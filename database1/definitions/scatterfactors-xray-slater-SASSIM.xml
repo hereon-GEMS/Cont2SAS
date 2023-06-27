@@ -1,0 +1,364 @@
+
+  <!-- # values are taken from SASSIM                                                               -->
+  <!-- constants are interpreted the following way:                                                 -->
+  <!--   double den = 0.0;                                                                          -->
+  <!--   for(size_t j = 0; j < 5; ++j)                                                              -->
+  <!--   {                                                                                          -->
+  <!--   	size_t j2 = 5+j;                                                                        -->
+  <!--   	size_t j3 = 10+j;                                                                       -->
+  <!--   	if (v[j]!=0.0) {                                                                        -->
+  <!--   		double c = 0.0;                                                                     -->
+  <!--   		c += powf( 2.0*v[j]/v[j3], v[j3]+0.5 );                                             -->
+  <!--   		c /= sqrt( boost::math::factorial<double>(2.0*v[j3]) );                             -->
+  <!--   		den += v[j2]* powf(  c*powf(q, v[j3]-1.0)*exp(-1.0*v[j]*q/v[j3]/1.0) , 2);          -->
+  <!--   	}                                                                                       -->
+  <!--   }                                                                                          -->
+  <!--   den /= 4.0*M_PI;                                                                           -->
+  <!-- v[0] corresponds to the second entry, the first constant describes the functional form       -->
+  <!-- sassim_atom = ( functiontype, v[0], v[1], ...);                                              -->
+  
+<scatterfactors>
+		<element>
+			<name>hydrogen 	</name> 
+			<type>1</type>
+			<param>	  1.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>	 1.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>	1.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom02 	</name> 
+			<type>1</type>
+			<param>    1.6875</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>	 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>	1.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom03 	</name> 
+			<type>1</type>
+			<param>    2.6906</param>
+			<param> 1.2792</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 1.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom04 	</name> 
+			<type>1</type>
+			<param>    3.6848</param>
+			<param> 1.9120</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom05 	</name> 
+			<type>1</type>
+			<param>    4.6795</param>
+			<param> 2.5762</param>
+			<param> 2.4214</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 1.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom06 	</name> 
+			<type>1</type>
+			<param>    5.6727</param>
+			<param> 3.2166</param>
+			<param> 3.1358</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom07 	</name> 
+			<type>1</type>
+			<param>    6.6651</param>
+			<param> 3.8474</param>
+			<param> 3.8340</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom08 	</name> 
+			<type>1</type>
+			<param>    7.6579</param>
+			<param> 4.4916</param>
+			<param> 4.4532</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 4.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom09 	</name> 
+			<type>1</type>
+			<param>    8.6501</param>
+			<param> 5.1276</param>
+			<param> 5.1000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 5.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom10 	</name> 
+			<type>1</type>
+			<param>    9.6421</param>
+			<param> 5.7584</param>
+			<param> 5.7584</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom11 	</name> 
+			<type>1</type>
+			<param>   10.6259</param>
+			<param> 6.5714</param>
+			<param> 6.8018</param>
+			<param> 2.5074</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 1.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom12 	</name> 
+			<type>1</type>
+			<param>   11.6089</param>
+			<param> 7.3920</param>
+			<param> 7.8258</param>
+			<param> 3.3075</param>
+			<param> 0.0000</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 2.0000</param>
+			<param> 0.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 0.0000  </param>
+		</element>
+		<element>
+			<name>atom13 	</name> 
+			<type>1</type>
+			<param>   12.5910</param>
+			<param> 8.2136</param>
+			<param> 8.9634</param>
+			<param> 4.1172</param>
+			<param> 4.0656</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 2.0000</param>
+			<param> 1.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 3.0000  </param>
+		</element>
+		<element>
+			<name>atom14 	</name> 
+			<type>1</type>
+			<param>   13.5745</param>
+			<param> 9.0200</param>
+			<param> 9.9450</param>
+			<param> 4.9032</param>
+			<param> 4.2852</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 3.0000  </param>
+		</element>
+		<element>
+			<name>atom15 	</name> 
+			<type>1</type>
+			<param>   14.5578</param>
+			<param> 9.8250</param>
+			<param>10.9612</param>
+			<param> 5.6418</param>
+			<param> 4.8864</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 3.0000  </param>
+		</element>
+		<element>
+			<name>atom16 	</name> 
+			<type>1</type>
+			<param>   15.5409</param>
+			<param>10.6288</param>
+			<param>11.9770</param>
+			<param> 6.3669</param>
+			<param> 5.4819</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 2.0000</param>
+			<param> 4.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 3.0000  </param>
+		</element>
+		<element>
+			<name>atom17 	</name> 
+			<type>1</type>
+			<param>   16.5239</param>
+			<param>11.4304</param>
+			<param>12.9932</param>
+			<param> 7.0683</param>
+			<param> 6.1161</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 2.0000</param>
+			<param> 5.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 3.0000  </param>
+		</element>
+		<element>
+			<name>atom18 	</name> 
+			<type>1</type>
+			<param>   17.5075</param>
+			<param>12.2304</param>
+			<param>14.0082</param>
+			<param> 7.7568</param>
+			<param> 6.7641</param>
+			<param>    2.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param> 2.0000</param>
+			<param> 6.0000</param>
+			<param>    1.0000</param>
+			<param> 2.0000</param>
+			<param> 2.0000</param>
+			<param> 3.0000</param>
+			<param> 3.0000  </param>
+		</element>
+
+</scatterfactors>
