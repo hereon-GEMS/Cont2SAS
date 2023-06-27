@@ -228,7 +228,7 @@ def database_generator(out_sl, in_sl, ndiv=10, database_dir='database'):
         tree = ET.ElementTree(root)
     tree.write(xml_file)
     
-def slurm_script_gen(folder,mpi_proc,omp_proc,xml_file='scatter.xml',sas=' /data/data/amajumda/sass_paper/sassena_Glab/sassena/compile_boxcut_img/sassena'):
+def slurm_script_gen(folder,mpi_proc,omp_proc,xml_file='scatter.xml',sas='/data/data/amajumda/sass_paper/sassena_Glab/sassena/compile_boxcut_img/sassena'):
     filename='run_slurm_icc'
     file=os.path.join(folder, filename)
     file_edit=open(file, 'w')
@@ -251,8 +251,7 @@ def slurm_script_gen(folder,mpi_proc,omp_proc,xml_file='scatter.xml',sas=' /data
     file_edit.write("module purge\n")
     file_edit.write("module load boost hdf5 compiler mpi mkl\n")
     file_edit.write("export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\n")
-    file_edit.write("mpiexec -n $SLURM_NTASKS \
-                    {0} --config {1}\n".format(sas, xml_file))
+    file_edit.write("mpiexec -n $SLURM_NTASKS {0} --config {1}\n".format(sas, xml_file))
     file_edit.write("\n")
     file_edit.write("\n")
     file_edit.close()
