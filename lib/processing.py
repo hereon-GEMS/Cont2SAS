@@ -3,8 +3,6 @@ import h5py
 
 # common
 
-#3d structures
-
 def hdfreader(file):
     file_read=h5py.File(file, 'r')
     node=np.array(file_read['node'])
@@ -48,6 +46,8 @@ def categorize_prop(prop,t,ndiv):
             cat_prop_t[cat_idx_t[j]]=cat_vals[j]
         cat_prop.append(cat_prop_t)
     return cat_prop, cat_idx
+
+#3d structures
     
 
 #old version with append
