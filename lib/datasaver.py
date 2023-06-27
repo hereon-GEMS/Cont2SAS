@@ -17,7 +17,6 @@ import xml.etree.cElementTree as ET
 def HDFwriter(node,con, prop_node, cell, prop_cell, filename,Folder='.'):
     file_full=os.path.join(Folder,filename)
     os.makedirs(Folder, exist_ok=True)
-    print(file_full)
     file=h5py.File(file_full,'w')
     file['node']=node
     file['nodeprop']=prop_node
