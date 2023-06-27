@@ -9,16 +9,16 @@ from mpl_toolkits.mplot3d import axes3d
 ## plot 3d structures
 
 
-def plotter_3d(coords_3d,show_plot=False):
+def plotter_3d(coords_3d,save_plot=False,save_dir='.'):
     fig = plt.figure()
     ax = plt.axes(projection='3d')
     #ax = plt.axes()
     coords_3d=np.array(coords_3d)
     ax.scatter(coords_3d[:,0],coords_3d[:,1],coords_3d[:,2])
-    if show_plot:
-        plt.show()
+    if save_plot:
+        plt.savefig(save_dir+'/3d_plot', format='png')
         
-def colorplot_node_3d(coords, sld, nx, ny, nz, show_plot=False):
+def colorplot_node_3d(coords, sld, nx, ny, nz, save_plot=False,save_dir='.'):
     fig = plt.figure()
     sld_reshape=np.array(sld).reshape(nx+1, ny+1, nz+1)
     print(sld_reshape.shape)
@@ -29,10 +29,10 @@ def colorplot_node_3d(coords, sld, nx, ny, nz, show_plot=False):
     plt.title('z = ' + str(z[0,0,int((nz+1)/2)]))
     plt.imshow(sld_reshape[:,:,int((nz+1)/2)],extent=(np.min(x), np.max(x), np.min(y), np.max(y)))
     plt.colorbar()
-    if show_plot:
-        plt.show()
+    if save_plot:
+        plt.savefig(save_dir+'/sld_node', format='png')
         
-def mesh_plotter_3d(coords_3d, con_3d):
+def mesh_plotter_3d(coords_3d, con_3d, save_plot=False,save_dir='.'):
     coords_3d=np.array(coords_3d)
     fig=plt.figure()
     ax=plt.axes(projection='3d')
@@ -47,9 +47,10 @@ def mesh_plotter_3d(coords_3d, con_3d):
         for i in range(4):
             draw_cur=draw3+i
             ax.plot(points[draw_cur,0], points[draw_cur,1],points[draw_cur,2],'k')
-    #plt.show()
+    if save_plot:
+        plt.savefig(save_dir+'/mesh', format='png')
     
-def colorplot_cell_3d(coords, sld, nx, ny, nz,show_plot=False):
+def colorplot_cell_3d(coords, sld, nx, ny, nz, save_plot=False,save_dir='.'):
     fig = plt.figure()
     ax = plt.axes()
     sld_reshape=np.array(sld).reshape(nx, ny, nz)
@@ -61,8 +62,8 @@ def colorplot_cell_3d(coords, sld, nx, ny, nz,show_plot=False):
     plt.title('z = ' + str(z[0,0,int((nz+1)/2)]))
     plt.imshow(sld_reshape[:,:,int((nz+1)/2)],extent=(np.min(x), np.max(x), np.min(y), np.max(y)))
     plt.colorbar()
-    if show_plot:
-        plt.show()
+    if save_plot:
+        plt.savefig(save_dir+'/sld_cell', format='png')
 
 
 """
