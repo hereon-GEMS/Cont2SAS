@@ -139,7 +139,7 @@ def database_generator(out_sl, in_sl, ndiv=10, database_dir='database'):
     # database_dir='database'
     
     os.makedirs(database_dir, exist_ok=True)
-    os.system('cp -r  database1/*.xml ' + database_dir + '/')
+    os.system('cp -r  database_sassena/*.xml ' + database_dir + '/')
     definition_dir=os.path.join(database_dir, 'definitions')
     os.makedirs(definition_dir, exist_ok=True)
     
@@ -227,3 +227,34 @@ def database_generator(out_sl, in_sl, ndiv=10, database_dir='database'):
         ET.SubElement(element, "param").text = str(sld_arr[i]) 
         tree = ET.ElementTree(root)
     tree.write(xml_file)
+    
+def slurm_script_gen(folder,mpi_proc,omp_proc,xml_file='scatter.xml',sas=' /data/data/amajumda/sass_paper/sassena_Glab/sassena/compile_boxcut_img/sassena'):
+    filename='run.slurm_icc'
+    file=os.path.join(folder, filename)
+    file_edit=open(file, 'w')
+    file_edit.write("#!/bin/bash\n")
+    file_edit.write("#SBATCH --job-name=sassena\n")
+    file_edit.write("#SBATCH --nodes=1             # run all processes on a single node\n")
+    file_edit.write("#SBATCH --nodes=1             # run all processes on a single node\n")
+    file_edit.write("#SBATCH --ntasks-per-node={0}  # number of MPI tasks (i.e. processes)\n".format(mpi_proc))
+    file_edit.write("#SBATCH --cpus-per-task={0}     # number of cores per MPI task (=OMP_NUM_THREADS)\n".format(omp_proc))
+    file_edit.write("#SBATCH --mem-per-cpu=2G      # 96GB RAM per node, 2 sockets * 12 cores * 2 threads\n")
+    file_edit.write("#SBATCH --output=out_%j.log   # Jobnumber mit dem Output\n")
+    file_edit.write("echo \"Date              = $(date)\"\n")
+    file_edit.write("echo \"Hostname          = $(hostname -s)\"\n")
+    file_edit.write("echo \"Working Directory = $(pwd)\"\n")
+    file_edit.write("echo \"\"\n")
+    file_edit.write("echo \"Number of Nodes Allocated      = $SLURM_JOB_NUM_NODES\"\n")
+    file_edit.write("echo \"Number of Tasks Allocated      = $SLURM_NTASKS\"\n")
+    file_edit.write("echo \"Number of Cores/Task Allocated = $SLURM_CPUS_PER_TASK\"\n")
+    file_edit.write("echo \"\"\n")
+    file_edit.write("module purge\n")
+    file_edit.write("module load boost hdf5 compiler mpi mkl\n")
+    file_edit.write("export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\n")
+    file_edit.write("mpiexec -n $SLURM_NTASKS \
+                    {0} --config {1}\n".format(sas, xml_file))
+    file_edit.write("\n")
+    file_edit.write("\n")
+    file_edit.close()
+    
+    
