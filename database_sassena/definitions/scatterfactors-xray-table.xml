@@ -1,0 +1,1209 @@
+                                                             
+	<!-- ft 2 , form:                                                                   -->
+	<!-- a1, b1, a2, b2, a3, b3, a4, b4, c                                              -->
+    <!--                                                                                -->
+	<!-- values from:                                                      -->
+	<!-- International Tables for Crystallography (2006). Vol. C, ch. 6.1, p. 572-4       -->
+
+	<!-- Elastic atomic scattering factors of x-rays for neutral atoms and ions and s up to 6.0 A?1 -->
+
+	<scatterfactors>
+
+		<element>
+			<name>hydrogen	</name>
+		 	<type>2</type>
+			<param> 	0.489918	</param>
+			<param>20.6593	</param>
+			<param>0.262003	</param>
+			<param>7.74039	</param>
+			<param>0.196767	</param>
+			<param>49.5519	</param>
+			<param>0.049879	</param>
+			<param>2.20159	</param>
+			<param>0.001305	</param>
+		</element> 
+		<element>
+			<name>deuterium 	</name>
+			<type>2</type>
+			<param> 0.489918</param>
+			<param> 20.6593</param>
+			<param> 0.262003</param>
+			<param> 7.74039</param>
+			<param> 0.196767</param>
+			<param> 49.5519</param>
+			<param> 0.049879</param>
+			<param> 2.20159</param>
+			<param> 0.001305 </param>
+		</element>
+
+
+		<element>
+			<name>helium</name>
+		 	<type>2</type>
+			<param> 	0.873400	</param>
+			<param>9.10370	</param>
+			<param>0.630900	</param>
+			<param>3.35680	</param>
+			<param>0.311200	</param>
+			<param>22.9276	</param>
+			<param>0.178000	</param>
+			<param>0.982100	</param>
+			<param>0.006400	</param>
+		</element> 
+		<element>
+			<name>lithium</name>
+		 	<type>2</type>
+			<param> 	1.12820	</param>
+			<param>3.95460	</param>
+			<param>0.750800	</param>
+			<param>1.05240	</param>
+			<param>0.617500	</param>
+			<param>85.3905	</param>
+			<param>0.465300	</param>
+			<param>168.261	</param>
+			<param>0.0137700	</param>
+		</element> 
+                <element>
+			<name>lithium(1+)</name>
+		 	<type>2</type>
+			<param> 	0.696800	</param>
+			<param>4.62370	</param>
+			<param>0.788800	</param>
+			<param>1.95570	</param>
+			<param>0.341400	</param>
+			<param>0.631600	</param>
+			<param>0.156300	</param>
+			<param>10.0953	</param>
+			<param>0.016700	</param>
+		</element> 
+		<element>
+			<name>beryllium</name>
+		 	<type>2</type>
+			<param> 	1.59190	</param>
+			<param>43.6427	</param>
+			<param>1.12780	</param>
+			<param>1.86230	</param>
+			<param>0.539100	</param>
+			<param>103.483	</param>
+			<param>0.702900	</param>
+			<param>0.542000	</param>
+			<param>0.038500	</param>
+		</element> 
+                <element>
+			<name>beryllium(2+)</name>
+		 	<type>2</type>
+			<param> 	6.26030	</param>
+			<param>0.002700	</param>
+			<param>0.884900	</param>
+			<param>0.831300	</param>
+			<param>0.799300	</param>
+			<param>2.27580	</param>
+			<param>0.164700	</param>
+			<param>5.11460	</param>
+			<param>-6.1092	</param>
+		</element> 
+		<element>
+			<name>boron</name>
+		 	<type>2</type>
+			<param> 	2.06450	</param>
+			<param>23.2185	</param>
+			<param>1.33260	</param>
+			<param>1.02100	</param>
+			<param>1.09790	</param>
+			<param>60.3498	</param>
+			<param>0.706800	</param>
+			<param>0.140300	</param>
+			<param>-0.19320	</param>
+		</element> 
+		<element>
+			<name>carbon</name>
+		 	<type>2</type>
+			<param> 	2.31000	</param>
+			<param>20.8439	</param>
+			<param>1.02000	</param>
+			<param>10.2075	</param>
+			<param>1.58860	</param>
+			<param>0.568700	</param>
+			<param>0.865000	</param>
+			<param>51.6512	</param>
+			<param>0.215600	</param>
+		</element> 
+		<element>
+			<name>carbon (val)</name>
+		 	<type>2</type>
+			<param> 	2.26069	</param>
+			<param>22.6907	</param>
+			<param>1.56165	</param>
+			<param>0.656665	</param>
+			<param>1.05075	</param>
+			<param>9.75618	</param>
+			<param>0.839259	</param>
+			<param>55.5949	</param>
+			<param>0.286977	</param>
+		</element> 
+		<element>
+			<name>nitrogen</name>
+		 	<type>2</type>
+			<param> 	12.2126	</param>
+			<param>0.005700	</param>
+			<param>3.13220	</param>
+			<param>9.89330	</param>
+			<param>2.01250	</param>
+			<param>28.9975	</param>
+			<param>1.16630	</param>
+			<param>0.582600	</param>
+			<param>-11.529	</param>
+		</element> 
+		<element>
+			<name>oxygen</name>
+		 	<type>2</type>
+			<param> 	3.04850	</param>
+			<param>13.2771	</param>
+			<param>2.28680	</param>
+			<param>5.70110	</param>
+			<param>1.54630	</param>
+			<param>0.323900	</param>
+			<param>0.867000	</param>
+			<param>32.9089	</param>
+			<param>0.250800	</param>
+		</element> 
+		<element>
+			<name>oxygen(1-)</name>
+		 	<type>2</type>
+			<param> 	4.19160	</param>
+			<param>12.8573	</param>
+			<param>1.63969	</param>
+			<param>4.17236	</param>
+			<param>1.52673	</param>
+			<param>47.0179	</param>
+			<param>-20.307	</param>
+			<param>-0.01404	</param>
+			<param>21.9412	</param>
+		</element> 
+		<element>
+			<name>F			</name>
+		 	<type>2</type>
+			<param> 	3.53920	</param>
+			<param>10.2825	</param>
+			<param>2.64120	</param>
+			<param>4.29440	</param>
+			<param>1.51700	</param>
+			<param>0.2615600	</param>
+			<param>1.02430	</param>
+			<param>26.1476	</param>
+			<param>0.277600	</param>
+		</element> 
+		<element>
+			<name>F(1-)			</name>
+		 	<type>2</type>
+			<param> 	3.63220	</param>
+			<param>5.27756	</param>
+			<param>3.51057	</param>
+			<param>14.7353	</param>
+			<param>1.26064	</param>
+			<param>0.442258	</param>
+			<param>0.940706	</param>
+			<param>47.3437	</param>
+			<param>0.653396	</param>
+		</element> 
+		<element>
+			<name>Ne			</name>
+		 	<type>2</type>
+			<param> 	3.95530	</param>
+			<param>8.40420	</param>
+			<param>3.11250	</param>
+			<param>3.42620	</param>
+			<param>1.45460	</param>
+			<param>0.230600	</param>
+			<param>1.12510	</param>
+			<param>21.7184	</param>
+			<param>0.351500	</param>
+		</element> 
+		<element>
+			<name>Na			</name>
+		 	<type>2</type>
+			<param> 	4.76260	</param>
+			<param>3.28500	</param>
+			<param>3.17360	</param>
+			<param>8.84220	</param>
+			<param>1.26740	</param>
+			<param>0.313600	</param>
+			<param>1.11280	</param>
+			<param>129.424	</param>
+			<param>0.676000	</param>
+		</element> 
+		<element>
+		<!-- ION Na(1+) -->
+			<name>sodium</name>
+		 	<type>2</type>
+			<param>3.25650    </param>
+			<param>2.66710	</param>
+			<param>3.93620	</param>
+			<param>6.11530	</param>
+			<param>1.39980	</param>
+			<param>0.200100	</param>
+			<param>1.00320	</param>
+			<param>14.0390     </param>
+			<param>0.404000 	</param>
+		</element> 
+
+		<element>
+			<name>Mg			</name>
+		 	<type>2</type>
+			<param> 	5.42040	</param>
+			<param>2.82750	</param>
+			<param>2.17350	</param>
+			<param>79.2611	</param>
+			<param>1.22690	</param>
+			<param>0.380800	</param>
+			<param>2.30730	</param>
+			<param>7.19370	</param>
+			<param>0.858400	</param>
+		</element> 
+		<element>
+			<name>Mg(2+)			</name>
+		 	<type>2</type>
+			<param> 	3.49880	</param>
+			<param>2.16760	</param>
+			<param>3.83780	</param>
+			<param>4.75420	</param>
+			<param>1.32840	</param>
+			<param>0.185000	</param>
+			<param>0.849700	</param>
+			<param>10.1411	</param>
+			<param>0.485300	</param>
+		</element> 
+		<element>
+			<name>Al			</name>
+		 	<type>2</type>
+			<param> 	6.42020	</param>
+			<param>3.03870	</param>
+			<param>1.90020	</param>
+			<param>0.742600	</param>
+			<param>1.59360	</param>
+			<param>31.5472	</param>
+			<param>1.96460	</param>
+			<param>85.0886	</param>
+			<param>1.11510	</param>
+		</element> 
+		<element>
+			<name>Al(3+)			</name>
+		 	<type>2</type>
+			<param> 	4.17448	</param>
+			<param>1.93816	</param>
+			<param>3.38760	</param>
+			<param>4.14553	</param>
+			<param>1.20296	</param>
+			<param>0.228753	</param>
+			<param>0.528137 </param>
+			<param>8.28524	</param>
+			<param>0.706786	</param>
+		</element> 
+		<element>
+			<name>Si(v)			</name>
+		 	<type>2</type>
+			<param> 	6.29150	</param>
+			<param>2.43860	</param>
+			<param>3.03530	</param>
+			<param>32.3337	</param>
+			<param>1.98910	</param>
+			<param>0.678500	</param>
+			<param>1.54100 </param>
+			<param>81.6937	</param>
+			<param>1.14070	</param>
+		</element> 
+		<element>
+			<name>Si(val)			</name>
+		 	<type>2</type>
+			<param> 	5.66269	</param>
+			<param>2.66520	</param>
+			<param>3.07164	</param>
+			<param>38.6634	</param>
+			<param>2.62446	</param>
+			<param>0.916946	</param>
+			<param>1.39320 </param>
+			<param>93.5458	</param>
+			<param>1.24707	</param>
+		</element> 
+		<element>
+			<name>Si(4+)			</name>
+		 	<type>2</type>
+			<param> 	4.43918	</param>
+			<param>1.64167	</param>
+			<param>3.20345	</param>
+			<param>3.43757	</param>
+			<param>1.19453	</param>
+			<param>0.214900	</param>
+			<param>0.416530 </param>
+			<param>6.65365 </param>
+			<param>0.746297	</param>
+		</element> 
+		<element>
+		<!-- original name : P -->
+			<name>phosphor</name>
+		 	<type>2</type>
+			<param> 	6.43450	</param>
+			<param>1.90670	</param>
+			<param>4.17910	</param>
+			<param>27.1570	</param>
+			<param>1.78000	</param>
+			<param>0.526000	</param>
+			<param>1.49080	</param>
+			<param>68.1645	</param>
+			<param>1.11490	</param>
+		</element> 
+		<element>
+		<!-- original name: S -->
+			<name>sulfur</name>
+		 	<type>2</type>
+			<param> 	6.90530	</param>
+			<param>1.46790	</param>
+			<param>5.20340	</param>
+			<param>22.2151	</param>
+			<param>1.43790	</param>
+			<param>0.253600	</param>
+			<param>1.58630 </param>
+			<param>56.1720	</param>
+			<param>0.866900	</param>
+		</element> 
+		<element>
+			<name>Cl</name>
+		 	<type>2</type>
+			<param> 	11.4604	</param>
+			<param>0.010400	</param>
+			<param>7.19640	</param>
+			<param>1.16720	</param>
+			<param>6.25560	</param>
+			<param>18.5194	</param>
+			<param>1.64550	</param>
+			<param>47.7784	</param>
+			<param>-9.5574	</param>
+		</element> 
+		<element>
+		<!-- ION CL(1-) -->
+			<name>chloride</name>
+		 	<type>2</type>
+			<param>18.2915	</param>
+			<param>0.006600	</param>
+			<param>7.20840	</param>
+			<param>1.17170	</param>
+			<param>6.53370	</param>
+			<param>19.5424	</param>
+			<param>2.33860	</param>
+			<param>60.4486	</param>
+			<param>-16.378	</param>
+		</element> 
+		<element>
+			<name>Ar			</name>
+		 	<type>2</type>
+			<param> 	7.48450	</param>
+			<param>0.907200	</param>
+			<param>6.77230	</param>
+			<param>14.8407	</param>
+			<param>0.653900	</param>
+			<param>43.8983 </param>
+			<param>1.64420	</param>
+			<param>33.3929	</param>
+			<param>1.44450	</param>
+		</element> 
+		<element>
+			<name>K			</name>
+		 	<type>2</type>
+			<param> 	8.21860	</param>
+			<param>12.7949	</param>
+			<param>7.43980	</param>
+			<param>0.774800	</param>
+			<param>1.05190	</param>
+			<param>213.187	</param>
+			<param>0.865900	</param>
+			<param>41.6841	</param>
+			<param>1.42280	</param>
+		</element> 
+		<element>
+		<!-- ION K(1+) -->
+			<name>potassium</name>
+		 	<type>2</type>
+			<param>7.95780	</param>
+			<param>12.6331 </param>
+			<param>7.49170	</param>
+			<param>0.767400	</param>
+			<param>6.35900	</param>
+			<param>-0.00200	</param>
+			<param>1.19150	</param>
+			<param>31.9128	</param>
+			<param>-4.9978	</param>
+		</element> 
+
+		<element>
+			<name>Ca			</name>
+		 	<type>2</type>
+			<param> 	8.62660	</param>
+			<param>10.4421	</param>
+			<param>7.38730	</param>
+			<param>0.659900	</param>
+			<param>1.58990	</param>
+			<param>85.7484	</param>
+			<param>1.02110	</param>
+			<param>178.437	</param>
+			<param>1.37510	</param>
+		</element> 
+		<element>
+			<name>Ca(2+)			</name>
+		 	<type>2</type>
+			<param> 	15.6348	</param>
+			<param>-0.00740	</param>
+			<param>7.95180	</param>
+			<param>0.608900	</param>
+			<param>8.43720 </param>
+			<param>10.3116	</param>
+			<param>0.853700 </param>
+			<param>25.9905	</param>
+			<param>-14.875	</param>
+		</element> 
+
+		<element>
+			<name>Sc			</name>
+		 	<type>2</type>
+			<param> 	9.18900	</param>
+			<param>9.02130	</param>
+			<param>7.36790	</param>
+			<param>0.572900	</param>
+			<param>1.64090	</param>
+			<param>136.108	</param>
+			<param>1.46800	</param>
+			<param>51.3531	</param>
+			<param>1.332900	</param>
+		</element> 
+		<element>
+			<name>Sc(3+)			</name>
+		 	<type>2</type>
+			<param> 	13.4008	</param>
+			<param>0.298540	</param>
+			<param>8.02730	</param>
+			<param>7.96290	</param>
+			<param>1.65943	</param>
+			<param>-0.28604	</param>
+			<param>1.57936 </param>
+			<param>16.0662	</param>
+			<param>-6.6667	</param>
+		</element> 
+		<element>
+			<name>Ti			</name>
+		 	<type>2</type>
+			<param> 	9.75950	</param>
+			<param>7.85080	</param>
+			<param>7.35580	</param>
+			<param>0.500000	</param>
+			<param>1.69910	</param>
+			<param>35.6338	</param>
+			<param>1.90210	</param>
+			<param>116.105	</param>
+			<param>1.28070	</param>
+		</element> 
+		<element>
+			<name>Ti(2+)			</name>
+		 	<type>2</type>
+			<param> 	9.11423	</param>
+			<param>7.52430	</param>
+			<param>7.62174	</param>
+			<param>0.457585	</param>
+			<param>2.27930	</param>
+			<param>19.5361	</param>
+			<param>0.087899 </param>
+			<param>61.6558	</param>
+			<param>0.897155	</param>
+		</element> 
+		<element>
+			<name>Ti(3+)			</name>
+		 	<type>2</type>
+			<param> 	17.7344	</param>
+			<param>0.220610	</param>
+			<param>8.73816	</param>
+			<param>7.04716	</param>
+			<param>5.25691	</param>
+			<param>-0.15762	</param>
+			<param>1.92134 </param>
+			<param>15.9768	</param>
+			<param>-14.652	</param>
+		</element> 
+		<element>
+			<name>Ti(4+)			</name>
+		 	<type>2</type>
+			<param> 	19.5114	</param>
+			<param>0.178847	</param>
+			<param>8.23473	</param>
+			<param>6.67018	</param>
+			<param>2.01341	</param>
+			<param>-0.29263	</param>
+			<param>1.52080 </param>
+			<param>12.9464	</param>
+			<param>-13.280	</param>
+		</element> 
+
+		<element>
+			<name>V			</name>
+		 	<type>2</type>
+			<param> 	10.2971	</param>
+			<param>6.86570	</param>
+			<param>7.35110	</param>
+			<param>0.438500	</param>
+			<param>2.07030	</param>
+			<param>26.8938	</param>
+			<param>2.05710	</param>
+			<param>102.478	</param>
+			<param>1.21990	</param>
+		</element> 
+		<element>
+			<name>V(2+)			</name>
+		 	<type>2</type>
+			<param> 	10.1060	</param>
+			<param>6.88180	</param>
+			<param>7.35410	</param>
+			<param>0.440900	</param>
+			<param>2.28840	</param>
+			<param>20.3004	</param>
+			<param>0.022300	</param>
+			<param>115.121	</param>
+			<param>1.22980	</param>
+		</element> 
+		<element>
+			<name>V(3+)			</name>
+		 	<type>2</type>
+			<param> 	9.43141	</param>
+			<param>6.39535	</param>
+			<param>7.74190	</param>
+			<param>0.383349	</param>
+			<param>2.15343	</param>
+			<param>15.1908	</param>
+			<param>0.016865	</param>
+			<param>63.9690	</param>
+			<param>0.656565	</param>
+		</element> 
+		<element>
+			<name>V(5+)		</name>
+		 	<type>2</type>
+			<param> 	15.6887	</param>
+			<param>0.679003	</param>
+			<param>8.14208	</param>
+			<param>5.40135	</param>
+			<param>2.03081	</param>
+			<param>9.97278	</param>
+			<param>-9.5760	</param>
+			<param>0.940464	</param>
+			<param>1.71430	</param>
+		</element> 
+		<element>
+			<name>Cr			</name>
+		 	<type>2</type>
+			<param> 	10.6406	</param>
+			<param>6.10380	</param>
+			<param>7.35370	</param>
+			<param>0.392000	</param>
+			<param>3.32400	</param>
+			<param>20.2626	</param>
+			<param>1.49220	</param>
+			<param>98.7399	</param>
+			<param>1.18320	</param>
+		</element> 
+		<element>
+			<name>Cr(2+)		</name>
+		 	<type>2</type>
+			<param> 	9.54034	</param>
+			<param>5.66078	</param>
+			<param>7.75090	</param>
+			<param>0.344261	</param>
+			<param>3.58274	</param>
+			<param>13.3075	</param>
+			<param>0.509107	</param>
+			<param>32.4224	</param>
+			<param>0.616898	</param>
+		</element> 
+		<element>
+			<name>Cr(3+)		</name>
+		 	<type>2</type>
+			<param> 	9.68090	</param>
+			<param>5.59463	</param>
+			<param>7.81136	</param>
+			<param>0.334393	</param>
+			<param>2.8763	</param>
+			<param>12.8288	</param>
+			<param>0.113575	</param>
+			<param>32.8761	</param>
+			<param>0.518275	</param>
+		</element> 
+		<element>
+			<name>Mn			</name>
+		 	<type>2</type>
+			<param> 	11.2819	</param>
+			<param>5.34090	</param>
+			<param>7.35730	</param>
+			<param>0.343200	</param>
+			<param>3.01930	</param>
+			<param>17.8674	</param>
+			<param>2.24410	</param>
+			<param>83.7543	</param>
+			<param>1.08960	</param>
+		</element> 
+		<element>
+			<name>Mn(2+)			</name>
+		 	<type>2</type>
+			<param> 	10.8061	</param>
+			<param>5.27960	</param>
+			<param>7.36200	</param>
+			<param>0.343500	</param>
+			<param>3.52680	</param>
+			<param>14.3430	</param>
+			<param>0.218400	</param>
+			<param>41.3235	</param>
+			<param>1.08740	</param>
+		</element> 
+		<element>
+			<name>Mn(3+)			</name>
+		 	<type>2</type>
+			<param> 	9.84521	</param>
+			<param>4.91797	</param>
+			<param>7.87194	</param>
+			<param>0.294393	</param>
+			<param>3.56531	</param>
+			<param>10.8171	</param>
+			<param>0.323613	</param>
+			<param>24.1281	</param>
+			<param>0.393974	</param>
+		</element> 
+		<element>
+			<name>Mn(4+)			</name>
+		 	<type>2</type>
+			<param> 	9.96253	</param>
+			<param>4.84850	</param>
+			<param>7.97057	</param>
+			<param>0.283303	</param>
+			<param>2.76067	</param>
+			<param>10.4852	</param>
+			<param>0.054447	</param>
+			<param>27.5730	</param>
+			<param>0.251877	</param>
+		</element> 
+		<element>
+			<name>Fe			</name>
+		 	<type>2</type>
+			<param> 	11.7695	</param>
+			<param>4.76110	</param>
+			<param>7.35730	</param>
+			<param>0.307200	</param>
+			<param>3.52220	</param>
+			<param>15.3535	</param>
+			<param>2.30450	</param>
+			<param>76.8805	</param>
+			<param>1.03690	</param>
+		</element> 
+		<element>
+			<name>Fe(2+)			</name>
+		 	<type>2</type>
+			<param> 	11.0424	</param>
+			<param>4.65380	</param>
+			<param>7.37400	</param>
+			<param>0.305300	</param>
+			<param>4.13460	</param>
+			<param>12.0546	</param>
+			<param>0.439900	</param>
+			<param>31.2809	</param>
+			<param>1.00970	</param>
+		</element> 
+		<element>
+			<name>Fe(3+)			</name>
+		 	<type>2</type>
+			<param> 	11.1764	</param>
+			<param>4.61470	</param>
+			<param>7.38630	</param>
+			<param>0.300500	</param>
+			<param>3.39480	</param>
+			<param>11.6729	</param>
+			<param>0.072400	</param>
+			<param>38.5566	</param>
+			<param>0.970700	</param>
+		</element> 
+		<element>
+			<name>Co			</name>
+		 	<type>2</type>
+			<param> 	12.2841	</param>
+			<param>4.27910	</param>
+			<param>7.34090	</param>
+			<param>0.278400	</param>
+			<param>4.00340	</param>
+			<param>13.5359	</param>
+			<param>2.34880	</param>
+			<param>71.1692	</param>
+			<param>1.01180	</param>
+		</element> 
+		<element>
+			<name>Co(2+)			</name>
+		 	<type>2</type>
+			<param> 	11.2296	</param>
+			<param>4.12310	</param>
+			<param>7.38830	</param>
+			<param>0.272600	</param>
+			<param>4.73930	</param>
+			<param>10.2443	</param>
+			<param>0.710800	</param>
+			<param>25.6466	</param>
+			<param>0.932400	</param>
+		</element> 
+		<element>
+			<name>Co(3+)			</name>
+		 	<type>2</type>
+			<param> 	10.3380	</param>
+			<param>3.90969	</param>
+			<param>7.88173	</param>
+			<param>0.238668	</param>
+			<param>4.76795	</param>
+			<param>8.35583	</param>
+			<param>0.725591	</param>
+			<param>18.3491	</param>
+			<param>0.286667	</param>
+		</element> 
+		<element>
+			<name>Ni			</name>
+		 	<type>2</type>
+			<param> 	12.8376	</param>
+			<param>3.87850	</param>
+			<param>7.29200	</param>
+			<param>0.256500	</param>
+			<param>4.44380	</param>
+			<param>12.1763	</param>
+			<param>2.38000	</param>
+			<param>66.3421	</param>
+			<param>1.0341	</param>
+		</element> 
+		<element>
+			<name>Ni(2+)			</name>
+		 	<type>2</type>
+			<param> 	11.4166	</param>
+			<param>3.67660	</param>
+			<param>7.40050	</param>
+			<param>0.244900	</param>
+			<param>5.34420	</param>
+			<param>8.87300	</param>
+			<param>0.977300	</param>
+			<param>22.1626	</param>
+			<param>0.861400	</param>
+		</element> 
+		<element>
+			<name>Ni(3+)			</name>
+		 	<type>2</type>
+			<param> 	10.7806	</param>
+			<param>3.54770	</param>
+			<param>7.75868	</param>
+			<param>0.223140	</param>
+			<param>5.22746	</param>
+			<param>7.64468	</param>
+			<param>0.847114	</param>
+			<param>16.9673	</param>
+			<param>0.386044	</param>
+		</element> 
+		<element>
+			<name>Cu			</name>
+		 	<type>2</type>
+			<param> 	13.3380	</param>
+			<param>3.58280	</param>
+			<param>7.16760	</param>
+			<param>0.247000	</param>
+			<param>5.61580	</param>
+			<param>11.3966	</param>
+			<param>1.67350	</param>
+			<param>64.8126	</param>
+			<param>1.19100	</param>
+		</element> 
+		<element>
+			<name>Cu(1+)			</name>
+		 	<type>2</type>
+			<param> 	11.9475	</param>
+			<param>3.36690	</param>
+			<param>7.35730	</param>
+			<param>0.227400	</param>
+			<param>6.24550	</param>
+			<param>8.66250	</param>
+			<param>1.55780	</param>
+			<param>25.8487	</param>
+			<param>0.89000	</param>
+		</element> 
+		<element>
+			<name>Cu(2+)			</name>
+		 	<type>2</type>
+			<param> 	11.8168	</param>
+			<param>3.37484	</param>
+			<param>7.11181	</param>
+			<param>0.244078	</param>
+			<param>5.78135	</param>
+			<param>7.98760	</param>
+			<param>1.14523	</param>
+			<param>19.8970	</param>
+			<param>1.14431	</param>
+		</element> 
+		<element>
+			<name>Zn			</name>
+		 	<type>2</type>
+			<param> 	14.0743	</param>
+			<param>3.26550	</param>
+			<param>7.03180	</param>
+			<param>0.233300	</param>
+			<param>5.16520	</param>
+			<param>10.3163	</param>
+			<param>2.41000	</param>
+			<param>58.7097	</param>
+			<param>1.30410	</param>
+		</element> 
+		<element>
+		<!-- ION Zn(2+) -->
+			<name>zinc</name>
+		 	<type>2</type>
+			<param>11.9719	</param>
+			<param>2.99460	</param>
+			<param>7.38620	</param>
+			<param>0.203100	</param>
+			<param>6.46680	</param>
+			<param>7.08260	</param>
+			<param>1.39400	</param>
+			<param>18.0995	</param>
+			<param>0.780700	</param>
+		</element> 
+
+		<element>
+			<name>Ga			</name>
+		 	<type>2</type>
+			<param> 	15.2354	</param>
+			<param>3.06690	</param>
+			<param>6.70060	</param>
+			<param>0.241200	</param>
+			<param>4.35910	</param>
+			<param>10.7805	</param>
+			<param>2.96230	</param>
+			<param>61.4135	</param>
+			<param>1.71890	</param>
+		</element> 
+		<element>
+			<name>Ga(3+)			</name>
+		 	<type>2</type>
+			<param> 	12.6920	</param>
+			<param>2.81262	</param>
+			<param>6.69883	</param>
+			<param>0.227890	</param>
+			<param>6.06692	</param>
+			<param>6.36441	</param>
+			<param>1.00660	</param>
+			<param>14.4122	</param>
+			<param>1.53545	</param>
+		</element> 
+		<element>
+			<name>Ge			</name>
+		 	<type>2</type>
+			<param> 	16.0816	</param>
+			<param>2.85090	</param>
+			<param>6.37470	</param>
+			<param>0.251600	</param>
+			<param>3.70680	</param>
+			<param>11.4468	</param>
+			<param>3.68300	</param>
+			<param>54.7625	</param>
+			<param>2.13130	</param>
+		</element> 
+		<element>
+			<name>Ge(4+)			</name>
+		 	<type>2</type>
+			<param> 	12.9172	</param>
+			<param>2.53718	</param>
+			<param>6.70003	</param>
+			<param>0.205855	</param>
+			<param>6.06791	</param>
+			<param>5.47913	</param>
+			<param>0.859041	</param>
+			<param>11.6030	</param>
+			<param>0.393974	</param>
+		</element> 
+		<element>
+			<name>As	 		</name>
+		 	<type>2</type>
+			<param> 	16.6723	</param>
+			<param>2.63450	</param>
+			<param>6.07010	</param>
+			<param>0.264700	</param>
+			<param>3.43130	</param>
+			<param>12.9479	</param>
+			<param>4.27790	</param>
+			<param>47.7972	</param>
+			<param>2.53100	</param>
+		</element> 
+			<element>
+			<name>Br			</name>
+		 	<type>2</type>
+			<param> 	17.1789	</param>
+			<param>2.17230	</param>
+			<param>5.23580	</param>
+			<param>16.5796	</param>
+			<param>5.63770	</param>
+			<param>0.260900	</param>
+			<param>3.98510	</param>
+			<param>41.4328	</param>
+			<param>2.95570	</param>
+		</element> 
+		<element>
+			<name>Br(1-)			</name>
+		 	<type>2</type>
+			<param> 	17.1718	</param>
+			<param>2.20590	</param>
+			<param>6.33380	</param>
+			<param>19.3345	</param>
+			<param>5.57540	</param>
+			<param>0.287100	</param>
+			<param>3.72720	</param>
+			<param>58.1535	</param>
+			<param>3.17760	</param>
+		</element> 
+		<element>
+			<name>Zr			</name>
+		 	<type>2</type>
+			<param> 	17.8765	</param>
+			<param>1.27618	</param>
+			<param>10.9480	</param>
+			<param>11.9160	</param>
+			<param>5.41732	</param>
+			<param>0.117622	</param>
+			<param>3.65721 </param>
+			<param>87.6627	</param>
+			<param>2.06929	</param>
+		</element> 
+		<element>
+			<name>Zr(4+)			</name>
+		 	<type>2</type>
+			<param> 	18.1668	</param>
+			<param>1.21480	</param>
+			<param>10.0562	</param>
+			<param>10.1483	</param>
+			<param>1.01118	</param>
+			<param>21.6054	</param>
+			<param>-2.6479	</param>
+			<param>-0.10276	</param>
+			<param>9.41454	</param>
+		</element> 
+		<element>
+			<name>Ag			</name>
+		 	<type>2</type>
+			<param> 	19.2808	</param>
+			<param>0.644600	</param>
+			<param>16.6885	</param>
+			<param>7.47260	</param>
+			<param>4.80450	</param>
+			<param>24.6605	</param>
+			<param>1.04630	</param>
+			<param>99.8156	</param>
+			<param>5.17900	</param>
+		</element> 
+		<element>
+			<name>Ag(1+)			</name>
+		 	<type>2</type>
+			<param> 	19.1812	</param>
+			<param>0.646179	</param>
+			<param>15.9719	</param>
+			<param>7.19123	</param>
+			<param>5.27475	</param>
+			<param>21.7326	</param>
+			<param>0.357534	</param>
+			<param>66.1147 </param>
+			<param>5.21572	</param>
+		</element> 
+		<element>
+			<name>Ag(2+)			</name>
+		 	<type>2</type>
+			<param> 	19.1643	</param>
+			<param>0.645643	</param>
+			<param>16.2456	</param>
+			<param>7.18544	</param>
+			<param>4.37090	</param>
+			<param>21.4072	</param>
+			<param>0.000000	</param>
+			<param>0.000000 </param>
+			<param>5.2144	</param>
+		</element> 
+		<element>
+			<name>I			</name>
+		 	<type>2</type>
+			<param> 	20.1472	</param>
+			<param>4.34700	</param>
+			<param>18.9949	</param>
+			<param>0.381400	</param>
+			<param>7.51380	</param>
+			<param>27.7660	</param>
+			<param>2.27350	</param>
+			<param>66.8776	</param>
+			<param>4.07120 </param>
+		</element> 
+		<element>
+			<name>I(1-)			</name>
+		 	<type>2</type>
+			<param> 	20.2332	</param>
+			<param>4.35790	</param>
+			<param>18.9970	</param>
+			<param>0.381500	</param>
+			<param>7.80690 </param>
+			<param>29.5259	</param>
+			<param>2.88680	</param>
+			<param>84.9304	</param>
+			<param>4.07140	</param>
+		</element> 
+		<element>
+			<name>Xe			</name>
+		 	<type>2</type>
+			<param> 	20.2933	</param>
+			<param>3.92820	</param>
+			<param>19.0298	</param>
+			<param>0.344000 </param>
+			<param>8.97670	</param>
+			<param>26.4659	</param>
+			<param>1.99000	</param>
+			<param>64.2658	</param>
+			<param>3.71180	</param>
+		</element> 
+		<element>
+			<name>Cs			</name>
+		 	<type>2</type>
+			<param> 	20.3892	</param>
+			<param>3.56900	</param>
+			<param>19.1062	</param>
+			<param>0.310700	</param>
+			<param>10.6620	</param>
+			<param>24.3879	</param>
+			<param>1.49530	</param>
+			<param>213.904	</param>
+			<param>3.33520	</param>
+		</element> 
+		<element>
+			<name>Cs(1+)			</name>
+		 	<type>2</type>
+			<param> 	20.3524	</param>
+			<param>3.55200	</param>
+			<param>19.1278	</param>
+			<param>0.308600	</param>
+			<param>10.2821	</param>
+			<param>23.7128	</param>
+			<param>0.961500	</param>
+			<param>59.4565	</param>
+			<param>3.27910	</param>
+		</element> 
+		<element>
+			<name>Pt			</name>
+		 	<type>2</type>
+			<param> 	27.0059   </param>
+			<param>1.51293	</param>
+			<param>17.7639	</param>
+			<param>8.81174	</param>
+			<param>15.7131	</param>
+			<param>0.424593	</param>
+			<param>5.78370	</param>
+			<param>38.6103	</param>
+			<param>11.6883	</param>
+		</element> 
+		<element>
+			<name>Pt(2+)			</name>
+		 	<type>2</type>
+			<param> 	29.8429	</param>
+			<param>1.32927	</param>
+			<param>16.7224	</param>
+			<param>7.38979	</param>
+			<param>13.2153 </param>
+			<param>0.263297	</param>
+			<param>6.35234	</param>
+			<param>22.9426	</param>
+			<param>9.85329	</param>
+		</element> 
+		<element>
+			<name>Pt(4+)			</name>
+		 	<type>2</type>
+			<param> 	30.9612	</param>
+			<param>1.24813	</param>
+			<param>15.9829	</param>
+			<param>6.60834	</param>
+			<param>13.7348	</param>
+			<param>0.168640	</param>
+			<param>5.92034	</param>
+			<param>16.9392	</param>
+			<param>7.39534	</param>
+		</element> 
+		<element>
+			<name>Au			</name>
+		 	<type>2</type>
+			<param> 	16.8819	</param>
+			<param>0.461100	</param>
+			<param>18.5913	</param>
+			<param>8.62160	</param>
+			<param>25.5582	</param>
+			<param>1.48260	</param>
+			<param>5.86000 </param>
+			<param>36.3956	</param>
+			<param>12.0658	</param>
+		</element> 
+		<element>
+			<name>Au(1+)			</name>
+		 	<type>2</type>
+			<param> 	28.0109	</param>
+			<param>1.35321	</param>
+			<param>17.8204	</param>
+			<param>7.73950	</param>
+			<param>14.3359	</param>
+			<param>0.356752	</param>
+			<param>6.58077	</param>
+			<param>26.4043	</param>
+			<param>11.2299	</param>
+		</element> 
+		<element>
+			<name>Au(3+)			</name>
+		 	<type>2</type>
+			<param> 	30.6886	</param>
+			<param>1.21990	</param>
+			<param>16.9029	</param>
+			<param>6.82872	</param>
+			<param>12.7801	</param>
+			<param>0.212867	</param>
+			<param>6.52354	</param>
+			<param>18.6590	</param>
+			<param>9.09680	</param>
+		</element> 
+		<element>
+			<name>Pb			</name>
+		 	<type>2</type>
+			<param> 	31.0617	</param>
+			<param>0.690200	</param>
+			<param>13.0637	</param>
+			<param>2.35760	</param>
+			<param>18.4420	</param>
+			<param>8.61800	</param>
+			<param>5.96960	</param>
+			<param>47.2579	</param>
+			<param>13.4118	</param>
+		</element> 
+		<element>
+			<name>Pb(2+)			</name>
+		 	<type>2</type>
+			<param> 	21.7886	</param>
+			<param>1.33660	</param>
+			<param>19.5682	</param>
+			<param>0.488383	</param>
+			<param>19.1406	</param>
+			<param>6.77270	</param>
+			<param>7.01107	</param>
+			<param>23.8132	</param>
+			<param>12.4734	</param>
+		</element> 
+		<element>
+			<name>Pb(4+)			</name>
+		 	<type>2</type>
+			<param> 	32.1244	</param>
+			<param>1.00566	</param>
+			<param>18.8003	</param>
+			<param>6.10926	</param>
+			<param>12.0175	</param>
+			<param>0.147041	</param>
+			<param>6.96886	</param>
+			<param>14.7140	</param>
+			<param>8.08428	</param>
+		</element>
+
+	</scatterfactors>

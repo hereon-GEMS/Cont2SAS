@@ -1,0 +1,57 @@
+
+<!-- masses are given in Daltons, i.e. atomic units () -->
+<!--source: http://www.webelements.com/-->
+<masses>
+	<element>
+		<name>hydrogen</name>
+		<param>1.00794</param>
+	</element>
+	<element>
+		<name>deuterium</name>
+		<param>2.0135</param><!--# fix this: value from wikipedia-->
+	</element>
+	<element>
+		<name>carbon</name>
+		<param>12.0107</param>
+	</element>	
+	<element>
+		<name>lithium</name>
+		<param>6.941</param>
+	</element>
+	<element>
+		<name>nitrogen</name>
+		<param>14.0067</param>
+	</element>
+	<element>
+		<name>oxygen</name>
+		<param>15.9994</param>
+	</element>
+	<element>
+		<name>sodium</name>
+		<param>22.98976928</param>
+	</element>
+	<element>
+		<name>phosphor</name>
+		<param>30.97376</param>
+	</element>
+	<element>
+		<name>sulfur</name>
+		<param>32.065</param>
+	</element>
+	<element>
+		<name>chloride</name>
+		<param>35.453</param>
+	</element>
+	<element>
+		<name>potassium</name>
+		<param>39.0983</param>
+	</element>
+	<element>
+		<name>zinc</name>
+		<param>65.409</param>
+	</element>
+	<element>
+		<name>boron</name>
+		<param>20</param>
+	</element>
+</masses>

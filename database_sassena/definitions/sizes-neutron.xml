@@ -1,0 +1,76 @@
+<!-- values describe radii                          -->
+<!-- excluded volume calculated internally (hardsphere) by:      -->
+<!-- V(atomtype) = 4/3 * PI * r(atomtype)^3         -->
+<!-- r for each atom type given below               -->
+
+<!-- valid function-types for sizes:                -->
+<!-- 1 : hardsphere radius, constants , V(atomtype) = 4/3 * PI * r(atomtype)^3              -->
+<!-- 2 : gausssphere radius, constants , V(atomtype) = PI^(3/2) * r(atomtype)^3.             -->
+<!-- 0 : volume direct, constants                   -->
+
+<!-- ft1=hardsphere:          -->
+<!--# units are in Angstrom-->
+
+<sizes>
+	<element>
+		<name>hydrogen</name>
+		<type>1</type>
+		<param>1.07</param>
+	</element>
+	<element>
+		<name>deuterium</name>
+		<type>1</type>
+		<param>1.07</param>
+	</element>
+	<element>
+		<name>carbon</name>
+		<type>1</type>
+		<param>1.58</param>
+	</element>
+	<element>
+		<name>lithium</name>
+		<type>1</type>
+		<param>1.58</param>
+	</element>
+	<element>
+		<name>nitrogen</name>
+		<type>1</type>
+		<param>0.84</param>
+	</element>
+	<element>
+		<name>oxygen</name>
+		<type>1</type>
+		<param>1.30</param>
+	</element>
+	<element>
+		<name>sodium</name>
+		<type>1</type>
+		<param>1.80</param>
+	</element>
+	<element>
+		<name>phosphor</name>
+		<type>1</type>
+		<param>1.11</param>
+	</element>
+	<element>
+		<name>sulfur</name>
+		<type>1</type>
+		<param>1.68</param>
+	</element>
+	<element>
+		<name>chloride</name>
+		<type>1</type>
+		<param>1.50</param>
+	</element>
+	<element>
+		<name>potassium</name>
+		<type>1</type>
+		<param>1.75</param>
+		<!-- source: VDW radius, http://periodictable.com-->
+	</element>
+	<element>
+		<name>zinc</name>
+		<type>1</type>
+		<param>1.50</param>
+	</element>
+</sizes>

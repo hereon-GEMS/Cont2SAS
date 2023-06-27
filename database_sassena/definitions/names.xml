@@ -1,0 +1,63 @@
+<!-- this configuration files maps atom names as used by sassena to pdb style atom names                                      -->
+<!-- the pdb style atom name can be supplied as regular expression                                                           -->
+<!-- when SASSIM reads atoms from a pdb file, it tests the library for matches with the supplied regular expressions         -->
+<!--                                                                                                                         -->
+<!-- desired behavior:                                                                                                       -->
+<!-- - if more than one atom match , sassena will abort with an ambiguity warning.                                            -->
+<!--                                                                                                                         -->
+<names>
+	<pdb>
+		<element>
+			<name>hydrogen</name>
+			<param>^\sH.*|^H.*|^\d*H.*|^\d*H.*\s*|^\s\d*H.*|^\s\d*H.*\s*</param>
+		</element>
+		<element>
+			<name>deuterium</name>
+			<param>^ *D.*</param>
+		</element>
+		<element>
+			<name>carbon</name>
+			<param>(?!^ *CL.*)^ *C.*</param>
+		</element>	
+		<element>
+			<name>lithium</name>
+			<param>^ *L.*</param>
+		</element>
+		<element>
+			<name>nitrogen</name>
+			<param>^ *N.*</param>
+		</element>
+		<element>
+			<name>oxygen</name>
+			<param>^ *O.*</param>
+		</element>
+		<element>
+			<name>sodium</name>
+			<param>^ *SOD.*</param>
+		</element>
+		<element>
+			<name>phosphor</name>
+			<param>^ *P.*</param>
+		</element>
+		<element>
+			<name>potassium</name>
+			<param>^ *K.*</param>
+		</element>
+		<element>
+			<name>sulfur</name>
+			<param>(?!^ *SOD)^ *S.*</param>
+		</element>
+		<element>
+			<name>chloride</name>
+			<param>^ *CL.*</param>
+		</element>
+		<element>
+			<name>boron</name>
+			<param>^ *B.*</param>
+		</element>
+		<element>
+			<name>zinc</name>
+			<param>^ *ZN.*</param>
+		</element>			
+	</pdb>
+</names>

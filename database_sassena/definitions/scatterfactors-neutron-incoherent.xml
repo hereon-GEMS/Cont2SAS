@@ -1,0 +1,46 @@
+<!--# values retrieved from "General Aspects of Neutron Scattering"-->
+
+
+<!--# factors are given in fm ( 1E-15 )                                                                               -->
+<!--# for elements the incoherent factor is calculated from cross inc: sqrt( 100 * cross inc / ( 4 * M_PI ) ) = <b_i> -->
+<scatterfactors>
+	<element><name>hydrogen 	</name> 	<type>0</type><param>	25.272</param></element>
+	<element><name>deuterium	</name>	<type>0</type><param> 4.04</param></element>
+	<element><name>H1		 	</name> 	<type>0</type><param>	25.274</param></element>
+	<element><name>H2			</name>	<type>0</type><param> 4.04</param></element>
+	<element><name>H3			</name>	<type>0</type><param> -1.04</param></element>
+	<element><name>helium		</name>	<type>0</type><param> 0.0</param></element>
+	<element><name>He4			</name>	<type>0</type><param> 0.0</param></element>
+	<element><name>carbon		</name>	<type>0</type><param> 0.0892</param></element>
+	<element><name>C12			</name>	<type>0</type><param> 0.0</param></element>
+	<element><name>C13			</name>	<type>0</type><param> -0.52</param></element>
+	<element><name>nitrogen	</name>	<type>0</type><param> 1.9947</param></element>
+	<element><name>N14			</name>	<type>0</type><param> 2.0</param></element>
+	<element><name>N15			</name>	<type>0</type><param> -0.02</param></element>
+	<element><name>oxygen		</name>	<type>0</type><param> 0.0798</param></element>
+	<element><name>O16			</name>	<type>0</type><param> 0.0</param></element>
+	<element><name>O17			</name>	<type>0</type><param> 0.18</param></element>
+	<element><name>O18			</name>	<type>0</type><param> 0.0</param></element>
+	<element><name>sodium		</name>	<type>0</type><param> 3.59</param></element>
+	<element><name>Na23		</name>	<type>0</type><param>	3.59</param></element>
+	<element><name>phosphor	</name>	<type>0</type><param> 0.2</param></element>
+	<element><name>P31			</name>	<type>0</type><param>	0.2</param></element>
+	<element><name>sulfur		</name>	<type>0</type><param> 0.236</param></element>
+	<element><name>S32			</name>	<type>0</type><param>	0.0</param></element>
+	<element><name>S33			</name>	<type>0</type><param>	1.5</param></element>
+	<element><name>S34			</name>	<type>0</type><param>	0.0</param></element>
+	<element><name>chloride	</name>	<type>0</type><param> 6.494</param></element>
+	<element><name>Cl35		</name>	<type>0</type><param>	6.1</param></element>
+	<element><name>Cl37		</name>	<type>0</type><param>	0.1</param></element>
+	<element><name>calcium		</name>	<type>0</type><param> 0.0</param></element>
+	<element><name>Ca40		</name>	<type>0</type><param>	0.0</param></element>
+	<element><name>Ca42		</name>	<type>0</type><param>	0.0</param></element>
+	<element><name>Ca43		</name>	<type>0</type><param>	0.31</param></element>
+	<element><name>Ca44		</name>	<type>0</type><param>	0.0</param></element>
+	<element><name>Ca46		</name>	<type>0</type><param>	0.0</param></element>
+	<element><name>Ca48		</name>	<type>0</type><param>	0.0</param></element>
+	<element><name>lithium</name><type>0</type><param>2.70575819144889</param></element>
+	<element><name>potassium</name><type>0</type><param>1.46580753654622</param></element>
+	<element><name>zinc</name><type>0</type><param>0.78278127954363</param></element>
+</scatterfactors>
+
