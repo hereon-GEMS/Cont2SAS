@@ -56,3 +56,5 @@ dsv.pdb_dcd_gen(cell, cat_sld_cell, np.min(cat_sld_cell), np.max(cat_sld_cell), 
 dsv.scatterxml_generator(sass_folder, sigfile='signal.h5')
 #generate database
 dsv.database_generator(np.min(cat_sld_cell), np.max(cat_sld_cell), ndiv=10, database_dir=sass_folder+'database/')
+# slurm script generator
+dsv.slurm_script_gen(sass_folder,24,1,xml_file='scatter.xml',sas=' /data/data/amajumda/sass_paper/sassena_Glab/sassena/compile_boxcut_img/sassena')
