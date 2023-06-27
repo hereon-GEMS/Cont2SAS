@@ -229,7 +229,7 @@ def database_generator(out_sl, in_sl, ndiv=10, database_dir='database'):
     tree.write(xml_file)
     
 def slurm_script_gen(folder,mpi_proc,omp_proc,xml_file='scatter.xml',sas=' /data/data/amajumda/sass_paper/sassena_Glab/sassena/compile_boxcut_img/sassena'):
-    filename='run.slurm_icc'
+    filename='run_slurm_icc'
     file=os.path.join(folder, filename)
     file_edit=open(file, 'w')
     file_edit.write("#!/bin/bash\n")
