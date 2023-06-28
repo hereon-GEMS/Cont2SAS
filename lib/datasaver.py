@@ -71,7 +71,7 @@ def scatterxml_generator(dir_name, sigfile='signal.h5'):
     #     shutil.rmtree(filename)
     pdb_file=os.path.join('pdb_dcd','sample.pdb')
     dcd_file=os.path.join('pdb_dcd','sample.dcd')
-    signal_file='signal.h5'
+    signal_file=sigfile
     resolution_num=100
     scan_vector=[1,0,0]
     start_length=0.0
@@ -85,8 +85,9 @@ def scatterxml_generator(dir_name, sigfile='signal.h5'):
     sample = ET.SubElement(root, "sample")
     database = ET.SubElement(root, "database")
     scattering = ET.SubElement(root, "scattering")
+    limits = ET.SubElement(root, "limits")
     
-    #scattering
+    #sample
     
     structure = ET.SubElement(sample, "structure")
     ET.SubElement(structure, "file").text = pdb_file
@@ -130,6 +131,11 @@ def scatterxml_generator(dir_name, sigfile='signal.h5'):
     #     el_name='Pseudo'+str(i)
     #     ET.SubElement(element, "name").text = el_name
     #     ET.SubElement(element, "param").text = "1"  
+    
+    #limits
+    decomposition=ET.SubElement(limits, "decomposition")
+    ET.SubElement(decomposition, "utilization").text = '0.5'
+    
     tree = ET.ElementTree(root)
     tree.write(filename)
     
