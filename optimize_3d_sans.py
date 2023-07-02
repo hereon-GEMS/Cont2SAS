@@ -84,11 +84,15 @@ def runner(r):
     os.chdir(root_dir)
     print(os.path.join(stepdir,'signal.h5'))
     q,fq0_it=procs.signalreader(os.path.join(stepdir,'signal.h5'))
-    return fq0_it-fq0
+    return fq0_it
 
-
+def chi_sq(r):
+    fq0_it=runner(r)
+    chi_sq=np.sum((fq0_it-fq0)**2/fq0)
+    print('current radius is ' + r)
+    return chi_sq
 from scipy.optimize import minimize
-res = minimize(runner, 4)
+res = minimize(chi_sq, 1)
 print(res.x)
 
 """
