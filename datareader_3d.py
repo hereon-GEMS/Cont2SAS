@@ -120,11 +120,14 @@ if os.path.exists('signal.h5'):
     if os.path.exists('signal_{0:0>6}.h5'.format(i)):
         i=i+1
     os.system('mv signal.h5 signal_{0:0>6}.h5'.format(i))
+    print('removed old result signal file and saved it to signal_{0:0>6}.h5'.format(i))
 if slurm:
     os.system('sbatch run_slurm_icc')
+    print('running sassena')
 else:
     os.system('mpirun -np 4 sassena')
 os.chdir(root_dir)
+
 print('working directory changed to {0}'.format(os.getcwd()))
 
 """
