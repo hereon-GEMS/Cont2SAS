@@ -65,6 +65,49 @@ def pdb_dcd_gen(coords, cat_prop, prop_min, prop_max, ndiv,dir_name):
         for j in range(n_frames):
             f.write(coords)
             
+def pdb_dcd_gen_opt(coords, cat_prop, cat_idx, prop_min, prop_max, ndiv,dir_name):    
+    element_cats=np.full((ndiv,), 'any', dtype='<U9')
+    sym_cats=np.full((ndiv,), 'any', dtype='<U6')
+    element_names=np.full((len(coords),), 'any', dtype='<U9')
+    sym_names=np.full((len(coords),), 'any', dtype='<U9')
+    os.makedirs(dir_name,exist_ok=True)
+    for i in range(ndiv):
+        el_cat='Pseudo'+str(i)
+        sym_cat='P'+str(i)
+        element_cats[i]=el_cat
+        sym_cats[i]=sym_cat
+        element_names[cat_idx[0][i]]=el_cat
+        sym_names[cat_idx[0][i]]=sym_cat
+    cat_mat=np.linspace(prop_min, prop_max, ndiv)
+    # for i in range(len(t)):
+    topo=md.Topology() #= md.Topology()
+    ch=topo.add_chain()
+    res=topo.add_residue('RES', ch)
+    # os.makedirs(dir_name, exist_ok=True)
+    pdb_file_name=os.path.join(dir_name, 'sample.pdb')
+    new_coords=[]
+    for j in range(len(coords)):
+        # print(atoms[0][j])
+        # prop_val=cat_prop[0][j]
+        # atom_type=int(np.where(cat_mat==prop_val)[0])
+        # # atom_type=int(cat_prop[i][j])
+        # el_name=element_names[atom_type]
+        # sym=el_name[0]+el_name[-1]
+        el_name=element_names[j]
+        sym=sym_names[j]
+        try:
+            ele=(md.element.Element(10,el_name, sym, 10, 10))
+        except AssertionError:
+            ele=(md.element.Element.getBySymbol(sym))
+        topo.add_atom(sym, ele, res)
+    with md.formats.PDBTrajectoryFile(pdb_file_name,'w','True') as f:
+        f.write(coords, topo) 
+    dcd_file_name=os.path.join(dir_name, 'sample.dcd')
+    with md.formats.DCDTrajectoryFile(dcd_file_name, 'w') as f:
+        n_frames = 1
+        for j in range(n_frames):
+            f.write(coords)
+            
 def scatterxml_generator(dir_name, sigfile='signal.h5'):
     filename=os.path.join(dir_name,'scatter.xml')
     # if os.path.exists(filename):
