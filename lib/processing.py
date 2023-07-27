@@ -47,6 +47,31 @@ def categorize_prop(prop,t,ndiv):
         cat_prop.append(cat_prop_t)
     return cat_prop, cat_idx
 
+def categorize_prop_dyn(prop,t,ndiv):
+    cat_prop= []
+    cat_idx=[]
+    for i in range(len(t)):
+        prop_t=prop[:,i]
+        prop_t_min=np.min(prop_t)
+        prop_t_max=np.max(prop_t)
+        step = (prop_t_max - prop_t_min)/ndiv
+        cat_arr=np.linspace(prop_t_min-step/2, prop_t_max+step/2, ndiv+1)
+        # step = (in_arr_max - in_arr_min)/ndiv
+        cat_idx_t=[]
+        # cat_prop=np.zeros(len(prop_t[i]))
+        for j in range(len(cat_arr)-1):
+            index_low=np.where(prop_t>=(cat_arr[j]))
+            index_high=np.where(prop_t<(cat_arr[j+1]))
+            # idx
+            cat_idx_t.append(np.intersect1d(index_high,index_low))
+        cat_idx.append(cat_idx_t)
+        cat_prop_t=np.zeros(len(prop_t))
+        cat_vals=np.linspace(prop_t_min,prop_t_max,ndiv)
+        for j in range(ndiv):
+            cat_prop_t[cat_idx_t[j]]=cat_vals[j]
+        cat_prop.append(cat_prop_t)
+    return cat_prop, cat_idx
+
 #3d structures
     
 
