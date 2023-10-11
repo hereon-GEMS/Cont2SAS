@@ -1,0 +1,217 @@
+       0.Info>>This software is being developed by Benjamin Lindner.                    
+       0.Info>>For help, suggestions or correspondense use:                             
+       0.Info>>ben@benlabs.net, Benjamin Lindner (Main Developer, Impl. & Maintenance)  
+       0.Info>>franc@cmm.ki.si, Franci Merzel (Methodology)                             
+       0.Info>>For publications include the following references:                       
+       0.Info>>.........................................................................
+       0.Info>>1. Sassena - X-ray and Neutron Scattering Calculated                     
+       0.Info>>  from Molecular Dynamics Trajectories using Massively Parallel Computers
+       0.Info>>  published as a Computer Program in Physics Paper                       
+       0.Info>>.........................................................................
+       0.Info>>Version Information: 1.4.2                                       
+       0.Info>>                                                                 
+       0.Info>>.................................................................
+       0.Info>>......................D.E.S.C.R.I.P.T.I.O.N......................
+       0.Info>>.................................................................
+       0.Info>>This binary computes the scattering intensities directly from    
+       0.Info>>a molecular dynamics trajectory.                                 
+       0.Info>>.................................................................
+       0.Info>>.................................................................
+       0.Info>>...................I.N.I.T.I.A.L.I.Z.A.T.I.O.N...................
+       0.Info>>.................................................................
+       0.Info>>No configuration file specified. Will use default                
+       0.Info>>Looking for configuration file: scatter.xml                      
+       0.Info>>Reading parameters from XML file: scatter.xml                    
+       0.Info>>Added frames from /home/amajumda/study/continuum_simulations/gitlab/continuum-to-scattering/data/100_100_100_50_50_50/single_atom_shrink/iteration_000/t007/pdb_dcd/sample.dcd using format: dcd
+       0.Info>>Options: first=0, last=0, lastset=0, stride=1                    
+       0.Info>>stager.target=system                                             
+       0.Info>>scattering.type=all                                              
+       0.Info>>scattering.dsp.type=square                                       
+       0.Info>>scattering.average.orientation.type=vectors                      
+       0.Info>>scattering.average.orientation.vectors.type=sphere               
+       0.Info>>scattering.average.orientation.vectors.algorithm=boost_uniform_on_sphere
+       0.Info>>scattering.average.orientation.vectors.resolution=100            
+       0.Info>>Generating orientations for orientational averaging using sphere,boost_uniform_on_sphere
+       0.Info>>Initialized orientational averaging with 100 vectors.            
+       0.Info>>scattering.signal.file=signal.h5                                 
+       0.Info>>scattering.signal.filepath=/home/amajumda/study/continuum_simulations/gitlab/continuum-to-scattering/data/100_100_100_50_50_50/single_atom_shrink/iteration_000/t007/signal.h5
+       0.Info>>scattering.signal.fqt=1                                          
+       0.Info>>scattering.signal.fq0=1                                          
+       0.Info>>scattering.signal.fq=1                                           
+       0.Info>>scattering.signal.fq2=1                                          
+       0.Info>>Analyzing command line for parameter overwrites                  
+       0.Info>>Reading database from file: /home/amajumda/study/continuum_simulations/gitlab/continuum-to-scattering/data/100_100_100_50_50_50/single_atom_shrink/iteration_000/t007/database/db-neutron-coherent.xml
+       0.Info>>Checking database...                                             
+       0.Info>>Testing mapping between PDB names and atom labels                
+       0.Info>>Testing database completeness for referenced atom labels         
+       0.Info>>Check succeeded. Database seems OK.                              
+       0.Info>>Initializing sample...                                           
+       0.Info>>Reading structure from file: /home/amajumda/study/continuum_simulations/gitlab/continuum-to-scattering/data/100_100_100_50_50_50/single_atom_shrink/iteration_000/t007/pdb_dcd/sample.pdb
+       0.Info>>Done. Atoms read: 125000                                         
+       0.Info>>Reading frames from: /home/amajumda/study/continuum_simulations/gitlab/continuum-to-scattering/data/100_100_100_50_50_50/single_atom_shrink/iteration_000/t007/pdb_dcd/sample.dcd
+       0.Info>>Found 1 frames                                                   
+       0.Info>>Total number of coordinate sets found: 1                         
+       0.Info>>Exchanging sample, database & params information with compute nodes... 
+       0.Info>>params...                                                        
+       0.Info>>database...                                                      
+       0.Info>>sample...                                                        
+       0.Info>>.................................................................
+       0.Info>>......................C.O.M.P.U.T.A.T.I.O.N......................
+       0.Info>>.................................................................
+       0.Info>>Setting up services...                                           
+       0.Info>>Initializing data file service...                                
+       0.Info>>Initializing monitor service...                                  
+       0.Info>>Starting data file service...                                    
+       0.Info>>Starting monitor service...                                      
+       0.Info>>Services setup and running...                                    
+       0.Info>>Checking /home/amajumda/study/continuum_simulations/gitlab/continuum-to-scattering/data/100_100_100_50_50_50/single_atom_shrink/iteration_000/t007/signal.h5 for old results.
+       0.Info>>Broadcasting service information                                 
+       0.Info>>Server host name    : hzglap02                                   
+       0.Info>>FileService Port    : 45731                                      
+       0.Info>>MonitorService Port : 43789                                      
+       0.Info>>Setting up parallel environment...                               
+       0.Info>>Searching for decomposition plan:                                
+       0.Info>>nodes    = 8                                                     
+       0.Info>>qvectors = 100                                                   
+       0.Info>>frames   = 1                                                     
+       0.Info>>atoms   = 125000                                                 
+       0.Info>>All interference scattering detected. Applying frame decomposition.
+       0.Info>>Automatic decomposition. Searching for best utilization.         
+       0.Info>>Final decomposition parameters:                                  
+       0.Info>>NN                : 8                                            
+       0.Info>>NQ                : 100                                          
+       0.Info>>NAF               : 1                                            
+       0.Info>>NP                : 8                                            
+       0.Info>>NNpP              : 1                                            
+       0.Info>>NAFcycles         : 1                                            
+       0.Info>>NQcycles          : 13                                           
+       0.Info>>CompEl (WASTE/USE): 4/100                                        
+       0.Info>>utilization(1=best)    : 0.96153846153846156                     
+       0.Info>>Initializing Scatter Device, Vectors (all)                       
+       0.Info>>Starting scattering...                                           
+       0.Info>>Checking memory requirements for scattering calculation...       
+       0.Info>>required limits.computation.memory.result_buffer=16              
+       0.Info>>required limits.computation.memory.signal_buffer=16              
+       0.Info>>required limits.computation.memory.exchange_buffer=0             
+       0.Info>>required limits.computation.memory.alignpad_buffer=32            
+       0.Info>>Memory limits ok                                                 
+       0.Info>>Staging data...                                                  
+       0.Info>>Forcing stager.mode=frames                                       
+       0.Info>>Staging first partition.                                         
+       0.Info>>Staging remaining partitions.                                    
+       0.Info>>background scattering length set to 0                            
+       0.Info>>Target initialized.                                              
+       0.Info>>Target 'system' produces a background scattering length density of 0.00060637439139683608
+       0.Info>>Starting computation...                                          
+       0.Info>>Orientational averaging includes 100 vectors                     
+       0.Info>>Setting progress sampling factor for monitoring to 1             
+       0.Info>>Progress: 2.760%, ETOTAL: 41.621107924528303 s, ETA: 40.472191924528303 s
+       0.Info>>Progress: 4.896%, ETOTAL: 24.396337021276597 s, ETA: 23.201933021276599 s
+       0.Info>>Progress: 6.905%, ETOTAL: 17.571732838245538 s, ETA: 16.358325838245538 s
+       0.Info>>Progress: 11.050%, ETOTAL: 11.499029105938659 s, ETA: 10.228331105938658 s
+       0.Info>>Progress: 20.580%, ETOTAL: 15.205949976639156 s, ETA: 12.076545976639155 s
+       0.Info>>Progress: 31.205%, ETOTAL: 10.050755053410027 s, ETA: 6.914404053410026 s
+       0.Info>>Progress: 41.455%, ETOTAL: 7.6264967372815837 s, ETA: 4.464922737281583 s
+       0.Info>>Progress: 51.080%, ETOTAL: 10.037132208069274 s, ETA: 4.910152208069273 s
+       0.Info>>Progress: 62.080%, ETOTAL: 8.3919382105426195 s, ETA: 3.1822122105426196 s
+       0.Info>>Progress: 72.580%, ETOTAL: 7.4251287966438522 s, ETA: 2.0359607966438515 s
+       0.Info>>Progress: 81.830%, ETOTAL: 8.7564252399044307 s, ETA: 1.5910312399044297 s
+       0.Info>>Scattering finished...                                           
+       0.Info>>.................................................................
+       0.Info>>.....................R.U.N...A.N.A.L.Y.S.I.S.....................
+       0.Info>>.................................................................
+       0.Info>>Aggregating timing information for performance analysis...       
+       0.Info>>                                                                 
+       0.Info>>                    Performance Analysis                         
+       0.Info>>-----------------------------------------------------------------
+       0.Info>> mean and total runtimes:                                        
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>          measure |    total |       count |     mean |   stddev 
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>   sd:c:b:dspstore| 3.562e-02|        10000| 3.562e-06| 1.877e-06
+       0.Info>>    sd:c:b:scatter| 4.271e+01|        10000| 4.271e-03| 7.672e-04
+       0.Info>>        sd:c:block| 4.289e+01|          100| 4.289e-01| 3.735e-02
+       0.Info>>         sd:c:init| 1.419e+01|          100| 1.419e-01| 2.502e-02
+       0.Info>>       sd:c:reduce| 1.080e-04|          100| 1.080e-06| 4.626e-07
+       0.Info>>         sd:c:wait| 1.540e-04|          100| 1.540e-06| 5.841e-07
+       0.Info>>        sd:compute| 5.709e+01|          100| 5.709e-01| 4.974e-02
+       0.Info>>         sd:runner| 5.709e+01|            8| 7.136e+00| 0.000e+00
+       0.Info>>          sd:stage| 2.000e-01|            8| 2.500e-02| 0.000e+00
+       0.Info>> sd:worker:scatter| 4.233e+01|        10000| 4.233e-03| 7.196e-04
+       0.Info>>    sd:worker:wait| 1.467e+01|        10000| 1.467e-03| 1.436e-02
+       0.Info>>          sd:write| 9.790e-04|          100| 9.790e-06| 7.178e-06
+       0.Info>>           st:fill| 1.342e-02|            8| 1.678e-03| 0.000e+00
+       0.Info>>          st:first| 2.320e-02|            1| 2.320e-02| 0.000e+00
+       0.Info>>           st:load| 2.273e-02|            1| 2.273e-02| 0.000e+00
+       0.Info>>           st:wait| 1.626e-01|            8| 2.033e-02| 0.000e+00
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>-----------------------------------------------------------------
+       0.Info>> watermarks:                                                     
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>          measure |      min |      max                          
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>   sd:c:b:dspstore| 2.000e-06| 7.300e-05                         
+       0.Info>>    sd:c:b:scatter| 1.458e-03| 1.764e-02                         
+       0.Info>>        sd:c:block| 1.558e-01| 5.493e-01                         
+       0.Info>>         sd:c:init| 1.121e-01| 2.086e-01                         
+       0.Info>>       sd:c:reduce| 0.000e+00| 2.000e-06                         
+       0.Info>>         sd:c:wait| 1.000e-06| 4.000e-06                         
+       0.Info>>        sd:compute| 2.680e-01| 6.986e-01                         
+       0.Info>>         sd:runner| 6.249e+00| 7.614e+00                         
+       0.Info>>          sd:stage| 2.486e-02| 2.510e-02                         
+       0.Info>> sd:worker:scatter| 1.439e-03| 1.071e-02                         
+       0.Info>>    sd:worker:wait| 2.000e-06| 2.087e-01                         
+       0.Info>>          sd:write| 5.000e-06| 4.700e-05                         
+       0.Info>>           st:fill| 1.532e-03| 1.780e-03                         
+       0.Info>>          st:first| 2.320e-02| 2.320e-02                         
+       0.Info>>           st:load| 2.273e-02| 2.273e-02                         
+       0.Info>>           st:wait| 1.000e-05| 2.324e-02                         
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>                                                                 
+       0.Info>>         Performance Analysis (relative to total time * nodes)   
+       0.Info>>-----------------------------------------------------------------
+       0.Info>> mean and total runtimes:                                        
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>          measure |    total |       count |     mean |   stddev 
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>   sd:c:b:dspstore| 5.517e-04|        10000| 5.517e-08| 2.336e-07
+       0.Info>>    sd:c:b:scatter| 6.616e-01|        10000| 6.616e-05| 9.548e-05
+       0.Info>>        sd:c:block| 6.643e-01|          100| 6.643e-03| 4.648e-03
+       0.Info>>         sd:c:init| 2.199e-01|          100| 2.199e-03| 3.114e-03
+       0.Info>>       sd:c:reduce| 1.673e-06|          100| 1.673e-08| 5.758e-08
+       0.Info>>         sd:c:wait| 2.385e-06|          100| 2.385e-08| 7.269e-08
+       0.Info>>        sd:compute| 8.842e-01|          100| 8.842e-03| 6.190e-03
+       0.Info>>         sd:runner| 8.842e-01|            8| 1.105e-01| 0.000e+00
+       0.Info>>          sd:stage| 3.098e-03|            8| 3.872e-04| 0.000e+00
+       0.Info>> sd:worker:scatter| 6.556e-01|        10000| 6.556e-05| 8.955e-05
+       0.Info>>    sd:worker:wait| 2.271e-01|        10000| 2.271e-05| 1.787e-03
+       0.Info>>          sd:write| 1.516e-05|          100| 1.516e-07| 8.933e-07
+       0.Info>>           st:fill| 2.079e-04|            8| 2.599e-05| 0.000e+00
+       0.Info>>          st:first| 3.593e-04|            1| 3.593e-04| 0.000e+00
+       0.Info>>           st:load| 3.521e-04|            1| 3.521e-04| 0.000e+00
+       0.Info>>           st:wait| 2.519e-03|            8| 3.149e-04| 0.000e+00
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>-----------------------------------------------------------------
+       0.Info>> watermarks:                                                     
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>          measure |      min |      max                          
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>   sd:c:b:dspstore| 3.098e-08| 1.131e-06                         
+       0.Info>>    sd:c:b:scatter| 2.258e-05| 2.732e-04                         
+       0.Info>>        sd:c:block| 2.413e-03| 8.508e-03                         
+       0.Info>>         sd:c:init| 1.736e-03| 3.231e-03                         
+       0.Info>>       sd:c:reduce| 0.000e+00| 3.098e-08                         
+       0.Info>>         sd:c:wait| 1.549e-08| 6.195e-08                         
+       0.Info>>        sd:compute| 4.150e-03| 1.082e-02                         
+       0.Info>>         sd:runner| 9.679e-02| 1.179e-01                         
+       0.Info>>          sd:stage| 3.850e-04| 3.888e-04                         
+       0.Info>> sd:worker:scatter| 2.229e-05| 1.659e-04                         
+       0.Info>>    sd:worker:wait| 3.098e-08| 3.232e-03                         
+       0.Info>>          sd:write| 7.744e-08| 7.280e-07                         
+       0.Info>>           st:fill| 2.373e-05| 2.757e-05                         
+       0.Info>>          st:first| 3.593e-04| 3.593e-04                         
+       0.Info>>           st:load| 3.521e-04| 3.521e-04                         
+       0.Info>>           st:wait| 1.549e-07| 3.599e-04                         
+       0.Info>>-----------------------------------------------------------------
+       0.Info>>Total runtime (s): 8.0705410000000004                            
+       0.Info>>Successfully finished... Have a nice day!                        
