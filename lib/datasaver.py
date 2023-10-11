@@ -14,15 +14,25 @@ import numpy as np
 import mdtraj as md
 import xml.etree.cElementTree as ET
 
-def HDFwriter(node,con, prop_node, cell, prop_cell, filename,Folder='.'):
+# def HDFwriter(node,con, prop_node, cell, prop_cell, filename,Folder='.'):
+#     file_full=os.path.join(Folder,filename)
+#     os.makedirs(Folder, exist_ok=True)
+#     file=h5py.File(file_full,'w')
+#     file['node']=node
+#     file['nodeprop']=prop_node
+#     file['cell']=cell
+#     file['cellprop']=prop_cell
+#     file['connectivity']=con
+#     file.close()
+    
+def HDFwriter(dict_name, filename,Folder='.'):
     file_full=os.path.join(Folder,filename)
     os.makedirs(Folder, exist_ok=True)
     file=h5py.File(file_full,'w')
-    file['node']=node
-    file['nodeprop']=prop_node
-    file['cell']=cell
-    file['cellprop']=prop_cell
-    file['connectivity']=con
+    list_keys=list(dict_name.keys())
+    list_vals=list(dict_name.values())
+    for i in range(len(dict_name)):
+        file[list_keys[i]]=list_vals[i]
     file.close()
     
 def pdb_dcd_gen(coords, cat_prop, prop_min, prop_max, ndiv,dir_name):
@@ -107,6 +117,30 @@ def pdb_dcd_gen_opt(coords, cat_prop, cat_idx, prop_min, prop_max, ndiv,dir_name
         n_frames = 1
         for j in range(n_frames):
             f.write(coords)
+            
+def pdb_dcd_gen_opt1(points, cat_prop, cat, dir_name): 
+    points=np.float32(points)
+    cat_prop=np.float32(cat_prop)
+    topo=md.Topology() #= md.Topology()
+    ch=topo.add_chain()
+    res=topo.add_residue('RES', ch)
+    # os.makedirs(dir_name, exist_ok=True)
+    pdb_file_name=os.path.join(dir_name, 'sample.pdb')
+    for i in range(len(points)):
+        el_name='Pseudo'+str(cat[i])
+        sym='P'+str(cat[i])
+        try:
+            ele=(md.element.Element(10,el_name, sym, 10, 10))
+        except AssertionError:
+            ele=(md.element.Element.getBySymbol(sym))
+        topo.add_atom(sym, ele, res)
+    with md.formats.PDBTrajectoryFile(pdb_file_name,'w') as f:
+        f.write(points, topo) 
+    dcd_file_name=os.path.join(dir_name, 'sample.dcd')
+    with md.formats.DCDTrajectoryFile(dcd_file_name, 'w') as f:
+        n_frames = 1
+        for j in range(n_frames):
+            f.write(points)
             
 def scatterxml_generator(dir_name, sigfile='signal.h5'):
     filename=os.path.join(dir_name,'scatter.xml')
