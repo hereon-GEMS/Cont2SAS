@@ -18,14 +18,26 @@ def plotter_3d(coords_3d,save_plot=False,save_dir='.'):
     if save_plot:
         plt.savefig(save_dir+'/3d_plot', format='png')
         
-def colorplot_node_3d(coords, sld, nx, ny, nz, save_plot=False,save_dir='.'):
+# def colorplot_node_3d(coords, sld, nx, ny, nz, save_plot=False,save_dir='.'):
+#     fig = plt.figure()
+#     sld_reshape=np.array(sld).reshape(nx+1, ny+1, nz+1)
+#     print(sld_reshape.shape)
+#     x=np.array(coords)[:,0].reshape(nx+1, ny+1,nz+1)
+#     y=np.array(coords)[:,1].reshape(nx+1, ny+1, nz+1)
+#     z=np.array(coords)[:,2].reshape(nx+1, ny+1, nz+1)
+#     print(int((nz+1)/2))
+#     plt.title('z = ' + str(z[0,0,int((nz+1)/2)]))
+#     plt.imshow(sld_reshape[:,:,int((nz+1)/2)],extent=(np.min(x), np.max(x), np.min(y), np.max(y)))
+#     plt.colorbar()
+#     if save_plot:
+#         plt.savefig(save_dir+'/sld_node', format='png')
+        
+def colorplot_node_3d(nodes, sld, nx, ny, nz, save_plot=False,save_dir='.'):
     fig = plt.figure()
     sld_reshape=np.array(sld).reshape(nx+1, ny+1, nz+1)
-    print(sld_reshape.shape)
-    x=np.array(coords)[:,0].reshape(nx+1, ny+1,nz+1)
-    y=np.array(coords)[:,1].reshape(nx+1, ny+1, nz+1)
-    z=np.array(coords)[:,2].reshape(nx+1, ny+1, nz+1)
-    print(int((nz+1)/2))
+    x=np.array(nodes)[:,0].reshape(nx+1, ny+1,nz+1)
+    y=np.array(nodes)[:,1].reshape(nx+1, ny+1, nz+1)
+    z=np.array(nodes)[:,2].reshape(nx+1, ny+1, nz+1)
     plt.title('z = ' + str(z[0,0,int((nz+1)/2)]))
     plt.imshow(sld_reshape[:,:,int((nz+1)/2)],extent=(np.min(x), np.max(x), np.min(y), np.max(y)))
     plt.colorbar()
@@ -37,6 +49,7 @@ def mesh_plotter_3d(coords_3d, con_3d, save_plot=False,save_dir='.'):
     fig=plt.figure()
     ax=plt.axes(projection='3d')
     for connec in con_3d:
+        #print(connec)
         points=coords_3d[connec]
         draw1=np.array([0,1,2,3,0])
         #points=np.concatenate((points[0:4], points[4:8,:]),axis=0)        
