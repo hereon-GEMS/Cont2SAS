@@ -1,5 +1,8 @@
 
 import numpy as np
+from scipy import special
+from scipy.optimize import minimize
+from numba import njit, prange
 
 ### 2d function ###
 
@@ -30,15 +33,117 @@ def sph_grain_3d(coords,origin,r,sld_in,sld_out):
 # spherical grain
 
 # diffusion into the grain
-def sph_grain_diffus_3d(coords,origin,r,sld_in,sld_out,t):
-    r_arr=np.linspace(r,0,len(t))
+def sph_grain_diffus_3d(coords,origin,r,fuzz_val,sld_in,sld_out):
+    #r_arr=np.linspace(r,0,len(t))
     coords = np.array(coords)
-    sld = sld_out*np.ones((len(coords),len(t)))
-    cord_ed = np.sum((coords-origin)**2,axis=1)
-    for i in range(len(t)):
-        #curr_t=t[i]
-        curr_r=r_arr[i]
-        sld_t = sld[:,i]
-        sld_t [cord_ed <= curr_r**2] = sld_in
-        sld[:,i]=sld_t
+    #sld = sld_out*np.ones((len(coords),len(t)))
+    sld = np.zeros(len(coords))
+    #cord_ed = np.sum((coords-origin)**2,axis=1)
+    coord_r=np.sqrt(np.sum((coords-origin)**2,axis=1))
+    if fuzz_val==0:
+        sld=-np.heaviside(coord_r-r,0)+1
+    else:
+        #sld=-np.heaviside(coord_r-r,0)+1
+        sld=(1/2)*(1-special.erf((coord_r-r)/(np.sqrt(2)*fuzz_val)))
     return sld
+    
+    
+    # for i in range(len(t)):
+    #     print(r_arr[i])
+    #     #curr_t=t[i]
+    #     curr_r=r_arr[i]
+    #     sld_t = sld[:,i]
+    #     if  curr_r>0:
+    #         sld_t [cord_ed <= curr_r**2] = sld_in
+    #     #sld_t [cord_ed <= curr_r**2] = sld_in
+    #     sld[:,i]=sld_t
+    # return sld
+    
+def sph_multigrain_loc_3d(coords,r_val,r_num,sld_in,sld_out, box_length):
+    #print('we are in')
+    
+    # Set up the initial configuration (positions and radii)
+    #rad_val=np.linspace(1,5,5)
+    #rad_num=np.array([2, 4, 3, 2, 5])
+    # rad_val=np.linspace(1,5,2)
+    # rad_num=np.array([2, 2])
+    rad_val=r_val
+    rad_num=r_num#np.array(r_num, dtype='int')
+    radii=np.zeros(int(np.sum(rad_num)))
+    idx=0
+    for i in range(len(rad_val)):
+        num=int(rad_num[i])
+        radii[idx:idx+num]=np.repeat(rad_val[i], num)
+        idx+=num
+    
+    box_length_x=box_length
+    box_length_y=box_length_x
+    box_length_z=box_length_x
+    initial_positions=np.row_stack((box_length_x*np.random.random(len(radii)), 
+                             box_length_y*np.random.random(len(radii)), 
+                             box_length_z*np.random.random(len(radii)))).T 
+    
+    # Define the Lennard-Jones potential function
+    def lj_potential(positions, radii=radii):
+        potential_energy = 0.0
+        tot_el=len(positions)
+        positions=positions.reshape(int(tot_el/3),3)
+        num_spheres = len(positions)
+    
+        for i in range(num_spheres):
+            for j in range(i + 1, num_spheres):
+                #print(i,j)
+                rij = np.linalg.norm(positions[i] - positions[j])
+                sigma = (radii[i] + radii[j]) / 2.0
+                epsilon = 1.0  # Adjust as needed
+                potential_energy += 4.0 * epsilon * ((sigma / rij) ** 12 - (sigma / rij) ** 6)
+                for k in range(3):
+                    if positions[i,k]-radii[i] <=0:
+                        potential_energy +=1e9
+    
+        return potential_energy
+    
+    # Define constraints to prevent overlap
+    def constraint_overlap(positions, radii=radii):
+        tot_el=len(positions)
+        positions=positions.reshape(int(tot_el/3),3)
+        num_spheres = len(positions)
+        constraints = []
+    
+        for i in range(num_spheres):
+            for j in range(i + 1, num_spheres):
+                rij = np.linalg.norm(positions[i] - positions[j])
+                sigma = (radii[i] + radii[j]) / 2.0
+                #constraints.append(sigma - rij)
+                constraints.append(-sigma + rij) 
+        
+        return constraints
+    
+    # Perform energy minimization with constraints
+    result = minimize(
+        lj_potential,
+        x0=initial_positions,
+        args=(radii,),
+        constraints={"type": "ineq", "fun": constraint_overlap, 'args': (radii,)},
+        method="SLSQP"  # You can choose a different optimization method if needed
+    )
+    
+    for i in range(len(radii)):
+        print('coordinate: {0}, radius: {1}'.format(result.x.reshape(len(radii),3)[i], radii[i]))
+    
+    return result.x.reshape(len(radii),3), radii
+
+#@njit(parallel=True)    
+def sph_multigrain_3d(nodes,radii, r_dist, sld_in,sld_out):
+    print('we are in')
+    nodes = np.array(nodes)
+    sld = sld_out*np.ones(len(nodes))
+    for i in range(len(r_dist)):
+        origin=r_dist[i]
+        r=radii[i]
+        #print(origin)
+        cord_ed = np.sum((nodes-origin)**2,axis=1)
+        sld [cord_ed <= r**2] = sld_in
+    return sld
+    
+    
