@@ -13,6 +13,12 @@ def hdfreader(file):
     file_read.close()
     return node, cell, sld_cell, sld_node, con
 
+def countreader(countfile):
+    file_read=h5py.File(countfile, 'r')
+    count=file_read['count'][:]
+    time=file_read['time'][:]
+    return time, count 
+
 def signalreader(sig_file):
     file_read=h5py.File(sig_file, 'r')
     q=np.sqrt(np.sum(np.array(file_read['qvectors'])**2,axis=1))
@@ -92,21 +98,78 @@ def node2cell_3d(nodes,connec,prop, t_arr):
 
 """
 
-def node2cell_3d(nodes,connec,prop, t_arr, nx, ny, nz):
-    steps=len(t_arr)
+# def node2cell_3d(nodes,connec,prop, t_arr, nx, ny, nz):
+#     steps=len(t_arr)
+#     tot_nodes=(nx+1)*(ny+1)*(nz+1)
+#     tot_cells=(nx)*(ny)*(nz)
+#     cells=np.zeros((tot_cells,3,steps))
+#     cell_props=np.zeros((steps,tot_cells))
+#     for t in range(steps):
+#         cells_t=np.zeros((tot_cells,3))
+#         cell_props_t=np.zeros((tot_cells))
+#         for i in range(len(connec)):
+#             cells_t[i,:]=np.average(np.array(nodes)[connec[i]],axis=0)
+#             cell_props_t[i]=np.average(np.array(prop[t])[connec[i]],axis=0)
+#         cells[:,:,t]=cells_t
+#         cell_props[t,:]=cell_props_t
+#     return cells[:,:,0], cell_props
+
+def node2cell_3d(nodes,connec, nx, ny, nz):
+    nodes=np.array(nodes)
     tot_nodes=(nx+1)*(ny+1)*(nz+1)
     tot_cells=(nx)*(ny)*(nz)
-    cells=np.zeros((tot_cells,3,steps))
-    cell_props=np.zeros((steps,tot_cells))
-    for t in range(steps):
-        cells_t=np.zeros((tot_cells,3))
-        cell_props_t=np.zeros((tot_cells))
-        for i in range(len(connec)):
-            cells_t[i,:]=np.average(np.array(nodes)[connec[i]],axis=0)
-            cell_props_t[i]=np.average(np.array(prop[t])[connec[i]],axis=0)
-        cells[:,:,t]=cells_t
-        cell_props[t,:]=cell_props_t
-    return cells[:,:,0], cell_props
+    #cells=np.zeros((tot_cells,3,steps))
+    
+    cells=np.zeros((tot_cells,3))
+    #cell_props_t=np.zeros((tot_cells))
+    # for i in range(len(connec)):
+    #     cell_nodes=nodes[connec[i]]
+    #     cells[i,:]=np.average(cell_nodes,axis=0)
+    #     if i==1:
+    #         print('nodes are {0}'.format(cell_nodes))
+    #         print('cell coordinates are {0}'.format(cell))
+    #     cell_props_t[i]=np.average(np.array(prop[t])[connec[i]],axis=0)
+    # cells[:,:,t]=cells_t
+    # cell_props[t,:]=cell_props_t
+    # return cells[:,:,0], cell_props
+
+def node2cell_3d_t(nodes,cells,connec,prop, nx, ny, nz, cell_vol):
+    tot_nodes=len(nodes)
+    tot_cells=len(connec)
+    cell_prop=np.zeros(tot_cells)
+    for i in range(tot_cells):
+        cell_nodes_i = connec[i,:]
+        cell_prop[i] = cell_vol*np.average(prop[cell_nodes_i])
+    return cell_prop
+
+def categorize_prop_3d_t(prop, ndiv):
+    prop_sort=np.sort(prop)
+    prop_arg_sort=np.argsort(prop)
+    prop_range=prop_sort[-1]-prop_sort[0]
+    #print(prop_range)
+    """
+      array with o midpoint of each division
+        [o ......o......o      ...      o] 
+       div1    div2    div3    ...     divN
+    |...o...|...o...|...o...|  ...  |...o...|
+    """
+    cat_range_half=prop_range/(2*(ndiv-1))
+    cat_val_arr=np.linspace(prop_sort[0],prop_sort[-1],ndiv)
+    cat_range_arr=np.linspace(prop_sort[0]-cat_range_half,prop_sort[-1]+cat_range_half,ndiv+1)    
+    prop_sort_cat=np.zeros(len(prop_sort))
+    sort_cat=np.zeros(len(prop_sort))
+    for i in range(len(cat_val_arr)):
+        cat_low_bound=cat_range_arr[i]
+        cat_low_bound_arg=len(prop_sort[prop_sort<cat_low_bound])
+        cat_upper_bound=cat_range_arr[i+1]
+        cat_upper_bound_arg=len(prop_sort[prop_sort<=cat_upper_bound])
+        #print(cat_upper_bound_arg)
+        prop_sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=cat_val_arr[i]
+        sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=i#print(prop_sort_cat)
+    prop[prop_arg_sort]=prop_sort_cat
+    cat=np.zeros(len(prop), dtype='int')
+    cat[prop_arg_sort]=sort_cat
+    return prop, cat
 
 
 
