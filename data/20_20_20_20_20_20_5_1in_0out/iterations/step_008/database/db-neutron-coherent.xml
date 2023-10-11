@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root xmlns:xi="http://www.w3.org/2001/XInclude">
+
+	<xi:include href="definitions/names.xml"/>
+	<xi:include href="definitions/masses.xml"/>
+	
+	<xi:include href="definitions/sizes-neutron.xml"/>
+	<xi:include href="definitions/exclusionfactors-neutron.xml"/>	
+    <xi:include href="definitions/scatterfactors-neutron-coherent.xml"/>
+                                                                                     
+</root>
