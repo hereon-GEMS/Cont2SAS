@@ -68,14 +68,22 @@ cell_vol=(length_a/nx)*(length_a/ny)*(length_a/nz)
 #cell_vol=1
 
 # time steps
-num_time_step=11
+num_time_step=31
+dt=0.5
 sld_in=1
 sld_out=0
 
+
 #
-mode='shrink'
-rad_start_shrnk=35
-rad_end_shrnk=5
+mode='diffuse'
+if mode=='shrink':
+    rad_start_shrnk=35
+    rad_end_shrnk=5
+
+if mode=='diffuse':
+    rad=35
+    D=0.07
+
     
 
 # result folder structure
@@ -101,6 +109,9 @@ simu_save_t1=time.perf_counter()
 if mode=='shrink':
     print('creating simulation with schrinking grain')
     print('data will be saved in folder {0}'.format(dyn_folder))
+if mode== 'diffuse':
+    print('creating simulation with diffusion into grain')
+    print('data will be saved in folder {0}'.format(dyn_folder))    
     
 neutron_count=np.zeros(num_time_step)
 for i in range(num_time_step):
@@ -112,6 +123,20 @@ for i in range(num_time_step):
         simu_t1=time.perf_counter()
         #### simulation start ###
         sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
+        sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
+        sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
+        #### simulation end ###
+        simu_t2=time.perf_counter()
+        print('\t calculating sld distribution took {} S'.format(simu_t2-simu_t1))
+    if mode=='diffuse':
+        #rad_t=rad_start_shrnk+((rad_end_shrnk-rad_start_shrnk)/(num_time_step-1))*i
+        print('timestep : {0}'.format(i))        
+        simu_t1=time.perf_counter()
+        #### simulation start ###
+        #sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
+        sld_dyn = sim.sph_grain_diffus_book_1_3d(nodes,
+                                                 [length_a/2,length_b/2,length_c/2],
+                                                 rad, D, dt*i, sld_in,sld_out)
         sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
@@ -130,9 +155,13 @@ for i in range(num_time_step):
     data_file['catcellprop']=sld_dyn_cell_cat
     data_file['catcell']=cat
     data_file['mode']=mode
-    data_file['radius']=rad_t
     data_file['grain_sld']=sld_in
     data_file['env_sld']=sld_out
+    if mode=='shrink':
+        data_file['radius']=rad_t
+    if mode=='diffuse':
+        data_file['radius']=rad
+        data_file['Diffusion_coeff']=D
     data_file.close()
     ### data saving end ###
     save_t2=time.perf_counter()
