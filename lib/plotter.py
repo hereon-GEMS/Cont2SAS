@@ -9,14 +9,36 @@ from mpl_toolkits.mplot3d import axes3d
 ## plot 3d structures
 
 
-def plotter_3d(coords_3d,save_plot=False,save_dir='.'):
-    fig = plt.figure()
+def plotter_3d(points_3d, save_plot=False, save_dir='.',
+               filename='plot', figsize=(10,10)):
+    fig = plt.figure(figsize=figsize)
     ax = plt.axes(projection='3d')
     #ax = plt.axes()
-    coords_3d=np.array(coords_3d)
-    ax.scatter(coords_3d[:,0],coords_3d[:,1],coords_3d[:,2])
+    points_3d=np.array(points_3d)
+    ax.scatter(points_3d[:,0],points_3d[:,1],points_3d[:,2])
     if save_plot:
-        plt.savefig(save_dir+'/3d_plot', format='png')
+        plt.savefig(save_dir+'/'+filename, format='png')
+    plt.close() 
+    
+def mesh_plotter_3d(points_3d, con_3d, save_plot=False, 
+                    save_dir='.', filename='plot', figsize=(10,10)):
+    points_3d=np.array(points_3d)
+    fig=plt.figure(figsize=figsize)
+    ax=plt.axes(projection='3d')
+    for connec in con_3d:
+        #print(connec)
+        point=points_3d[connec]
+        draw1=np.array([0,1,2,3,0])
+        #points=np.concatenate((points[0:4], points[4:8,:]),axis=0)        
+        ax.plot(point[draw1,0], point[draw1,1],point[draw1,2],'k')
+        draw2=draw1+4
+        ax.plot(point[draw2,0], point[draw2,1],point[draw2,2],'k')
+        draw3=np.array([0,4])
+        for i in range(4):
+            draw_cur=draw3+i
+            ax.plot(point[draw_cur,0], point[draw_cur,1],point[draw_cur,2],'k')
+    if save_plot:
+        plt.savefig(save_dir+'/'+ filename, format='png')
         
 # def colorplot_node_3d(coords, sld, nx, ny, nz, save_plot=False,save_dir='.'):
 #     fig = plt.figure()
@@ -44,24 +66,24 @@ def colorplot_node_3d(nodes, sld, nx, ny, nz, save_plot=False,save_dir='.'):
     if save_plot:
         plt.savefig(save_dir+'/sld_node', format='png')
         
-def mesh_plotter_3d(coords_3d, con_3d, save_plot=False,save_dir='.'):
-    coords_3d=np.array(coords_3d)
-    fig=plt.figure()
-    ax=plt.axes(projection='3d')
-    for connec in con_3d:
-        #print(connec)
-        points=coords_3d[connec]
-        draw1=np.array([0,1,2,3,0])
-        #points=np.concatenate((points[0:4], points[4:8,:]),axis=0)        
-        ax.plot(points[draw1,0], points[draw1,1],points[draw1,2],'k')
-        draw2=draw1+4
-        ax.plot(points[draw2,0], points[draw2,1],points[draw2,2],'k')
-        draw3=np.array([0,4])
-        for i in range(4):
-            draw_cur=draw3+i
-            ax.plot(points[draw_cur,0], points[draw_cur,1],points[draw_cur,2],'k')
-    if save_plot:
-        plt.savefig(save_dir+'/mesh', format='png')
+# def mesh_plotter_3d(coords_3d, con_3d, save_plot=False,save_dir='.'):
+#     coords_3d=np.array(coords_3d)
+#     fig=plt.figure()
+#     ax=plt.axes(projection='3d')
+#     for connec in con_3d:
+#         #print(connec)
+#         points=coords_3d[connec]
+#         draw1=np.array([0,1,2,3,0])
+#         #points=np.concatenate((points[0:4], points[4:8,:]),axis=0)        
+#         ax.plot(points[draw1,0], points[draw1,1],points[draw1,2],'k')
+#         draw2=draw1+4
+#         ax.plot(points[draw2,0], points[draw2,1],points[draw2,2],'k')
+#         draw3=np.array([0,4])
+#         for i in range(4):
+#             draw_cur=draw3+i
+#             ax.plot(points[draw_cur,0], points[draw_cur,1],points[draw_cur,2],'k')
+#     if save_plot:
+#         plt.savefig(save_dir+'/mesh', format='png')
     
 def colorplot_cell_3d(coords, sld, nx, ny, nz, save_plot=False,save_dir='.'):
     fig = plt.figure()

@@ -75,7 +75,7 @@ def node_cell_gen_3d (a, b, c, nx, ny, nz):
         cells[idx]=cell_center
         idx+=1
         #print(cell_center)
-    return nodes, con_3d, cells
+    return nodes, cells, con_3d
 
 ## 2d structures ##
 def struct_gen_2d (a, b, nx, ny, flat=0): 
