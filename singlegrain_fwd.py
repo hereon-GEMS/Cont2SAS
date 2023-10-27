@@ -77,11 +77,6 @@ res_folder=os.path.join('./data/',
 # get nodes, cells, connectivity
 data_filename=os.path.join(res_folder,'data.h5')
 nodes, cells, con = dsv.mesh_read(data_filename)
-# data_file=h5py.File(data_filename, 'r')
-# nodes=data_file['nodes'][:]
-# cells=data_file['cells'][:]
-# con=data_file['connectivity'][:]
-# data_file.close()
 
 # create dolder for dynamics
 dyn_file='single_grain_'+ mode
@@ -139,22 +134,6 @@ for i in range(num_time_step):
         dsv.sim_gen(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
             cat, mode, sld_in, sld_out, (rad, D))
    
-    # data_file=h5py.File(data_file_full,'w')
-    # data_file['node']=nodes
-    # data_file['nodeprop']=sld_dyn
-    # data_file['cell']=cells
-    # data_file['cellprop']=sld_dyn_cell
-    # data_file['catcellprop']=sld_dyn_cell_cat
-    # data_file['catcell']=cat
-    # data_file['mode']=mode
-    # data_file['grain_sld']=sld_in
-    # data_file['env_sld']=sld_out
-    # if mode=='shrink':
-    #     data_file['radius']=rad_t
-    # if mode=='diffuse':
-    #     data_file['radius']=rad
-    #     data_file['Diffusion_coeff']=D
-    # data_file.close()
     # ### data saving end ###
     save_t2=time.perf_counter()
     print('\t saving data_{0:0>3}.h5 took {1} S'.format(i, save_t2-save_t1))
@@ -181,13 +160,6 @@ for i in range(num_time_step):
     ### 
     sigfile_name=os.path.join(time_dir,'signal.h5')
     q_vec_t, fq0_t, fqt_t, fq_t, fq2_t = dsv.sig_read(sigfile_name)
-    # sigfile=h5py.File(sigfile_name, 'r')
-    # q_vec_t=np.sqrt(np.sum(sigfile['qvectors'][:]**2,axis=1))
-    # q_args=np.argsort(q_vec_t)
-    # fq0_t=np.sqrt(np.sum(sigfile['fq0'][:]**2,axis=1))
-    # q_vec_t=q_vec_t[q_args]
-    # fq0_t=fq0_t[q_args]
-    # sigfile.close()
     neutron_count_t=0
     for j in range(len(q_vec_t)-1):
         del_q=q_vec_t[j+1]-q_vec_t[j]
@@ -199,10 +171,6 @@ countdatafile_name=os.path.join(dyn_folder, 'count.h5')
 time_arr= np.linspace(0,num_time_step-1,num_time_step)
 dsv.count_gen(countdatafile_name, neutron_count, time_arr)
 
-# countdatafile=h5py.File(countdatafile_name, 'w')
-# countdatafile['count']=neutron_count
-# countdatafile['time']=np.linspace(0,num_time_step-1,num_time_step)
-# countdatafile.close()
 simu_save_t2=time.perf_counter()
 print('Total time taken is {0} S'.format(simu_save_t2-simu_save_t1))
 
