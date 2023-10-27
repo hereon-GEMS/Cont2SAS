@@ -46,8 +46,8 @@ cell_vol=(length_a/nx)*(length_a/ny)*(length_a/nz)
 
 # time steps
 t_end=10
-num_time_step=11
-dt=0.5
+num_time_step=6
+dt=1
 time_arr= np.arange(0,t_end+dt,dt)
 
 # sld outside and inside
@@ -55,7 +55,7 @@ sld_in=1
 sld_out=0
 
 #
-mode='diffuse'
+mode='gg'
 
 if mode=='shrink':
     rad_0= 35                    # radius at time 0
@@ -71,16 +71,19 @@ if mode=='diffuse':
                length_c/2,rad_0) # max value allowed is length/2
     D=0.07                       # diffusion coeff
 
-# if mode=='gg':
-#     rad=3
-#     D=0.07
+if mode=='gg':
+    rad_0= 5                    # radius at time 0
+    rad_0= min(length_a/nx,
+               length_b/nx,
+               length_c/nx,rad_0) # max value allowed is length/2 
+    gr = 1                       # rate of shrinking 
     
 
 # result folder structure
 os.makedirs('data', exist_ok=True)
 res_folder=os.path.join('./data/',
                         str(length_a)+'_'+str(length_b)+'_'+str(length_c)+'_'+
-                        str(nx)+'_'+str(ny)+'_'+str(ny))
+                        str(nx)+'_'+str(ny)+'_'+str(nz))
 
 
 # get nodes, cells, connectivity
@@ -88,7 +91,7 @@ data_filename=os.path.join(res_folder,'data.h5')
 nodes, cells, con = dsv.mesh_read(data_filename)
 
 # create dolder for dynamics
-dyn_file='single_grain_'+ mode
+dyn_file='single_grain_'+ mode + '_' + str(t_end) + '_' + str(dt).replace('.','p')
 dyn_folder=os.path.join(res_folder,dyn_file)
 os.makedirs(dyn_folder, exist_ok=True)
 os.system('rm -r {0}/*'.format(dyn_folder))
@@ -96,17 +99,18 @@ simu_save_t1=time.perf_counter() # time counter for simulation
 
 if mode=='shrink':
     print('creating simulation with schrinking grain')
-
 if mode== 'diffuse':
     print('creating simulation with diffusion into grain')
+if mode== 'gg':
+    print('creating simulation with growing grain')
 
 print('data will be saved in folder {0}'.format(dyn_folder))    
     
-neutron_count=np.zeros(num_time_step)
+neutron_count=np.zeros_like(time_arr)
 
 for i in range(len(time_arr)):
     t=time_arr[i]
-    time_dir=os.path.join(dyn_folder,'t{0:0>3}'.format(t))
+    time_dir=os.path.join(dyn_folder,'t{0:0>3}'.format(i))
     simu_t1=time.perf_counter()
     if mode=='shrink':
         rad_t=rad_0 - sr*t
@@ -126,6 +130,13 @@ for i in range(len(time_arr)):
         sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
+    if mode=='gg':
+        rad_t=rad_0 + gr*t
+        print('radius : {0}'.format(rad_t))        
+        #### simulation start ###
+        sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
+        sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
+        sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
     simu_t2=time.perf_counter()
     print('\t calculating sld distribution took {} S'.format(simu_t2-simu_t1))
 
@@ -133,7 +144,7 @@ for i in range(len(time_arr)):
     os.makedirs(time_dir, exist_ok=True)
     ### data saving start ###
     data_file_full=os.path.join(time_dir,'data_{0:0>3}.h5'.format(i))
-    if mode=='shrink':
+    if mode=='shrink' or mode=='gg':
         dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
             cat, mode, sld_in, sld_out, (rad_t))
     if mode=='diffuse':
