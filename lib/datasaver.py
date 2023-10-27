@@ -14,7 +14,9 @@ import numpy as np
 import mdtraj as md
 import xml.etree.cElementTree as ET
 
-def mesh_gen(file_name, nodes, cells, con):
+### create and read hdf file 
+
+def mesh_write(file_name, nodes, cells, con):
     #file_full=os.path.join(Folder,filename)
     #os.makedirs(Folder, exist_ok=True)
     file=h5py.File(file_name,'w')
@@ -33,7 +35,7 @@ def mesh_read(file_name):
     file.close()
     return nodes, cells, con
 
-def sim_gen(file_name, nodes, nodeprop, cell, cellprop, catcellprop,
+def sim_write(file_name, nodes, nodeprop, cell, cellprop, catcellprop,
             catcell, mode, grain_sld, env_sld, ex_var):
     file=h5py.File(file_name,'w')
     file['nodes']=nodes
@@ -97,117 +99,15 @@ def sig_read(file_name):
     
     return q_vec_t, fq0_t, fqt_t, fq_t, fq2_t
 
-def count_gen(file_name, neutron_count, time):
+def count_write(file_name, neutron_count, time):
     file=h5py.File(file_name, 'w')
     file['count']=neutron_count
     file['time']=time
     file.close()  
+    
+### pdb_dcd file generation
 
-# def HDFwriter(node,con, prop_node, cell, prop_cell, filename,Folder='.'):
-#     file_full=os.path.join(Folder,filename)
-#     os.makedirs(Folder, exist_ok=True)
-#     file=h5py.File(file_full,'w')
-#     file['node']=node
-#     file['nodeprop']=prop_node
-#     file['cell']=cell
-#     file['cellprop']=prop_cell
-#     file['connectivity']=con
-#     file.close()
-    
-# def HDFwriter(dict_name, filename,Folder='.'):
-#     file_full=os.path.join(Folder,filename)
-#     os.makedirs(Folder, exist_ok=True)
-#     file=h5py.File(file_full,'w')
-#     list_keys=list(dict_name.keys())
-#     list_vals=list(dict_name.values())
-#     for i in range(len(dict_name)):
-#         file[list_keys[i]]=list_vals[i]
-#     file.close()
-    
-# def pdb_dcd_gen(coords, cat_prop, prop_min, prop_max, ndiv,dir_name):
-#     num=ndiv
-#     element_names=[]
-#     if os.path.exists(dir_name):
-#         shutil.rmtree(dir_name)
-#     if not os.path.exists(dir_name):
-#         os.mkdir(dir_name)
-#     for i in range(num):
-#         el_name='Pseudo'+str(i) 
-#         element_names.append(el_name)
-#     # prop_min=np.min(cat_prop)
-#     # prop_max=np.max(cat_prop)
-#     cat_mat=np.linspace(prop_min, prop_max, ndiv)
-#     # for i in range(len(t)):
-#     topo=md.Topology() #= md.Topology()
-#     ch=topo.add_chain()
-#     res=topo.add_residue('RES', ch)
-#     # os.makedirs(dir_name, exist_ok=True)
-#     pdb_file_name=os.path.join(dir_name, 'sample.pdb')
-#     new_coords=[]
-#     for j in range(len(coords)):
-#         # print(atoms[0][j])
-#         prop_val=cat_prop[0][j]
-#         atom_type=int(np.where(cat_mat==prop_val)[0])
-#         # atom_type=int(cat_prop[i][j])
-#         el_name=element_names[atom_type]
-#         sym=el_name[0]+el_name[-1]
-#         try:
-#             ele=(md.element.Element(10,el_name, sym, 10, 10))
-#         except AssertionError:
-#             ele=(md.element.Element.getBySymbol(sym))
-#         topo.add_atom(sym, ele, res)
-#     with md.formats.PDBTrajectoryFile(pdb_file_name,'w','True') as f:
-#         f.write(coords, topo) 
-#     dcd_file_name=os.path.join(dir_name, 'sample.dcd')
-#     with md.formats.DCDTrajectoryFile(dcd_file_name, 'w') as f:
-#         n_frames = 1
-#         for j in range(n_frames):
-#             f.write(coords)
-            
-# def pdb_dcd_gen_opt(coords, cat_prop, cat_idx, prop_min, prop_max, ndiv,dir_name):    
-#     element_cats=np.full((ndiv,), 'any', dtype='<U9')
-#     sym_cats=np.full((ndiv,), 'any', dtype='<U6')
-#     element_names=np.full((len(coords),), 'any', dtype='<U9')
-#     sym_names=np.full((len(coords),), 'any', dtype='<U9')
-#     os.makedirs(dir_name,exist_ok=True)
-#     for i in range(ndiv):
-#         el_cat='Pseudo'+str(i)
-#         sym_cat='P'+str(i)
-#         element_cats[i]=el_cat
-#         sym_cats[i]=sym_cat
-#         element_names[cat_idx[0][i]]=el_cat
-#         sym_names[cat_idx[0][i]]=sym_cat
-#     cat_mat=np.linspace(prop_min, prop_max, ndiv)
-#     # for i in range(len(t)):
-#     topo=md.Topology() #= md.Topology()
-#     ch=topo.add_chain()
-#     res=topo.add_residue('RES', ch)
-#     # os.makedirs(dir_name, exist_ok=True)
-#     pdb_file_name=os.path.join(dir_name, 'sample.pdb')
-#     new_coords=[]
-#     for j in range(len(coords)):
-#         # print(atoms[0][j])
-#         # prop_val=cat_prop[0][j]
-#         # atom_type=int(np.where(cat_mat==prop_val)[0])
-#         # # atom_type=int(cat_prop[i][j])
-#         # el_name=element_names[atom_type]
-#         # sym=el_name[0]+el_name[-1]
-#         el_name=element_names[j]
-#         sym=sym_names[j]
-#         try:
-#             ele=(md.element.Element(10,el_name, sym, 10, 10))
-#         except AssertionError:
-#             ele=(md.element.Element.getBySymbol(sym))
-#         topo.add_atom(sym, ele, res)
-#     with md.formats.PDBTrajectoryFile(pdb_file_name,'w','True') as f:
-#         f.write(coords, topo) 
-#     dcd_file_name=os.path.join(dir_name, 'sample.dcd')
-#     with md.formats.DCDTrajectoryFile(dcd_file_name, 'w') as f:
-#         n_frames = 1
-#         for j in range(n_frames):
-#             f.write(coords)
-            
-def pdb_dcd_gen_opt1(points, cat_prop, cat, dir_name): 
+def pdb_dcd_write(points, cat_prop, cat, dir_name): 
     points=np.float32(points)
     cat_prop=np.float32(cat_prop)
     topo=md.Topology() #= md.Topology()
@@ -231,6 +131,8 @@ def pdb_dcd_gen_opt1(points, cat_prop, cat, dir_name):
         for j in range(n_frames):
             f.write(points)
             
+### files related to sassena (scatter.xml and database)
+
 def scatterxml_generator(dir_name, sigfile='signal.h5'):
     filename=os.path.join(dir_name,'scatter.xml')
     # if os.path.exists(filename):
@@ -291,12 +193,6 @@ def scatterxml_generator(dir_name, sigfile='signal.h5'):
     ET.SubElement(vectors, "type").text = 'sphere'
     ET.SubElement(vectors, "algorithm").text = 'boost_uniform_on_sphere'
     ET.SubElement(vectors, "resolution").text = str(resolution_num)
-    # masses = ET.Element("masses")
-    # for i in range(ndiv):
-    #     element = ET.SubElement(masses, "element")
-    #     el_name='Pseudo'+str(i)
-    #     ET.SubElement(element, "name").text = el_name
-    #     ET.SubElement(element, "param").text = "1"  
     
     #limits
     decomposition=ET.SubElement(limits, "decomposition")
@@ -307,8 +203,6 @@ def scatterxml_generator(dir_name, sigfile='signal.h5'):
     
 def database_generator(out_sl, in_sl, ndiv=10, database_dir='database'):
     sld_arr=np.linspace(out_sl, in_sl, ndiv)
-        
-    # database_dir='database'
     
     os.makedirs(database_dir, exist_ok=True)
     os.system('cp -r  database_sassena/*.xml ' + database_dir + '/')
@@ -331,7 +225,6 @@ def database_generator(out_sl, in_sl, ndiv=10, database_dir='database'):
     xml_file=os.path.join(definition_dir, filename)
     
     exclusionfactors = ET.Element("exclusionfactors")
-    # element = ET.SubElement(exclusionfactors, "element")
     for i in range(ndiv):
         element = ET.SubElement(exclusionfactors, "element")
         el_name='Pseudo'+str(i)
@@ -400,6 +293,8 @@ def database_generator(out_sl, in_sl, ndiv=10, database_dir='database'):
         tree = ET.ElementTree(root)
     tree.write(xml_file)
     
+
+# slurm file generator 
 def slurm_script_gen(folder,mpi_proc,omp_proc,xml_file='scatter.xml',sas='/data/data/amajumda/sass_paper/sassena_Glab/sassena/compile_boxcut_img/sassena'):
     filename='run_slurm_icc'
     file=os.path.join(folder, filename)
