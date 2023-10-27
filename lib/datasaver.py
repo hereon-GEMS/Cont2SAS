@@ -14,24 +14,94 @@ import numpy as np
 import mdtraj as md
 import xml.etree.cElementTree as ET
 
-def mesh_gen(file, nodes, cells, con):
+def mesh_gen(file_name, nodes, cells, con):
     #file_full=os.path.join(Folder,filename)
     #os.makedirs(Folder, exist_ok=True)
-    file=h5py.File(file,'w')
+    file=h5py.File(file_name,'w')
     file['nodes']=nodes
     file['cells']=cells
     file['connectivity']=con
     file.close()
     
-def mesh_read(file):
+def mesh_read(file_name):
     #file_full=os.path.join(Folder,filename)
     #os.makedirs(Folder, exist_ok=True)
-    file=h5py.File(file,'r')
+    file=h5py.File(file_name,'r')
     nodes=file['nodes'][:]
     cells=file['cells'][:]
     con=file['connectivity'][:]
     file.close()
     return nodes, cells, con
+
+def sim_gen(file_name, nodes, nodeprop, cell, cellprop, catcellprop,
+            catcell, mode, grain_sld, env_sld, ex_var):
+    file=h5py.File(file_name,'w')
+    file['nodes']=nodes
+    file['nodeprop']=nodeprop
+    file['cell']=cell
+    file['cellprop']=cellprop
+    file['catcellprop']=catcellprop
+    file['catcell']=catcell
+    file['mode']=mode
+    file['grain_sld']=grain_sld
+    file['env_sld']=env_sld
+    if mode=='shrink':
+        #ex_var: rad_t
+        file['radius']=ex_var[0]
+    if mode=='diffuse':
+        #ex_var: rad, D
+        file['radius']=ex_var[0]
+        file['Diffusion_coeff']=ex_var[1]
+    file.close()
+
+def sim_read(file_name):
+    file=h5py.File(file_name,'r')
+    nodes=file['nodes'][:]
+    nodeprop=file['nodeprop'][:]
+    cell=file['cell'][:]
+    cellprop=file['cellprop'][:]
+    catcellprop=file['catcellprop'][:]
+    catcell=file['catcell'][:]
+    mode=file['mode'][:]
+    grain_sld=file['grain_sld'][:]
+    env_sld=file['env_sld'][:]
+    if mode=='shrink':
+        rad_t=file['radius'][:]
+    if mode=='diffuse':
+        rad=file['radius'][:]
+        D=file['Diffusion_coeff'][:]
+    file.close() 
+    if mode=='shrink':
+        return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad_t
+    if mode=='diffuse':
+        return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad, D
+
+def sig_read(file_name):
+    
+    file=h5py.File(file_name,'r')
+    q_vec_t=np.sqrt(np.sum(file['qvectors'][:]**2,axis=1))
+    q_args=np.argsort(q_vec_t)
+    
+    fq0_t=np.sqrt(np.sum(file['fq0'][:]**2,axis=1))
+    fqt_t=file['fqt'][:]
+    fq_t=np.sqrt(np.sum(file['fq'][:]**2,axis=1))
+    fq2_t=np.sqrt(np.sum(file['fq2'][:]**2,axis=1))
+    
+    q_vec_t=q_vec_t[q_args]
+    fq0_t=fq0_t[q_args]
+    fqt_t=fqt_t[q_args,:,0]
+    fq_t=fq_t[q_args]
+    fq2_t=fq2_t[q_args]
+    
+    file.close()    
+    
+    return q_vec_t, fq0_t, fqt_t, fq_t, fq2_t
+
+def count_gen(file_name, neutron_count, time):
+    file=h5py.File(file_name, 'w')
+    file['count']=neutron_count
+    file['time']=time
+    file.close()  
 
 # def HDFwriter(node,con, prop_node, cell, prop_cell, filename,Folder='.'):
 #     file_full=os.path.join(Folder,filename)
