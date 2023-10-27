@@ -3,6 +3,7 @@ import numpy as np
 from scipy import special
 from scipy.optimize import minimize
 from numba import njit, prange
+from scipy.special import erf
 
 ### 2d function ###
 
@@ -46,7 +47,51 @@ def sph_grain_diffus_3d(coords,origin,r,fuzz_val,sld_in,sld_out):
         #sld=-np.heaviside(coord_r-r,0)+1
         sld=(1/2)*(1-special.erf((coord_r-r)/(np.sqrt(2)*fuzz_val)))
     return sld
-    
+
+def sph_grain_diffus_book_1_3d(nodes,origin,rad,D_coeff, time, sld_in,sld_out):
+    n=50 # num_term in series
+    a=rad
+    t=time
+    c1=sld_in
+    c0=sld_out
+    nodes = np.array(nodes)
+    sld = sld_out*np.ones(len(nodes))
+    r=np.sqrt(np.sum((nodes-origin)**2,axis=1))
+    if t==0:
+        sld [r**2 <= rad**2] = sld_in
+            
+    else:
+        if D_coeff*t<=0.1:
+            for i in range(len(r)):
+                series=0
+                if r[i] <=rad:
+                    if r[i]==0:
+                        for j in range(1,n):
+                            series+=((-1)**j) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
+                    
+                        sld[i]=c1+(c0-c1)*(1+2*series)
+                    else:
+                        for j in range(n):
+                            #series+=((-1)**j/j) * np.sin(j*np.pi*r[i]/a) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
+                            term_1=(2*j+1)*a
+                            term_2=2* np.sqrt(D_coeff*t)
+                            series+=erf((term_1-r[i])/term_2)-erf((term_1+r[i])/term_2)
+                        sld[i]=c1+(c0-c1)*(a/r[i]*series)
+        else:
+            for i in range(len(r)):
+                series=0
+                if r[i] <=rad:
+                    if r[i]==0:
+                        for j in range(1,n):
+                            series+=((-1)**j) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
+                    
+                        sld[i]=c1+(c0-c1)*(1+2*series)
+                    else:
+                        for j in range(1,n):
+                            series+=((-1)**j/j) * np.sin(j*np.pi*r[i]/a) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
+                    
+                        sld[i]=c1+(c0-c1)*(1+((2*a)/(np.pi*r[i]))*series)
+    return sld
     
     # for i in range(len(t)):
     #     print(r_arr[i])
