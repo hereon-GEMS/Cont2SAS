@@ -174,28 +174,3 @@ dsv.count_gen(countdatafile_name, neutron_count, time_arr)
 simu_save_t2=time.perf_counter()
 print('Total time taken is {0} S'.format(simu_save_t2-simu_save_t1))
 
-#### old logger code
-
-# # Create a logger
-# logger = logging.getLogger('single_fwd_logger')
-
-# # Set the logging level (e.g., DEBUG, INFO, WARNING, ERROR)
-# logger.setLevel(logging.INFO)
-
-# # Create a file handler to write log messages to a file
-# file_handler = logging.FileHandler('single_fwd.log')
-
-# # Create a console handler to display log messages in the console
-# console_handler = logging.StreamHandler()
-
-# # Create a formatter to specify the log message format
-# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-# # Set the formatter for the handlers
-# file_handler.setFormatter(formatter)
-# console_handler.setFormatter(formatter)
-
-# # Add the handlers to the logger
-# logger.addHandler(file_handler)
-# logger.addHandler(console_handler)
-
