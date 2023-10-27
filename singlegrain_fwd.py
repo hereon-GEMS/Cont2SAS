@@ -45,23 +45,31 @@ nz=40
 cell_vol=(length_a/nx)*(length_a/ny)*(length_a/nz)
 
 # time steps
+t_end=10
 num_time_step=11
 dt=0.5
+time_arr= np.arange(0,t_end+dt,dt)
+
+# sld outside and inside
 sld_in=1
 sld_out=0
 
 #
 mode='diffuse'
 
-
 if mode=='shrink':
     rad_0= 35                    # radius at time 0
-    rad_0= min(length_a/2,rad_0) # max value allowed is length/2 
+    rad_0= min(length_a/2,
+               length_b/2,
+               length_c/2,rad_0) # max value allowed is length/2 
     sr = 1                       # rate of shrinking 
 
 if mode=='diffuse':
-    rad=35
-    D=0.07
+    rad_0=35                     # radius at time 0
+    rad_0= min(length_a/2,
+               length_b/2,
+               length_c/2,rad_0) # max value allowed is length/2
+    D=0.07                       # diffusion coeff
 
 # if mode=='gg':
 #     rad=3
@@ -95,11 +103,13 @@ if mode== 'diffuse':
 print('data will be saved in folder {0}'.format(dyn_folder))    
     
 neutron_count=np.zeros(num_time_step)
-for i in range(num_time_step):
-    time_dir=os.path.join(dyn_folder,'t{0:0>3}'.format(i))
+
+for i in range(len(time_arr)):
+    t=time_arr[i]
+    time_dir=os.path.join(dyn_folder,'t{0:0>3}'.format(t))
     simu_t1=time.perf_counter()
     if mode=='shrink':
-        rad_t=rad_start_shrnk+((rad_end_shrnk-rad_start_shrnk)/(num_time_step-1))*i
+        rad_t=rad_0 - sr*t
         print('radius : {0}'.format(rad_t))        
         #### simulation start ###
         sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
@@ -108,12 +118,11 @@ for i in range(num_time_step):
         #### simulation end ###
     if mode=='diffuse':
         #rad_t=rad_start_shrnk+((rad_end_shrnk-rad_start_shrnk)/(num_time_step-1))*i
-        print('timestep : {0}'.format(i))        
-        simu_t1=time.perf_counter()
+        print('timestep : {0}'.format(t))        
         #### simulation start ###
         sld_dyn = sim.sph_grain_diffus_book_1_3d(nodes,
                                                  [length_a/2,length_b/2,length_c/2],
-                                                 rad, D, dt*i, sld_in,sld_out)
+                                                 rad_0, D, dt*i, sld_in,sld_out)
         sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
@@ -125,11 +134,11 @@ for i in range(num_time_step):
     ### data saving start ###
     data_file_full=os.path.join(time_dir,'data_{0:0>3}.h5'.format(i))
     if mode=='shrink':
-        dsv.sim_gen(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
+        dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
             cat, mode, sld_in, sld_out, (rad_t))
     if mode=='diffuse':
-        dsv.sim_gen(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
-            cat, mode, sld_in, sld_out, (rad, D))
+        dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
+            cat, mode, sld_in, sld_out, (rad_0, D))
    
     # ### data saving end ###
     save_t2=time.perf_counter()
@@ -139,7 +148,7 @@ for i in range(num_time_step):
     ### pdb dcd generation ###
     pdb_dcd_dir=os.path.join(time_dir,'pdb_dcd')
     os.makedirs(pdb_dcd_dir, exist_ok=True)
-    dsv.pdb_dcd_gen_opt1(cells, sld_dyn_cell_cat, cat, pdb_dcd_dir)
+    dsv.pdb_dcd_write(cells, sld_dyn_cell_cat, cat, pdb_dcd_dir)
     
     ### scatter.xml generate ###
     dsv.scatterxml_generator(time_dir, sigfile='signal.h5')
@@ -165,8 +174,8 @@ for i in range(num_time_step):
     neutron_count[i]=neutron_count_t
 #countdatadir=os.path.join(res_folder, dyn_file)
 countdatafile_name=os.path.join(dyn_folder, 'count.h5')
-time_arr= np.linspace(0,num_time_step-1,num_time_step)
-dsv.count_gen(countdatafile_name, neutron_count, time_arr)
+
+dsv.count_write(countdatafile_name, neutron_count, time_arr)
 
 simu_save_t2=time.perf_counter()
 print('Total time taken is {0} S'.format(simu_save_t2-simu_save_t1))
