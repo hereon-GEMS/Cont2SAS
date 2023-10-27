@@ -55,8 +55,9 @@ mode='diffuse'
 
 
 if mode=='shrink':
-    rad_start_shrnk=35
-    rad_end_shrnk=5
+    rad_0= 35                    # radius at time 0
+    rad_0= min(length_a/2,rad_0) # max value allowed is length/2 
+    sr = 1                       # rate of shrinking 
 
 if mode=='diffuse':
     rad=35
@@ -95,33 +96,29 @@ print('data will be saved in folder {0}'.format(dyn_folder))
     
 neutron_count=np.zeros(num_time_step)
 for i in range(num_time_step):
-    
     time_dir=os.path.join(dyn_folder,'t{0:0>3}'.format(i))
+    simu_t1=time.perf_counter()
     if mode=='shrink':
         rad_t=rad_start_shrnk+((rad_end_shrnk-rad_start_shrnk)/(num_time_step-1))*i
         print('radius : {0}'.format(rad_t))        
-        simu_t1=time.perf_counter()
         #### simulation start ###
         sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
         sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
-        simu_t2=time.perf_counter()
-        print('\t calculating sld distribution took {} S'.format(simu_t2-simu_t1))
     if mode=='diffuse':
         #rad_t=rad_start_shrnk+((rad_end_shrnk-rad_start_shrnk)/(num_time_step-1))*i
         print('timestep : {0}'.format(i))        
         simu_t1=time.perf_counter()
         #### simulation start ###
-        #sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
         sld_dyn = sim.sph_grain_diffus_book_1_3d(nodes,
                                                  [length_a/2,length_b/2,length_c/2],
                                                  rad, D, dt*i, sld_in,sld_out)
         sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
-        simu_t2=time.perf_counter()
-        print('\t calculating sld distribution took {} S'.format(simu_t2-simu_t1))
+    simu_t2=time.perf_counter()
+    print('\t calculating sld distribution took {} S'.format(simu_t2-simu_t1))
 
     save_t1=time.perf_counter()
     os.makedirs(time_dir, exist_ok=True)
