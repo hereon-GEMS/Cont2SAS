@@ -39,7 +39,7 @@ nz=40
 
 
 # control parameters 
-update=True
+update=False
 
 # plot values
 plot_node = False
@@ -74,7 +74,7 @@ else:
 
     filename='data.h5'
     os.makedirs(res_dir, exist_ok=True)
-    dsv.mesh_gen(os.path.join(res_dir, filename), nodes, cells, con)
+    dsv.mesh_write(os.path.join(res_dir, filename), nodes, cells, con)
 
 # images of nodes , cells , mesh
 
