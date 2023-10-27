@@ -44,7 +44,7 @@ update=True
 # plot values
 plot_node = False
 plot_cell = False
-plot_mesh = True
+plot_mesh = False
 
 #folder structure
 os.makedirs('data', exist_ok=True)
