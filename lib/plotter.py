@@ -5,9 +5,123 @@ import numpy as np
 
 from matplotlib.colors import LogNorm
 from mpl_toolkits.mplot3d import axes3d
+import matplotlib.patches as patches
+import os
+import imageio
 
-## plot 3d structures
+## plot images in time folder
+def img_plot_mesh(cell, nodes, nodeprop, timestep, dyn_folder, mode):
+    # plot cell values
+    nx=len(np.unique(cell[:,0]))
+    ny=len(np.unique(cell[:,1]))
+    nz=len(np.unique(cell[:,2]))
+    length_a=np.max(nodes[:,0])
+    length_b=np.max(nodes[:,1])
+    length_c=np.max(nodes[:,2])
+    #cell_vol=(length_a/nx)*(length_b/ny)*(length_c/nz)
+    divx=length_a/nx
+    divy=length_b/ny
+    divz=length_c/nz
+    
+    # plot imshow
+    sld = nodeprop[:]#[0,:]
+    
+    sld_shape=sld.reshape(nx+1,ny+1,nz+1)
+    print(np.max(sld_shape))
+    fig, ax = plt.subplots(figsize=(10,8))
+    extent=[0, nx/2, 0, ny/2]
+    images = ax.imshow(sld_shape[:,:,int(nz/2+1)], cmap='viridis', vmin=-0, vmax=1, extent=extent, interpolation='bilinear')#, vmin=0, vmax=20)
+    #print(np.max(sld_shape[:,:,21]))
+    
+    ax.set_title('t = {0} s, z = 10 $\AA$'.format(timestep), fontsize=20)
+    ax.set_xlabel('x [$\AA$]', fontsize=20)
+    ax.set_ylabel('y [$\AA$]', fontsize=20)
+    cbar=fig.colorbar(images)
+    cbar.ax.tick_params(labelsize=20)
+    ax.set_aspect('equal', adjustable='box')
+    ax.tick_params(which='both', width=1, length=10, labelsize=20)
+    #plt.xticks(fontsize=30)
+    #plt.yticks(fontsize=30)
+    
+    for axis in ['top','bottom','left','right']:
+        ax.spines[axis].set_linewidth(0.5)
+    
 
+    for ix in range(nx):
+        for jy in range(ny):
+            #print(i*0.5)
+            rect = patches.Rectangle((jy*divy, ix*divx), divy, divx, linewidth=0.5, edgecolor='k', facecolor='none')
+            ax.add_patch(rect)
+    plot_folder_t=os.path.join(dyn_folder,'t{0:0>3}/images'.format(timestep))
+    os.makedirs(plot_folder_t, exist_ok=True)
+    plot_file=os.path.join(plot_folder_t,'node_{1:0>3}_{0}.pdf'.format(mode,timestep))
+    plt.savefig(plot_file)
+    plt.close() 
+
+## plot pseudo scatterer with mesh
+def p_scatter_plot_mesh(cell, cellprop, nodes, timestep, mode, dyn_folder):
+    #read cells
+    x = cell[:,0]
+    y = cell[:,1]
+    z = cell[:,2]
+    sld = cellprop[:]
+    
+    # find middle z
+    num_z=len(np.unique(z))
+    if num_z%2==0:
+        idx=int(num_z/2)
+        mid_z=np.unique(z)[idx]
+        #print(mid_z)
+    else:
+        idx=int(np.ceil(num_z/2))
+        mid_z=np.unique(z)[idx]
+        #print(mid_z)
+    
+    x_red = x[z==mid_z]
+    y_red = y[z==mid_z]
+    #z_red = z[z==mid_z]
+    sld_red=sld[z==mid_z]
+    
+    # plot cell values
+    nx=len(np.unique(x))
+    ny=len(np.unique(y))
+    nz=len(np.unique(z))
+    length_a=np.max(nodes[:,0])
+    length_b=np.max(nodes[:,1])
+    length_c=np.max(nodes[:,2])
+    cell_vol=(length_a/nx)*(length_b/ny)*(length_c/nz)
+    divx=length_a/nx
+    divy=length_b/ny
+    #divz=length_c/nz
+    #area=np.ones(nx*ny)
+    fig, ax = plt.subplots(figsize=(10,8)) 
+
+    scatt_plot = ax.scatter(x_red, y_red, s=40, c=sld_red, edgecolors=None, cmap='viridis', vmin=0*cell_vol, vmax=1*cell_vol)
+
+    ax.set_title('t = {0} s, z = 10.25 $\AA$'.format(timestep), fontsize=20)
+    ax.set_xlabel('x [$\AA$]', fontsize=20)
+    ax.set_ylabel('y [$\AA$]', fontsize=20)
+    #cbar=fig.colorbar(images)
+    #cbar.ax.tick_params(labelsize=20)
+    #ax.set_aspect('equal', adjustable='box')
+    ax.tick_params(which='both', width=1, length=10, labelsize=20)
+    ax.set_xlim([0,20])
+    ax.set_ylim([0,20])
+    cbar=fig.colorbar(scatt_plot)
+    cbar.ax.tick_params(labelsize=20)
+    #ax.set_title('t = {0}'.format(i))
+    ax.set_aspect('equal', adjustable='box')
+
+    for ix in range(nx):
+        for jy in range(ny):
+            #print(i*0.5)
+            rect = patches.Rectangle((jy*divy, ix*divx), divy, divx, linewidth=0.5, edgecolor='k', facecolor='none')
+            ax.add_patch(rect)
+    plot_folder_t=os.path.join(dyn_folder,'t{0:0>3}/images'.format(timestep))
+    os.makedirs(plot_folder_t, exist_ok=True)
+    plot_file=os.path.join(plot_folder_t,'cat_cell_{1:0>3}_{0}.pdf'.format(mode,timestep))
+    plt.savefig(plot_file, bbox_inches='tight')
+    plt.close()
 
 def plotter_3d(points_3d, save_plot=False, save_dir='.',
                filename='plot', figsize=(10,10)):

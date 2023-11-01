@@ -137,6 +137,8 @@ for i in range(len(time_arr)):
         sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
         sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
+        #### simulation end ###
+        
     simu_t2=time.perf_counter()
     print('\t calculating sld distribution took {} S'.format(simu_t2-simu_t1))
 
@@ -146,11 +148,13 @@ for i in range(len(time_arr)):
     data_file_full=os.path.join(time_dir,'data_{0:0>3}.h5'.format(i))
     if mode=='shrink' or mode=='gg':
         dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
-            cat, mode, sld_in, sld_out, (rad_t))
+            cat, mode, sld_in, sld_out, [rad_t])
     if mode=='diffuse':
         dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
-            cat, mode, sld_in, sld_out, (rad_0, D))
+            cat, mode, sld_in, sld_out, [rad_0, D])
    
+    
+    
     # ### data saving end ###
     save_t2=time.perf_counter()
     print('\t saving data_{0:0>3}.h5 took {1} S'.format(i, save_t2-save_t1))

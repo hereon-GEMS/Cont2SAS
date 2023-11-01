@@ -47,7 +47,7 @@ def sim_write(file_name, nodes, nodeprop, cell, cellprop, catcellprop,
     file['mode']=mode
     file['grain_sld']=grain_sld
     file['env_sld']=env_sld
-    if mode=='shrink':
+    if mode=='shrink' or mode=='gg':
         #ex_var: rad_t
         file['radius']=ex_var[0]
     if mode=='diffuse':
@@ -64,19 +64,21 @@ def sim_read(file_name):
     cellprop=file['cellprop'][:]
     catcellprop=file['catcellprop'][:]
     catcell=file['catcell'][:]
-    mode=file['mode'][:]
-    grain_sld=file['grain_sld'][:]
-    env_sld=file['env_sld'][:]
-    if mode=='shrink':
-        rad_t=file['radius'][:]
+    mode=file['mode'][()]
+    grain_sld=file['grain_sld'][()]
+    env_sld=file['env_sld'][()]
+    if mode=='shrink' or mode=='gg':
+        rad_t=file['radius'][()]
     if mode=='diffuse':
         rad=file['radius'][:]
         D=file['Diffusion_coeff'][:]
     file.close() 
-    if mode=='shrink':
+    if mode=='shrink' or mode=='gg':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad_t
+        #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad_t
     if mode=='diffuse':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad, D
+        #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad, D
 
 def sig_read(file_name):
     
