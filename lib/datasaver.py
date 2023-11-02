@@ -54,6 +54,10 @@ def sim_write(file_name, nodes, nodeprop, cell, cellprop, catcellprop,
         #ex_var: rad, D
         file['radius']=ex_var[0]
         file['Diffusion_coeff']=ex_var[1]
+    if mode=='fs':
+        #ex_var: rad, D
+        file['radius']=ex_var[0]
+        file['sigma']=ex_var[1]
     file.close()
 
 def sim_read(file_name):
@@ -72,12 +76,19 @@ def sim_read(file_name):
     if mode=='diffuse':
         rad=file['radius'][()]
         D=file['Diffusion_coeff'][()]
+    if mode=='fs':
+        #ex_var: rad, D
+        rad=file['radius'][()]
+        sig_t=file['sigma'][()]
     file.close() 
     if mode=='shrink' or mode=='gg':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad_t
         #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad_t
     if mode=='diffuse':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad, D
+        #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad, D
+    if mode=='fs':
+        return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad, sig_t
         #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad, D
 
 def sig_read(file_name):

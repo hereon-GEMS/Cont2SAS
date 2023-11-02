@@ -51,7 +51,7 @@ time_arr= np.arange(0,t_end+dt,dt)
 # print(num_time_step)
 
 #
-mode='diffuse'
+mode='fs'
    
 
 # result folder structure
@@ -76,6 +76,9 @@ for i in range(num_time_step):
     if mode=='diffuse':
         nodes, nodeprop, cell, cellprop, catcellprop, catcell,\
             mode, grain_sld, env_sld, rad, D = dsv.sim_read(data_file_t)
+    if mode=='fs':
+        nodes, nodeprop, cell, cellprop, catcellprop, catcell,\
+            mode, grain_sld, env_sld, rad, sig_t = dsv.sim_read(data_file_t)
 
     pltr.p_scatter_plot_mesh(cell, cellprop, nodes, i, mode, dyn_folder, grain_sld, env_sld)
     

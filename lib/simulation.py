@@ -34,19 +34,38 @@ def sph_grain_3d(coords,origin,r,sld_in,sld_out):
 # spherical grain
 
 # diffusion into the grain
-def sph_grain_diffus_3d(coords,origin,r,fuzz_val,sld_in,sld_out):
+# def sph_grain_diffus_3d(coords,origin,r,fuzz_val,sld_in,sld_out):
+#     #r_arr=np.linspace(r,0,len(t))
+#     coords = np.array(coords)
+#     #sld = sld_out*np.ones((len(coords),len(t)))
+#     sld = np.zeros(len(coords))
+#     #cord_ed = np.sum((coords-origin)**2,axis=1)
+#     coord_r=np.sqrt(np.sum((coords-origin)**2,axis=1))
+#     if fuzz_val==0:
+#         sld=-np.heaviside(coord_r-r,0)+1
+#     else:
+#         #sld=-np.heaviside(coord_r-r,0)+1
+#         sld=(1/2)*(1-special.erf((coord_r-r)/(np.sqrt(2)*fuzz_val)))
+#     return sld
+
+def sph_grain_fs_3d(coords,origin,r,fuzz_val,sld_in,sld_out):
     #r_arr=np.linspace(r,0,len(t))
     coords = np.array(coords)
     #sld = sld_out*np.ones((len(coords),len(t)))
     sld = np.zeros(len(coords))
     #cord_ed = np.sum((coords-origin)**2,axis=1)
     coord_r=np.sqrt(np.sum((coords-origin)**2,axis=1))
+    max_sld=np.max(sld_in, sld_out)
+    min_sld=np.min(sld_in, sld_out)
     if fuzz_val==0:
         sld=-np.heaviside(coord_r-r,0)+1
     else:
         #sld=-np.heaviside(coord_r-r,0)+1
         sld=(1/2)*(1-special.erf((coord_r-r)/(np.sqrt(2)*fuzz_val)))
-    return sld
+    #adjust with range
+    sld_final = (sld_in-sld_out) * sld + sld_out
+    #sld_final = sld
+    return sld_final
 
 def sph_grain_diffus_book_1_3d(nodes,origin,rad,D_coeff, time, sld_in,sld_out):
     n=50 # num_term in series

@@ -56,28 +56,37 @@ sld_in=2
 sld_out=0
 
 #
-mode='diffuse'
+mode='fs'
 
 if mode=='shrink':
-    rad_0= 9                    # radius at time 0
+    rad_0= 9                     # radius at time 0
     rad_0= min(length_a/2,
                length_b/2,
                length_c/2,rad_0) # max value allowed is length/2 
-    sr = 0.5                       # rate of shrinking 
+    sr = 0.5                     # rate of shrinking 
 
 if mode=='diffuse':
-    rad_0=9                     # radius at time 0
+    rad_0=9                      # radius at time 0
     rad_0= min(length_a/2,
                length_b/2,
                length_c/2,rad_0) # max value allowed is length/2
-    D=1                       # diffusion coeff
+    D=1                          # diffusion coeff
 
 if mode=='gg':
-    rad_0= 3                    # radius at time 0
+    rad_0= 3                                # radius at time 0
     rad_0= max(length_a/nx,
                length_b/nx,
-               length_c/nx,rad_0) # max value allowed is length/2 
-    gr = (7-3)/np.max(time_arr)                       # rate of shrinking 
+               length_c/nx,rad_0)           # max value allowed is length/2 
+    # opt1: when end radius is fixed
+    rad_end=7
+    gr = (rad_end-rad_0)/np.max(time_arr)   # rate of shrinking 
+    
+if mode=='fs':
+    rad_0 = 7                               # radius at time 0
+    sig_0 = 0                               # sigma at time 0 
+    # opt1: when end radius is fixed
+    sig_end = 2
+    cr = (sig_end-sig_0)/np.max(time_arr)   # rate of change (sigma)
     
 
 # result folder structure
@@ -106,6 +115,9 @@ if mode== 'diffuse':
 if mode== 'gg':
     rad_evo=np.zeros_like(time_arr, dtype=float)
     print('creating simulation with growing grain')
+if mode== 'fs':
+    sig_evo=np.zeros_like(time_arr, dtype=float)
+    print('creating simulation with inter-diffusing grain')
 
 print('data will be saved in folder {0}'.format(dyn_folder))    
     
@@ -143,6 +155,17 @@ for i in range(len(time_arr)):
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
         rad_evo[i]=rad_t
+    if mode=='fs':
+        sig_t=sig_0 + cr*t
+        print('sigma : {0}'.format(sig_t))        
+        #### simulation start ###
+        sld_dyn = sim.sph_grain_fs_3d(nodes,[length_a/2,length_b/2,length_c/2],
+                                      rad_0,sig_t,sld_in,sld_out)
+        #sld_dyn = sim.sph_grain_3d(nodes,[length_a/2,length_b/2,length_c/2],rad_t,sld_in,sld_out)
+        sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
+        sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
+        #### simulation end ###
+        sig_evo[i]=sig_t
         
     simu_t2=time.perf_counter()
     print('\t calculating sld distribution took {} S'.format(simu_t2-simu_t1))
@@ -157,6 +180,9 @@ for i in range(len(time_arr)):
     if mode=='diffuse':
         dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
             cat, mode, sld_in, sld_out, [rad_0, D])
+    if mode=='fs':
+        dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
+            cat, mode, sld_in, sld_out, [rad_0, sig_t])
    
     
     
@@ -203,3 +229,6 @@ print('Total time taken is {0} S'.format(simu_save_t2-simu_save_t1))
 if mode=='shrink' or mode=='gg':
     rad_evo_plt=os.path.join(dyn_folder,'rad_evo.pdf')
     pltr.plot_xy(time_arr,rad_evo, rad_evo_plt)
+if mode=='fs':
+    sig_evo_plt=os.path.join(dyn_folder,'sig_evo.pdf')
+    pltr.plot_xy(time_arr,sig_evo, sig_evo_plt)
