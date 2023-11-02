@@ -11,11 +11,11 @@ import imageio
 
 ## plot xvs y
 
-def plot_xy(x,y, filename):
+def plot_xy(x,y, filename, xlabel='', ylabel=''):
     fig, ax = plt.subplots(figsize=(10,8))
     ax.plot(x, y, marker='o', ms=20, linewidth=4)
-    ax.set_xlabel('t [s]', fontsize=20)
-    ax.set_ylabel('r [$\AA$]', fontsize=20)
+    ax.set_xlabel(xlabel, fontsize=20)
+    ax.set_ylabel(ylabel, fontsize=20)
     #ax.set_aspect('equal', adjustable='box')
     ax.tick_params(which='both', width=1, length=10, labelsize=20)
     ax.grid()

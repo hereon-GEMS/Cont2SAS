@@ -46,7 +46,7 @@ nz=40
 cell_vol=(length_a/nx)*(length_a/ny)*(length_a/nz)
 
 # time steps
-t_end=10
+t_end=20
 num_time_step=6
 dt=1
 time_arr= np.arange(0,t_end+dt,dt)
@@ -56,7 +56,7 @@ sld_in=2
 sld_out=0
 
 #
-mode='fs'
+mode='hydinout'
 
 if mode=='shrink':
     rad_0= 9                     # radius at time 0
@@ -71,6 +71,21 @@ if mode=='diffuse':
                length_b/2,
                length_c/2,rad_0) # max value allowed is length/2
     D=1                          # diffusion coeff
+
+if mode=='hydinout':
+    rad_0=9                      # radius at time 0
+    rad_0= min(length_a/2,
+               length_b/2,
+               length_c/2,rad_0) # max value allowed is length/2
+    D=1                          # diffusion coeff
+    
+    ini_cond='hyd'
+    t_flip=[10,20,30]
+    sld_hyd=2
+    sld_dehyd=1
+    sld_out=0
+    
+    
 
 if mode=='gg':
     rad_0= 3                                # radius at time 0
@@ -112,9 +127,15 @@ if mode=='shrink':
     print('creating simulation with schrinking grain')
 if mode== 'diffuse':
     print('creating simulation with diffusion into grain')
+if mode== 'desorption':
+    print('creating simulation with diffusion out of grain')
 if mode== 'gg':
     rad_evo=np.zeros_like(time_arr, dtype=float)
     print('creating simulation with growing grain')
+if mode=='hydinout':
+    cur_cond=ini_cond
+    cur_flip=0
+    print('creating simulation with hydrogen absorption and desorption')
 if mode== 'fs':
     sig_evo=np.zeros_like(time_arr, dtype=float)
     print('creating simulation with inter-diffusing grain')
@@ -123,6 +144,7 @@ print('data will be saved in folder {0}'.format(dyn_folder))
     
 neutron_count=np.zeros_like(time_arr)
 
+t_counter=0
 for i in range(len(time_arr)):
     t=time_arr[i]
     time_dir=os.path.join(dyn_folder,'t{0:0>3}'.format(i))
@@ -136,13 +158,38 @@ for i in range(len(time_arr)):
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
         rad_evo[i]=rad_t
-    if mode=='diffuse':
+    if mode=='diffuse' or mode=='desorption':
         #rad_t=rad_start_shrnk+((rad_end_shrnk-rad_start_shrnk)/(num_time_step-1))*i
         print('timestep : {0}'.format(t))        
         #### simulation start ###
         sld_dyn = sim.sph_grain_diffus_book_1_3d(nodes,
                                                  [length_a/2,length_b/2,length_c/2],
                                                  rad_0, D, dt*i, sld_in,sld_out)
+        sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
+        sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
+        #### simulation end ###
+    if mode=='hydinout':
+        #rad_t=rad_start_shrnk+((rad_end_shrnk-rad_start_shrnk)/(num_time_step-1))*i
+        print('timestep : {0}'.format(t))        
+        #### simulation start ###
+        # ini_cond='hyd'
+        # t_flip=[10,20,30]
+        # sld_hyd=2
+        # sld_dehyd=1
+        # sld_out=0
+        sld_dyn = sim.sph_grain_hydinout_3d(nodes,
+                                                 [length_a/2,length_b/2,length_c/2],
+                                                 rad_0, D, t-t_counter, sld_hyd, sld_dehyd,
+                                                 sld_out, cur_cond)
+        # change from absorption to desorption and vice versa
+        if t >= t_flip[cur_flip]:
+            t_counter=t_flip[cur_flip]
+            cur_flip+=1
+            if cur_cond=='hyd':
+                cur_cond='dehyd'
+            else:
+                cur_cond='hyd'
+        ###
         sld_dyn_cell=procs.node2cell_3d_t(nodes , cells, con, sld_dyn, nx, ny, nz, cell_vol)
         sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
         #### simulation end ###
@@ -177,9 +224,21 @@ for i in range(len(time_arr)):
     if mode=='shrink' or mode=='gg':
         dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
             cat, mode, sld_in, sld_out, [rad_t])
-    if mode=='diffuse':
+    if mode=='diffuse' or mode=='desorption':
         dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
             cat, mode, sld_in, sld_out, [rad_0, D])
+    if mode=='hydinout':
+        if ini_cond=='hyd':
+            sld_in=sld_hyd
+        else:
+            sld_in=sld_dehyd
+        dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
+            cat, mode, sld_in, sld_out, [rad_0, D, cur_cond, t_flip, sld_hyd, sld_dehyd])
+        # ini_cond='hyd'
+        # t_flip=[10,20,30]
+        # sld_hyd=2
+        # sld_dehyd=1
+        # sld_out=0
     if mode=='fs':
         dsv.sim_write(data_file_full, nodes, sld_dyn, cells, sld_dyn_cell, sld_dyn_cell_cat,
             cat, mode, sld_in, sld_out, [rad_0, sig_t])
@@ -224,11 +283,16 @@ countdatafile_name=os.path.join(dyn_folder, 'count.h5')
 dsv.count_write(countdatafile_name, neutron_count, time_arr)
 
 simu_save_t2=time.perf_counter()
+
+count_plt=os.path.join(dyn_folder,'count.pdf')
+pltr.plot_xy(time_arr, neutron_count, count_plt, xlabel='t [s]', ylabel='neutron count [-]')
+
 print('Total time taken is {0} S'.format(simu_save_t2-simu_save_t1))
 
 if mode=='shrink' or mode=='gg':
     rad_evo_plt=os.path.join(dyn_folder,'rad_evo.pdf')
-    pltr.plot_xy(time_arr,rad_evo, rad_evo_plt)
+    pltr.plot_xy(time_arr,rad_evo, rad_evo_plt, xlabel='t [s]', ylabel='r [$\AA$]')
+
 if mode=='fs':
     sig_evo_plt=os.path.join(dyn_folder,'sig_evo.pdf')
-    pltr.plot_xy(time_arr,sig_evo, sig_evo_plt)
+    pltr.plot_xy(time_arr,sig_evo, sig_evo_plt, xlabel='t [s]', ylabel='$\sigma$ [$\AA$]')

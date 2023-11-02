@@ -43,7 +43,7 @@ nz=40
 cell_vol=(length_a/nx)*(length_a/ny)*(length_a/nz)
 
 # time steps
-t_end=10
+t_end=20
 dt=1
 num_time_step=math.floor(t_end/dt+1)
 time_arr= np.arange(0,t_end+dt,dt)
@@ -51,7 +51,7 @@ time_arr= np.arange(0,t_end+dt,dt)
 # print(num_time_step)
 
 #
-mode='fs'
+mode='hydinout'
    
 
 # result folder structure
@@ -73,12 +73,18 @@ for i in range(num_time_step):
     if mode=='shrink' or mode=='gg':
         nodes, nodeprop, cell, cellprop, catcellprop, catcell,\
             mode, grain_sld, env_sld, rad_t = dsv.sim_read(data_file_t)
-    if mode=='diffuse':
+    if mode=='diffuse' or mode=='desorption':
         nodes, nodeprop, cell, cellprop, catcellprop, catcell,\
             mode, grain_sld, env_sld, rad, D = dsv.sim_read(data_file_t)
     if mode=='fs':
         nodes, nodeprop, cell, cellprop, catcellprop, catcell,\
             mode, grain_sld, env_sld, rad, sig_t = dsv.sim_read(data_file_t)
+    if mode=='hydinout':
+        nodes, nodeprop, cell, cellprop, catcellprop, catcell,\
+            mode, grain_sld, env_sld, rad, D, cur_cond, \
+                flip_times, sld_hyd, sld_dehyd = dsv.sim_read(data_file_t)
+            # nodes, nodeprop, cell, cellprop, catcellprop, catcell, \
+            # mode, grain_sld, env_sld, rad, D, cur_cond, flip_times, sld_hyd, sld_dehyd
 
     pltr.p_scatter_plot_mesh(cell, cellprop, nodes, i, mode, dyn_folder, grain_sld, env_sld)
     
@@ -97,6 +103,8 @@ for i in range(num_time_step):
     images1.append(imageio.imread(plot_file))
 imageio.mimsave(os.path.join(dyn_folder,'{0}_node.gif'.format(mode)), images, fps=2, loop=0)
 imageio.mimsave(os.path.join(dyn_folder,'{0}_pscatter.gif'.format(mode)), images1, fps=2, loop=0)
+
+
     # nodes, nodeprop, cell, cellprop, \
     #     catcellprop, catcell, mode, grain_sld, env_sld, rad, D=dsv.sim_read(data_file_t)
     #print(file)

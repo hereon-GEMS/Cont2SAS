@@ -50,7 +50,7 @@ def sim_write(file_name, nodes, nodeprop, cell, cellprop, catcellprop,
     if mode=='shrink' or mode=='gg':
         #ex_var: rad_t
         file['radius']=ex_var[0]
-    if mode=='diffuse':
+    if mode=='diffuse' or mode=='desorption':
         #ex_var: rad, D
         file['radius']=ex_var[0]
         file['Diffusion_coeff']=ex_var[1]
@@ -58,6 +58,14 @@ def sim_write(file_name, nodes, nodeprop, cell, cellprop, catcellprop,
         #ex_var: rad, D
         file['radius']=ex_var[0]
         file['sigma']=ex_var[1]
+    if mode=='hydinout':
+        # [rad_0, D, ini_cond, t_flip, sld_hyd, sld_dehyd]
+        file['radius']=ex_var[0]
+        file['Diffusion_coeff']=ex_var[1]
+        file['current_cond']=ex_var[2]
+        file['flip_times']=ex_var[3]
+        file['sld_hyd']=ex_var[4]
+        file['sld_dehyd']=ex_var[5]
     file.close()
 
 def sim_read(file_name):
@@ -73,23 +81,33 @@ def sim_read(file_name):
     env_sld=file['env_sld'][()]
     if mode=='shrink' or mode=='gg':
         rad_t=file['radius'][()]
-    if mode=='diffuse':
+    if mode=='diffuse' or mode=='desorption':
         rad=file['radius'][()]
         D=file['Diffusion_coeff'][()]
     if mode=='fs':
         #ex_var: rad, D
         rad=file['radius'][()]
         sig_t=file['sigma'][()]
+    if mode=='hydinout':
+        rad=file['radius']
+        D=file['Diffusion_coeff']
+        cur_cond=file['current_cond']
+        flip_times=file['flip_times']
+        sld_hyd=file['sld_hyd']
+        sld_dehyd=file['sld_dehyd']
     file.close() 
     if mode=='shrink' or mode=='gg':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad_t
         #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad_t
-    if mode=='diffuse':
+    if mode=='diffuse' or mode=='desorption':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad, D
         #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad, D
     if mode=='fs':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad, sig_t
         #return nodes, nodeprop, cell, cellprop, catcellprop, catcell, rad, D
+    if mode=='hydinout':
+        return nodes, nodeprop, cell, cellprop, catcellprop, catcell, \
+            mode, grain_sld, env_sld, rad, D, cur_cond, flip_times, sld_hyd, sld_dehyd
 
 def sig_read(file_name):
     
