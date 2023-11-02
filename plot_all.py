@@ -23,6 +23,7 @@ import numpy as np
 import math
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
+import imageio
 
 
 """
@@ -50,7 +51,7 @@ time_arr= np.arange(0,t_end+dt,dt)
 # print(num_time_step)
 
 #
-mode='gg'
+mode='diffuse'
    
 
 # result folder structure
@@ -76,10 +77,23 @@ for i in range(num_time_step):
         nodes, nodeprop, cell, cellprop, catcellprop, catcell,\
             mode, grain_sld, env_sld, rad, D = dsv.sim_read(data_file_t)
 
-    pltr.p_scatter_plot_mesh(cell, cellprop, nodes, i, mode, dyn_folder)
+    pltr.p_scatter_plot_mesh(cell, cellprop, nodes, i, mode, dyn_folder, grain_sld, env_sld)
     
-    pltr.img_plot_mesh(cell, nodes, nodeprop, i, dyn_folder, mode)
-    
+    pltr.img_plot_mesh(cell, nodes, nodeprop, i, dyn_folder, mode, grain_sld, env_sld)
+
+images=[]
+images1=[]
+for i in range(num_time_step):
+    plot_folder_t=os.path.join(dyn_folder,'t{0:0>3}/images'.format(i))
+    os.makedirs(plot_folder_t, exist_ok=True)
+    plot_file=os.path.join(plot_folder_t,'node_{1:0>3}_{0}.png'.format(mode,i))
+    #print(plot_file)
+    images.append(imageio.imread(plot_file))
+    plot_file=os.path.join(plot_folder_t,'cat_cell_{1:0>3}_{0}.png'.format(mode,i))
+    #print(plot_file)
+    images1.append(imageio.imread(plot_file))
+imageio.mimsave(os.path.join(dyn_folder,'{0}_node.gif'.format(mode)), images, fps=2, loop=0)
+imageio.mimsave(os.path.join(dyn_folder,'{0}_pscatter.gif'.format(mode)), images1, fps=2, loop=0)
     # nodes, nodeprop, cell, cellprop, \
     #     catcellprop, catcell, mode, grain_sld, env_sld, rad, D=dsv.sim_read(data_file_t)
     #print(file)

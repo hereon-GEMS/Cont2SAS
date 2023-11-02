@@ -9,8 +9,21 @@ import matplotlib.patches as patches
 import os
 import imageio
 
+## plot xvs y
+
+def plot_xy(x,y, filename):
+    fig, ax = plt.subplots(figsize=(10,8))
+    ax.plot(x, y, marker='o', ms=20, linewidth=4)
+    ax.set_xlabel('t [s]', fontsize=20)
+    ax.set_ylabel('r [$\AA$]', fontsize=20)
+    ax.set_aspect('equal', adjustable='box')
+    ax.tick_params(which='both', width=1, length=10, labelsize=20)
+    ax.grid()
+    plt.savefig(filename)
+    plt.close()
+
 ## plot images in time folder
-def img_plot_mesh(cell, nodes, nodeprop, timestep, dyn_folder, mode):
+def img_plot_mesh(cell, nodes, nodeprop, timestep, dyn_folder, mode, sld_in, sld_out):
     # plot cell values
     nx=len(np.unique(cell[:,0]))
     ny=len(np.unique(cell[:,1]))
@@ -27,10 +40,12 @@ def img_plot_mesh(cell, nodes, nodeprop, timestep, dyn_folder, mode):
     sld = nodeprop[:]#[0,:]
     
     sld_shape=sld.reshape(nx+1,ny+1,nz+1)
-    print(np.max(sld_shape))
+    #print(np.max(sld_shape))
     fig, ax = plt.subplots(figsize=(10,8))
     extent=[0, nx/2, 0, ny/2]
-    images = ax.imshow(sld_shape[:,:,int(nz/2+1)], cmap='viridis', vmin=-0, vmax=1, extent=extent, interpolation='bilinear')#, vmin=0, vmax=20)
+    images = ax.imshow(sld_shape[:,:,int(nz/2+1)], cmap='viridis', 
+                       vmin=min(sld_in, sld_out), vmax=max(sld_in, sld_out),
+                       extent=extent, interpolation='bilinear')#, vmin=0, vmax=20)
     #print(np.max(sld_shape[:,:,21]))
     
     ax.set_title('t = {0} s, z = 10 $\AA$'.format(timestep), fontsize=20)
@@ -54,12 +69,14 @@ def img_plot_mesh(cell, nodes, nodeprop, timestep, dyn_folder, mode):
             ax.add_patch(rect)
     plot_folder_t=os.path.join(dyn_folder,'t{0:0>3}/images'.format(timestep))
     os.makedirs(plot_folder_t, exist_ok=True)
-    plot_file=os.path.join(plot_folder_t,'node_{1:0>3}_{0}.pdf'.format(mode,timestep))
+    plot_file=os.path.join(plot_folder_t,'node_{1:0>3}_{0}.pdf'.format(mode,timestep))    
+    plt.savefig(plot_file)
+    plot_file=os.path.join(plot_folder_t,'node_{1:0>3}_{0}.png'.format(mode,timestep))    
     plt.savefig(plot_file)
     plt.close() 
 
 ## plot pseudo scatterer with mesh
-def p_scatter_plot_mesh(cell, cellprop, nodes, timestep, mode, dyn_folder):
+def p_scatter_plot_mesh(cell, cellprop, nodes, timestep, mode, dyn_folder, sld_in, sld_out):
     #read cells
     x = cell[:,0]
     y = cell[:,1]
@@ -96,7 +113,9 @@ def p_scatter_plot_mesh(cell, cellprop, nodes, timestep, mode, dyn_folder):
     #area=np.ones(nx*ny)
     fig, ax = plt.subplots(figsize=(10,8)) 
 
-    scatt_plot = ax.scatter(x_red, y_red, s=40, c=sld_red, edgecolors=None, cmap='viridis', vmin=0*cell_vol, vmax=1*cell_vol)
+    scatt_plot = ax.scatter(x_red, y_red, s=40, c=sld_red, edgecolors=None,
+                            cmap='viridis', vmin=min(sld_in, sld_out)*cell_vol,
+                            vmax=max(sld_in, sld_out)*cell_vol)
 
     ax.set_title('t = {0} s, z = 10.25 $\AA$'.format(timestep), fontsize=20)
     ax.set_xlabel('x [$\AA$]', fontsize=20)
@@ -120,6 +139,8 @@ def p_scatter_plot_mesh(cell, cellprop, nodes, timestep, mode, dyn_folder):
     plot_folder_t=os.path.join(dyn_folder,'t{0:0>3}/images'.format(timestep))
     os.makedirs(plot_folder_t, exist_ok=True)
     plot_file=os.path.join(plot_folder_t,'cat_cell_{1:0>3}_{0}.pdf'.format(mode,timestep))
+    plt.savefig(plot_file, bbox_inches='tight')
+    plot_file=os.path.join(plot_folder_t,'cat_cell_{1:0>3}_{0}.png'.format(mode,timestep))
     plt.savefig(plot_file, bbox_inches='tight')
     plt.close()
 

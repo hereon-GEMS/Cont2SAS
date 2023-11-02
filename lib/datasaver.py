@@ -70,8 +70,8 @@ def sim_read(file_name):
     if mode=='shrink' or mode=='gg':
         rad_t=file['radius'][()]
     if mode=='diffuse':
-        rad=file['radius'][:]
-        D=file['Diffusion_coeff'][:]
+        rad=file['radius'][()]
+        D=file['Diffusion_coeff'][()]
     file.close() 
     if mode=='shrink' or mode=='gg':
         return nodes, nodeprop, cell, cellprop, catcellprop, catcell, mode, grain_sld, env_sld, rad_t
