@@ -152,7 +152,7 @@ def plotter_3d(points_3d, save_plot=False, save_dir='.',
     points_3d=np.array(points_3d)
     ax.scatter(points_3d[:,0],points_3d[:,1],points_3d[:,2])
     if save_plot:
-        plt.savefig(save_dir+'/'+filename, format='png')
+        plt.savefig(save_dir+'/'+filename+'.png', format='png')
     plt.close() 
     
 def mesh_plotter_3d(points_3d, con_3d, save_plot=False, 
@@ -173,7 +173,7 @@ def mesh_plotter_3d(points_3d, con_3d, save_plot=False,
             draw_cur=draw3+i
             ax.plot(point[draw_cur,0], point[draw_cur,1],point[draw_cur,2],'k')
     if save_plot:
-        plt.savefig(save_dir+'/'+ filename, format='png')
+        plt.savefig(save_dir+'/'+ filename+'.png', format='png')
         
 # def colorplot_node_3d(coords, sld, nx, ny, nz, save_plot=False,save_dir='.'):
 #     fig = plt.figure()
