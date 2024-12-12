@@ -26,8 +26,6 @@ def mesh_write(file_name, nodes, cells, con):
     file.close()
     
 def mesh_read(file_name):
-    #file_full=os.path.join(Folder,filename)
-    #os.makedirs(Folder, exist_ok=True)
     file=h5py.File(file_name,'r')
     nodes=file['nodes'][:]
     cells=file['cells'][:]
