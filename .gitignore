@@ -1,3 +1,6 @@
 # folder (data and non required)
 data
 garbage
+
+# __pycache__
+lib/__pycache__
