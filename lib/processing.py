@@ -201,6 +201,11 @@ def node2cell(nodes,connec,prop, t_arr):
         cell_props.append(cell_props_t)
     return np.array(cells[0]), np.array(cell_props)
 
-
-
+# function for converting string to boolean
+def str_to_bool(value):
+    if value.lower() in ['true', '1', 'yes']:
+        return True
+    elif value.lower() in ['false', '0', 'no']:
+        return False
+    return None
   
