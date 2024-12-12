@@ -1,0 +1,12 @@
+<root>
+    <lengths>
+        <x>20</x>
+        <y>20</y>
+        <z>20</z>
+    </lengths>
+    <num_cell>
+        <x>40</x>
+        <y>40</y>
+        <z>40</z>
+    </num_cell>
+</root>
