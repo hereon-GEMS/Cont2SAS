@@ -9,4 +9,12 @@
         <y>40</y>
         <z>40</z>
     </num_cell>
+    <decision>
+        <update>False</update>
+        <plot>
+            <node>True</node>
+            <cell>True</cell>
+            <mesh>True</mesh>
+        </plot>
+    </decision>
 </root>
