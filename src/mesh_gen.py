@@ -7,6 +7,10 @@ Created on Fri Jun 23 10:28:09 2023
 
 @author: amajumda
 """
+import sys
+import os
+lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(lib_dir)
 
 from lib import struct_gen as sg
 from lib import plotter as pltr
@@ -26,38 +30,58 @@ import xml.etree.ElementTree as ET
 tic = time.perf_counter()
 
 """
-configuration of the structure 
+read input from xml file
 """
 
 xml_folder='../xml/'
 
-struct_xml=os.join.path(xml_folder, 'struct.xml')
+struct_xml=os.path.join(xml_folder, 'struct.xml')
 
-root = ET.fromstring(xml_data)
+tree=ET.parse(struct_xml)
+root = tree.getroot()
 
-#box side lengths
-length_a=20
-length_b=20
-length_c=20
+# box side lengths
+length_a=float(root.find('lengths').find('x').text) 
+length_b=float(root.find('lengths').find('y').text)
+length_c=float(root.find('lengths').find('z').text)
 # number of cells in each direction
-nx=40
-ny=40
-nz=40
+nx=int(root.find('num_cell').find('x').text)
+ny=int(root.find('num_cell').find('y').text)
+nz=int(root.find('num_cell').find('z').text)
 
+"""
+create folder structure
+"""
 
-# control parameters 
+# decision paramters
+# True: current saved data are updated (if available)
+# False: current saved data are not updated (if available)
 update=False
 
-# plot values
+# True: new figures created
+# False: new figures not created
+# three figs: points at nodes,points at cells,Line figure showing mesh connectivity 
 plot_node = False
 plot_cell = False
 plot_mesh = False
 
-#folder structure
-os.makedirs('data', exist_ok=True)
-res_dir=os.path.join('./data/',
-                        str(length_a)+'_'+str(length_b)+'_'+str(length_c)+'_'+
-                        str(nx)+'_'+str(ny)+'_'+str(nz))
+# create folders 
+os.makedirs('../data', exist_ok=True)
+
+# save length values as strings
+# decimal points are replaced with p
+length_a_str=str(length_a).replace('.','p')
+length_b_str=str(length_a).replace('.','p')
+length_c_str=str(length_a).replace('.','p')
+
+# save num_cell values as strings
+nx_str=str(nx)
+ny_str=str(ny)
+nz_str=str(nz)
+res_dir=os.path.join('../data/',
+                        length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
+                        nx_str+'_'+ny_str+'_'+nz_str)
+
 
 if os.path.exists(res_dir):
     is_dir=True
@@ -69,7 +93,7 @@ if os.path.exists(res_dir):
 
 
 if is_dir:
-    filename='data.h5'
+    filename='mesh.h5'
     os.makedirs(res_dir, exist_ok=True) 
     nodes, cells, con = dsv.mesh_read(os.path.join(res_dir, filename))
 else:
