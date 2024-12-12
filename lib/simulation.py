@@ -2,7 +2,7 @@
 import numpy as np
 from scipy import special
 from scipy.optimize import minimize
-from numba import njit, prange
+#from numba import njit, prange
 from scipy.special import erf
 
 ### 2d function ###
