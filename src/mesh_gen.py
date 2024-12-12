@@ -54,16 +54,16 @@ create folder structure
 """
 
 # decision paramters
-# True: current saved data are updated (if available)
-# False: current saved data are not updated (if available)
-update=False
+# True: current saved figures are updated (if available)
+# False: current saved figures are not updated (if available)
+update=procs.str_to_bool(root.find('decision').find('update').text)
 
 # True: new figures created
 # False: new figures not created
 # three figs: points at nodes,points at cells,Line figure showing mesh connectivity 
-plot_node = False
-plot_cell = False
-plot_mesh = False
+plot_node = procs.str_to_bool(root.find('decision').find('plot').find('node').text)
+plot_cell = procs.str_to_bool(root.find('decision').find('plot').find('cell').text)
+plot_mesh = procs.str_to_bool(root.find('decision').find('plot').find('mesh').text)
 
 # create folders 
 os.makedirs('../data', exist_ok=True)
@@ -80,7 +80,7 @@ ny_str=str(ny)
 nz_str=str(nz)
 res_dir=os.path.join('../data/',
                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-                        nx_str+'_'+ny_str+'_'+nz_str)
+                        nx_str+'_'+ny_str+'_'+nz_str+'/structure')
 
 
 if os.path.exists(res_dir):
@@ -89,33 +89,62 @@ if os.path.exists(res_dir):
         print('structure exists at {0}'.format(res_dir))
         print('!abort!')
         sys.exit()
+    else:
+        print('structure exists at {0} but figures will be updated'.format(res_dir))
+        if plot_node:
+            print('node figure exists at {0} but will be updated'.format(res_dir))
+        if plot_cell:
+            print('cell figure exists at {0} but will be updated'.format(res_dir))
+        if plot_mesh:
+            print('mesh figure exists at {0} but will be updated'.format(res_dir))
+else:
+    is_dir=False
+    print('new structure will be created at {0}'.format(res_dir))
+    if plot_node:
+        print('node figure will be created at {0}'.format(res_dir))
+    if plot_cell:
+        print('cell figure will be created at {0}'.format(res_dir))
+    if plot_mesh:
+        print('mesh figure will be created at {0}'.format(res_dir))
 
 
+"""
+structure read (if exist) or generation (if not exist)
+""" 
 
 if is_dir:
-    filename='mesh.h5'
-    os.makedirs(res_dir, exist_ok=True) 
-    nodes, cells, con = dsv.mesh_read(os.path.join(res_dir, filename))
+    # read structure for updating figures
+    struct_file=os.path.join(res_dir, 'struct.h5')
+    #os.makedirs(res_dir, exist_ok=True) 
+    nodes, cells, con = dsv.mesh_read(struct_file)
+
 else:
     # generattion of node cell and connectivity
-    
     nodes, cells, con = sg.node_cell_gen_3d(length_a, length_b, length_c, nx, ny, nz)
-    
-    # creation of mesh file data.h5
 
-    filename='data.h5'
+    # creation of mesh file struct.h5
     os.makedirs(res_dir, exist_ok=True)
-    dsv.mesh_write(os.path.join(res_dir, filename), nodes, cells, con)
+    struct_file=os.path.join(res_dir, 'struct.h5')
+    dsv.mesh_write(struct_file, nodes, cells, con)
 
+
+"""
+Create figures
+""" 
 # images of nodes , cells , mesh
-
-os.makedirs(os.path.join(res_dir, 'images'), exist_ok=True)
+os.makedirs(os.path.join(res_dir, 'figures'), exist_ok=True)
 if plot_node:
-    pltr.plotter_3d(nodes,save_plot=True,save_dir=os.path.join(res_dir, 'images'),
+    pltr.plotter_3d(nodes,save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
                 filename='node', figsize=(10,10))
 if plot_cell:
-    pltr.plotter_3d(cells,save_plot=True,save_dir=os.path.join(res_dir, 'images'),
+    pltr.plotter_3d(cells,save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
                 filename='cell', figsize=(10,10))
 if plot_mesh:
-    pltr.mesh_plotter_3d(nodes, con, save_plot=True,save_dir=os.path.join(res_dir, 'images'),
+    pltr.mesh_plotter_3d(nodes, con, save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
                 filename='mesh', figsize=(10,10))
+    
+toc = time.perf_counter()
+tcomp=toc-tic
+
+print('Program finished running')
+print('Total time taken is {0}s'.format(tcomp))
