@@ -4,7 +4,92 @@ from scipy import special
 from scipy.optimize import minimize
 #from numba import njit, prange
 from scipy.special import erf
+import xml.etree.ElementTree as ET
+import os
 
+def model_run(sim_model,nodes, midpoint, t):
+    if sim_model=='ball':
+        return model_ball(nodes, midpoint, t)
+    if sim_model=='box':
+        return model_box(nodes, midpoint, t)
+    if sim_model=='bib':
+        return model_bib(nodes, midpoint, t)
+    if sim_model=='bib_ecc':
+        return model_bib_ecc(nodes, midpoint, t)
+
+def model_ball(nodes, midpoint, t):
+    # read model_run_param from xml
+    xml_folder='../xml/'
+    struct_xml=os.path.join(xml_folder, 'model_ball.xml')
+    tree=ET.parse(struct_xml)
+    root = tree.getroot()
+    # read params
+    rad=float(root.find('rad').text)
+    sld=float(root.find('sld').text)
+    # run simulation
+    nodes = np.array(nodes)
+    sim_sld = np.zeros(len(nodes))
+    cord_ed = np.sum((nodes-midpoint)**2,axis=1)
+    sim_sld [cord_ed <= rad**2] = sld
+    return sim_sld
+
+def model_box(nodes, midpoint, t):
+    # read model_run_param from xml
+    xml_folder='../xml/'
+    struct_xml=os.path.join(xml_folder, 'model_box.xml')
+    tree=ET.parse(struct_xml)
+    root = tree.getroot()
+    # read params
+    sld=float(root.find('sld').text)
+    # run simulation
+    nodes = np.array(nodes)
+    sim_sld = sld*np.ones(len(nodes))
+    return sim_sld
+
+def model_bib(nodes, midpoint, t):
+    # read model_run_param from xml
+    xml_folder='../xml/'
+    struct_xml=os.path.join(xml_folder, 'model_bib.xml')
+    tree=ET.parse(struct_xml)
+    root = tree.getroot()
+    # read params
+    rad=float(root.find('rad').text)
+    sld_ball=float(root.find('sld_in').text)
+    sld_box=float(root.find('sld_out').text)
+    # run simulation
+    nodes = np.array(nodes)
+    sim_sld = sld_box*np.ones(len(nodes))
+    cord_ed = np.sum((nodes-midpoint)**2,axis=1)
+    sim_sld [cord_ed <= rad**2] = sld_ball
+    return sim_sld
+
+def model_bib_ecc(nodes, midpoint, t):
+    # read model_run_param from xml
+    xml_folder='../xml/'
+    struct_xml=os.path.join(xml_folder, 'model_bib_ecc.xml')
+    tree=ET.parse(struct_xml)
+    root = tree.getroot()
+    # read params
+    rad=float(root.find('rad').text)
+    sld_ball=float(root.find('sld_in').text)
+    sld_box=float(root.find('sld_out').text)
+    ecc_x=float(root.find('ecc').find('x').text)
+    ecc_y=float(root.find('ecc').find('y').text)
+    ecc_z=float(root.find('ecc').find('z').text)
+    ecc=np.array([ecc_x, ecc_y, ecc_z])
+    print(ecc)
+    # run simulation
+    nodes = np.array(nodes)
+    sim_sld = sld_box*np.ones(len(nodes))
+    ball_mid=midpoint+ecc
+    print(ball_mid)
+    cord_ed = np.sum((nodes-ball_mid)**2,axis=1)
+    sim_sld [cord_ed <= rad**2] = sld_ball
+    return sim_sld
+
+
+
+########################## old functions #####################
 ### 2d function ###
 
 ### static grain models ###
