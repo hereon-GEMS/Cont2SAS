@@ -80,6 +80,56 @@ def node_cell_gen_3d (a, b, c, nx, ny, nz):
         idx+=1
     return nodes, cells, con_3d
 
+# # generates nodes, connectivity and cells (used in the node_cell version)
+# def node_cell_gen_3d (a, b, c, nx, ny, nz): 
+#     #a = length_a, b = length_b c = length_c
+#     #nx = no. of divisions in x direction (same for ny and nz)
+    
+#     # cell dimension
+#     dx=a/(nx)
+#     dy=b/(ny)
+#     dz=c/(nz)
+
+#     # total number of nodes and cells
+#     num_nodes=(nx+1)*(ny+1)*(nz+1)
+#     num_cells=nx*ny*nz
+    
+#     # create node matrix
+#     nodes=np.zeros((num_nodes,3))
+#     idx=0
+#     for i in range(nz+1):
+#         for j in range(ny+1):
+#             for k in range(nx+1):
+#                 nodes[idx,:]=np.array([k*dx, j*dy, i*dz])
+#                 idx+=1
+#                 #print(idx)
+    
+#     # create connectivity matrix
+#     el=np.array([0, 1, nx+2, nx+1, (nx+1)*(ny+1), (nx+1)*(ny+1)+1, \
+#                   (nx+1)*(ny+1)+ny+2, (nx+1)*(ny+1)+ny+1])
+#     con_3d=np.zeros((num_cells,len(el)), dtype=int)
+#     cur=0
+#     idx=0
+#     for i in range(nz):
+#         for j in range(ny):
+#             for k in range(nx):
+#                 con_3d[idx,:]=cur+el
+#                 #con_3d.append(list((cur)+el))
+#                 idx+=1
+#                 cur=cur+1
+#             cur=cur+1
+#         cur=cur+1+nz
+    
+#     # create cell matrix
+#     cells=np.zeros((num_cells,3))
+#     idx=0
+#     for connec in con_3d:
+#         points=nodes[connec]
+#         cell_center=np.average(points, axis=0)
+#         cells[idx]=cell_center
+#         idx+=1
+#     return nodes, cells, con_3d
+
 ## 2d structures ##
 def struct_gen_2d (a, b, nx, ny, flat=0): 
     #a = length_a, b = length_b c = length_c
