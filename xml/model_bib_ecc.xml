@@ -1,0 +1,23 @@
+<!-- 
+model names:
+static model:
+1) Sphere (ball)
+list params:
+(maintain the order)
+1) radius
+2) sld of ball
+3) sld of box
+4) eccentricity vector
+-->
+
+<root>
+    <rad>7</rad>
+    <sld_in>2</sld_in>
+    <sld_out>0</sld_out>
+    <ecc>
+        <x>5</x>
+        <y>5</y>
+        <z>5</z>
+    </ecc>
+
+</root>
