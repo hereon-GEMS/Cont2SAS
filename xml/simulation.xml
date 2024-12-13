@@ -1,0 +1,21 @@
+<!-- 
+model names:
+static models:
+1) Cube (box)
+2) Sphere (ball)
+3) Sphere in center of cube (bib) % bib = ball in box
+4) Sphere not in center of cube (bib_ecc)% ecc = eccentric
+
+Dynamic models:
+1) grain growth (gg)
+2) interdiffusion (fs) % fs = fuzzy sphere
+-->
+
+<root>
+    <model>bib_ecc</model>
+    <sim_param>
+        <dt>1</dt>
+        <tend>0</tend>
+        <n_ensem>3</n_ensem>
+    </sim_param>
+</root>
