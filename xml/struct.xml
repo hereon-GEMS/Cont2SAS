@@ -10,7 +10,7 @@
         <z>40</z>
     </num_cell>
     <decision>
-        <update>False</update>
+        <update>True</update>
         <plot>
             <node>True</node>
             <cell>True</cell>
