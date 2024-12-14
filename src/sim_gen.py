@@ -144,7 +144,6 @@ for i in range(len(t_arr)):
         # .T is required to exchange x and y axis 
         # origin is 'lower' to put it in lower left corner 
         plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, 20, 0, 20], origin='lower')
-        #plt.imshow(nodes_3d[:,:,6,1].T, extent=[0, 20, 0, 20], origin='lower')
         plot_file=os.path.join(ensem_dir,'snap.jpg')
         plt.colorbar()
         plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} '.format(t,idx_ensem+1))
