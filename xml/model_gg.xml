@@ -1,24 +1,18 @@
 <!-- 
 model names:
-static models:
-1) Cube (box)
-2) Sphere (ball)
-3) Sphere in center of cube (bib) % bib = ball in box
-4) Sphere not in center of cube (bib_ecc)% ecc = eccentric
-
-Dynamic models:
-1) grain growth (gg)
-2) interdiffusion (fs) % fs = fuzzy sphere
+static model:
+1) Sphere (ball)
+list params:
+(maintain the order)
+1) radius at time t=0
+2) radius at time t=t_end
+3) sld_in=sld of grain
+4) sld_in=sld of environment
 -->
 
 <root>
-    <model>
-        ball
-    </model>
-    <sim_param>
-        <dt>1</dt>
-        <tend>10</tend>
-        <sld_in>2</sld_in>
-        <sld_out>0</sld_out>
-    </sim_param>
+    <rad_0>2</rad_0>
+    <rad_end>7</rad_end>
+    <sld_in>4</sld_in>
+    <sld_out>2</sld_out>
 </root>
