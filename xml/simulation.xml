@@ -12,10 +12,10 @@ Dynamic models:
 -->
 
 <root>
-    <model>bib_ecc</model>
+    <model>gg</model>
     <sim_param>
         <dt>1</dt>
-        <tend>0</tend>
+        <tend>2</tend>
         <n_ensem>3</n_ensem>
     </sim_param>
 </root>
