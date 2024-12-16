@@ -140,7 +140,7 @@ for i in range(len(t_arr)):
         """
         run simulation
         """
-        sld=sim.model_run(sim_model, nodes, mid_point, t, t_end)
+        sld, sld_max, sld_min=sim.model_run(sim_model, nodes, mid_point, t, t_end)
 
         # plottig
         sld_3d=sld.reshape(nx+1, ny+1, nz+1)
@@ -150,7 +150,7 @@ for i in range(len(t_arr)):
         z_val=nodes_3d[0, 0, (nz+1)//4, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower')
+        plt.imshow(sld_3d[:,:,(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower', vmin=sld_min, vmax=sld_max)
         plot_file_1=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
         plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
@@ -168,12 +168,12 @@ for i in range(len(t_arr)):
         z_val=nodes_3d[0, 0, (nz+1)//2, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, 20, 0, 20], origin='lower')
+        plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, 20, 0, 20], origin='lower',vmin=sld_min, vmax=sld_max)
         plot_file_2=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
-        plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
-            \n z = {2}$\AA$'.format(t,idx_ensem+1,z_val))
-        plt.savefig(plot_file_2, format='jpg', bbox_inches='tight')
+        plt.title('time = {0:0>3}s, ensmbl num = {1}, z = {2}{3}'.format(t,idx_ensem+1,z_val,r'$\mathrm{\AA}$'))
+        #plt.title(r"time = {0:0>3}s, {1}".format(t,r'$\mathrm{\AA}$'))
+        plt.savefig(plot_file_2, format='jpg')
         ### add images of ensemble 1 for video
         if idx_ensem==0:  
             images_2.append(imageio.imread(plot_file_2))
@@ -185,12 +185,12 @@ for i in range(len(t_arr)):
         z_val=nodes_3d[0, 0, 3*(nz+1)//4, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,3*(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower')
+        plt.imshow(sld_3d[:,:,3*(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower',vmin=sld_min, vmax=sld_max)
         plot_file_3=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
-        plt.title(" time = {0:0>3}s \n emsemble step = {1:0>3} \
+        plt.title(" time = {0:0>3}s, emsemble step = {1:0>3} \
             \n z = {2}$\AA$".format(t,idx_ensem+1,z_val))
-        plt.savefig(plot_file_3, format='jpg', bbox_inches='tight')
+        plt.savefig(plot_file_3, format='jpg')
         ### add images of ensemble 1 for video
         if idx_ensem==0:  
             images_3.append(imageio.imread(plot_file_3))
