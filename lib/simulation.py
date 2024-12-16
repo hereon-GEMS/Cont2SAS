@@ -77,12 +77,10 @@ def model_bib_ecc(nodes, midpoint, t):
     ecc_y=float(root.find('ecc').find('y').text)
     ecc_z=float(root.find('ecc').find('z').text)
     ecc=np.array([ecc_x, ecc_y, ecc_z])
-    print(ecc)
     # run simulation
     nodes = np.array(nodes)
     sim_sld = sld_box*np.ones(len(nodes))
     ball_mid=midpoint+ecc
-    print(ball_mid)
     cord_ed = np.sum((nodes-ball_mid)**2,axis=1)
     sim_sld [cord_ed <= rad**2] = sld_ball
     return sim_sld
