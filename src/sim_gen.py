@@ -29,7 +29,8 @@ import numpy as np
 import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio
+import imageio.v2 as imageio
+
 
 #timer counter initial
 tic = time.perf_counter()
@@ -152,7 +153,7 @@ for i in range(len(t_arr)):
         plt.imshow(sld_3d[:,:,(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower')
         plot_file_1=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
-        plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
+        plt.title(r' time = {0:0>3}s \n emsemble step = {1:0>3} \
             \n z = {2}$\AA$'.format(t,idx_ensem+1,z_val))
         plt.savefig(plot_file_1, format='jpg', bbox_inches='tight')
         ### add images of ensemble 1 for video
@@ -168,7 +169,7 @@ for i in range(len(t_arr)):
         plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, 20, 0, 20], origin='lower')
         plot_file_2=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
-        plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
+        plt.title(r' time = {0:0>3}s \n emsemble step = {1:0>3} \
             \n z = {2}$\AA$'.format(t,idx_ensem+1,z_val))
         plt.savefig(plot_file_2, format='jpg', bbox_inches='tight')
         ### add images of ensemble 1 for video
@@ -184,8 +185,8 @@ for i in range(len(t_arr)):
         plt.imshow(sld_3d[:,:,3*(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower')
         plot_file_3=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
-        plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
-            \n z = {2}$\AA$'.format(t,idx_ensem+1,z_val))
+        plt.title(r" time = {0:0>3}s \n emsemble step = {1:0>3} \
+            \n z = {2}$\AA$".format(t,idx_ensem+1,z_val))
         plt.savefig(plot_file_3, format='jpg', bbox_inches='tight')
         ### add images of ensemble 1 for video
         if idx_ensem==0:  
