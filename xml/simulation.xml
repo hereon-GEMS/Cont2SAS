@@ -12,10 +12,10 @@ Dynamic models:
 -->
 
 <root>
-    <model>gg</model>
+    <model>fs</model>
     <sim_param>
         <dt>1</dt>
-        <tend>2</tend>
+        <tend>10</tend>
         <n_ensem>3</n_ensem>
     </sim_param>
 </root>
