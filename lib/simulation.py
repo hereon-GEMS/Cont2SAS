@@ -7,7 +7,7 @@ from scipy.special import erf
 import xml.etree.ElementTree as ET
 import os
 
-def model_run(sim_model,nodes, midpoint, t):
+def model_run(sim_model,nodes, midpoint, t, t_end):
     if sim_model=='ball':
         return model_ball(nodes, midpoint, t)
     if sim_model=='box':
@@ -16,6 +16,10 @@ def model_run(sim_model,nodes, midpoint, t):
         return model_bib(nodes, midpoint, t)
     if sim_model=='bib_ecc':
         return model_bib_ecc(nodes, midpoint, t)
+    if sim_model=='gg':
+        return model_gg(nodes, midpoint, t, t_end)
+    if sim_model=='fs':
+        return model_fs(nodes, midpoint, t, t_end)
 
 def model_ball(nodes, midpoint, t):
     # read model_run_param from xml
@@ -85,7 +89,28 @@ def model_bib_ecc(nodes, midpoint, t):
     sim_sld [cord_ed <= rad**2] = sld_ball
     return sim_sld
 
+def model_gg(nodes, midpoint, t, t_end):
+    # read model_run_param from xml
+    xml_folder='../xml/'
+    struct_xml=os.path.join(xml_folder, 'model_gg.xml')
+    tree=ET.parse(struct_xml)
+    root = tree.getroot()
+    # read params
+    rad_0=float(root.find('rad_0').text)
+    rad_end=float(root.find('rad_end').text)
+    sld_grain=float(root.find('sld_in').text)
+    sld_env=float(root.find('sld_out').text)
+    # run simulation
+    nodes = np.array(nodes)
+    sim_sld = sld_env*np.ones(len(nodes))
+    rad=rad_0+t*(rad_end-rad_0)/t_end
+    print(t)
+    cord_ed = np.sum((nodes-midpoint)**2,axis=1)
+    sim_sld [cord_ed <= rad**2] = sld_grain
+    return sim_sld
 
+def model_fs(nodes, midpoint, t):
+    print(' we are in model fs')
 
 ########################## old functions #####################
 ### 2d function ###
