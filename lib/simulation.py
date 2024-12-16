@@ -35,6 +35,9 @@ def model_ball(nodes, midpoint, t):
     sim_sld = np.zeros(len(nodes))
     cord_ed = np.sum((nodes-midpoint)**2,axis=1)
     sim_sld [cord_ed <= rad**2] = sld
+    sld_max=sld
+    sld_min=0
+    return sim_sld, sld_max, sld_min
     return sim_sld
 
 def model_box(nodes, midpoint, t):
@@ -48,7 +51,9 @@ def model_box(nodes, midpoint, t):
     # run simulation
     nodes = np.array(nodes)
     sim_sld = sld*np.ones(len(nodes))
-    return sim_sld
+    sld_max=sld
+    sld_min=0
+    return sim_sld, sld_max, sld_min
 
 def model_bib(nodes, midpoint, t):
     # read model_run_param from xml
@@ -65,7 +70,9 @@ def model_bib(nodes, midpoint, t):
     sim_sld = sld_box*np.ones(len(nodes))
     cord_ed = np.sum((nodes-midpoint)**2,axis=1)
     sim_sld [cord_ed <= rad**2] = sld_ball
-    return sim_sld
+    sld_max=sld_ball
+    sld_min=sld_box
+    return sim_sld, sld_max, sld_min
 
 def model_bib_ecc(nodes, midpoint, t):
     # read model_run_param from xml
@@ -87,7 +94,9 @@ def model_bib_ecc(nodes, midpoint, t):
     ball_mid=midpoint+ecc
     cord_ed = np.sum((nodes-ball_mid)**2,axis=1)
     sim_sld [cord_ed <= rad**2] = sld_ball
-    return sim_sld
+    sld_max=sld_ball
+    sld_min=sld_box
+    return sim_sld, sld_max, sld_min
 
 def model_gg(nodes, midpoint, t, t_end):
     # read model_run_param from xml
@@ -104,13 +113,37 @@ def model_gg(nodes, midpoint, t, t_end):
     nodes = np.array(nodes)
     sim_sld = sld_env*np.ones(len(nodes))
     rad=rad_0+t*(rad_end-rad_0)/t_end
-    print(t)
     cord_ed = np.sum((nodes-midpoint)**2,axis=1)
     sim_sld [cord_ed <= rad**2] = sld_grain
-    return sim_sld
+    sld_max=sld_grain
+    sld_min=sld_env
+    return sim_sld, sld_max, sld_min
 
-def model_fs(nodes, midpoint, t):
-    print(' we are in model fs')
+def model_fs(nodes, midpoint, t, t_end):
+    # read model_run_param from xml
+    xml_folder='../xml/'
+    struct_xml=os.path.join(xml_folder, 'model_fs.xml')
+    tree=ET.parse(struct_xml)
+    root = tree.getroot()
+    # read params
+    rad=float(root.find('rad').text)
+    sig_0=float(root.find('sig_0').text)
+    sig_end=float(root.find('sig_end').text)
+    sld_grain=float(root.find('sld_in').text)
+    sld_env=float(root.find('sld_out').text)
+    # run simulation
+    nodes = np.array(nodes)
+    sig=sig_0+t*(sig_end-sig_0)/t_end
+    sim_sld = np.ones(len(nodes))
+    coord_r=np.sqrt(np.sum((nodes-midpoint)**2,axis=1))
+    if sig==0:
+        sim_sld=(sld_env-sld_grain)*np.heaviside(coord_r-rad,0)+sld_grain
+    else:
+        #sld=-np.heaviside(coord_r-r,0)+1
+        sim_sld=((sld_grain-sld_env)/2)*(1-special.erf((coord_r-rad)/(np.sqrt(2)*sig)))+sld_env
+    sld_max=sld_grain
+    sld_min=sld_env
+    return sim_sld, sld_max, sld_min
 
 ########################## old functions #####################
 ### 2d function ###
