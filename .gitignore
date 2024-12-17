@@ -4,3 +4,9 @@ garbage
 
 # __pycache__
 lib/__pycache__
+
+# images
+*.jpg
+
+#tempcode
+*tempCodeRunnerFile.py
