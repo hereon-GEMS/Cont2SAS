@@ -14,7 +14,7 @@ Dynamic models:
 <root>
     <model>fs</model>
     <sim_param>
-        <dt>1</dt>
+        <dt>5</dt>
         <tend>10</tend>
         <n_ensem>3</n_ensem>
     </sim_param>
