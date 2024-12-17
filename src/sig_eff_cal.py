@@ -18,6 +18,7 @@ from lib import simulation as sim
 from lib import processing as procs
 from lib import datasaver as dsv
 from lib import scatt_cal as scatt
+from lib import sig_eff as sigeff
 
 
 
@@ -79,6 +80,8 @@ t_arr=np.arange(0,t_end+dt, dt)
 ## ensemble
 n_ensem=int(root.find('sim_param').find('n_ensem').text)
 
+
+### scatt_cal xml ###
 # scatter calculation
 # scatt_cal
 scatt_cal_xml=os.path.join(xml_folder, 'scatt_cal.xml')
@@ -102,6 +105,24 @@ scan_vec_y=float(root.find('scatt_cal').find('scan_vec').find('y').text)
 scan_vec_z=float(root.find('scatt_cal').find('scan_vec').find('z').text)
 scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
 
+### sigeff xml ###
+sig_eff_xml=os.path.join(xml_folder, 'sig_eff.xml')
+
+tree=ET.parse(sig_eff_xml)
+root = tree.getroot()
+
+# decreitization params
+# number of categories and method of categorization
+instrument=root.find('instrument').text
+facility=root.find('facility').text
+
+# scatt_cal params
+d=float(root.find('d').text)
+wl=float(root.find('lambda').text) # wavelength
+beam_shift_vec_x=float(root.find('beam_center').find('x').text)
+beam_shift_vec_y=float(root.find('beam_center').find('y').text)
+#beam_center_vec_z=float(root.find('beam_center').find('z').text)
+beam_shift_vector=np.array([beam_shift_vec_x, beam_shift_vec_y])
 
 """
 create folder structure, read structure and sld info
@@ -149,38 +170,60 @@ if os.path.exists(model_param_dir):
 else:
     print('create simulation first')
 
-for i in range(len(t_arr)):
-    t=t_arr[i]
-    # time_dir name
-    t_dir_name='t{0:0>3}'.format(i)
-    t_dir=os.path.join(model_param_dir, t_dir_name)
-    Iq_all_ensem=np.zeros((num_points,n_ensem))
-    q_all_ensem=np.zeros((num_points,n_ensem))
-    # read I and Q
-    Iq_data_file_name='Iq.h5'
-    Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
-    Iq_data=h5py.File(Iq_data_file,'r')
-    Iq=Iq_data['Iq'][:]
-    q=Iq_data['Q'][:]
-    Iq_data.close()
-    # plotitng I vs Q in time folder
-    plt.loglog(q,Iq)
-    plt.xlabel('Q')
-    plt.ylabel('I(Q)')
-    plt.show()
-    # calculate sigma eff
-    sig_eff=np.zeros(len(t_arr))
-    #neutron_count_t=0
-    for j in range(len(q)-1):
-        del_q=q[j+1]-q[j]
-        sig_eff[i]+=0.5*del_q*(Iq[j+1]+Iq[j])
-    # neutron_count[i]=neutron_count_t
-sig_eff_data_file_name='sig_eff.h5'
-sig_eff_data_file=os.path.join(model_param_dir,sig_eff_data_file_name)
-sig_eff_data=h5py.File(sig_eff_data_file,'w')
-sig_eff_data['sig_eff']=sig_eff
-sig_eff_data['t']=t_arr
-sig_eff_data.close()
+## read detector geometry
+detector_file_name='detector.h5'
+detector_dir='../detector_geometry/{0}_{1}'.format(instrument, facility)
+detector_file=os.path.join(detector_dir, detector_file_name)
+detector_file_data=h5py.File(detector_file,'r')
+nx_det=detector_file_data['num_pixel_x'][()]
+ny_det=detector_file_data['num_pixel_y'][()]
+dx_det=detector_file_data['width_pixel_x'][()]
+dy_det=detector_file_data['width_pixel_y'][()]
+pixel_coord_det=detector_file_data['pixel_coord'][:]
+detector_file_data.close()
+# calculate beam center
+org_det=np.array([nx_det*dx_det/2, ny_det*dy_det/2])
+org_beam=org_det+beam_shift_vector
+# calculate r from pixel coordinates
+r=np.sqrt(np.sum((pixel_coord_det-org_beam)**2, axis=1))
+Q=(4*np.pi/wl)*np.sin(0.5*np.arctan(r/d))
+print(max(Q))
+print(min(Q))
 
-plt.plot(t_arr, sig_eff)
-plt.show()
+##### below will be uncommeted tomorrow
+
+# for i in range(len(t_arr)):
+#     t=t_arr[i]
+#     # time_dir name
+#     t_dir_name='t{0:0>3}'.format(i)
+#     t_dir=os.path.join(model_param_dir, t_dir_name)
+#     Iq_all_ensem=np.zeros((num_points,n_ensem))
+#     q_all_ensem=np.zeros((num_points,n_ensem))
+#     # read I and Q
+#     Iq_data_file_name='Iq.h5'
+#     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
+#     Iq_data=h5py.File(Iq_data_file,'r')
+#     Iq=Iq_data['Iq'][:]
+#     q=Iq_data['Q'][:]
+#     Iq_data.close()
+#     # plotitng I vs Q in time folder
+#     # plt.loglog(q,Iq)
+#     # plt.xlabel('Q')
+#     # plt.ylabel('I(Q)')
+#     # plt.show()
+#     # calculate sigma eff
+#     sig_eff=np.zeros(len(t_arr))
+#     #neutron_count_t=0
+#     for j in range(len(q)-1):
+#         del_q=q[j+1]-q[j]
+#         sig_eff[i]+=0.5*del_q*(Iq[j+1]+Iq[j])
+#     # neutron_count[i]=neutron_count_t
+# sig_eff_data_file_name='sig_eff.h5'
+# sig_eff_data_file=os.path.join(model_param_dir,sig_eff_data_file_name)
+# sig_eff_data=h5py.File(sig_eff_data_file,'w')
+# sig_eff_data['sig_eff']=sig_eff
+# sig_eff_data['t']=t_arr
+# sig_eff_data.close()
+
+# plt.plot(t_arr, sig_eff)
+# # plt.show()
