@@ -154,6 +154,8 @@ for i in range(len(t_arr)):
     # time_dir name
     t_dir_name='t{0:0>3}'.format(i)
     t_dir=os.path.join(model_param_dir, t_dir_name)
+    Iq_all_ensem=np.zeros((num_points,n_ensem))
+    q_all_ensem=np.zeros((num_points,n_ensem))
     for j in range(n_ensem):
         idx_ensem=j
         # create ensemble dir
@@ -393,8 +395,43 @@ for i in range(len(t_arr)):
             os.remove(signal_file)
         os.system('mpirun -np 8 sassena')
         os.chdir(parent_dir)
-    
 
+        # read and save Iq data from current ensem
+        ## read
+        signal_file_loc=os.path.join(scatt_dir, signal_file)
+        sig_data=h5py.File(signal_file_loc,'r')
+        Iq_ensem=np.sqrt(np.sum(sig_data['fq'][:]**2,axis=1))
+        q_ensem=np.sqrt(np.sum(sig_data['qvectors'][:]**2,axis=1))
+        sig_data.close()
+        # process
+        q_arg_ensem=np.argsort(q_ensem)
+        Iq_ensem=Iq_ensem[q_arg_ensem]
+        q_ensem=q_ensem[q_arg_ensem]
+        ## save
+        Iq_all_ensem[:,idx_ensem]=Iq_ensem
+        q_all_ensem[:,idx_ensem]=q_ensem
+
+    # ensem average
+    Iq=np.average(Iq_all_ensem, axis=1)
+    q=q_all_ensem[:,0]
+    q_arg=np.argsort(q)
+    Iq=Iq[q_arg]
+    q=q[q_arg]
+    # plotitng I vs Q in time folder
+    plt.loglog(q,Iq)
+    plt.xlabel('Q')
+    plt.ylabel('I(Q)')
+    Iq_plot_file_name='Iq.jpg'
+    Iq_plot_file=os.path.join(t_dir, Iq_plot_file_name)
+    plt.savefig(Iq_plot_file, format='jpg')
+    plt.show()
+    # saving I vs Q in time folder
+    Iq_data_file_name='Iq.h5'
+    Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
+    Iq_data=h5py.File(Iq_data_file,'w')
+    Iq_data['Iq']=Iq
+    Iq_data['Q']=q
+    Iq_data.close()
 ############################ old garbage #################################
         # sim_data_file_name='sim.h5'
         # sim_data_file=os.path.join(ensem_dir, sim_data_file_name)
