@@ -1,0 +1,21 @@
+<!-- 
+model names:
+static model:
+1) Sphere (ball)
+list params:
+(maintain the order)
+1) radius
+2) sld of ball
+-->
+
+<root>
+    <instrument>SANS-1</instrument>
+    <facility>MLZ</facility>
+    <d>20</d>
+    <lambda>4.5</lambda>
+    <beam_center>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+    </beam_center>
+</root>
