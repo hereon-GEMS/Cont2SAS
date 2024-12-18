@@ -90,4 +90,6 @@ det_geo_data['num_pixel_x']=nx
 det_geo_data['num_pixel_y']=ny
 det_geo_data['width_pixel_x']=dx
 det_geo_data['width_pixel_y']=dy
+det_geo_data['beam_stop_width_x']=bs_wx
+det_geo_data['beam_stop_width_y']=bs_wy
 det_geo_data.close()
