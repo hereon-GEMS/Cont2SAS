@@ -1,11 +1,12 @@
 <!-- 
-model names:
-static model:
-1) Sphere (ball)
+input xml for effective cross-section calculation
 list params:
 (maintain the order)
-1) radius
-2) sld of ball
+1) discretization - instrument
+2) params for calculating scattering function - facility
+3) distance between sample and detector - d
+4) wavelength of neutron beam - lambda
+5) vector defining positing of beam center w.r.t. detector center - beam_center
 -->
 
 <root>

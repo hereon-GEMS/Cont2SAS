@@ -1,14 +1,12 @@
 <!-- 
-model names:
-static models:
-1) Cube (box)
-2) Sphere (ball)
-3) Sphere in center of cube (bib) % bib = ball in box
-4) Sphere not in center of cube (bib_ecc)% ecc = eccentric
-
-Dynamic models:
-1) grain growth (gg)
-2) interdiffusion (fs) % fs = fuzzy sphere
+input xml for effective cross-section calculation
+list params:
+(maintain the order)
+1) name of simulation model - model
+2) params for simulating - sim_param
+    2a) length of time step - dt
+    2b) total time - tend
+    2c) number of ensemble per time step - n_ensem
 -->
 
 <root>

@@ -1,13 +1,13 @@
 <!-- 
 model names:
-static model:
-1) Sphere (ball)
+static model: interdiffusion (ana model: fuzzy sphere)
 list params:
 (maintain the order)
-1) radius at time t=0
-2) radius at time t=t_end
-3) sld_in=sld of grain
-4) sld_in=sld of environment
+1) radius of grain  - rad
+2) sigma at (t=0) - sig_0
+3) sigma at (t=t_end) - sig_end
+4) sld of grain - sld_in
+5) sld of environment - sld_out
 -->
 
 <root>

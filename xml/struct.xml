@@ -1,3 +1,17 @@
+<!-- 
+input xml for structure (or mesh) generation
+list params:
+(maintain the order)
+1) length of simulation box (x,y,z) - lengths
+2) number of cells per direction (x,y,z) - num_cell
+3) decision whether to save or not - decision
+    3a) whether to change - update
+    3b) whether to plot - plot
+        3ba) plot points at nodes - node
+        3bb) plot points at cells - cell
+        3bc) plot mesh - mesh
+-->
+
 <root>
     <lengths>
         <x>20</x>

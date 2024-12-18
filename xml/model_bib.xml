@@ -1,12 +1,11 @@
 <!-- 
 model names:
-static model:
-1) Sphere (ball)
+static model: sphere in cube (ball in box)
 list params:
 (maintain the order)
-1) radius
-2) sld of ball
-3) sld of box
+1) radius - rad
+2) sld of ball - sld_in
+3) sld of box - sld_out
 -->
 
 <root>

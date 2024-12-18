@@ -1,10 +1,9 @@
 <!-- 
 model names:
-static model:
-1) Sphere (ball)
+static model: cube (box)
 list params:
 (maintain the order)
-1) sld of ball
+1) sld of ball - sld
 -->
 
 <root>

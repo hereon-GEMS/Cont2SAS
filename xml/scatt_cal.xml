@@ -1,11 +1,17 @@
 <!-- 
-model names:
-static model:
-1) Sphere (ball)
+input xml for scattering calculation
 list params:
 (maintain the order)
-1) radius
-2) sld of ball
+1) discretization - discretization
+    1a) number of categories - num_cat
+    1b) method of categorization - method_cat
+2) params for calculating scattering function - scatt_cal
+    2a) name of signal file (sassena output)- sig_file
+    2b) scan vector (along which Q vectors will be calculated) - scan_vec
+    2c) lower bound of Q - Q_start
+    2d) upper bound of Q - Q_end
+    2e) number of Q points - num_points
+    2f) number of Q oriantation (orientational average) - num_orientation
 -->
 
 <root>

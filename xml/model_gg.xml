@@ -1,13 +1,12 @@
 <!-- 
 model names:
-static model:
-1) Sphere (ball)
+static model: grain growth (ana model: sphere)
 list params:
 (maintain the order)
-1) radius at time t=0
-2) radius at time t=t_end
-3) sld_in=sld of grain
-4) sld_in=sld of environment
+1) radius of grain at (t=0) - rad_0
+2) radius of grain at (t=t_end) - rad_end
+3) sld of grain - sld_in
+4) sld of environment - sld_out
 -->
 
 <root>
