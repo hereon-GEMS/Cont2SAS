@@ -6,10 +6,11 @@ list params:
 2) number of cells per direction (x,y,z) - num_cell
 3) decision whether to save or not - decision
     3a) whether to change - update
+    (if update is false and structure exists nothing changes)
     3b) whether to plot - plot
         3ba) plot points at nodes - node
         3bb) plot points at cells - cell
-        3bc) plot mesh - mesh
+        3bc) plot mesh - mesh (time consuming plot)
 -->
 
 <root>
