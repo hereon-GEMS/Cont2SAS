@@ -217,9 +217,11 @@ for i in range(len(t_arr)):
         # ### sassena runner ###
         parent_dir=os.getcwd()
         os.chdir(os.path.join(parent_dir,scatt_dir))
+        sassena_exec='/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+        sass_out_file='sass.log'
         if os.path.exists(signal_file):
             os.remove(signal_file)
-        os.system('mpirun -np 8 sassena')
+        os.system('mpirun -np 8 {0} > {1} 2>&1'.format(sassena_exec, sass_out_file))
         os.chdir(parent_dir)
 
         # read and save Iq data from current ensem
@@ -258,109 +260,3 @@ for i in range(len(t_arr)):
     Iq_data['Iq']=Iq
     Iq_data['Q']=q
     Iq_data.close()
-############################ old garbage #################################
-        # sim_data_file_name='sim.h5'
-        # sim_data_file=os.path.join(ensem_dir, sim_data_file_name)
-        # sim_data=h5py.File(sim_data_file,'r')
-        # node_sld=sim_data['sld']
-        # sim_data.close()
-        # dsv.pdb_dcd_write(cells, sld_dyn_cell_cat, cat, pdb_dcd_dir)
-        
-        # ### scatter.xml generate ###
-        # dsv.scatterxml_generator(time_dir, sigfile='signal.h5')
-        
-        # ### database generator ###
-        # db_dir=os.path.join(time_dir,'database')
-        # dsv.database_generator(min(sld_dyn_cell_cat), max(sld_dyn_cell_cat), ndiv=10, database_dir=db_dir)
-        
-        # ### sassena runner ###
-        # parent_dir=os.getcwd()
-        # os.chdir(os.path.join(parent_dir,time_dir))
-        # os.system('mpirun -np 8 sassena')
-        # os.chdir(parent_dir)
-        
-        # ### 
-        # sigfile_name=os.path.join(time_dir,'signal.h5')
-        # q_vec_t, fq0_t, fqt_t, fq_t, fq2_t = dsv.sig_read(sigfile_name)
-        # neutron_count_t=0
-        # for j in range(len(q_vec_t)-1):
-        #     del_q=q_vec_t[j+1]-q_vec_t[j]
-        #     neutron_count_t+=0.5*del_q*(fq0_t[j+1]+fq0_t[j])
-        # print('neutron count is '+ str(neutron_count_t))
-        # neutron_count[i]=neutron_count_t
-
-#         """
-#         run simulation
-#         """
-#         sld, sld_max, sld_min=sim.model_run(sim_model, nodes, mid_point, t, t_end)
-
-#         # plottig
-#         sld_3d=sld.reshape(nx+1, ny+1, nz+1)
-        
-#         ## z = 1/4 * z_max
-#         nodes_3d=nodes.reshape(nx+1, ny+1, nz+1, 3)
-#         z_val=nodes_3d[0, 0, (nz+1)//4, 2]
-#         ### .T is required to exchange x and y axis 
-#         ### origin is 'lower' to put it in lower left corner 
-#         plt.imshow(sld_3d[:,:,(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower', vmin=sld_min, vmax=sld_max)
-#         plot_file_1=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
-#         plt.colorbar()
-#         plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
-#             \n z = {2}$\AA$'.format(t,idx_ensem+1,z_val))
-#         plt.savefig(plot_file_1, format='jpg', bbox_inches='tight')
-#         ### add images of ensemble 1 for video
-#         if idx_ensem==0:  
-#             images_1.append(imageio.imread(plot_file_1))
-#             if sim_model=='bib_ecc':
-#                 plt.show()
-#         plt.close()
-
-#         ## z = 2/4 * z_max
-#         nodes_3d=nodes.reshape(nx+1, ny+1, nz+1, 3)
-#         z_val=nodes_3d[0, 0, (nz+1)//2, 2]
-#         ### .T is required to exchange x and y axis 
-#         ### origin is 'lower' to put it in lower left corner 
-#         plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, 20, 0, 20], origin='lower',vmin=sld_min, vmax=sld_max)
-#         plot_file_2=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
-#         plt.colorbar()
-#         plt.title('time = {0:0>3}s, ensmbl num = {1}, z = {2}{3}'.format(t,idx_ensem+1,z_val,r'$\mathrm{\AA}$'))
-#         #plt.title(r"time = {0:0>3}s, {1}".format(t,r'$\mathrm{\AA}$'))
-#         plt.savefig(plot_file_2, format='jpg')
-#         ### add images of ensemble 1 for video
-#         if idx_ensem==0:  
-#             images_2.append(imageio.imread(plot_file_2))
-#             plt.show()
-#         plt.close()
-
-#         ## z = 3/4 * z_max
-#         nodes_3d=nodes.reshape(nx+1, ny+1, nz+1, 3)
-#         z_val=nodes_3d[0, 0, 3*(nz+1)//4, 2]
-#         ### .T is required to exchange x and y axis 
-#         ### origin is 'lower' to put it in lower left corner 
-#         plt.imshow(sld_3d[:,:,3*(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower',vmin=sld_min, vmax=sld_max)
-#         plot_file_3=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
-#         plt.colorbar()
-#         plt.title(" time = {0:0>3}s, emsemble step = {1:0>3} \
-#             \n z = {2}$\AA$".format(t,idx_ensem+1,z_val))
-#         plt.savefig(plot_file_3, format='jpg')
-#         ### add images of ensemble 1 for video
-#         if idx_ensem==0:  
-#             images_3.append(imageio.imread(plot_file_3))
-#             if sim_model=='bib_ecc':
-#                 plt.show()
-#         plt.close()
-#         """
-#         save data
-#         """
-#         sim_data_file_name='sim.h5'
-#         sim_data_file=os.path.join(ensem_dir, sim_data_file_name)
-#         sim_data=h5py.File(sim_data_file,'w')
-#         sim_data['sld']=sld
-#         sim_data.close()
-# # save simulation video
-# ## z = 1/4 * z_max 
-# imageio.mimsave(os.path.join(model_param_dir,'simu_1_4.gif'), images_1, fps=2, loop=0)
-# ## z = 2/4 * z_max 
-# imageio.mimsave(os.path.join(model_param_dir,'simu_2_4.gif'), images_2, fps=2, loop=0)
-# ## z = 3/4 * z_max 
-# imageio.mimsave(os.path.join(model_param_dir,'simu_3_4.gif'), images_3, fps=2, loop=0)
