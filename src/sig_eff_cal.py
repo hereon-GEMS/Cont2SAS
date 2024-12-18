@@ -33,6 +33,7 @@ import matplotlib.pyplot as plt
 import h5py
 import imageio.v2 as imageio
 import mdtraj as md
+import matplotlib.patches as patches
 
 
 #timer counter initial
@@ -180,6 +181,8 @@ ny_det=detector_file_data['num_pixel_y'][()]
 dx_det=detector_file_data['width_pixel_x'][()]
 dy_det=detector_file_data['width_pixel_y'][()]
 pixel_coord_det=detector_file_data['pixel_coord'][:]
+bs_wx_det=detector_file_data['beam_stop_width_x'][()]
+bs_wy_det=detector_file_data['beam_stop_width_y'][()]
 detector_file_data.close()
 # calculate beam center
 org_det=np.array([nx_det*dx_det/2, ny_det*dy_det/2])
@@ -209,9 +212,11 @@ for i in range(len(t_arr)):
     # plt.xlabel('Q')
     # plt.ylabel('I(Q)')
     # plt.show()
+
     # calculate weight
     # categorize Q pixel and weight calculation
     q_cat=np.zeros_like(pixel_Q)
+    w_cat=np.zeros_like(pixel_Q)
     wq=np.zeros_like(q_cut)
     for q_cat_idx in range(len(q_cut)):
         q_cat_val=q_cut[q_cat_idx]
@@ -225,14 +230,38 @@ for i in range(len(t_arr)):
             cat_upper_bound=(q_cut[q_cat_idx]+q_cut[q_cat_idx+1])/2
         q_cat[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)]=q_cat_val
         wq[q_cat_idx]=len(pixel_Q[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)])
+        w_cat[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)]=wq[q_cat_idx]
         
     # plotitng I vs Q in time folder
-    print(q_cut.shape)
-    plt.scatter(pixel_coord_det[:,0], pixel_coord_det[:,1], c=q_cat, cmap='viridis_r', s=1)
+    plt.scatter(pixel_coord_det[:,0], pixel_coord_det[:,1], c=w_cat, cmap='viridis_r', s=1)
     plt.axis('equal')
     plt.xlabel('x [$m$]')
     plt.ylabel('y [$m$]')
     plt.colorbar(label='categorized q values')
+    beam_stop = patches.Rectangle(((nx_det*dx_det-bs_wx_det)/2, (nx_det*dy_det-bs_wy_det)/2),
+                                   0.085, 0.085, color='orange', fill=True)
+    plt.gca().add_patch(beam_stop)
+    outercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
+                                     np.sqrt((nx_det*dx_det/2)**2+(ny_det*dy_det/2)**2), 
+                                     color='r', fill=False)
+    outercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
+                                     (nx_det*dx_det/2), 
+                                     color='r', fill=False)
+    plt.gca().add_patch(outercircle_out)
+    plt.gca().add_patch(outercircle_in)
+    innercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
+                                     np.sqrt((bs_wx_det/2)**2+(bs_wy_det/2)**2), 
+                                     color='k', fill=False)
+    innercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
+                                     (bs_wx_det/2), 
+                                     color='k', fill=False)
+    plt.gca().add_patch(innercircle_out)
+    plt.gca().add_patch(innercircle_in)
+    fig_org=[(nx_det*dx_det)/2, (nx_det*dy_det)/2]
+    fig_diag_len=np.sqrt((nx_det*dx_det)**2+(ny_det*dy_det)**2)
+    fig_pad=0.05*fig_diag_len/2
+    plt.xlim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
+    plt.ylim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
     plt.show()
 
     # combine intensity and weights
@@ -240,11 +269,9 @@ for i in range(len(t_arr)):
 
     # calculate sigma eff
     sig_eff=np.zeros(len(t_arr))
-    #neutron_count_t=0
     for j in range(len(q_cut)-1):
         del_q=q_cut[j+1]-q_cut[j]
         sig_eff[i]+=0.5*del_q*(Iq_total[j+1]+Iq_total[j])
-    # neutron_count[i]=neutron_count_t
 sig_eff_data_file_name='sig_eff.h5'
 sig_eff_data_file=os.path.join(model_param_dir,sig_eff_data_file_name)
 sig_eff_data=h5py.File(sig_eff_data_file,'w')
