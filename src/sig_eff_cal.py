@@ -185,45 +185,72 @@ detector_file_data.close()
 org_det=np.array([nx_det*dx_det/2, ny_det*dy_det/2])
 org_beam=org_det+beam_shift_vector
 # calculate r from pixel coordinates
-r=np.sqrt(np.sum((pixel_coord_det-org_beam)**2, axis=1))
-Q=(4*np.pi/wl)*np.sin(0.5*np.arctan(r/d))
-print(max(Q))
-print(min(Q))
+pixel_r=np.sqrt(np.sum((pixel_coord_det-org_beam)**2, axis=1))
+pixel_Q=(4*np.pi/wl)*np.sin(0.5*np.arctan(pixel_r/d))
+Q_range=[min(pixel_Q), max(pixel_Q)]
 
-##### below will be uncommeted tomorrow
+for i in range(len(t_arr)):
+    t=t_arr[i]
+    # time_dir name
+    t_dir_name='t{0:0>3}'.format(i)
+    t_dir=os.path.join(model_param_dir, t_dir_name)
+    # read I and Q
+    Iq_data_file_name='Iq.h5'
+    Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
+    Iq_data=h5py.File(Iq_data_file,'r')
+    Iq=Iq_data['Iq'][:]
+    q=Iq_data['Q'][:]
+    Iq_data.close()
+    # q cut
+    q_cut = q[(q >= Q_range[0]) & (q <= Q_range[1])]
+    Iq_cut= Iq[(q >= Q_range[0]) & (q <= Q_range[1])]
+    # # plotitng I vs Q in time folder
+    # plt.loglog(q_cut,Iq_cut)
+    # plt.xlabel('Q')
+    # plt.ylabel('I(Q)')
+    # plt.show()
+    # calculate weight
+    # categorize Q pixel and weight calculation
+    q_cat=np.zeros_like(pixel_Q)
+    wq=np.zeros_like(q_cut)
+    for q_cat_idx in range(len(q_cut)):
+        q_cat_val=q_cut[q_cat_idx]
+        if q_cat_idx == 0:
+            cat_low_bound=Q_range[0]
+        else:
+            cat_low_bound=(q_cut[q_cat_idx]+q_cut[q_cat_idx-1])/2
+        if q_cat_idx == len(q_cut)-1:
+            cat_upper_bound=Q_range[1]
+        else:
+            cat_upper_bound=(q_cut[q_cat_idx]+q_cut[q_cat_idx+1])/2
+        q_cat[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)]=q_cat_val
+        wq[q_cat_idx]=len(pixel_Q[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)])
+        
+    # plotitng I vs Q in time folder
+    print(q_cut.shape)
+    plt.scatter(pixel_coord_det[:,0], pixel_coord_det[:,1], c=q_cat, cmap='viridis_r', s=1)
+    plt.axis('equal')
+    plt.xlabel('x [$m$]')
+    plt.ylabel('y [$m$]')
+    plt.colorbar(label='categorized q values')
+    plt.show()
 
-# for i in range(len(t_arr)):
-#     t=t_arr[i]
-#     # time_dir name
-#     t_dir_name='t{0:0>3}'.format(i)
-#     t_dir=os.path.join(model_param_dir, t_dir_name)
-#     Iq_all_ensem=np.zeros((num_points,n_ensem))
-#     q_all_ensem=np.zeros((num_points,n_ensem))
-#     # read I and Q
-#     Iq_data_file_name='Iq.h5'
-#     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
-#     Iq_data=h5py.File(Iq_data_file,'r')
-#     Iq=Iq_data['Iq'][:]
-#     q=Iq_data['Q'][:]
-#     Iq_data.close()
-#     # plotitng I vs Q in time folder
-#     # plt.loglog(q,Iq)
-#     # plt.xlabel('Q')
-#     # plt.ylabel('I(Q)')
-#     # plt.show()
-#     # calculate sigma eff
-#     sig_eff=np.zeros(len(t_arr))
-#     #neutron_count_t=0
-#     for j in range(len(q)-1):
-#         del_q=q[j+1]-q[j]
-#         sig_eff[i]+=0.5*del_q*(Iq[j+1]+Iq[j])
-#     # neutron_count[i]=neutron_count_t
-# sig_eff_data_file_name='sig_eff.h5'
-# sig_eff_data_file=os.path.join(model_param_dir,sig_eff_data_file_name)
-# sig_eff_data=h5py.File(sig_eff_data_file,'w')
-# sig_eff_data['sig_eff']=sig_eff
-# sig_eff_data['t']=t_arr
-# sig_eff_data.close()
+    # combine intensity and weights
+    Iq_total=Iq_cut*wq
 
-# plt.plot(t_arr, sig_eff)
-# # plt.show()
+    # calculate sigma eff
+    sig_eff=np.zeros(len(t_arr))
+    #neutron_count_t=0
+    for j in range(len(q_cut)-1):
+        del_q=q_cut[j+1]-q_cut[j]
+        sig_eff[i]+=0.5*del_q*(Iq_total[j+1]+Iq_total[j])
+    # neutron_count[i]=neutron_count_t
+sig_eff_data_file_name='sig_eff.h5'
+sig_eff_data_file=os.path.join(model_param_dir,sig_eff_data_file_name)
+sig_eff_data=h5py.File(sig_eff_data_file,'w')
+sig_eff_data['sig_eff']=sig_eff
+sig_eff_data['t']=t_arr
+sig_eff_data.close()
+
+plt.plot(t_arr, sig_eff)
+plt.show()
