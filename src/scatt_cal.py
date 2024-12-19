@@ -101,7 +101,10 @@ scan_vec_x=float(root.find('scatt_cal').find('scan_vec').find('x').text)
 scan_vec_y=float(root.find('scatt_cal').find('scan_vec').find('y').text)
 scan_vec_z=float(root.find('scatt_cal').find('scan_vec').find('z').text)
 scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
-
+# signal_file=root.find('scatt_cal').find('sig_file').text
+scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
+    + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(resolution_num)
+scatt_settings=scatt_settings.replace('.', 'p')
 
 """
 create folder structure, read structure and sld info
@@ -172,7 +175,7 @@ for i in range(len(t_arr)):
         sim_data.close()
 
         # create scatt dir
-        scatt_dir_name='scatt_cal'
+        scatt_dir_name='scatt_cal_'+ scatt_settings
         scatt_dir=os.path.join(ensem_dir, scatt_dir_name)
         # calculate pseudo atom position
         pseudo_pos=cells
@@ -250,12 +253,12 @@ for i in range(len(t_arr)):
     plt.loglog(q,Iq)
     plt.xlabel('Q')
     plt.ylabel('I(Q)')
-    Iq_plot_file_name='Iq.jpg'
+    Iq_plot_file_name='Iq_{0}.jpg'.format(scatt_settings) 
     Iq_plot_file=os.path.join(t_dir, Iq_plot_file_name)
     plt.savefig(Iq_plot_file, format='jpg')
     plt.show()
     # saving I vs Q in time folder
-    Iq_data_file_name='Iq.h5'
+    Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings) 
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
     Iq_data=h5py.File(Iq_data_file,'w')
     Iq_data['Iq']=Iq
