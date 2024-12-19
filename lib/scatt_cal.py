@@ -199,7 +199,7 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
     tree.write(xml_file)
 
 def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_length,
-                  num_points, resolution_num):
+                  num_points, resolution_num, sld, xlength, ylength, zlength, mid_point):
     pdb_file=os.path.join('pdb_dcd','sample.pdb')
     dcd_file=os.path.join('pdb_dcd','sample.dcd')
 
@@ -229,6 +229,19 @@ def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_le
     #scattering
     
     ET.SubElement(scattering, "type").text = 'all'
+    bg= ET.SubElement(scattering, "background")
+    cut= ET.SubElement(bg, "cut")
+    box= ET.SubElement(cut, "box")
+    sld_xml=ET.SubElement(box, "sld")
+    ET.SubElement(sld_xml, "real") .text = str(sld)
+    ET.SubElement(sld_xml, "imaginary") .text = str(0)
+    ET.SubElement(box, "xlength").text = str(round(xlength,2))
+    ET.SubElement(box, "ylength").text = str(round(ylength,2))
+    ET.SubElement(box, "zlength").text = str(round(zlength,2))
+    mid_pt= ET.SubElement(box, "midpoint")
+    ET.SubElement(mid_pt, "x").text = str(round(mid_point[0],2))
+    ET.SubElement(mid_pt, "y").text = str(round(mid_point[1],2))
+    ET.SubElement(mid_pt, "z").text = str(round(mid_point[2],2))
     dsp = ET.SubElement(scattering, "dsp")
     ET.SubElement(dsp, "type").text = 'square'
     signal = ET.SubElement(scattering, "signal")
@@ -257,3 +270,17 @@ def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_le
 
     tree = ET.ElementTree(root)
     tree.write(scatter_xml_file)
+
+def qclean_sld(model, xml_dir):
+    model_xml_name='model_{0}.xml'.format(model)
+    model_xml=os.path.join(xml_dir, model_xml_name)
+    if model == 'gg':
+        tree=ET.parse(model_xml)
+        root = tree.getroot()
+        return float(root.find('sld_out').text)
+    elif model == 'fs':
+        tree=ET.parse(model_xml)
+        root = tree.getroot()
+        return float(root.find('sld_out').text)
+    else:
+        return 0
