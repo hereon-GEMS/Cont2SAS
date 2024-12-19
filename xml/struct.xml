@@ -20,9 +20,9 @@ list params:
         <z>40</z>
     </lengths>
     <num_cell>
-        <x>40</x>
-        <y>40</y>
-        <z>40</z>
+        <x>10</x>
+        <y>10</y>
+        <z>10</z>
     </num_cell>
     <decision>
         <update>True</update>
