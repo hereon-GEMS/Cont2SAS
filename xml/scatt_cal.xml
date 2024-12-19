@@ -16,7 +16,7 @@ list params:
 
 <root>
     <discretization>
-        <num_cat>10</num_cat>
+        <num_cat>2</num_cat>
         <method_cat>extend</method_cat>
     </discretization>
     <scatt_cal>

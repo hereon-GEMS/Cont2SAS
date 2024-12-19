@@ -10,7 +10,7 @@ list params:
 -->
 
 <root>
-    <model>fs</model>
+    <model>gg</model>
     <sim_param>
         <dt>5</dt>
         <tend>10</tend>
