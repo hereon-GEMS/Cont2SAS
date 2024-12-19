@@ -210,9 +210,10 @@ for i in range(len(t_arr)):
         # detailed version
         scatter_xml_file_name='scatter.xml'
         scatter_xml_file=os.path.join(scatt_dir,scatter_xml_file_name)
+        qclean_sld=scatt.qclean_sld(sim_model, xml_folder)
         scatt.scattxml_gen(scatter_xml_file, signal_file,scan_vector,
                             start_length, end_length, num_points,
-                              resolution_num)
+                              resolution_num, qclean_sld, length_a, length_b, length_c, mid_point)
 
         # ### sassena runner ###
         parent_dir=os.getcwd()
