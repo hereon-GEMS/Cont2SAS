@@ -118,7 +118,7 @@ model_param_dir_name=''
 for elem in root.iter():
     if elem.text and elem.text.strip():  # Avoid None or empty texts
         model_param_dir_name+= f"{elem.tag}_{elem.text.strip()}_"
-model_param_dir_name=model_param_dir_name[0:-1]
+model_param_dir_name=model_param_dir_name[0:-1].replace('.', 'p')
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
 os.makedirs(model_dir, exist_ok=True)
 
@@ -150,7 +150,7 @@ for i in range(len(t_arr)):
         z_val=nodes_3d[0, 0, (nz+1)//4, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower', vmin=sld_min, vmax=sld_max)
+        plt.imshow(sld_3d[:,:,(nz+1)//4].T, extent=[0, length_a, 0, length_b], origin='lower', vmin=sld_min, vmax=sld_max)
         plot_file_1=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
         plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
@@ -168,7 +168,7 @@ for i in range(len(t_arr)):
         z_val=nodes_3d[0, 0, (nz+1)//2, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, 20, 0, 20], origin='lower',vmin=sld_min, vmax=sld_max)
+        plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
         plot_file_2=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
         plt.title('time = {0:0>3}s, ensmbl num = {1}, z = {2}{3}'.format(t,idx_ensem+1,z_val,r'$\mathrm{\AA}$'))
@@ -185,7 +185,7 @@ for i in range(len(t_arr)):
         z_val=nodes_3d[0, 0, 3*(nz+1)//4, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,3*(nz+1)//4].T, extent=[0, 20, 0, 20], origin='lower',vmin=sld_min, vmax=sld_max)
+        plt.imshow(sld_3d[:,:,3*(nz+1)//4].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
         plot_file_3=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
         plt.title(" time = {0:0>3}s, emsemble step = {1:0>3} \
