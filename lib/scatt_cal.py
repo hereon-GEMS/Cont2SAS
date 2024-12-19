@@ -23,7 +23,7 @@ def pseudo_b(node_sld,connec,cell_vol):
 def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
     # sorting of b_values
     b_sort=np.sort(pseudo_b)
-    b_arg_sort=np.argsort(b_sort)
+    b_arg_sort=np.argsort(pseudo_b)
     b_min=b_sort[0]
     b_max=b_sort[-1]
     b_range=b_max-b_min
