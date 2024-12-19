@@ -141,7 +141,7 @@ model_param_dir_name=''
 for elem in root.iter():
     if elem.text and elem.text.strip():  # Avoid None or empty texts
         model_param_dir_name+= f"{elem.tag}_{elem.text.strip()}_"
-model_param_dir_name=model_param_dir_name[0:-1]
+model_param_dir_name=model_param_dir_name[0:-1].replace('.', 'p')
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
 
 if os.path.exists(model_param_dir):
