@@ -14,7 +14,6 @@ sys.path.append(lib_dir)
 
 from lib import struct_gen as sg
 from lib import plotter as pltr
-from lib import simulation as sim
 from lib import processing as procs
 from lib import datasaver as dsv
 
@@ -22,7 +21,6 @@ from lib import datasaver as dsv
 
 import os
 import time
-import argparse
 import sys
 import xml.etree.ElementTree as ET
 
@@ -115,7 +113,6 @@ structure read (if exist) or generation (if not exist)
 if is_dir:
     # read structure for updating figures
     struct_file=os.path.join(res_dir, 'struct.h5')
-    #os.makedirs(res_dir, exist_ok=True) 
     nodes, cells, con = dsv.mesh_read(struct_file)
 
 else:
