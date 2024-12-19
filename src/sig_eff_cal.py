@@ -105,6 +105,9 @@ scan_vec_x=float(root.find('scatt_cal').find('scan_vec').find('x').text)
 scan_vec_y=float(root.find('scatt_cal').find('scan_vec').find('y').text)
 scan_vec_z=float(root.find('scatt_cal').find('scan_vec').find('z').text)
 scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
+scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
+    + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(resolution_num)
+scatt_settings=scatt_settings.replace('.', 'p')
 
 ### sigeff xml ###
 sig_eff_xml=os.path.join(xml_folder, 'sig_eff.xml')
@@ -198,7 +201,7 @@ for i in range(len(t_arr)):
     t_dir_name='t{0:0>3}'.format(i)
     t_dir=os.path.join(model_param_dir, t_dir_name)
     # read I and Q
-    Iq_data_file_name='Iq.h5'
+    Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings)
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
     Iq_data=h5py.File(Iq_data_file,'r')
     Iq=Iq_data['Iq'][:]
@@ -262,6 +265,9 @@ for i in range(len(t_arr)):
     fig_pad=0.05*fig_diag_len/2
     plt.xlim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
     plt.ylim([fig_org[0]-fig_diag_len/2-fig_pad, fig_org[0]+fig_diag_len/2+fig_pad])
+    wq_plot_file_name='weightvsq.jpg'
+    wq_plot_file = os.path.join(t_dir, wq_plot_file_name)
+    plt.savefig(wq_plot_file, format='jpg')
     plt.show()
 
     # combine intensity and weights
@@ -272,7 +278,7 @@ for i in range(len(t_arr)):
     for j in range(len(q_cut)-1):
         del_q=q_cut[j+1]-q_cut[j]
         sig_eff[i]+=0.5*del_q*(Iq_total[j+1]+Iq_total[j])
-sig_eff_data_file_name='sig_eff.h5'
+sig_eff_data_file_name='sig_eff_{0}.h5'.format(scatt_settings)
 sig_eff_data_file=os.path.join(model_param_dir,sig_eff_data_file_name)
 sig_eff_data=h5py.File(sig_eff_data_file,'w')
 sig_eff_data['sig_eff']=sig_eff
@@ -280,4 +286,7 @@ sig_eff_data['t']=t_arr
 sig_eff_data.close()
 
 plt.plot(t_arr, sig_eff)
+sig_eff_plot_file_name='sig_eff_{0}.jpg'.format(scatt_settings)
+sig_eff_plot_file = os.path.join(model_param_dir, sig_eff_plot_file_name)
+plt.savefig(sig_eff_plot_file, format='jpg')
 plt.show()
