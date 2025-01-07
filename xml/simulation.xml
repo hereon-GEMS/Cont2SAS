@@ -3,6 +3,12 @@ input xml for effective cross-section calculation
 list params:
 (maintain the order)
 1) name of simulation model - model
+ 1a) ball
+ 2a) box
+ 3a) bib
+ 4a) bib_ecc
+ 5a) gg
+ 6a) fs
 2) params for simulating - sim_param
     2a) length of time step - dt
     2b) total time - tend
