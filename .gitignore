@@ -1,7 +1,6 @@
 # folder (data and non required)
 data
 garbage
-xml
 figure
 
 # __pycache__
