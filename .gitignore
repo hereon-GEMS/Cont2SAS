@@ -2,6 +2,7 @@
 data
 garbage
 xml
+figure
 
 # __pycache__
 lib/__pycache__
