@@ -192,6 +192,18 @@ for i in range(len(t_arr)):
         # categorize SLD
         pseudo_b_cat_val, pseudo_b_cat_idx = scatt.pseudo_b_cat(pseudo_b,num_cat,method=method_cat)
 
+        # save pseudo atom info
+        scatt_cal_data_file_name='scatt_cal.h5'
+        scatt_cal_data_file=os.path.join(scatt_dir, scatt_cal_data_file_name)
+        scatt_cal_data=h5py.File(scatt_cal_data_file,'w')
+        scatt_cal_data['node_pos']=nodes
+        scatt_cal_data['node_sld']=node_sld
+        scatt_cal_data['pseudo_pos']=pseudo_pos
+        scatt_cal_data['pseudo_b']=pseudo_b
+        scatt_cal_data['pseudo_b_cat_val']=pseudo_b_cat_val
+        scatt_cal_data['pseudo_b_cat_idx']=pseudo_b_cat_idx
+        scatt_cal_data.close()
+
         """
         calculate I vs Q
         """
