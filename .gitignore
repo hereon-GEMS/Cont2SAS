@@ -1,6 +1,7 @@
 # folder (data and non required)
 data
 garbage
+xml
 
 # __pycache__
 lib/__pycache__
@@ -10,3 +11,5 @@ lib/__pycache__
 
 #tempcode
 *tempCodeRunnerFile.py
+
+#tempcode
