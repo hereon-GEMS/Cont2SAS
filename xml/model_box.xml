@@ -1,0 +1,11 @@
+<!-- 
+model names:
+static model: cube (box)
+list params:
+(maintain the order)
+1) sld of ball - sld
+-->
+
+<root>
+    <sld>2</sld>
+</root>

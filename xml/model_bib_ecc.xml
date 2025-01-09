@@ -1,0 +1,22 @@
+<!-- 
+model names:
+static model: eccentric sphere in cube (eccentric ball in box)
+list params:
+(maintain the order)
+1) radius - rad
+2) sld of ball - sld_in
+3) sld of box - sld_out
+4) eccentricity vector - ecc
+-->
+
+<root>
+    <rad>15</rad>
+    <sld_in>2</sld_in>
+    <sld_out>0</sld_out>
+    <ecc>
+        <x>2</x>
+        <y>2</y>
+        <z>2</z>
+    </ecc>
+
+</root>
