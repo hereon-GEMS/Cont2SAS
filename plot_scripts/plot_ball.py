@@ -32,6 +32,7 @@ import imageio.v2 as imageio
 import mdtraj as md
 from matplotlib.patches import Rectangle
 
+# function
 def J1(x):
     if x==0:
         return 0
@@ -40,16 +41,21 @@ def J1(x):
 
 def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
     vol=(4/3)*np.pi*rad**3
+    # SLD unit 10^-5 \AA^-2
     del_rho=sld-sld_sol
-    q_vec=np.linspace(qmin,qmax,Npts)
-    FormFactor=np.zeros(len(q_vec))
-    for i in range(len(q_vec)):
-        q=q_vec[i]
+    q_arr=np.linspace(qmin,qmax,Npts)
+    FormFactor=np.zeros(len(q_arr))
+    for i in range(len(q_arr)):
+        q=q_arr[i]
         if q==0:
+            # Form factor unit 10^-5 \AA
             FormFactor[i]=1
         else:
+            # Form factor unit 10^-5 \AA
             FormFactor[i]=3*vol*del_rho*J1(q*rad)/(q*rad)
-    return ((scale/vol)*np.abs(FormFactor)**2+bg)*10**2, q_vec
+    # Intensity unit 10^-10 \AA^2
+    Iq_arr = ((scale)*np.abs(FormFactor)**2+bg)
+    return Iq_arr, q_arr
 
 
 #timer counter initial
@@ -63,61 +69,64 @@ read input from xml file
 
 xml_folder='../xml/'
 
-struct_xml=os.path.join(xml_folder, 'struct.xml')
+# struct_xml=os.path.join(xml_folder, 'struct.xml')
 
-tree=ET.parse(struct_xml)
-root = tree.getroot()
+# tree=ET.parse(struct_xml)
+# root = tree.getroot()
 
-# box side lengths
-length_a=float(root.find('lengths').find('x').text) 
-length_b=float(root.find('lengths').find('y').text)
-length_c=float(root.find('lengths').find('z').text)
-# number of cells in each direction
-nx=int(root.find('num_cell').find('x').text)
-ny=int(root.find('num_cell').find('y').text)
-nz=int(root.find('num_cell').find('z').text)
-# mid point of structure
+"""
+Input data
+"""
+### struct.xml entries ###
+
+# box side lengths (float values)
+length_a= 40.  
+length_b=40. 
+length_c=40. 
+# number of cells in each direction (int values)
+nx= 40
+ny= 40
+nz= 40
+# calculate mid point of structure (simulation box)
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
-### sim xml ###
-
-sim_xml=os.path.join(xml_folder, 'simulation.xml')
-
-tree=ET.parse(sim_xml)
-root = tree.getroot()
+### sim xml entries ###
 
 # model name
-sim_model=root.find('model').text
+sim_model= 'ball' #root.find('model').text
 
 # simulation parameters
 ## time
-dt=float(root.find('sim_param').find('dt').text)
-t_end=float(root.find('sim_param').find('tend').text)
+dt= 1. 
+t_end= 0.
 t_arr=np.arange(0,t_end+dt, dt)
 ## ensemble
-n_ensem=int(root.find('sim_param').find('n_ensem').text)
+n_ensem=3 #int(root.find('sim_param').find('n_ensem').text)
 
-# scatter calculation
-# scatt_cal
-scatt_cal_xml=os.path.join(xml_folder, 'scatt_cal.xml')
+### model xml entries ###
 
-tree=ET.parse(scatt_cal_xml)
-root = tree.getroot()
+# model params
+ball_rad=15
+ball_sld=2
+# dir name for model param
+model_param_dir_name = ('rad' + '_' + str(ball_rad) + '_' + 'sld' + '_' + str(ball_sld)).replace('.', 'p')
+
+### scatt_cal xml entries ###
 
 # decreitization params
 # number of categories and method of categorization
-num_cat=int(root.find('discretization').find('num_cat').text)
-method_cat=root.find('discretization').find('method_cat').text
+num_cat= 10 # int(root.find('discretization').find('num_cat').text)
+method_cat='extend' # root.find('discretization').find('method_cat').text
 
 # scatt_cal params
-signal_file=root.find('scatt_cal').find('sig_file').text
-resolution_num=int(root.find('scatt_cal').find('num_orientation').text)
-start_length=float(root.find('scatt_cal').find('Q_start').text)
-end_length=float(root.find('scatt_cal').find('Q_end').text)
-num_points=int(root.find('scatt_cal').find('num_points').text)
-scan_vec_x=float(root.find('scatt_cal').find('scan_vec').find('x').text)
-scan_vec_y=float(root.find('scatt_cal').find('scan_vec').find('y').text)
-scan_vec_z=float(root.find('scatt_cal').find('scan_vec').find('z').text)
+signal_file='signal.h5' #root.find('scatt_cal').find('sig_file').text
+resolution_num=100 #int(root.find('scatt_cal').find('num_orientation').text)
+start_length=0. #float(root.find('scatt_cal').find('Q_start').text)
+end_length=1. #float(root.find('scatt_cal').find('Q_end').text)
+num_points=100 #int(root.find('scatt_cal').find('num_points').text)
+scan_vec_x=1. #float(root.find('scatt_cal').find('scan_vec').find('x').text)
+scan_vec_y=0. #float(root.find('scatt_cal').find('scan_vec').find('y').text)
+scan_vec_z=0. #float(root.find('scatt_cal').find('scan_vec').find('z').text)
 scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
 # signal_file=root.find('scatt_cal').find('sig_file').text
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
@@ -130,7 +139,7 @@ read folder structure
 """
 
 # folder structure
-## mother folder for simulation 
+## mother folder name
 ### save length values as strings
 ### decimal points are replaced with p
 length_a_str=str(length_a).replace('.','p')
@@ -141,14 +150,15 @@ length_c_str=str(length_a).replace('.','p')
 nx_str=str(nx)
 ny_str=str(ny)
 nz_str=str(nz)
-sim_dir=os.path.join('../data/',
-                        length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-                        nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
 
+mother_dir_name = length_a_str+'_' + length_b_str+'_' + length_c_str\
+      + '_' + nx_str + '_' + ny_str+'_' + nz_str
+mother_dir = os.path.join('../data/', mother_dir_name)
 
 # read structure info
-data_filename=os.path.join(sim_dir,'../structure/struct.h5')
-# nodes, cells, con = dsv.mesh_read(data_filename)
+data_file=os.path.join(mother_dir, 'structure/struct.h5')
+
+sim_dir=os.path.join(mother_dir, 'simulation')
 
 # folder name for model
 model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
@@ -156,22 +166,13 @@ model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
 model_dir=os.path.join(sim_dir,model_dir_name)
 
 # folder name for model with particular run param
-model_xml=os.path.join(xml_folder, 'model_'+sim_model + '.xml')
-tree = ET.parse(model_xml)
-root = tree.getroot()
-model_param_dir_name=''
-for elem in root.iter():
-    if elem.text and elem.text.strip():  # Avoid None or empty texts
-        model_param_dir_name+= f"{elem.tag}_{elem.text.strip()}_"
-model_param_dir_name=model_param_dir_name[0:-1].replace('.', 'p')
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
 
-# create folder for figure
-## mother folder for figure
-figure_dir='../figure/'
+# create folder for figure (one level up from data folder)
+figure_dir=os.path.join(mother_dir, '../../figure/')
 os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
-plot_dir=os.path.join(figure_dir, 'ball')
+plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
 
 if os.path.exists(model_param_dir):
@@ -184,8 +185,6 @@ for i in range(len(t_arr)):
     # time_dir name
     t_dir_name='t{0:0>3}'.format(i)
     t_dir=os.path.join(model_param_dir, t_dir_name)
-    # Iq_all_ensem=np.zeros((num_points,n_ensem))
-    # q_all_ensem=np.zeros((num_points,n_ensem))
     for j in range(n_ensem):
         idx_ensem=j
         # create ensemble dir
@@ -198,7 +197,7 @@ for i in range(len(t_arr)):
 
 
         """
-        read scatt_cal
+        read pseudo atom info from scatt_cal.h5
         """
         # read node sld
         # save pseudo atom info
@@ -213,12 +212,13 @@ for i in range(len(t_arr)):
         pseudo_b_cat_idx=scatt_cal_data['pseudo_b_cat_idx'][:]
         scatt_cal_data.close()
 
+        # determine sld min and max for plotting
         sld_min=np.min(node_sld,0)
         sld_max=np.max(node_sld,0)
 
 
         if idx_ensem==0:
-            print('plotting for the particular ensemble')
+            print('plotting for the first ensemble')
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
@@ -271,9 +271,7 @@ for i in range(len(t_arr)):
             plot_file_name='pseudo_ball'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
-            ## image plot
-            ### .T is required to exchange x and y axis 
-            ### origin is 'lower' to put it in lower left corner 
+            ## scatter plot
             pseudo_pos_x=pseudo_pos_3d[:,:,z_idx_pseudo,0]
             pseudo_pos_y=pseudo_pos_3d[:,:,z_idx_pseudo,1]
             pseudo_b_xy=pseudo_b_3d[:,:,z_idx_pseudo]
@@ -292,7 +290,6 @@ for i in range(len(t_arr)):
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
             ax.set_ylim([0, length_b])
-
             ## add mesh
             cell_x=length_a/nx
             cell_y=length_a/ny
@@ -310,9 +307,7 @@ for i in range(len(t_arr)):
             plot_file_name='pseudo_cat_ball'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
-            ## image plot
-            ### .T is required to exchange x and y axis 
-            ### origin is 'lower' to put it in lower left corner 
+            ## scatter plot
             pseudo_b_cat_val_3d=pseudo_b_cat_val.reshape(nx, ny, nz)
             pseudo_b_cat_val_xy=pseudo_b_cat_val_3d[:,:,z_idx_pseudo]
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_cat_val_xy, s=3, cmap='viridis')
@@ -330,9 +325,10 @@ for i in range(len(t_arr)):
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
             ax.set_ylim([0, length_b])
-            ax.set_xticks([0, 10, 20, 30, 40])
-            [(x, x**2) for x in range(5)]
-
+            x_ticks_val=np.round(np.linspace(0, length_a, 5),2)
+            ax.set_xticks(list(x_ticks_val))
+            y_ticks_val=np.round(np.linspace(0, length_b, 5),2)
+            ax.set_yticks(list(y_ticks_val))
             ## add mesh
             cell_x=length_a/nx
             cell_y=length_a/ny
@@ -344,47 +340,42 @@ for i in range(len(t_arr)):
                                            edgecolor='k', facecolor='none', linewidth=0.5))
             plt.savefig(plot_file, format='pdf')
             plt.close(fig)
-    # read radius and sld
-    model_xml=os.path.join(xml_folder, 'model_'+sim_model + '.xml')
-    tree = ET.parse(model_xml)
-    root = tree.getroot()
-    ball_rad=int(root.find('rad').text)
-    ball_sld=float(root.find('sld').text)
+    
+    # ball geometry
     vol_ball=(4/3)*np.pi*ball_rad**3
 
-    # read signal file
+    # numerical intensity
+    ## read I vs Q signal file
     Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings) 
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
     Iq_data=h5py.File(Iq_data_file,'r')
-    Iq=Iq_data['Iq'][:]
-    Iq=Iq/vol_ball*10**2 # conversion from fm2 to cm-1
+    Iq=Iq_data['Iq'][:] # unit fm^2
+    Iq=Iq/vol_ball*10**2 # unit (fm^2 / \AA^3) * 10^2 = cm^-1
     q=Iq_data['Q'][:]
     Iq_data.close()
 
-    
+    # ananlytical intensity 
+    ## Intensity unit 10^-10 \AA^2
     Iq_ana,q_ana=ball(qmax=np.max(q),qmin=np.min(q),Npts=100,
                 scale=1,bg=0,sld=ball_sld,sld_sol=0,rad=ball_rad)
-
+    ## Normalize by volume
+    ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
+    ## (after * 10**2) Intensity unit cm^-1
+    Iq_ana = (Iq_ana / ball_rad) * 10**2
     plot_file_name='Iq_ball'
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
-    ## image plot
-    ### .T is required to exchange x and y axis 
-    ### origin is 'lower' to put it in lower left corner 
+    
+    # loglog plot
     ax.loglog(q_ana, Iq_ana, 'b')
     ax.loglog(q, Iq,'r', linestyle='', marker='o', markersize=3)
     
-    ## plot title
-    # title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
-    # ax.set_title(title_text)
-    # labels
+    # plot formatting
+    ## labels
     ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
     ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
-    # other formatting
-    # ax.set_aspect('equal')
+    ## SANS upper boundary Q=1 \AA^-1
     ax.set_xlim(right=1)
-    # ax.set_ylim([0, length_b])
+    ## save plot
     plt.savefig(plot_file, format='pdf')
     plt.close(fig)
-    
-    # plt.show()
