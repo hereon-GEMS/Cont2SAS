@@ -177,6 +177,7 @@ for i in range(len(t_arr)):
         # create scatt dir
         scatt_dir_name='scatt_cal_'+ scatt_settings
         scatt_dir=os.path.join(ensem_dir, scatt_dir_name)
+        os.makedirs(scatt_dir, exist_ok=True)
         # calculate pseudo atom position
         pseudo_pos=cells
 
