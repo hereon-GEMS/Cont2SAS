@@ -201,8 +201,10 @@ for i in range(len(t_arr)):
         """
         # read node sld
         # save pseudo atom info
+        scatt_cal_dir_name='scatt_cal_' + scatt_settings
+        scatt_cal_dir=os.path.join(ensem_dir, scatt_cal_dir_name)
         scatt_cal_data_file_name='scatt_cal.h5'
-        scatt_cal_data_file=os.path.join(ensem_dir, scatt_cal_data_file_name)
+        scatt_cal_data_file=os.path.join(scatt_cal_dir, scatt_cal_data_file_name)
         scatt_cal_data=h5py.File(scatt_cal_data_file,'r')
         node_pos=scatt_cal_data['node_pos'][:]
         node_sld=scatt_cal_data['node_sld'][:]
@@ -344,13 +346,16 @@ for i in range(len(t_arr)):
     # ball geometry
     vol_ball=(4/3)*np.pi*ball_rad**3
 
+    # volume for normalization
+    vol_norm=vol_ball
+
     # numerical intensity
     ## read I vs Q signal file
     Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings) 
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
     Iq_data=h5py.File(Iq_data_file,'r')
     Iq=Iq_data['Iq'][:] # unit fm^2
-    Iq=Iq/vol_ball*10**2 # unit (fm^2 / \AA^3) * 10^2 = cm^-1
+    Iq=Iq/vol_norm*10**2 # unit (fm^2 / \AA^3) * 10^2 = cm^-1
     q=Iq_data['Q'][:]
     Iq_data.close()
 
@@ -361,7 +366,7 @@ for i in range(len(t_arr)):
     ## Normalize by volume
     ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
     ## (after * 10**2) Intensity unit cm^-1
-    Iq_ana = (Iq_ana / ball_rad) * 10**2
+    Iq_ana = (Iq_ana / vol_norm) * 10**2
     plot_file_name='Iq_ball'
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
