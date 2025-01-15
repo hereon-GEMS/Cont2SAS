@@ -162,7 +162,7 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
         el_name='Pseudo'+str(b_cat[i])
         el_sym='P'+str(b_cat[i])
         ET.SubElement(element, "name").text = el_name
-        ET.SubElement(element, "param").text = '^ *'+el_sym+'.*'  
+        ET.SubElement(element, "param").text = '^ *'+el_sym #+'.*'  
         # ET.SubElement(element, "param").text = '/ '+el_sym+'/g'  
         tree = ET.ElementTree(names)
     tree.write(xml_file)
