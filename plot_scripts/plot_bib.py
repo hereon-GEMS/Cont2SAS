@@ -28,8 +28,6 @@ import numpy as np
 import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
-import mdtraj as md
 from matplotlib.patches import Rectangle
 
 def J1(x):
