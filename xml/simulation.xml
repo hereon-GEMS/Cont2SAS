@@ -16,7 +16,7 @@ list params:
 -->
 
 <root>
-    <model>ball</model>
+    <model>bib_ecc</model>
     <sim_param>
         <dt>1</dt>
         <tend>0</tend>

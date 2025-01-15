@@ -12,7 +12,7 @@ list params:
 <root>
     <rad>15</rad>
     <sld_in>2</sld_in>
-    <sld_out>0</sld_out>
+    <sld_out>1</sld_out>
     <ecc>
         <x>2</x>
         <y>2</y>
