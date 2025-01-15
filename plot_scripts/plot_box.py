@@ -382,10 +382,12 @@ for i in range(len(t_arr)):
     fig, ax = plt.subplots(figsize=(7, 5))
     
     # loglog plot
-    ax.loglog(q_ana, Iq_ana, 'b')
-    ax.loglog(q, Iq,'r', linestyle='', marker='o', markersize=3)
+    ax.loglog(q_ana, Iq_ana, 'b', label= 'Analytical calculation')
+    ax.loglog(q, Iq,'r', linestyle='', marker='o', markersize=3, label= 'Numerical calculation')
     
     # plot formatting
+    ## legend
+    ax.legend()
     ## labels
     ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
     ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
