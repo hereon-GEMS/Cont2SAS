@@ -69,11 +69,6 @@ read input from xml file
 
 xml_folder='../xml/'
 
-# struct_xml=os.path.join(xml_folder, 'struct.xml')
-
-# tree=ET.parse(struct_xml)
-# root = tree.getroot()
-
 """
 Input data
 """
@@ -115,20 +110,19 @@ model_param_dir_name = ('rad' + '_' + str(ball_rad) + '_' + 'sld' + '_' + str(ba
 
 # decreitization params
 # number of categories and method of categorization
-num_cat= 10 # int(root.find('discretization').find('num_cat').text)
-method_cat='extend' # root.find('discretization').find('method_cat').text
+num_cat= 10
+method_cat='extend'
 
 # scatt_cal params
-signal_file='signal.h5' #root.find('scatt_cal').find('sig_file').text
-resolution_num=100 #int(root.find('scatt_cal').find('num_orientation').text)
-start_length=0. #float(root.find('scatt_cal').find('Q_start').text)
-end_length=1. #float(root.find('scatt_cal').find('Q_end').text)
-num_points=100 #int(root.find('scatt_cal').find('num_points').text)
-scan_vec_x=1. #float(root.find('scatt_cal').find('scan_vec').find('x').text)
-scan_vec_y=0. #float(root.find('scatt_cal').find('scan_vec').find('y').text)
-scan_vec_z=0. #float(root.find('scatt_cal').find('scan_vec').find('z').text)
+signal_file='signal.h5'
+resolution_num=100
+start_length=0.
+end_length=1.
+num_points=100
+scan_vec_x=1.
+scan_vec_y=0.
+scan_vec_z=0.
 scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
-# signal_file=root.find('scatt_cal').find('sig_file').text
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
     + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(resolution_num)
 scatt_settings=scatt_settings.replace('.', 'p')
