@@ -16,7 +16,7 @@ list params:
 -->
 
 <root>
-    <model>bib_ecc</model>
+    <model>box</model>
     <sim_param>
         <dt>1</dt>
         <tend>0</tend>

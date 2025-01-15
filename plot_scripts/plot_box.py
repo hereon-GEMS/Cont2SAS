@@ -84,11 +84,6 @@ read input from xml file
 
 xml_folder='../xml/'
 
-# struct_xml=os.path.join(xml_folder, 'struct.xml')
-
-# tree=ET.parse(struct_xml)
-# root = tree.getroot()
-
 """
 Input data
 """
@@ -116,7 +111,7 @@ dt= 1.
 t_end= 0.
 t_arr=np.arange(0,t_end+dt, dt)
 ## ensemble
-n_ensem=3 #int(root.find('sim_param').find('n_ensem').text)
+n_ensem=3
 
 ### model xml entries ###
 
@@ -129,12 +124,12 @@ model_param_dir_name = ('sld' + '_' + str(box_sld)).replace('.', 'p')
 
 # decreitization params
 # number of categories and method of categorization
-num_cat= 10 # int(root.find('discretization').find('num_cat').text)
-method_cat='extend' # root.find('discretization').find('method_cat').text
+num_cat= 10
+method_cat='extend'
 
 # scatt_cal params
 signal_file='signal.h5' #root.find('scatt_cal').find('sig_file').text
-resolution_num=100 #int(root.find('scatt_cal').find('num_orientation').text)
+resolution_num=1000 #int(root.find('scatt_cal').find('num_orientation').text)
 start_length=0. #float(root.find('scatt_cal').find('Q_start').text)
 end_length=1. #float(root.find('scatt_cal').find('Q_end').text)
 num_points=100 #int(root.find('scatt_cal').find('num_points').text)
