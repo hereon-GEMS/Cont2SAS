@@ -47,7 +47,7 @@ def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
         q=q_arr[i]
         if q==0:
             # Form factor unit 10^-5 \AA
-            FormFactor[i]=1
+            FormFactor[i]=vol*del_rho
         else:
             # Form factor unit 10^-5 \AA
             FormFactor[i]=3*vol*del_rho*J1(q*rad)/(q*rad)
@@ -63,8 +63,12 @@ def fuzzysph(qmax,qmin,Npts,scale,bg,sld,sld_sol,sig_fuzz,radius):
     FormFactor=np.zeros(len(q_arr))
     for i in range(len(q_arr)):
         q=q_arr[i]
-        # Form factor unit 10^-5 \AA
-        FormFactor[i]=3*vol*del_rho*J1(q*radius)/(q*radius)*np.exp((-(sig_fuzz*q)**2)/2)
+        if q==0:
+            # Form factor unit 10^-5 \AA
+            FormFactor[i]=vol*del_rho
+        else:
+            # Form factor unit 10^-5 \AA
+            FormFactor[i]=(3*vol*del_rho*J1(q*radius)/(q*radius))*np.exp((-(sig_fuzz*q)**2)/2)
     # Intensity unit 10^-10 \AA^2
     Iq_arr = scale*np.abs(FormFactor)**2+bg
     return Iq_arr, q_arr
