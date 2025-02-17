@@ -167,6 +167,8 @@ for i in range(len(t_arr)):
         """
         discretization
         """
+
+        print('Discretizing to pseudo atoms')
         # read node sld
         sim_data_file_name='sim.h5'
         sim_data_file=os.path.join(ensem_dir, sim_data_file_name)
@@ -209,6 +211,8 @@ for i in range(len(t_arr)):
         calculate I vs Q
         """
         
+        print('preparing for sassena run')
+
         ### pdb dcd generation ###
         pdb_dcd_dir=os.path.join(scatt_dir,'pdb_dcd')
         os.makedirs(pdb_dcd_dir, exist_ok=True)
@@ -232,13 +236,15 @@ for i in range(len(t_arr)):
                               resolution_num, qclean_sld, length_a, length_b, length_c, mid_point)
 
         # ### sassena runner ###
+        print('Running sassena')
         parent_dir=os.getcwd()
         os.chdir(os.path.join(parent_dir,scatt_dir))
         sassena_exec='/home/amajumda/Documents/Softwares/sassena/compile/sassena'
         sass_out_file='sass.log'
         if os.path.exists(signal_file):
             os.remove(signal_file)
-        os.system('mpirun -np 8 {0} > {1} 2>&1'.format(sassena_exec, sass_out_file))
+        print('mpirun -np 4 {0} > {1} 2>&1'.format(sassena_exec, sass_out_file))
+        os.system('mpirun -np 4 {0} > {1} 2>&1'.format(sassena_exec, sass_out_file))
         os.chdir(parent_dir)
 
         # read and save Iq data from current ensem
@@ -269,7 +275,7 @@ for i in range(len(t_arr)):
     Iq_plot_file_name='Iq_{0}.jpg'.format(scatt_settings) 
     Iq_plot_file=os.path.join(t_dir, Iq_plot_file_name)
     plt.savefig(Iq_plot_file, format='jpg')
-    plt.show()
+    # plt.show()
     # saving I vs Q in time folder
     Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings) 
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
