@@ -13,15 +13,8 @@ lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
 from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import processing as procs
-from lib import datasaver as dsv
 
-
-
-import os
 import time
-import sys
 import xml.etree.ElementTree as ET
 
 #timer counter initial
@@ -58,14 +51,14 @@ if el_type=='lagrangian':
 # decision paramters
 # True: current saved figures are updated (if available)
 # False: current saved figures are not updated (if available)
-update=procs.str_to_bool(root.find('decision').find('update').text)
+update=sg.str_to_bool(root.find('decision').find('update').text)
 
 # True: new figures created
 # False: new figures not created
 # three figs: points at nodes,points at cells,Line figure showing mesh connectivity 
-plot_node = procs.str_to_bool(root.find('decision').find('plot').find('node').text)
-plot_cell = procs.str_to_bool(root.find('decision').find('plot').find('cell').text)
-plot_mesh = procs.str_to_bool(root.find('decision').find('plot').find('mesh').text)
+plot_node = sg.str_to_bool(root.find('decision').find('plot').find('node').text)
+plot_cell = sg.str_to_bool(root.find('decision').find('plot').find('cell').text)
+plot_mesh = sg.str_to_bool(root.find('decision').find('plot').find('mesh').text)
 
 """
 create folder structure
