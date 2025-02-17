@@ -42,14 +42,18 @@ root = tree.getroot()
 length_a=float(root.find('lengths').find('x').text) 
 length_b=float(root.find('lengths').find('y').text)
 length_c=float(root.find('lengths').find('z').text)
+
 # number of cells in each direction
 nx=int(root.find('num_cell').find('x').text)
 ny=int(root.find('num_cell').find('y').text)
 nz=int(root.find('num_cell').find('z').text)
 
-"""
-create folder structure
-"""
+# element type
+el_type=root.find('element').find('type').text
+if el_type=='lagrangian':
+    el_order=int(root.find('element').find('order').text)
+    el_info={'type': el_type,
+             'order': el_order}
 
 # decision paramters
 # True: current saved figures are updated (if available)
@@ -62,6 +66,10 @@ update=procs.str_to_bool(root.find('decision').find('update').text)
 plot_node = procs.str_to_bool(root.find('decision').find('plot').find('node').text)
 plot_cell = procs.str_to_bool(root.find('decision').find('plot').find('cell').text)
 plot_mesh = procs.str_to_bool(root.find('decision').find('plot').find('mesh').text)
+
+"""
+create folder structure
+"""
 
 # create folders 
 os.makedirs('../data', exist_ok=True)
@@ -76,9 +84,16 @@ length_c_str=str(length_a).replace('.','p')
 nx_str=str(nx)
 ny_str=str(ny)
 nz_str=str(nz)
-res_dir=os.path.join('../data/',
-                        length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-                        nx_str+'_'+ny_str+'_'+nz_str+'/structure')
+
+struct_folder_name = (length_a_str + '_' + length_b_str + '_' + length_c_str
+                       + '_' + nx_str + '_' + ny_str + '_' + nz_str)
+# save elemnt type as string
+if el_type=='lagrangian':
+    el_order_str=str(el_order)
+    struct_folder_name += '_' + el_type + '_' + el_order_str
+
+
+res_dir=os.path.join('../data/', struct_folder_name +'/structure')
 
 
 if os.path.exists(res_dir):
@@ -113,16 +128,16 @@ structure read (if exist) or generation (if not exist)
 if is_dir:
     # read structure for updating figures
     struct_file=os.path.join(res_dir, 'struct.h5')
-    nodes, cells, con = dsv.mesh_read(struct_file)
+    nodes, cells, con, mesh = sg.mesh_read(struct_file)
 
 else:
     # generattion of node cell and connectivity
-    nodes, cells, con = sg.node_cell_gen_3d(length_a, length_b, length_c, nx, ny, nz)
+    nodes, cells, con, mesh = sg.node_cell_gen_3d(length_a, length_b, length_c, nx, ny, nz, el_info)
 
     # creation of mesh file struct.h5
     os.makedirs(res_dir, exist_ok=True)
     struct_file=os.path.join(res_dir, 'struct.h5')
-    dsv.mesh_write(struct_file, nodes, cells, con)
+    sg.mesh_write(struct_file, nodes, cells, con, mesh)
 
 
 """
@@ -131,13 +146,13 @@ Create figures
 # images of nodes , cells , mesh
 os.makedirs(os.path.join(res_dir, 'figures'), exist_ok=True)
 if plot_node:
-    pltr.plotter_3d(nodes,save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
+    sg.plotter_3d(nodes,save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
                 filename='node', figsize=(10,10))
 if plot_cell:
-    pltr.plotter_3d(cells,save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
+    sg.plotter_3d(cells,save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
                 filename='cell', figsize=(10,10))
 if plot_mesh:
-    pltr.mesh_plotter_3d(nodes, con, save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
+    sg.mesh_plotter_3d(nodes, mesh, save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
                 filename='mesh', figsize=(10,10))
     
 toc = time.perf_counter()
