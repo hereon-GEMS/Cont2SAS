@@ -4,10 +4,13 @@ list params:
 (maintain the order)
 1) length of simulation box (x,y,z) - lengths
 2) number of cells per direction (x,y,z) - num_cell
-3) decision whether to save or not - decision
-    3a) whether to change - update
+3) element type - nature of shape function (FEM)
+    3a) type - family of elements (only lagrangian elements are considered) 
+    3b) order - 1, 2 (1: linear, 1: quadratic)
+4) decision whether to save or not - decision
+    4a) whether to change - update
     (if update is false and structure exists nothing changes)
-    3b) whether to plot - plot
+    4b) whether to plot - plot
         3ba) plot points at nodes - node
         3bb) plot points at cells - cell
         3bc) plot mesh - mesh (time consuming plot)
@@ -20,16 +23,20 @@ list params:
         <z>40</z>
     </lengths>
     <num_cell>
-        <x>40</x>
-        <y>40</y>
-        <z>40</z>
+        <x>400</x>
+        <y>400</y>
+        <z>400</z>
     </num_cell>
+    <element>
+        <type>lagrangian</type>
+        <order>1</order>
+    </element>
     <decision>
         <update>True</update>
         <plot>
-            <node>True</node>
-            <cell>True</cell>
-            <mesh>True</mesh>
+            <node>False</node>
+            <cell>False</cell>
+            <mesh>False</mesh>
         </plot>
     </decision>
 </root>
