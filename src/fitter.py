@@ -63,6 +63,12 @@ ny=int(root.find('num_cell').find('y').text)
 nz=int(root.find('num_cell').find('z').text)
 # mid point of structure
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
+# element type
+el_type=root.find('element').find('type').text
+if el_type=='lagrangian':
+    el_order=int(root.find('element').find('order').text)
+    el_info={'type': el_type,
+             'order': el_order}
 
 ### sim xml ###
 
@@ -125,9 +131,18 @@ length_c_str=str(length_a).replace('.','p')
 nx_str=str(nx)
 ny_str=str(ny)
 nz_str=str(nz)
-sim_dir=os.path.join('../data/',
-                        length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-                        nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
+struct_folder_name = (length_a_str + '_' + length_b_str + '_' + length_c_str
+                       + '_' + nx_str + '_' + ny_str + '_' + nz_str)
+# save elemnt type as string
+if el_type=='lagrangian':
+    el_order_str=str(el_order)
+    struct_folder_name += '_' + el_type + '_' + el_order_str
+
+
+sim_dir=os.path.join('../data/', struct_folder_name +'/simulation')
+# sim_dir=os.path.join('../data/',
+#                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
+#                         nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
 os.makedirs(sim_dir, exist_ok=True)
 
 # read structure info
@@ -155,7 +170,8 @@ if os.path.exists(model_param_dir):
 else:
     print('create simulation first')
 
-fit_param_arr=np.zeros(len(t_arr))
+fit_param_arr_1=np.zeros(len(t_arr))
+fit_param_arr_2=np.zeros(len(t_arr))
 for i in range(len(t_arr)):
     t=t_arr[i]
     # time_dir name
@@ -176,34 +192,49 @@ for i in range(len(t_arr)):
 
     # decreitization params
     # number of categories and method of categorization
+    # ball_sld=float(root.find('sld_in').text)
+    # box_sld=float(root.find('sld_out').text)
+    # r_0=float(root.find('rad_0').text)
+    # r_end=float(root.find('rad_end').text)
+    # ball_rad=r_0+((r_end-r_0)/t_end)*t
+    # fit_param=fit.fitter(Iq_num=Iq_num, q_num=q_num, 
+    #                         model_xml=model_xml, 
+    #                         t_end=t_end, t=t)
     ball_sld=float(root.find('sld_in').text)
     box_sld=float(root.find('sld_out').text)
-    r_0=float(root.find('rad_0').text)
-    r_end=float(root.find('rad_end').text)
-    ball_rad=r_0+((r_end-r_0)/t_end)*t
-    fit_param=fit.fitter(Iq_num=Iq_num, q_num=q_num, 
-                            model_xml=model_xml, 
-                            t_end=t_end, t=t)
-    Iq_fit, q_fit =ana.ball(qmax=np.max(q_num),qmin=np.min(q_num),Npts=100,
-                scale=1,bg=0,sld=ball_sld,sld_sol=box_sld,rad=fit_param)
-
+    ball_rad=float(root.find('rad').text)
+    sig_0=float(root.find('sig_0').text)
+    sig_end=float(root.find('sig_end').text)
+    # Iq_fit, q_fit =ana.ball(qmax=np.max(q_num),qmin=np.min(q_num),Npts=100,
+    #             scale=1,bg=0,sld=ball_sld,sld_sol=box_sld,rad=fit_param)
+    fit_param=sig_0+((sig_end-sig_0)/t_end)*t
+    fit_param_arr_1, fit_param_arr_2=fit.fitter(Iq_num=Iq_num, q_num=q_num, 
+                         model_xml=model_xml, 
+                         t_arr=t_arr, t_idx=i, 
+                         fit_param_1=fit_param_arr_1, fit_param_2=fit_param_arr_2)
+    # print(fit_param)
+    Iq_fit, q_fit =ana.fuzzysph(qmax=np.max(q_num),qmin=np.min(q_num),Npts=100,scale=1,
+                                bg=0,sld=ball_sld,sld_sol=box_sld,
+                                sig_fuzz=fit_param_arr_1[i], radius=fit_param_arr_2[i])
+    
+    
     vol_box=length_a*length_b*length_c
     # vol_ball=(4/3)*np.pi*ball_rad**3
-    plt.loglog(q_num, Iq_num)
+    plt.loglog(q_num, Iq_num,'o')
     plt.loglog(q_fit, Iq_fit)
     plt.show()
 
-    fit_param_arr[i] =  fit_param
+    # fit_param_arr[i] =  fit_param
 
-# fit param saving
-fit_param_dir = model_param_dir
-fit_param_name = fit.get_fit_param(sim_model)
-fit_param_file_name = 'fit_param.h5'
-fit_param_file = os.path.join(fit_param_dir, 'fit_param.h5')
-fit_param_data=h5py.File(fit_param_file,'w')
-fit_param_data['fit_param_val']=fit_param_arr
-fit_param_data['fit_param_name']=fit_param_name
-fit_param_data.close()
+# # fit param saving
+# fit_param_dir = model_param_dir
+# fit_param_file_name = 'fit_param.h5'
+# fit_param_file = os.path.join(fit_param_dir, 'fit_param.h5')
+# fit_param_name = fit.get_fit_param(sim_model)
+# fit_param_data=h5py.File(fit_param_file,'w')
+# fit_param_data['fit_param_val']=fit_param_arr
+# fit_param_data['fit_param_name']=fit_param_name
+# fit_param_data.close()
 
 
 
