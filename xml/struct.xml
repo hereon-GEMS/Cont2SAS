@@ -11,9 +11,9 @@ list params:
     4a) whether to change - update
     (if update is false and structure exists nothing changes)
     4b) whether to plot - plot
-        3ba) plot points at nodes - node
-        3bb) plot points at cells - cell
-        3bc) plot mesh - mesh (time consuming plot)
+        4ba) plot points at nodes - node
+        4bb) plot points at cells - cell
+        4bc) plot mesh - mesh (time consuming plot)
 -->
 
 <root>
@@ -23,20 +23,20 @@ list params:
         <z>40</z>
     </lengths>
     <num_cell>
-        <x>400</x>
-        <y>400</y>
-        <z>400</z>
+        <x>10</x>
+        <y>5</y>
+        <z>2</z>
     </num_cell>
     <element>
         <type>lagrangian</type>
-        <order>1</order>
+        <order>2</order>
     </element>
     <decision>
         <update>True</update>
         <plot>
-            <node>False</node>
-            <cell>False</cell>
-            <mesh>False</mesh>
+            <node>True</node>
+            <cell>True</cell>
+            <mesh>True</mesh>
         </plot>
     </decision>
 </root>
