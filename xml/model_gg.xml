@@ -12,6 +12,6 @@ list params:
 <root>
     <rad_0>7</rad_0>
     <rad_end>17</rad_end>
-    <sld_in>4</sld_in>
+    <sld_in>2</sld_in>
     <sld_out>1</sld_out>
 </root>

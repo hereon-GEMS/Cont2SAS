@@ -23,9 +23,9 @@ list params:
         <z>40</z>
     </lengths>
     <num_cell>
-        <x>10</x>
-        <y>5</y>
-        <z>2</z>
+        <x>40</x>
+        <y>40</y>
+        <z>40</z>
     </num_cell>
     <element>
         <type>lagrangian</type>
@@ -34,9 +34,9 @@ list params:
     <decision>
         <update>True</update>
         <plot>
-            <node>True</node>
-            <cell>True</cell>
-            <mesh>True</mesh>
+            <node>False</node>
+            <cell>False</cell>
+            <mesh>False</mesh>
         </plot>
     </decision>
 </root>

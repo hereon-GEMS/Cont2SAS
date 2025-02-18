@@ -16,10 +16,10 @@ list params:
 -->
 
 <root>
-    <model>gg</model>
+    <model>fs</model>
     <sim_param>
         <dt>1</dt>
-        <tend>0</tend>
+        <tend>10</tend>
         <n_ensem>3</n_ensem>
     </sim_param>
 </root>
