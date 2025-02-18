@@ -36,8 +36,10 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
                     #print(idx)
         
         # create connectivity matrix
-        el=np.array([0, 1, nz+2, nz+1, (nz+1)*(ny+1), (nz+1)*(ny+1)+1, \
-                    (nz+1)*(ny+1)+nz+2, (nz+1)*(ny+1)+nz+1])
+        el=np.array([0, 1, 
+                     (nz+1), (nz+1)+1, 
+                     (nz+1)*(ny+1),(nz+1)*(ny+1)+1, 
+                     (nz+1)*(ny+1)+(nz+1), (nz+1)*(ny+1)+(nz+1)+1])
         con_3d=np.zeros((num_cells,len(el)), dtype=int)
         cur=0
         idx=0
@@ -51,7 +53,7 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
             cur=cur+1+nz
         
         # corner nodes for plotting mesh
-        mesh=con_3d[:,[0,1,2,3,4,5,6,7]]
+        mesh=con_3d[:,[0,1,3,2,4,5,7,6]]
         
         # create cell matrix
         cells=np.zeros((num_cells,3))
@@ -61,9 +63,64 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
             cell_center=np.average(points, axis=0)
             cells[idx]=cell_center
             idx+=1
+    elif el_order==2:
+        #a = length_a, b = length_b c = length_c
+        #nx = no. of divisions in x direction (same for ny and nz)
         
+        # cell dimension
+        dx=a/(nx)
+        dy=b/(ny)
+        dz=c/(nz)
 
-        return nodes, cells, con_3d, mesh_3d
+        # total number of nodes and cells
+        num_nodes=(2*nx+1)*(2*ny+1)*(2*nz+1)
+        num_cells=nx*ny*nz
+        
+        # create node matrix
+        nodes=np.zeros((num_nodes,3))
+        idx=0
+        for i in range(2*nx+1):
+            for j in range(2*ny+1):
+                for k in range(2*nz+1):
+                    nodes[idx,:]=np.array([i*dx/2, j*dy/2, k*dz/2])
+                    idx+=1
+        
+        # create connectivity matrix
+        el=np.array([0, 1, 2,
+                    (2*nz+1), (2*nz+1)+1, (2*nz+1)+2,
+                    2*(2*nz+1), 2*(2*nz+1)+1, 2*(2*nz+1)+2,
+                    (2*nz+1)*(2*ny+1), (2*nz+1)*(2*ny+1)+1, (2*nz+1)*(2*ny+1)+2,
+                    (2*nz+1)*(2*ny+1)+(2*nz+1), (2*nz+1)*(2*ny+1)+(2*nz+1)+1, (2*nz+1)*(2*ny+1)+(2*nz+1)+2,
+                    (2*nz+1)*(2*ny+1)+2*(2*nz+1), (2*nz+1)*(2*ny+1)+2*(2*nz+1)+1, (2*nz+1)*(2*ny+1)+2*(2*nz+1)+2,
+                    2*(2*nz+1)*(2*ny+1), 2*(2*nz+1)*(2*ny+1)+1, 2*(2*nz+1)*(2*ny+1)+2,
+                    2*(2*nz+1)*(2*ny+1)+(2*nz+1), 2*(2*nz+1)*(2*ny+1)+(2*nz+1)+1, 2*(2*nz+1)*(2*ny+1)+(2*nz+1)+2,
+                    2*(2*nz+1)*(2*ny+1)+2*(2*nz+1), 2*(2*nz+1)*(2*ny+1)+2*(2*nz+1)+1, 2*(2*nz+1)*(2*ny+1)+2*(2*nz+1)+2])
+        con_3d=np.zeros((num_cells,len(el)), dtype=int)
+        cur=0
+        idx=0
+        for i in range(nx):
+            for j in range(ny):
+                for k in range(nz):
+                    con_3d[idx,:]=cur+el
+                    idx+=1
+                    cur=cur+2
+                cur=cur+(2*nz+1) +1
+            cur=cur+(2*nz+1) + (2*nz+1)*(2*ny+1)
+        
+        # corner nodes for plotting mesh
+        mesh=con_3d[:,[0,2,8,6,18,20,26,24]]
+        print(nodes[mesh[1,:]])
+        
+        # create cell matrix
+        cells=np.zeros((num_cells,3))
+        idx=0
+        for connec in con_3d:
+            points=nodes[connec]
+            cell_center=np.average(points, axis=0)
+            cells[idx]=cell_center
+            idx+=1
+
+    return nodes, cells, con_3d, mesh
 
 # plot script of nodes or cells
 def plotter_3d(points_3d, save_plot=False, save_dir='.',
