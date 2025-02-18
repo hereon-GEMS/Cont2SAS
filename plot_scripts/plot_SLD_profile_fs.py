@@ -79,9 +79,9 @@ length_a= 40.
 length_b=40. 
 length_c=40. 
 # number of cells in each direction (int values)
-nx= 40
-ny= 40
-nz= 40
+nx= 80
+ny= 80
+nz= 80
 # calculate mid point of structure (simulation box)
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
@@ -92,7 +92,7 @@ sim_model= 'fs' #root.find('model').text
 
 # simulation parameters
 ## time
-dt= 1. 
+dt= 5. 
 t_end= 10.
 t_arr=np.arange(0,t_end+dt, dt)
 ## ensemble
@@ -258,7 +258,7 @@ for i in range(len(t_arr)):
             plt.plot(x_line_1, y_line_1,'-')
             plt.plot(x_line_2, y_line_2,'-')
             plt.show()
-            
+
             #plot pseudo atoms
             cut_frac=0.5
             pseudo_pos_3d=pseudo_pos.reshape(nx, ny, nz, 3)
