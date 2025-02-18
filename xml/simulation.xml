@@ -16,10 +16,10 @@ list params:
 -->
 
 <root>
-    <model>fs</model>
+    <model>sld_grow</model>
     <sim_param>
         <dt>1</dt>
         <tend>10</tend>
-        <n_ensem>3</n_ensem>
+        <n_ensem>1</n_ensem>
     </sim_param>
 </root>

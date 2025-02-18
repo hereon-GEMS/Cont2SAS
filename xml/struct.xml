@@ -29,7 +29,7 @@ list params:
     </num_cell>
     <element>
         <type>lagrangian</type>
-        <order>2</order>
+        <order>1</order>
     </element>
     <decision>
         <update>True</update>

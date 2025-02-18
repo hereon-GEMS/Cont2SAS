@@ -26,8 +26,8 @@ list params:
             <y>0</y>
             <z>0</z>
         </scan_vec>
-        <Q_start>0.0</Q_start>
-        <Q_end>1.0</Q_end>
+        <Q_start>0.0029</Q_start>
+        <Q_end>0.05</Q_end>
         <num_points>100</num_points>
         <num_orientation>100</num_orientation>
     </scatt_cal>
