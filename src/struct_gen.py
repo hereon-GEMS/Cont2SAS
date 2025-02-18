@@ -24,7 +24,7 @@ tic = time.perf_counter()
 read input from xml file
 """
 
-xml_folder='../xml/'
+xml_folder='./xml/'
 
 struct_xml=os.path.join(xml_folder, 'struct.xml')
 
@@ -65,7 +65,7 @@ create folder structure
 """
 
 # create folders 
-os.makedirs('../data', exist_ok=True)
+os.makedirs('./data', exist_ok=True)
 
 # save length values as strings
 # decimal points are replaced with p
@@ -86,7 +86,7 @@ if el_type=='lagrangian':
     struct_folder_name += '_' + el_type + '_' + el_order_str
 
 
-res_dir=os.path.join('../data/', struct_folder_name +'/structure')
+res_dir=os.path.join('./data/', struct_folder_name +'/structure')
 
 
 if os.path.exists(res_dir):
