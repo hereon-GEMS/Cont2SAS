@@ -60,6 +60,12 @@ ny=int(root.find('num_cell').find('y').text)
 nz=int(root.find('num_cell').find('z').text)
 # mid point of structure
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
+# element type
+el_type=root.find('element').find('type').text
+if el_type=='lagrangian':
+    el_order=int(root.find('element').find('order').text)
+    el_info={'type': el_type,
+             'order': el_order}
 
 ### sim xml ###
 
@@ -122,9 +128,18 @@ length_c_str=str(length_a).replace('.','p')
 nx_str=str(nx)
 ny_str=str(ny)
 nz_str=str(nz)
-sim_dir=os.path.join('../data/',
-                        length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-                        nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
+struct_folder_name = (length_a_str + '_' + length_b_str + '_' + length_c_str
+                       + '_' + nx_str + '_' + ny_str + '_' + nz_str)
+# save elemnt type as string
+if el_type=='lagrangian':
+    el_order_str=str(el_order)
+    struct_folder_name += '_' + el_type + '_' + el_order_str
+
+
+sim_dir=os.path.join('../data/', struct_folder_name +'/simulation')
+# sim_dir=os.path.join('../data/',
+#                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
+#                         nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
 os.makedirs(sim_dir, exist_ok=True)
 
 # read structure info
@@ -161,9 +176,11 @@ for i in range(len(t_arr)):
     q_all_ensem=np.zeros((num_points,n_ensem))
     for j in range(n_ensem):
         idx_ensem=j
+        print('time step: {0}, emsemble: {1}'.format(t,idx_ensem))
         # create ensemble dir
         ensem_dir_name='ensem{0:0>3}'.format(idx_ensem)
         ensem_dir=os.path.join(t_dir, ensem_dir_name)
+        
         """
         discretization
         """
@@ -180,16 +197,16 @@ for i in range(len(t_arr)):
         scatt_dir_name='scatt_cal_'+ scatt_settings
         scatt_dir=os.path.join(ensem_dir, scatt_dir_name)
         os.makedirs(scatt_dir, exist_ok=True)
+
         # calculate pseudo atom position
         pseudo_pos=cells
-
 
         # calculate pseudo atom scattering lengths
         cell_dx=length_a/nx
         cell_dy=length_b/ny
         cell_dz=length_b/nz
         cell_vol=cell_dx*cell_dy*cell_dz
-        pseudo_b=scatt.pseudo_b(node_sld,con,cell_vol)
+        pseudo_b=scatt.pseudo_b(nodes,cells,node_sld,con,cell_vol,el_info)
         #sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
 
         # categorize SLD
