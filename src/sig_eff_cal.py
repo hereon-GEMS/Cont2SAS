@@ -62,6 +62,12 @@ ny=int(root.find('num_cell').find('y').text)
 nz=int(root.find('num_cell').find('z').text)
 # mid point of structure
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
+# element type
+el_type=root.find('element').find('type').text
+if el_type=='lagrangian':
+    el_order=int(root.find('element').find('order').text)
+    el_info={'type': el_type,
+             'order': el_order}
 
 ### sim xml ###
 
@@ -144,9 +150,19 @@ length_c_str=str(length_a).replace('.','p')
 nx_str=str(nx)
 ny_str=str(ny)
 nz_str=str(nz)
-sim_dir=os.path.join('../data/',
-                        length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-                        nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
+struct_folder_name = (length_a_str + '_' + length_b_str + '_' + length_c_str
+                       + '_' + nx_str + '_' + ny_str + '_' + nz_str)
+
+# save elemnt type as string
+if el_type=='lagrangian':
+    el_order_str=str(el_order)
+    struct_folder_name += '_' + el_type + '_' + el_order_str
+
+
+sim_dir=os.path.join('../data/', struct_folder_name +'/simulation')
+# sim_dir=os.path.join('../data/',
+#                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
+#                         nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
 os.makedirs(sim_dir, exist_ok=True)
 
 # read structure info
@@ -195,6 +211,8 @@ pixel_r=np.sqrt(np.sum((pixel_coord_det-org_beam)**2, axis=1))
 pixel_Q=(4*np.pi/wl)*np.sin(0.5*np.arctan(pixel_r/d))
 Q_range=[min(pixel_Q), max(pixel_Q)]
 
+# initialize sigma_eff
+sig_eff=np.zeros(len(t_arr))
 for i in range(len(t_arr)):
     t=t_arr[i]
     # time_dir name
@@ -274,7 +292,7 @@ for i in range(len(t_arr)):
     Iq_total=Iq_cut*wq
 
     # calculate sigma eff
-    sig_eff=np.zeros(len(t_arr))
+    
     for j in range(len(q_cut)-1):
         del_q=q_cut[j+1]-q_cut[j]
         sig_eff[i]+=0.5*del_q*(Iq_total[j+1]+Iq_total[j])
