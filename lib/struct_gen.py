@@ -33,7 +33,6 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
                 for k in range(nz+1):
                     nodes[idx,:]=np.array([i*dx, j*dy, k*dz])
                     idx+=1
-                    #print(idx)
         
         # create connectivity matrix
         el=np.array([0, 1, 
@@ -109,7 +108,6 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
         
         # corner nodes for plotting mesh
         mesh=con_3d[:,[0,2,8,6,18,20,26,24]]
-        print(nodes[mesh[1,:]])
         
         # create cell matrix
         cells=np.zeros((num_cells,3))
