@@ -58,6 +58,12 @@ ny=int(root.find('num_cell').find('y').text)
 nz=int(root.find('num_cell').find('z').text)
 # mid point of structure
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
+# element type
+el_type=root.find('element').find('type').text
+if el_type=='lagrangian':
+    el_order=int(root.find('element').find('order').text)
+    el_info={'type': el_type,
+             'order': el_order}
 
 ### sim xml ###
 
@@ -94,9 +100,20 @@ length_c_str=str(length_a).replace('.','p')
 nx_str=str(nx)
 ny_str=str(ny)
 nz_str=str(nz)
-sim_dir=os.path.join('../data/',
-                        length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-                        nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
+
+struct_folder_name = (length_a_str + '_' + length_b_str + '_' + length_c_str
+                       + '_' + nx_str + '_' + ny_str + '_' + nz_str)
+
+# save elemnt type as string
+if el_type=='lagrangian':
+    el_order_str=str(el_order)
+    struct_folder_name += '_' + el_type + '_' + el_order_str
+
+
+sim_dir=os.path.join('../data/', struct_folder_name +'/simulation')
+# sim_dir=os.path.join('../data/',
+#                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
+#                         nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
 os.makedirs(sim_dir, exist_ok=True)
 
 
@@ -142,15 +159,20 @@ for i in range(len(t_arr)):
         """
         sld, sld_max, sld_min=sim.model_run(sim_model, nodes, mid_point, t, t_end)
 
+        # number for nodes in x, y, z direction
+        if el_type=='lagrangian':
+            num_node_x=el_order*nx+1
+            num_node_y=el_order*ny+1
+            num_node_z=el_order*nz+1
         # plottig
-        sld_3d=sld.reshape(nx+1, ny+1, nz+1)
+        sld_3d=sld.reshape(num_node_x, num_node_y, num_node_z)
         
         ## z = 1/4 * z_max
-        nodes_3d=nodes.reshape(nx+1, ny+1, nz+1, 3)
-        z_val=nodes_3d[0, 0, (nz+1)//4, 2]
+        nodes_3d=nodes.reshape(num_node_x, num_node_y, num_node_z, 3)
+        z_val=nodes_3d[0, 0, num_node_z//4, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,(nz+1)//4].T, extent=[0, length_a, 0, length_b], origin='lower', vmin=sld_min, vmax=sld_max)
+        plt.imshow(sld_3d[:,:,num_node_z//4].T, extent=[0, length_a, 0, length_b], origin='lower', vmin=sld_min, vmax=sld_max)
         plot_file_1=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
         plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
@@ -164,11 +186,11 @@ for i in range(len(t_arr)):
         plt.close()
 
         ## z = 2/4 * z_max
-        nodes_3d=nodes.reshape(nx+1, ny+1, nz+1, 3)
-        z_val=nodes_3d[0, 0, (nz+1)//2, 2]
+        nodes_3d=nodes.reshape(num_node_x, num_node_y, num_node_z, 3)
+        z_val=nodes_3d[0, 0, (num_node_z)//2, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,(nz+1)//2].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
+        plt.imshow(sld_3d[:,:,(num_node_z)//2].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
         plot_file_2=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
         plt.title('time = {0:0>3}s, ensmbl num = {1}, z = {2}{3}'.format(t,idx_ensem+1,z_val,r'$\mathrm{\AA}$'))
@@ -181,11 +203,11 @@ for i in range(len(t_arr)):
         plt.close()
 
         ## z = 3/4 * z_max
-        nodes_3d=nodes.reshape(nx+1, ny+1, nz+1, 3)
-        z_val=nodes_3d[0, 0, 3*(nz+1)//4, 2]
+        nodes_3d=nodes.reshape(num_node_x, num_node_y, num_node_z, 3)
+        z_val=nodes_3d[0, 0, 3*(num_node_z)//4, 2]
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,3*(nz+1)//4].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
+        plt.imshow(sld_3d[:,:,3*(num_node_z)//4].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
         plot_file_3=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
         plt.colorbar()
         plt.title(" time = {0:0>3}s, emsemble step = {1:0>3} \
