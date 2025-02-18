@@ -20,6 +20,8 @@ def model_run(sim_model,nodes, midpoint, t, t_end):
         return model_gg(nodes, midpoint, t, t_end)
     if sim_model=='fs':
         return model_fs(nodes, midpoint, t, t_end)
+    if sim_model=='sld_grow':
+        return model_sld_grow(nodes, midpoint, t, t_end)
 
 def model_ball(nodes, midpoint, t):
     # read model_run_param from xml
@@ -143,6 +145,27 @@ def model_fs(nodes, midpoint, t, t_end):
         sim_sld=((sld_grain-sld_env)/2)*(1-special.erf((coord_r-rad)/(np.sqrt(2)*sig)))+sld_env
     sld_max=sld_grain
     sld_min=sld_env
+    return sim_sld, sld_max, sld_min
+
+def model_sld_grow(nodes, midpoint, t, t_end):
+    # read model_run_param from xml
+    xml_folder='../xml/'
+    struct_xml=os.path.join(xml_folder, 'model_sld_grow.xml')
+    tree=ET.parse(struct_xml)
+    root = tree.getroot()
+    # read params
+    rad=float(root.find('rad').text)
+    sld_start=float(root.find('sld_in_0').text)
+    sld_end=float(root.find('sld_in_end').text)
+    sld_env=float(root.find('sld_out').text)
+    # run simulation
+    nodes = np.array(nodes)
+    sim_sld = sld_env*np.ones(len(nodes))
+    sld_grain=sld_start+t*(sld_end-sld_start)/t_end
+    cord_ed = np.sum((nodes-midpoint)**2,axis=1)
+    sim_sld [cord_ed <= rad**2] = sld_grain
+    sld_max=max(sld_start, sld_end, sld_env)
+    sld_min=min(sld_start, sld_end, sld_env)
     return sim_sld, sld_max, sld_min
 
 ########################## old functions #####################
