@@ -161,10 +161,8 @@ def mesh_plotter_3d(points_3d, con_3d, save_plot=False,
     fig=plt.figure(figsize=figsize)
     ax=plt.axes(projection='3d')
     for connec in con_3d:
-        #print(connec)
         point=points_3d[connec]
-        draw1=np.array([0,1,2,3,0])
-        #points=np.concatenate((points[0:4], points[4:8,:]),axis=0)        
+        draw1=np.array([0,1,2,3,0])    
         ax.plot(point[draw1,0], point[draw1,1],point[draw1,2],'k')
         draw2=draw1+4
         ax.plot(point[draw2,0], point[draw2,1],point[draw2,2],'k')
