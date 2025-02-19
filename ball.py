@@ -19,7 +19,16 @@ plt_node=False
 plt_cell=False
 plt_mesh=False
 
-### sim_gen
+### sim_gen ###
+sim_model='ball'
+dt=1 
+t_end=0
+n_ensem=1
+
+### model_param ###
+rad=15
+sld=2
+
 
 """
 input values
@@ -34,6 +43,15 @@ xml_gen.struct_xml_write(xml_dir,
 # generate structure
 script_path = "src/struct_gen.py"  # Full path of the script
 working_dir = "."  # Directory to run the script in
-
 subprocess.run(["python", script_path], cwd=working_dir)
 
+# simulation xml
+xml_gen.sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem)
+
+# model xml
+xml_gen.model_ball_xml_write(xml_dir, rad, sld)
+
+# generate structure
+script_path = "src/sim_gen.py"  # Full path of the script
+working_dir = "."  # Directory to run the script in
+subprocess.run(["python", script_path], cwd=working_dir)

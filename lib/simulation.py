@@ -25,7 +25,7 @@ def model_run(sim_model,nodes, midpoint, t, t_end):
 
 def model_ball(nodes, midpoint, t):
     # read model_run_param from xml
-    xml_folder='../xml/'
+    xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_ball.xml')
     tree=ET.parse(struct_xml)
     root = tree.getroot()
@@ -44,7 +44,7 @@ def model_ball(nodes, midpoint, t):
 
 def model_box(nodes, midpoint, t):
     # read model_run_param from xml
-    xml_folder='../xml/'
+    xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_box.xml')
     tree=ET.parse(struct_xml)
     root = tree.getroot()
@@ -59,7 +59,7 @@ def model_box(nodes, midpoint, t):
 
 def model_bib(nodes, midpoint, t):
     # read model_run_param from xml
-    xml_folder='../xml/'
+    xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_bib.xml')
     tree=ET.parse(struct_xml)
     root = tree.getroot()
@@ -78,7 +78,7 @@ def model_bib(nodes, midpoint, t):
 
 def model_bib_ecc(nodes, midpoint, t):
     # read model_run_param from xml
-    xml_folder='../xml/'
+    xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_bib_ecc.xml')
     tree=ET.parse(struct_xml)
     root = tree.getroot()
@@ -102,7 +102,7 @@ def model_bib_ecc(nodes, midpoint, t):
 
 def model_gg(nodes, midpoint, t, t_end):
     # read model_run_param from xml
-    xml_folder='../xml/'
+    xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_gg.xml')
     tree=ET.parse(struct_xml)
     root = tree.getroot()
@@ -123,7 +123,7 @@ def model_gg(nodes, midpoint, t, t_end):
 
 def model_fs(nodes, midpoint, t, t_end):
     # read model_run_param from xml
-    xml_folder='../xml/'
+    xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_fs.xml')
     tree=ET.parse(struct_xml)
     root = tree.getroot()
@@ -149,7 +149,7 @@ def model_fs(nodes, midpoint, t, t_end):
 
 def model_sld_grow(nodes, midpoint, t, t_end):
     # read model_run_param from xml
-    xml_folder='../xml/'
+    xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_sld_grow.xml')
     tree=ET.parse(struct_xml)
     root = tree.getroot()
