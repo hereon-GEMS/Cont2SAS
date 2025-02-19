@@ -1,0 +1,17 @@
+<!-- 
+model names:
+static model: sld growth (ana model: sphere)
+list params:
+(maintain the order)
+1) radius of grain - rad
+2) sld of grain (t=0) - sld_in_0
+3) sld of grain (t=t_end) - sld_in_end
+4) sld of environment - sld_out
+-->
+
+<root>
+    <rad>10</rad>
+    <sld_in_0>2</sld_in_0>
+    <sld_in_end>5</sld_in_end>
+    <sld_out>1</sld_out>
+</root>

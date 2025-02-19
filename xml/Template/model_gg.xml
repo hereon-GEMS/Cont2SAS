@@ -1,0 +1,17 @@
+<!-- 
+model names:
+static model: grain growth (ana model: sphere)
+list params:
+(maintain the order)
+1) radius of grain at (t=0) - rad_0
+2) radius of grain at (t=t_end) - rad_end
+3) sld of grain - sld_in
+4) sld of environment - sld_out
+-->
+
+<root>
+    <rad_0>7</rad_0>
+    <rad_end>17</rad_end>
+    <sld_in>2</sld_in>
+    <sld_out>1</sld_out>
+</root>

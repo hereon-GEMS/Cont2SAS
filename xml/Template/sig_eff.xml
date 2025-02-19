@@ -1,0 +1,22 @@
+<!-- 
+input xml for effective cross-section calculation
+list params:
+(maintain the order)
+1) discretization - instrument
+2) params for calculating scattering function - facility
+3) distance between sample and detector - d
+4) wavelength of neutron beam - lambda
+5) vector defining positing of beam center w.r.t. detector center - beam_center
+-->
+
+<root>
+    <instrument>SANS-1</instrument>
+    <facility>MLZ</facility>
+    <d>20</d>
+    <lambda>4.5</lambda>
+    <beam_center>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+    </beam_center>
+</root>

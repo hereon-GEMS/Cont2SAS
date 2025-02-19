@@ -1,0 +1,13 @@
+<!-- 
+model names:
+static model: sphere (ball)
+list params:
+(maintain the order)
+1) radius - rad
+2) sld of ball - sld
+-->
+
+<root>
+    <rad>15</rad>
+    <sld>2</sld>
+</root>
