@@ -6,6 +6,8 @@ test*
 
 # __pycache__
 lib/__pycache__
+lib/__init__.pyc
+lib/xml_gen.pyc
 
 # images
 *.jpg
@@ -13,4 +15,5 @@ lib/__pycache__
 #tempcode
 *tempCodeRunnerFile.py
 
-#tempcode
+#xml
+./xml/*.xml
