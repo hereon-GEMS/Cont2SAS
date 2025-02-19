@@ -16,4 +16,4 @@ lib/xml_gen.pyc
 *tempCodeRunnerFile.py
 
 #xml
-./xml/*.xml
+xml/*.xml
