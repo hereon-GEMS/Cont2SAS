@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+from xml.dom.minidom import parseString
 import os
 
 # write struct_gen.xml file
@@ -35,12 +36,13 @@ def struct_xml_write(xml_dir, length_a, length_b, length_c, nx, ny, nz, el_type,
     # Convert to a string and format
     tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
 
     # Save to a file
-    xml_file_name='struct_gen.xml'
+    xml_file_name='struct.xml'
     xml_file=os.path.join(xml_dir, xml_file_name)
     with open(xml_file, "w", encoding="utf-8") as f:
-        f.write(xml_str)
+        f.write(formatted_xml)
     
     print("structure generation xml file created successfully!")
 
@@ -63,8 +65,10 @@ def sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem):
     # Save to a file
     xml_file_name='simulation.xml'
     xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
     with open(xml_file, "w", encoding="utf-8") as f:
-        f.write(xml_str)
+        f.write(formatted_xml)
     
     print("simulation xml file created successfully!")
 
@@ -84,7 +88,48 @@ def model_ball_xml_write(xml_dir, rad, sld):
     # Save to a file
     xml_file_name='model_ball.xml'
     xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
     with open(xml_file, "w", encoding="utf-8") as f:
-        f.write(xml_str)
+        f.write(formatted_xml)
     
     print("model_ball xml file created successfully!")
+
+# write model_ball.xml file
+def scatt_cal_xml_write(xml_dir, num_cat, method_cat, 
+                        sig_file, scan_vec_val, Q_range,
+                        num_points, num_orientation):
+    # Create the root element
+    root = ET.Element("root")
+
+    # details for categorization
+    discretization = ET.SubElement(root, "discretization")
+    ET.SubElement(discretization, "num_cat").text=str(num_cat)
+    ET.SubElement(discretization, "method_cat").text=str(method_cat)
+
+    # details for scatt_cal
+    scatt_cal = ET.SubElement(root, "scatt_cal")
+    ET.SubElement(scatt_cal, "sig_file").text=str(sig_file)
+    scan_vec=ET.SubElement(scatt_cal, "scan_vec")
+    ET.SubElement(scan_vec, "x").text=str(scan_vec_val[0])
+    ET.SubElement(scan_vec, "y").text=str(scan_vec_val[1])
+    ET.SubElement(scan_vec, "z").text=str(scan_vec_val[2])
+    ET.SubElement(scatt_cal, "Q_start").text=str(Q_range[0])
+    ET.SubElement(scatt_cal, "Q_end").text=str(Q_range[1])
+    ET.SubElement(scatt_cal, "num_points").text=str(num_points)
+    ET.SubElement(scatt_cal, "num_orientation").text=str(num_orientation)
+
+    # Convert to a string and format
+    tree = ET.ElementTree(root)
+    xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+
+    # Save to a file
+    xml_file_name='scatt_cal.xml'
+    xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
+    with open(xml_file, "w", encoding="utf-8") as f:
+        f.write(formatted_xml)
+    
+    print("scatt_cal xml file created successfully!")
+
