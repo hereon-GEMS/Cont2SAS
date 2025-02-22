@@ -263,7 +263,7 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
     # copy xml files that are not reproducible by coding 
     # this can be part of further work
     # check files in database_sassena dir
-    os.system('cp -r ../database_sassena/*.xml ' + db_dir + '/')
+    os.system('cp -r database_sassena/*.xml ' + db_dir + '/')
     definition_dir=os.path.join(db_dir, 'definitions')
     os.makedirs(definition_dir, exist_ok=True)
 
