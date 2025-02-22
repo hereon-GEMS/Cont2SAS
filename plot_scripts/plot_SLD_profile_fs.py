@@ -79,9 +79,9 @@ length_a= 40.
 length_b=40. 
 length_c=40. 
 # number of cells in each direction (int values)
-nx= 80
-ny= 80
-nz= 80
+nx= 40
+ny= 40
+nz= 40
 # calculate mid point of structure (simulation box)
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
@@ -92,11 +92,11 @@ sim_model= 'fs' #root.find('model').text
 
 # simulation parameters
 ## time
-dt= 5. 
+dt= 1. 
 t_end= 10.
 t_arr=np.arange(0,t_end+dt, dt)
 ## ensemble
-n_ensem=3 #int(root.find('sim_param').find('n_ensem').text)
+n_ensem=1 #int(root.find('sim_param').find('n_ensem').text)
 
 ### model xml entries ###
 
@@ -153,7 +153,7 @@ ny_str=str(ny)
 nz_str=str(nz)
 # element type
 el_type='lagrangian'
-el_order=2
+el_order=1
 el_order_str=str(el_order)
 
 
@@ -188,6 +188,7 @@ else:
 
 for i in range(len(t_arr)):
     t=t_arr[i]
+    print(t)
     # time_dir name
     t_dir_name='t{0:0>3}'.format(i)
     t_dir=os.path.join(model_param_dir, t_dir_name)
