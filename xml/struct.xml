@@ -1,42 +1,25 @@
-<!-- 
-input xml for structure (or mesh) generation
-list params:
-(maintain the order)
-1) length of simulation box (x,y,z) - lengths
-2) number of cells per direction (x,y,z) - num_cell
-3) element type - nature of shape function (FEM)
-    3a) type - family of elements (only lagrangian elements are considered) 
-    3b) order - 1, 2 (1: linear, 1: quadratic)
-4) decision whether to save or not - decision
-    4a) whether to change - update
-    (if update is false and structure exists nothing changes)
-    4b) whether to plot - plot
-        4ba) plot points at nodes - node
-        4bb) plot points at cells - cell
-        4bc) plot mesh - mesh (time consuming plot)
--->
-
+<?xml version="1.0" ?>
 <root>
-    <lengths>
-        <x>40</x>
-        <y>40</y>
-        <z>40</z>
-    </lengths>
-    <num_cell>
-        <x>40</x>
-        <y>40</y>
-        <z>40</z>
-    </num_cell>
-    <element>
-        <type>lagrangian</type>
-        <order>1</order>
-    </element>
-    <decision>
-        <update>True</update>
-        <plot>
-            <node>False</node>
-            <cell>False</cell>
-            <mesh>False</mesh>
-        </plot>
-    </decision>
+  <lengths>
+    <x>40</x>
+    <y>40</y>
+    <z>40</z>
+  </lengths>
+  <num_cell>
+    <x>40</x>
+    <y>40</y>
+    <z>40</z>
+  </num_cell>
+  <element>
+    <type>lagrangian</type>
+    <order>1</order>
+  </element>
+  <decision>
+    <update>True</update>
+    <plot>
+      <node>False</node>
+      <cell>False</cell>
+      <mesh>False</mesh>
+    </plot>
+  </decision>
 </root>

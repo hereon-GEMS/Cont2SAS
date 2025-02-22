@@ -1,1 +1,9 @@
-<root><model>ball</model><sim_param><dt>1</dt><tend>0</tend><n_ensem>1</n_ensem></sim_param></root>
+<?xml version="1.0" ?>
+<root>
+  <model>ball</model>
+  <sim_param>
+    <dt>1</dt>
+    <tend>0</tend>
+    <n_ensem>1</n_ensem>
+  </sim_param>
+</root>

@@ -13,7 +13,7 @@ list params:
 <root>
     <rad>10</rad>
     <sig_0>0</sig_0>
-    <sig_end>2</sig_end>
+    <sig_end>4</sig_end>
     <sld_in>2</sld_in>
     <sld_out>1</sld_out>
 </root>
