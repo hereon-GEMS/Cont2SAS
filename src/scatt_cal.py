@@ -43,7 +43,7 @@ read input from xml file
 
 ### struct xml ###
 
-xml_folder='../xml/'
+xml_folder='./xml/'
 
 struct_xml=os.path.join(xml_folder, 'struct.xml')
 
@@ -136,7 +136,7 @@ if el_type=='lagrangian':
     struct_folder_name += '_' + el_type + '_' + el_order_str
 
 
-sim_dir=os.path.join('../data/', struct_folder_name +'/simulation')
+sim_dir=os.path.join('./data/', struct_folder_name +'/simulation')
 # sim_dir=os.path.join('../data/',
 #                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
 #                         nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
