@@ -3,6 +3,7 @@ data
 garbage
 figure
 test*
+old_scripts
 
 # __pycache__
 lib/__pycache__
