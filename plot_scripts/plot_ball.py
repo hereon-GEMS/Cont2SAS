@@ -84,6 +84,10 @@ ny= 40
 nz= 40
 # calculate mid point of structure (simulation box)
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
+# element details
+el_type='lagrangian'
+el_order=1
+
 
 ### sim xml entries ###
 
@@ -215,11 +219,15 @@ for i in range(len(t_arr)):
 
         if idx_ensem==0:
             print('plotting for the first ensemble')
+            if el_type=='lagrangian':
+                num_node_x=el_order*nx+1
+                num_node_y=el_order*ny+1
+                num_node_z=el_order*nz+1
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
-            node_pos_3d=node_pos.reshape(nx+1, ny+1, nz+1, 3)
-            z_idx= np.floor(cut_frac*(nz+1)).astype(int)
+            node_pos_3d=node_pos.reshape(num_node_x, num_node_y, num_node_z, 3)
+            z_idx= np.floor(cut_frac*(num_node_z)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
             plot_file_name='SLD_ball'
@@ -228,7 +236,7 @@ for i in range(len(t_arr)):
             ## image plot
             ### .T is required to exchange x and y axis 
             ### origin is 'lower' to put it in lower left corner 
-            node_sld_3d=node_sld.reshape(nx+1, ny+1, nz+1)
+            node_sld_3d=node_sld.reshape(num_node_x, num_node_y, num_node_z)
             img = ax.imshow(node_sld_3d[:,:,z_idx].T, 
                             extent=[0, length_a, 0, length_b], 
                             origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
