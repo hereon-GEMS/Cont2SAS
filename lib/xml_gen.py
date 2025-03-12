@@ -95,10 +95,38 @@ def model_ball_xml_write(xml_dir, rad, sld):
     
     print("model_ball xml file created successfully!")
 
-# write model_ball.xml file
+# write model_fs.xml file
+def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out):
+    # Create the root element
+    root = ET.Element("root")
+
+    # details for simulation box
+    ET.SubElement(root, "rad").text=str(rad)
+    ET.SubElement(root, "sig_0").text=str(sig_0)
+    ET.SubElement(root, "sig_end").text=str(sig_end)
+    ET.SubElement(root, "sld_in").text=str(sld_in)
+    ET.SubElement(root, "sld_out").text=str(sld_out)
+
+    # Convert to a string and format
+    tree = ET.ElementTree(root)
+    xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+
+    # Save to a file
+    xml_file_name='model_fs.xml'
+    xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
+    with open(xml_file, "w", encoding="utf-8") as f:
+        f.write(formatted_xml)
+    
+    print("model_fs xml file created successfully!")
+
+# write scatt_cal.xml file
 def scatt_cal_xml_write(xml_dir, num_cat, method_cat, 
+                        sassena_exe, mpi_procs, num_threads, 
                         sig_file, scan_vec_val, Q_range,
                         num_points, num_orientation):
+    
     # Create the root element
     root = ET.Element("root")
 
@@ -106,6 +134,12 @@ def scatt_cal_xml_write(xml_dir, num_cat, method_cat,
     discretization = ET.SubElement(root, "discretization")
     ET.SubElement(discretization, "num_cat").text=str(num_cat)
     ET.SubElement(discretization, "method_cat").text=str(method_cat)
+
+    # details for sassena
+    sassena = ET.SubElement(root, "sassena")
+    ET.SubElement(sassena, "exe_loc").text=str(sassena_exe)
+    ET.SubElement(sassena, "mpi_procs").text=str(mpi_procs)
+    ET.SubElement(sassena, "num_threads").text=str(num_threads)
 
     # details for scatt_cal
     scatt_cal = ET.SubElement(root, "scatt_cal")
