@@ -85,6 +85,8 @@ t_arr=np.arange(0,t_end+dt, dt)
 ## ensemble
 n_ensem=int(root.find('sim_param').find('n_ensem').text)
 
+### scatt_cal xml ###
+
 # scatter calculation
 # scatt_cal
 scatt_cal_xml=os.path.join(xml_folder, 'scatt_cal.xml')
@@ -96,6 +98,11 @@ root = tree.getroot()
 # number of categories and method of categorization
 num_cat=int(root.find('discretization').find('num_cat').text)
 method_cat=root.find('discretization').find('method_cat').text
+
+# sassena details
+sassena_exec=root.find('sassena').find('exe_loc').text
+mpi_procs=int(root.find('sassena').find('mpi_procs').text)
+num_threads=int(root.find('sassena').find('num_threads').text)
 
 # scatt_cal params
 signal_file=root.find('scatt_cal').find('sig_file').text
@@ -256,12 +263,12 @@ for i in range(len(t_arr)):
         print('Running sassena')
         parent_dir=os.getcwd()
         os.chdir(os.path.join(parent_dir,scatt_dir))
-        sassena_exec='/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+        #sassena_exec='/home/amajumda/Documents/Softwares/sassena/compile/sassena'
         sass_out_file='sass.log'
         if os.path.exists(signal_file):
             os.remove(signal_file)
-        print('mpirun -np 4 {0} > {1} 2>&1'.format(sassena_exec, sass_out_file))
-        os.system('mpirun -np 4 {0} > {1} 2>&1'.format(sassena_exec, sass_out_file))
+        print('mpirun -np 4 {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file))
+        os.system('mpirun -np 4 {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file))
         os.chdir(parent_dir)
 
         # read and save Iq data from current ensem
