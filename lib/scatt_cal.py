@@ -415,9 +415,9 @@ def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_le
     stage=ET.SubElement(limits, "stage")
     memory=ET.SubElement(stage, "memory")
     ET.SubElement(memory, "data").text=str(800000000)
-    # threads
-    computation=ET.SubElement(limits, "computation")
-    ET.SubElement(computation, "threads").text=str(2)
+    # # threads
+    # computation=ET.SubElement(limits, "computation")
+    # ET.SubElement(computation, "threads").text=str(2)
 
     tree = ET.ElementTree(root)
     tree.write(scatter_xml_file)
