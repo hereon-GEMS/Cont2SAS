@@ -39,6 +39,9 @@ sld=2
 ### scatt_cal ###
 num_cat=101
 method_cat='extend'
+sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+mpi_procs=2
+num_threads=2
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0, 1])
@@ -69,7 +72,7 @@ if struct_gen_run==1:
     # generate structure
     print(info_str + 'Executing struct_gen.py')
     script_path = os.path.join(script_dir, 'struct_gen.py')  # Full path of the script
-    working_dir = "."  # Directory to run the script in
+    #working_dir = "."  # Directory to run the script in
     subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
 else:
     print(info_str + 'structure generation not attempted')
@@ -87,7 +90,7 @@ if sim_run==1:
     # generate structure
     print(info_str + 'Executing sim_gen.py')
     script_path = os.path.join(script_dir, 'sim_gen.py')  # Full path of the script
-    working_dir = "."  # Directory to run the script in
+    #working_dir = "."  # Directory to run the script in
     subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
 else:
     print(info_str + 'simulation not attempted')
@@ -97,13 +100,14 @@ if scatt_cal_run==1:
     # scatt_cal xml
     print(info_str + 'Generating scatt_cal.xml')
     xml_gen.scatt_cal_xml_write(xml_dir, num_cat, method_cat,
+                                sassena_exe, mpi_procs, num_threads,
                                 sig_file, scan_vec, Q_range,
                                 num_points, num_orientation)
 
     # calculate scattering function
     print(info_str + 'Executing scatt_cal.py')
     script_path = os.path.join(script_dir, 'scatt_cal.py')  # Full path of the script
-    working_dir = "."  # Directory to run the script in
+    #working_dir = "."  # Directory to run the script in
     subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
 else:
     print(info_str + 'Calculation of scattring function not attempted')
