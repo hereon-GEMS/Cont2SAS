@@ -13,9 +13,9 @@ working_dir = "."  # Directory to run the script in
 
 ### struct gen ###
 xml_dir='./xml' 
-length_a=40 
-length_b=40 
-length_c=40
+length_a=40.
+length_b=40. 
+length_c=40.
 nx=40 
 ny=40 
 nz=40 
