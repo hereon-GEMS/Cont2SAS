@@ -12,21 +12,19 @@ import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-from lib import struct_gen as sg
-from lib import plotter as pltr
+# from lib import struct_gen as sg
+# from lib import plotter as pltr
 from lib import simulation as sim
-from lib import processing as procs
+# from lib import processing as procs
 from lib import datasaver as dsv
 
 
 
 import os
 import time
-import argparse
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
 import imageio.v2 as imageio
