@@ -28,7 +28,7 @@ plt_mesh=False
 
 ### sim_gen ###
 sim_model='ball'
-dt=1 
+dt=1
 t_end=0
 n_ensem=1
 
