@@ -13,9 +13,9 @@ lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
 from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import simulation as sim
-from lib import processing as procs
+# from lib import plotter as pltr
+# from lib import simulation as sim
+# from lib import processing as procs
 from lib import datasaver as dsv
 from lib import scatt_cal as scatt
 
@@ -23,7 +23,6 @@ from lib import scatt_cal as scatt
 
 import os
 import time
-import argparse
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
@@ -151,7 +150,8 @@ os.makedirs(sim_dir, exist_ok=True)
 
 # read structure info
 data_filename=os.path.join(sim_dir,'../structure/struct.h5')
-nodes, cells, con = dsv.mesh_read(data_filename)
+nodes, cells, con, mesh = sg.mesh_read(data_filename)
+# nodes, cells, con = dsv.mesh_read(data_filename)
 
 # folder name for model
 model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
