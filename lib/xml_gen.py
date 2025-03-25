@@ -117,6 +117,30 @@ def model_box_xml_write(xml_dir, sld):
     
     print("model_box xml file created successfully!")
 
+# write model_bib.xml file
+def model_bib_xml_write(xml_dir, rad, sld_in, sld_out):
+    # Create the root element
+    root = ET.Element("root")
+
+    # details for simulation box
+    ET.SubElement(root, "rad").text=str(rad)
+    ET.SubElement(root, "sld_in").text=str(sld_in)
+    ET.SubElement(root, "sld_out").text=str(sld_out)
+
+    # Convert to a string and format
+    tree = ET.ElementTree(root)
+    xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+
+    # Save to a file
+    xml_file_name='model_bib.xml'
+    xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
+    with open(xml_file, "w", encoding="utf-8") as f:
+        f.write(formatted_xml)
+    
+    print("model_bib xml file created successfully!")
+
 # write model_fs.xml file
 def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out):
     # Create the root element
