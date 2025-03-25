@@ -112,7 +112,7 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.])
 num_points=100
-num_orientation=10
+num_orientation=100
 
 """
 calculate vars and create folder structure
@@ -185,39 +185,9 @@ scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
 scatt_settings=scatt_settings.replace('.', 'p')
 
 
-# """
-# read folder structure
-# """
-
-# # folder structure
-# ## mother folder name
-# ### save length values as strings
-# ### decimal points are replaced with p
-# length_a_str=str(length_a).replace('.','p')
-# length_b_str=str(length_a).replace('.','p')
-# length_c_str=str(length_a).replace('.','p')
-
-# ### save num_cell values as strings
-# nx_str=str(nx)
-# ny_str=str(ny)
-# nz_str=str(nz)
-
-# mother_dir_name = length_a_str+'_' + length_b_str+'_' + length_c_str\
-#       + '_' + nx_str + '_' + ny_str+'_' + nz_str
-# mother_dir = os.path.join('../data/', mother_dir_name)
-
-# # read structure info
-# data_file=os.path.join(mother_dir, 'structure/struct.h5')
-
-# sim_dir=os.path.join(mother_dir, 'simulation')
-
-# # folder name for model
-# model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
-#     + '_ensem_' + str(n_ensem)).replace('.','p')
-# model_dir=os.path.join(sim_dir,model_dir_name)
-
-# # folder name for model with particular run param
-# model_param_dir=os.path.join(model_dir,model_param_dir_name)
+"""
+read folder structure
+"""
 
 # create folder for figure (one level up from data folder)
 figure_dir=os.path.join(mother_dir, '../../figure/')
