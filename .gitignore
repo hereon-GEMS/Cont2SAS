@@ -11,6 +11,8 @@ plot_scripts/plot_IQ_fs_check.py
 lib/__pycache__
 lib/__init__.pyc
 lib/xml_gen.pyc
+lib/plotter.pyc
+lib/struct_gen.pyc
 
 # images
 *.jpg
