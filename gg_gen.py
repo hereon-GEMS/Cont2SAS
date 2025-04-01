@@ -37,7 +37,6 @@ rad_0=7
 rad_end=17
 sld_in=2
 sld_out=1
-ecc_vec=np.array([2, 2, 2])
 
 ### scatt_cal ###
 num_cat=101
