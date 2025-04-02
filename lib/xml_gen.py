@@ -291,3 +291,33 @@ def scatt_cal_xml_write(xml_dir, num_cat, method_cat,
     
     print("scatt_cal xml file created successfully!")
 
+# write sig_eff.xml file
+def sig_eff_xml_write(xml_dir, instrument, facility, 
+                        distance, wl, beam_center_coord):
+    # Create the root element
+    root = ET.Element("root")
+
+    # instrument details
+    ET.SubElement(root, "instrument").text=str(instrument)
+    ET.SubElement(root, "facility").text=str(facility)
+    ET.SubElement(root, "d").text=str(distance)
+    ET.SubElement(root, "lambda").text=str(wl)
+    beam_center = ET.SubElement(root, "beam_center")
+    ET.SubElement(beam_center, "x").text=str(beam_center_coord[0])
+    ET.SubElement(beam_center, "y").text=str(beam_center_coord[1])
+    ET.SubElement(beam_center, "z").text=str(beam_center_coord[2])
+    
+    # Convert to a string and format
+    tree = ET.ElementTree(root)
+    xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+
+    # Save to a file
+    xml_file_name='sig_eff.xml'
+    xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
+    with open(xml_file, "w", encoding="utf-8") as f:
+        f.write(formatted_xml)
+    
+    print("sig_eff xml file created successfully!")
+
