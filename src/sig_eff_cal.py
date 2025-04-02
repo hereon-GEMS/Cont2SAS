@@ -45,7 +45,7 @@ read input from xml file
 
 ### struct xml ###
 
-xml_folder='../xml/'
+xml_folder='./xml/'
 
 struct_xml=os.path.join(xml_folder, 'struct.xml')
 
@@ -159,7 +159,7 @@ if el_type=='lagrangian':
     struct_folder_name += '_' + el_type + '_' + el_order_str
 
 
-sim_dir=os.path.join('../data/', struct_folder_name +'/simulation')
+sim_dir=os.path.join('./data/', struct_folder_name +'/simulation')
 # sim_dir=os.path.join('../data/',
 #                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
 #                         nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
@@ -192,7 +192,7 @@ else:
 
 ## read detector geometry
 detector_file_name='detector.h5'
-detector_dir='../detector_geometry/{0}_{1}'.format(instrument, facility)
+detector_dir='./detector_geometry/{0}_{1}'.format(instrument, facility)
 detector_file=os.path.join(detector_dir, detector_file_name)
 detector_file_data=h5py.File(detector_file,'r')
 nx_det=detector_file_data['num_pixel_x'][()]
