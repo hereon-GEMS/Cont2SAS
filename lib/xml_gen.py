@@ -222,6 +222,29 @@ def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out):
     
     print("model_fs xml file created successfully!")
 
+# write model_sld_grow.xml file
+def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out):
+    # Create the root element
+    root = ET.Element("root")
+
+    # details for simulation box
+    ET.SubElement(root, "rad").text=str(rad)
+    ET.SubElement(root, "sld_in_0").text=str(sld_in_0)
+    ET.SubElement(root, "sld_in_end").text=str(sld_in_end)
+    ET.SubElement(root, "sld_out").text=str(sld_out)
+
+    # Convert to a string and format
+    tree = ET.ElementTree(root)
+    xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+
+    # Save to a file
+    xml_file_name='model_sld_grow.xml'
+    xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
+    with open(xml_file, "w", encoding="utf-8") as f:
+        f.write(formatted_xml)
+
 # write scatt_cal.xml file
 def scatt_cal_xml_write(xml_dir, num_cat, method_cat, 
                         sassena_exe, mpi_procs, num_threads, 
