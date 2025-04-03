@@ -13,14 +13,14 @@ working_dir = "."  # Directory to run the script in
 
 ### struct gen ###
 xml_dir='./xml' 
-length_a=40.
+length_a=200.
 length_b=length_a
 length_c=length_a
-nx=40 
+nx=50 
 ny=nx 
 nz=nx 
 el_type='lagrangian'
-el_order=1
+el_order=2
 update_val=True
 plt_node=False
 plt_cell=False
@@ -33,21 +33,21 @@ t_end=10
 n_ensem=1
 
 ### model_param ###
-rad=10
-sig_0=0
-sig_end=1
-sld_in=2
+rad=60
+sig_0=2
+sig_end=10
+sld_in=5
 sld_out=1
 
 ### scatt_cal ###
-num_cat=101
+num_cat=501
 method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=2
 num_threads=2
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
-Q_range=np.array([0, 1])
+Q_range=np.array([0, 0.2])
 num_points=100
 num_orientation=100
 
