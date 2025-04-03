@@ -433,5 +433,9 @@ def qclean_sld(model, xml_dir):
         tree=ET.parse(model_xml)
         root = tree.getroot()
         return float(root.find('sld_out').text)
+    elif model == 'sld_grow':
+        tree=ET.parse(model_xml)
+        root = tree.getroot()
+        return float(root.find('sld_out').text)
     else:
         return 0
