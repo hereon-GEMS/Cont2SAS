@@ -13,10 +13,10 @@ working_dir = "."  # Directory to run the script in
 
 ### struct gen ###
 xml_dir='./xml' 
-length_a=40.
+length_a=200.
 length_b=length_a
 length_c=length_a
-nx=40 
+nx=50 
 ny=nx 
 nz=nx 
 el_type='lagrangian'
@@ -33,13 +33,13 @@ t_end=10
 n_ensem=1
 
 ### model_param ###
-rad=10
+rad=75
 sld_in_0=2
 sld_in_end=5
 sld_out=1
 
 ### scatt_cal ###
-num_cat=51
+num_cat=101
 method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=2
@@ -61,8 +61,8 @@ wl=4.5
 beam_center_coord=np.array([0, 0, 0])
 
 ### run_vars ###
-struct_gen_run=0
-sim_run=0
+struct_gen_run=1
+sim_run=1
 scatt_cal_run=1
 sig_eff_cal_run=1
 
