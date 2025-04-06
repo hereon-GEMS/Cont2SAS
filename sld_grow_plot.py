@@ -259,7 +259,7 @@ for i in range(len(t_arr)):
             z_idx= np.floor(cut_frac*(nz+1)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
-            plot_file_name='SLD_{0}_{1}'.format(sim_model, t_str)
+            plot_file_name='SLD_{0}_{1}.pdf'.format(sim_model, t_str)
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## image plot
@@ -302,7 +302,7 @@ for i in range(len(t_arr)):
             z_idx_pseudo= z_idx-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
-            plot_file_name='pseudo_{0}_{1}'.format(sim_model, t_str)
+            plot_file_name='pseudo_{0}_{1}.pdf'.format(sim_model, t_str)
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -338,7 +338,7 @@ for i in range(len(t_arr)):
 
             # plotting categorized pseudo atoms
             ## figure specification
-            plot_file_name='pseudo_cat_{0}_{1}'.format(sim_model, t_str)
+            plot_file_name='pseudo_cat_{0}_{1}.pdf'.format(sim_model, t_str)
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -407,7 +407,7 @@ for i in range(len(t_arr)):
     Iq_ana = (Iq_ana_raw / vol_norm) * 10**2
 
     # plot scatt pattern for this time step
-    plot_file_name='Iq_{0}_{1}'.format(sim_model, t_str)
+    plot_file_name='Iq_{0}_{1}.pdf'.format(sim_model, t_str)
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
     
@@ -429,7 +429,7 @@ for i in range(len(t_arr)):
     plt.close(fig)
 
     # plot fit param upto this time step
-    plot_file_name='sld_fit_{0}_{1}'.format(sim_model, t_str)
+    plot_file_name='sld_fit_{0}_{1}.pdf'.format(sim_model, t_str)
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
     
@@ -467,13 +467,13 @@ ax_scatt_all.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
 ax_scatt_all.set_xlim([Q_range[0], Q_range[1]])
 ax_scatt_all.set_ylim(bottom=1e5 )
 ## save plot
-plot_file_name='Iq_{0}'.format(sim_model)
+plot_file_name='Iq_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig_scatt_all.savefig(plot_file, format='pdf')
 plt.close('all')
 
 # plot fit param for all time step
-plot_file_name='sld_fit_{0}'.format(sim_model)
+plot_file_name='sld_fit_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig, ax = plt.subplots(figsize=(7, 5))
 
@@ -503,7 +503,7 @@ contrast_arr=(sld_fit-sld_out)
 factor=sig_eff_num[0]/(contrast_arr[0]**2)
 
 # plot fit param for all time step
-plot_file_name='sif_eff_fit_{0}'.format(sim_model)
+plot_file_name='sig_eff_fit_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig, ax = plt.subplots(figsize=(7, 5))
 
