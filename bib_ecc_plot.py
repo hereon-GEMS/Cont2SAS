@@ -309,14 +309,18 @@ for i in range(len(t_arr)):
 
         if idx_ensem==0:
             print('plotting for the first ensemble')
+            if el_type=='lagrangian':
+                num_node_x=el_order*nx+1
+                num_node_y=el_order*ny+1
+                num_node_z=el_order*nz+1
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
-            node_pos_3d=node_pos.reshape(nx+1, ny+1, nz+1, 3)
+            node_pos_3d=node_pos.reshape(num_node_x, num_node_y, num_node_z, 3)
             z_idx= np.floor(cut_frac*(nz+1)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
-            plot_file_name='SLD_bib_ecc'
+            plot_file_name='SLD_bib_ecc.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## image plot
@@ -359,7 +363,7 @@ for i in range(len(t_arr)):
             z_idx_pseudo= z_idx-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
-            plot_file_name='pseudo_bib_ecc'
+            plot_file_name='pseudo_bib_ecc.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -395,7 +399,7 @@ for i in range(len(t_arr)):
 
             # plotting categorized pseudo atoms
             ## figure specification
-            plot_file_name='pseudo_cat_bib_ecc'
+            plot_file_name='pseudo_cat_bib_ecc.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -459,7 +463,7 @@ for i in range(len(t_arr)):
     ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
     ## (after * 10**2) Intensity unit cm^-1
     Iq_ana = (Iq_ana / vol_norm) * 10**2
-    plot_file_name='Iq_bib_ecc'
+    plot_file_name='Iq_bib_ecc.pdf'
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
     
