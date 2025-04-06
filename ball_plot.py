@@ -171,7 +171,7 @@ model_dir=os.path.join(sim_dir,model_dir_name)
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
 
 # create folder for figure (one level up from data folder)
-figure_dir=os.path.join(mother_dir, './../figure/')
+figure_dir=os.path.join(mother_dir, '../../figure/')
 os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
 plot_dir=os.path.join(figure_dir, sim_model)
@@ -234,7 +234,7 @@ for i in range(len(t_arr)):
             z_idx= np.floor(cut_frac*(num_node_z)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
-            plot_file_name='SLD_ball'
+            plot_file_name='SLD_ball.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## image plot
@@ -273,10 +273,10 @@ for i in range(len(t_arr)):
             cut_frac=0.5
             pseudo_pos_3d=pseudo_pos.reshape(nx, ny, nz, 3)
             pseudo_b_3d=pseudo_b.reshape(nx, ny, nz)
-            z_idx_pseudo= z_idx-1
+            z_idx_pseudo= nz//2-1 #z_idx-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
-            plot_file_name='pseudo_ball'
+            plot_file_name='pseudo_ball.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -312,7 +312,7 @@ for i in range(len(t_arr)):
 
             # plotting categorized pseudo atoms
             ## figure specification
-            plot_file_name='pseudo_cat_ball'
+            plot_file_name='pseudo_cat_ball.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -373,7 +373,7 @@ for i in range(len(t_arr)):
     ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
     ## (after * 10**2) Intensity unit cm^-1
     Iq_ana = (Iq_ana / vol_norm) * 10**2
-    plot_file_name='Iq_ball'
+    plot_file_name='Iq_ball.pdf'
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
     
