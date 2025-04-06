@@ -252,14 +252,18 @@ for i in range(len(t_arr)):
 
         if idx_ensem==0:
             print('plotting for the first ensemble')
+            if el_type=='lagrangian':
+                num_node_x=el_order*nx+1
+                num_node_y=el_order*ny+1
+                num_node_z=el_order*nz+1
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
-            node_pos_3d=node_pos.reshape(nx+1, ny+1, nz+1, 3)
+            node_pos_3d=node_pos.reshape(num_node_x, num_node_y, num_node_z, 3)
             z_idx= np.floor(cut_frac*(nz+1)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
-            plot_file_name='SLD_{0}_{1}'.format(sim_model, t_str)
+            plot_file_name='SLD_{0}_{1}.pdf'.format(sim_model, t_str)
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## image plot
@@ -299,10 +303,10 @@ for i in range(len(t_arr)):
             cut_frac=0.5
             pseudo_pos_3d=pseudo_pos.reshape(nx, ny, nz, 3)
             pseudo_b_3d=pseudo_b.reshape(nx, ny, nz)
-            z_idx_pseudo= z_idx-1
+            z_idx_pseudo= nz//2-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
-            plot_file_name='pseudo_{0}_{1}'.format(sim_model, t_str)
+            plot_file_name='pseudo_{0}_{1}.pdf'.format(sim_model, t_str)
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -338,7 +342,7 @@ for i in range(len(t_arr)):
 
             # plotting categorized pseudo atoms
             ## figure specification
-            plot_file_name='pseudo_cat_{0}_{1}'.format(sim_model, t_str)
+            plot_file_name='pseudo_cat_{0}_{1}.pdf'.format(sim_model, t_str)
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -406,7 +410,7 @@ for i in range(len(t_arr)):
     Iq_ana = (Iq_ana_raw / vol_norm) * 10**2
 
     # plot scatt pattern for this time step
-    plot_file_name='Iq_{0}_{1}'.format(sim_model, t_str)
+    plot_file_name='Iq_{0}_{1}.pdf'.format(sim_model, t_str)
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
     
@@ -427,7 +431,7 @@ for i in range(len(t_arr)):
     plt.close(fig)
 
     # plot fit param upto this time step
-    plot_file_name='rad_fit_{0}_{1}'.format(sim_model, t_str)
+    plot_file_name='rad_fit_{0}_{1}.pdf'.format(sim_model, t_str)
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
     
@@ -465,13 +469,13 @@ ax_scatt_all.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
 ## SANS upper boundary Q=1 \AA^-1
 ax_scatt_all.set_xlim(right=1)
 ## save plot
-plot_file_name='Iq_{0}'.format(sim_model)
+plot_file_name='Iq_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig_scatt_all.savefig(plot_file, format='pdf')
 plt.close('all')
 
 # plot fit param for all time step
-plot_file_name='rad_fit_{0}'.format(sim_model)
+plot_file_name='rad_fit_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig, ax = plt.subplots(figsize=(7, 5))
 
