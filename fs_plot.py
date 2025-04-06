@@ -93,14 +93,14 @@ working_dir = "."  # Directory to run the script in
 
 ### struct gen ###
 xml_dir=os.path.join(working_dir, './xml') 
-length_a=40. 
-length_b=40. 
-length_c=40.
-nx=40 
-ny=40 
-nz=40 
+length_a=200. 
+length_b=length_a 
+length_c=length_a
+nx=50 
+ny=nx 
+nz=nx 
 el_type='lagrangian'
-el_order=1
+el_order=2
 update_val=True
 plt_node=False
 plt_cell=False
@@ -113,18 +113,18 @@ t_end=10.
 n_ensem=1
 
 ### model_param ###
-rad=10
-sig_0=0
-sig_end=1
-sld_in=2
+rad=60
+sig_0=2
+sig_end=10
+sld_in=5
 sld_out=1
 
 ### scatt_cal ###
-num_cat=101
+num_cat=501
 method_cat='extend'
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
-Q_range=np.array([0., 1.])
+Q_range=np.array([0., 0.2])
 num_points=100
 num_orientation=100
 
@@ -273,10 +273,14 @@ for i in range(len(t_arr)):
 
         if idx_ensem==0:
             print('plotting for the first ensemble')
+            if el_type=='lagrangian':
+                num_node_x=el_order*nx+1
+                num_node_y=el_order*ny+1
+                num_node_z=el_order*nz+1
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
-            node_pos_3d=node_pos.reshape(nx+1, ny+1, nz+1, 3)
+            node_pos_3d=node_pos.reshape(num_node_x, num_node_y, num_node_z, 3)
             z_idx= np.floor(cut_frac*(nz+1)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
@@ -286,7 +290,7 @@ for i in range(len(t_arr)):
             ## image plot
             ### .T is required to exchange x and y axis 
             ### origin is 'lower' to put it in lower left corner 
-            node_sld_3d=node_sld.reshape(nx+1, ny+1, nz+1)
+            node_sld_3d=node_sld.reshape(num_node_x, num_node_y, num_node_z)
             img = ax.imshow(node_sld_3d[:,:,z_idx].T, 
                             extent=[0, length_a, 0, length_b], 
                             origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
@@ -320,7 +324,7 @@ for i in range(len(t_arr)):
             cut_frac=0.5
             pseudo_pos_3d=pseudo_pos.reshape(nx, ny, nz, 3)
             pseudo_b_3d=pseudo_b.reshape(nx, ny, nz)
-            z_idx_pseudo= z_idx-1
+            z_idx_pseudo= nz//2-1 # z_idx-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
             plot_file_name='pseudo_{0}_{1}'.format(sim_model, t_str)
@@ -413,7 +417,8 @@ for i in range(len(t_arr)):
     Iq_data.close()
 
     # fit radius and sig (fuzz_value) w.r.t. numerical intensity
-    popt, pcov = curve_fit(fit_func, q_num, Iq_num_raw)
+    popt, pcov = curve_fit(fit_func, q_num, Iq_num_raw, 
+                           bounds=([sig_0, rad-cell_x], [sig_end, rad+cell_x]))
     sig_fit[i]=round(np.abs(popt[0]),2)
     rad_fit[i]=round(popt[1],2)
 
@@ -444,7 +449,7 @@ for i in range(len(t_arr)):
     ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
     ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
     ## SANS upper boundary Q=1 \AA^-1
-    ax.set_xlim(right=1)
+    ax.set_xlim(right=Q_range[1])
     ## save plot
     plt.savefig(plot_file, format='pdf')
     plt.close(fig)
@@ -491,7 +496,7 @@ for i in range(len(t_arr)):
     ax.set_ylabel('Radius ($r$) [$\mathrm{\AA}$]')
     ## limits
     #ax.set_xlim([t_arr[0], t_arr[-1]])
-    #ax.set_ylim([rad_0,rad_end])
+    ax.set_ylim([rad-cell_x,rad+cell_x])
     ax.grid(True)
     ## save plot
     plt.savefig(plot_file, format='pdf')
@@ -509,7 +514,7 @@ ax_scatt_all.legend(ncol=2)
 ax_scatt_all.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
 ax_scatt_all.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
 ## SANS upper boundary Q=1 \AA^-1
-ax_scatt_all.set_xlim(right=1)
+ax_scatt_all.set_xlim(right=Q_range[1])
 ## save plot
 plot_file_name='Iq_{0}'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
@@ -551,6 +556,7 @@ ax.legend()
 ax.set_xlabel('Time [s]')
 ax.set_ylabel('Radius of grain [$\mathrm{\AA}$]')
 ## limits
+ax.set_ylim([rad-cell_x,rad+cell_x])
 ax.grid(True)
 ## save plot
 plt.savefig(plot_file, format='pdf')
