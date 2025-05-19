@@ -106,13 +106,13 @@ n_ensem=1
 sld=2
 
 ### scatt_cal ###
-num_cat=101
+num_cat=3
 method_cat='extend'
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.])
 num_points=100
-num_orientation=100
+num_orientation=200
 
 """
 calculate vars and create folder structure
