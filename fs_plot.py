@@ -281,7 +281,7 @@ for i in range(len(t_arr)):
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
             node_pos_3d=node_pos.reshape(num_node_x, num_node_y, num_node_z, 3)
-            z_idx= np.floor(cut_frac*(nz+1)).astype(int)
+            z_idx= np.floor(cut_frac*num_node_z).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
             plot_file_name='SLD_{0}_{1}.pdf'.format(sim_model, t_str)
