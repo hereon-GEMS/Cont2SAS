@@ -437,5 +437,9 @@ def qclean_sld(model, xml_dir):
         tree=ET.parse(model_xml)
         root = tree.getroot()
         return float(root.find('sld_out').text)
+    elif model == 'phase_field':
+        return 0.7316602760096453
     else:
         return 0
+    
+    
