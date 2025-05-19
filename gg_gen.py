@@ -39,7 +39,7 @@ sld_in=2
 sld_out=1
 
 ### scatt_cal ###
-num_cat=101
+num_cat=3
 method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=2
@@ -48,7 +48,7 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0, 1])
 num_points=100
-num_orientation=100
+num_orientation=10
 
 ### run_vars ###
 struct_gen_run=1
