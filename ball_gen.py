@@ -37,7 +37,7 @@ rad=15
 sld=2
 
 ### scatt_cal ###
-num_cat=101
+num_cat=3
 method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=2
