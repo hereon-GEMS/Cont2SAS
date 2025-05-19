@@ -6,6 +6,7 @@ from scipy.optimize import minimize
 from scipy.special import erf
 import xml.etree.ElementTree as ET
 import os
+import h5py
 
 def model_run(sim_model,nodes, midpoint, t, t_end):
     if sim_model=='ball':
@@ -22,6 +23,17 @@ def model_run(sim_model,nodes, midpoint, t, t_end):
         return model_fs(nodes, midpoint, t, t_end)
     if sim_model=='sld_grow':
         return model_sld_grow(nodes, midpoint, t, t_end)
+    if sim_model=='phase_field':
+        return model_phase_field()
+
+def model_phase_field():
+    file_name='phase_field.h5'
+    file=h5py.File(file_name,'r')
+    sim_sld=file['SLD'][:]
+    sld_max=np.max(sim_sld)
+    sld_min=np.min(sim_sld)
+    return sim_sld, sld_max, sld_min
+
 
 def model_ball(nodes, midpoint, t):
     # read model_run_param from xml
@@ -40,7 +52,7 @@ def model_ball(nodes, midpoint, t):
     sld_max=sld
     sld_min=0
     return sim_sld, sld_max, sld_min
-    return sim_sld
+    # return sim_sld
 
 def model_box(nodes, midpoint, t):
     # read model_run_param from xml
