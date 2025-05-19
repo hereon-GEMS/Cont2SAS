@@ -101,13 +101,13 @@ sld_in=2
 sld_out=1
 
 ### scatt_cal ###
-num_cat=101
+num_cat=3
 method_cat='extend'
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.])
 num_points=100
-num_orientation=100
+num_orientation=10
 
 """
 calculate vars and create folder structure
@@ -480,8 +480,9 @@ plot_file=os.path.join(plot_dir,plot_file_name)
 fig, ax = plt.subplots(figsize=(7, 5))
 
 rad_ana=rad_0+t_arr*(rad_end-rad_0)/t_end
-ax.plot(t_arr, rad_ana, 'b', label= 'Simulation value')
-ax.plot(t_arr, rad_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Fit value')
+ax.plot(t_arr, rad_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Retrieved value')
+ax.plot(t_arr, rad_ana, 'gray', zorder=-10, label= 'Simulation value')
+
 
 # plot formatting
 ## legend
@@ -490,7 +491,7 @@ ax.legend()
 ax.set_xlabel('Time [s]')
 ax.set_ylabel('Radius of grain [$\mathrm{\AA}$]')
 ## limits
-ax.grid(True)
+# ax.grid(True)
 ## save plot
 plt.savefig(plot_file, format='pdf')
 plt.close(fig)
