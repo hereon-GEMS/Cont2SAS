@@ -127,13 +127,13 @@ sld_in=2
 sld_out=1
 
 ### scatt_cal ###
-num_cat=101
+num_cat=3
 method_cat='extend'
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.])
 num_points=100
-num_orientation=100
+num_orientation=200
 
 """
 calculate vars and create folder structure
@@ -422,8 +422,9 @@ for i in range(len(t_arr)):
     fig, ax = plt.subplots(figsize=(7, 5))
     
     # loglog plot
-    ax.loglog(q_ana, Iq_ana, 'b', label= 'Analytical calculation')
     ax.loglog(q, Iq,'r', linestyle='', marker='o', markersize=3, label= 'Numerical calculation')
+    ax.loglog(q_ana, Iq_ana, 'gray', label= 'Analytical calculation')
+    
     
     # plot formatting
     ## legend
