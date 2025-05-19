@@ -106,7 +106,7 @@ n_ensem=1
 sld=2
 
 ### scatt_cal ###
-num_cat=101
+num_cat=3
 method_cat='extend'
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
@@ -205,9 +205,9 @@ for i in range(len(t_arr)):
     t_dir=os.path.join(model_param_dir, t_dir_name)
     # plotting accoring to orientations
     fig, ax = plt.subplots(figsize=(7, 5))
-    markers=['o', '^', 's']
-    colors=['m', 'r', 'k']
-    ms_arr=[3, 5, 3]
+    markers=['^', 's', 'o']
+    colors=['g', 'b', 'r']
+    ms_arr=[3, 3, 3]
     for num_orientation in num_orientation_arr:
         num_orien_idx=num_orientation_arr.index(num_orientation)
         scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
@@ -245,7 +245,7 @@ for i in range(len(t_arr)):
     ## (after * 10**2) Intensity unit cm^-1
     Iq_ana = (Iq_ana / vol_norm) * 10**2
     
-    ax.loglog(q_ana, Iq_ana, 'b', label= 'Analytical calculation')
+    ax.loglog(q_ana, Iq_ana, 'gray', label= 'Analytical calculation')
 
     # plot formatting
     ## legend
