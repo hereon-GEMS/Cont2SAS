@@ -48,7 +48,7 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0.0029, 0.05])
 num_points=100
-num_orientation=100
+num_orientation=10
 
 ### sig_eff_cal ###
 # distance : distance between detenctor and sample
@@ -61,9 +61,9 @@ wl=4.5
 beam_center_coord=np.array([0, 0, 0])
 
 ### run_vars ###
-struct_gen_run=1
-sim_run=1
-scatt_cal_run=1
+struct_gen_run=0
+sim_run=0
+scatt_cal_run=0
 sig_eff_cal_run=1
 
 """
