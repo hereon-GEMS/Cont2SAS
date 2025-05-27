@@ -6,6 +6,7 @@ test*
 old_scripts
 plot_scripts/plot_IQ0_fs_check.py
 plot_scripts/plot_IQ_fs_check.py
+ppt
 
 # __pycache__
 lib/__pycache__
@@ -22,3 +23,6 @@ lib/struct_gen.pyc
 
 #xml
 xml/*.xml
+
+#pdf
+*.pdf
