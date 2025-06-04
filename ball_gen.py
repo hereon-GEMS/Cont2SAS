@@ -33,12 +33,12 @@ t_end=0
 n_ensem=1
 
 ### model_param ###
-rad=15
+rad=10
 sld=2
 
 ### scatt_cal ###
-num_cat=3
-method_cat='extend'
+num_cat=101
+method_cat='simple'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=2
 num_threads=2
