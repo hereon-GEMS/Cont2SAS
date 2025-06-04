@@ -33,6 +33,8 @@ import imageio.v2 as imageio
 import mdtraj as md
 from matplotlib.patches import Rectangle
 from scipy.optimize import curve_fit
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from matplotlib.colors import ListedColormap
 
 def J1(x):
     if x==0:
@@ -273,6 +275,41 @@ for i in range(len(t_arr)):
             img = ax.imshow(node_sld_3d[:,:,z_idx].T, 
                             extent=[0, length_a, 0, length_b], 
                             origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
+            
+            # inset in the final figure
+            if i==0:
+                ax_ins = inset_axes(ax_fit_all, width="100%", height="100%", bbox_to_anchor=(1, 0.3, 0.2, 0.2),
+                        bbox_transform=ax.transAxes)
+                img = ax_ins.imshow(node_sld_3d[:,:,z_idx].T, 
+                                extent=[0, length_a, 0, length_b], 
+                                origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
+                ## add mesh
+                cell_x=length_a/nx
+                cell_y=length_a/ny
+                for idx1 in range(nx):
+                    for idx2 in range(ny):
+                        rect_center_x=idx1*cell_x
+                        rect_center_y=idx2*cell_y
+                        ax_ins.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
+                                            edgecolor='k', facecolor='none', linewidth=0.5))
+                ax_ins.axis('off')
+
+            elif i==len(t_arr)-1:
+                ax_ins = inset_axes(ax_fit_all, width="100%", height="100%", bbox_to_anchor=(1, -0.1, 0.2, 0.2),
+                        bbox_transform=ax.transAxes)
+                img = ax_ins.imshow(node_sld_3d[:,:,z_idx].T, 
+                                extent=[0, length_a, 0, length_b], 
+                                origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
+                ax_ins.axis('off')
+                ## add mesh
+                cell_x=length_a/nx
+                cell_y=length_a/ny
+                for idx1 in range(nx):
+                    for idx2 in range(ny):
+                        rect_center_x=idx1*cell_x
+                        rect_center_y=idx2*cell_y
+                        ax_ins.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
+                                            edgecolor='k', facecolor='none', linewidth=0.5))
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
             cbar_label="Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
@@ -472,26 +509,26 @@ ax_scatt_all.set_xlim(right=1)
 plot_file_name='Iq_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig_scatt_all.savefig(plot_file, format='pdf')
-plt.close('all')
+
 
 # plot fit param for all time step
 plot_file_name='rad_fit_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
-fig, ax = plt.subplots(figsize=(7, 5))
+# fig, ax = plt.subplots(figsize=(7, 5))
 
 rad_ana=rad_0+t_arr*(rad_end-rad_0)/t_end
-ax.plot(t_arr, rad_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Retrieved value')
-ax.plot(t_arr, rad_ana, 'gray', zorder=-10, label= 'Simulation value')
+ax_fit_all.plot(t_arr, rad_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Retrieved value')
+ax_fit_all.plot(t_arr, rad_ana, 'gray', zorder=-10, label= 'Simulation value')
 
 
 # plot formatting
 ## legend
-ax.legend()
+ax_fit_all.legend()
 ## labels
-ax.set_xlabel('Time [s]')
-ax.set_ylabel('Radius of grain [$\mathrm{\AA}$]')
+ax_fit_all.set_xlabel('Time [s]')
+ax_fit_all.set_ylabel('Radius of grain [$\mathrm{\AA}$]')
 ## limits
 # ax.grid(True)
 ## save plot
 plt.savefig(plot_file, format='pdf')
-plt.close(fig)
+plt.close('all')
