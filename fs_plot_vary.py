@@ -33,6 +33,8 @@ import imageio.v2 as imageio
 import mdtraj as md
 from matplotlib.patches import Rectangle
 from scipy.optimize import curve_fit
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from matplotlib.lines import Line2D
 
 def J1(x):
     if x==0:
@@ -82,6 +84,7 @@ el_order_arr=[1,1,2]
 # plot_file=os.path.join(plot_dir,plot_file_name)
 fig1, ax1 = plt.subplots(figsize=(7, 5))
 fig2, ax2 = plt.subplots(figsize=(7, 5))
+fig3, ax3 = plt.subplots(2,figsize=(7, 5), gridspec_kw={'hspace': 0.1, 'height_ratios': [3, 1]})
 
 marker=['s', '^', 'o']
 colors=['lime', 'm', 'yellow']
@@ -245,6 +248,85 @@ for vary_idx in range(len(nx_arr)):
             scatt_dir_name='scatt_cal_'+ scatt_settings
             scatt_dir=os.path.join(ensem_dir, scatt_dir_name)
 
+            """
+            read pseudo atom info from scatt_cal.h5
+            """
+            # read node sld
+            # save pseudo atom info
+            scatt_cal_dir_name='scatt_cal_' + scatt_settings
+            scatt_cal_dir=os.path.join(ensem_dir, scatt_cal_dir_name)
+            scatt_cal_data_file_name='scatt_cal.h5'
+            scatt_cal_data_file=os.path.join(scatt_cal_dir, scatt_cal_data_file_name)
+            scatt_cal_data=h5py.File(scatt_cal_data_file,'r')
+            node_pos=scatt_cal_data['node_pos'][:]
+            node_sld=scatt_cal_data['node_sld'][:]
+            pseudo_pos=scatt_cal_data['pseudo_pos'][:]
+            pseudo_b=scatt_cal_data['pseudo_b'][:]
+            pseudo_b_cat_val=scatt_cal_data['pseudo_b_cat_val'][:]
+            pseudo_b_cat_idx=scatt_cal_data['pseudo_b_cat_idx'][:]
+            scatt_cal_data.close()
+
+            # determine sld min and max for plotting
+            sld_min=np.min(node_sld,0)
+            sld_max=np.max(node_sld,0)
+
+            if vary_idx==0 and idx_ensem==0:
+                if el_type=='lagrangian':
+                    num_node_x=el_order*nx+1
+                    num_node_y=el_order*ny+1
+                    num_node_z=el_order*nz+1
+                # plotting node SLD
+                ## cutting at z = cut_frac * length_z
+                cut_frac=0.5
+                node_pos_3d=node_pos.reshape(num_node_x, num_node_y, num_node_z, 3)
+                z_idx= np.floor(cut_frac*(nz+1)).astype(int)
+                z_val=node_pos_3d[0, 0, z_idx , 2]
+                ## figure specification
+                plot_file_name='SLD_{0}_{1}.pdf'.format(sim_model, t_str)
+                plot_file=os.path.join(plot_dir,plot_file_name)
+                fig, ax = plt.subplots(figsize=(5, 5))
+                ## image plot
+                ### .T is required to exchange x and y axis 
+                ### origin is 'lower' to put it in lower left corner 
+                node_sld_3d=node_sld.reshape(nx+1, ny+1, nz+1)
+                
+                # inset in the final figure
+                if i==0:
+                    ax_ins = inset_axes(ax3[0], width="100%", height="100%", bbox_to_anchor=(0.22, -0.2, 0.56, 0.56),
+                            bbox_transform=ax3[0].transAxes)
+                    img = ax_ins.imshow(node_sld_3d[:,:,z_idx].T, 
+                                    extent=[0, length_a, 0, length_b], 
+                                    origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
+                    ## add mesh
+                    cell_x=length_a/nx
+                    cell_y=length_a/ny
+                    for idx1 in range(nx):
+                        for idx2 in range(ny):
+                            rect_center_x=idx1*cell_x
+                            rect_center_y=idx2*cell_y
+                            ax_ins.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
+                                                edgecolor='none', facecolor='none', linewidth=0.5))
+                    ax_ins.axis('off')
+
+                    
+
+                elif i==len(t_arr)-1:
+                    ax_ins = inset_axes(ax3[0], width="100%", height="100%", bbox_to_anchor=(0.51, -0.2, 0.56, 0.56),
+                            bbox_transform=ax3[0].transAxes)
+                    img = ax_ins.imshow(node_sld_3d[:,:,z_idx].T, 
+                                    extent=[0, length_a, 0, length_b], 
+                                    origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
+                    ax_ins.axis('off')
+                    ## add mesh
+                    cell_x=length_a/nx
+                    cell_y=length_a/ny
+                    for idx1 in range(nx):
+                        for idx2 in range(ny):
+                            rect_center_x=idx1*cell_x
+                            rect_center_y=idx2*cell_y
+                            ax_ins.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
+                                                edgecolor='none', facecolor='none', linewidth=0.5))
+
         
         # box geometry
         vol_box=length_a*length_b*length_c
@@ -271,10 +353,56 @@ for vary_idx in range(len(nx_arr)):
     ax1.plot(t_arr, sig_fit, linestyle='', marker=marker[vary_idx], 
              color=colors[vary_idx], markersize=ms[vary_idx], markeredgecolor='k', markeredgewidth=0.5,
              label= 'Meshing: {0} elements of order {1}'.format(nx*ny*nz, el_order))
+    ax3[0].plot(t_arr, sig_fit, linestyle='', marker=marker[vary_idx], 
+             color=colors[vary_idx], markersize=ms[vary_idx], markeredgecolor='k', markeredgewidth=0.5,
+             label= 'Meshing: {0} elements of order {1}'.format(nx*ny*nz, el_order))
+    if vary_idx==0:
+        ## Draw arrow (t=0)
+        # Draw a horrizontal line (rightward)
+        ax3[0].plot([0, 0.5], [sig_fit[0], sig_fit[0]], linewidth=1, color='black', linestyle='--')
+        # Draw a vertical line (downward)
+        ax3[0].plot([0.5, 0.5], [sig_fit[0], 2], linewidth=1, color='black', linestyle='--')
+        # Draw a vertical line (rightward)
+        ax3[0].plot([0.5, 3.5], [2, 2], linewidth=1, color='black', linestyle='--')
+        # Draw arrowhead
+        ax3[0].arrow(3, 2, 0.001, 0, linewidth=1, head_width=0.5, head_length=0.3, 
+                            fc='black', ec='black')
+        
+        ## Draw arrow (t=end)
+        # Draw a vertical line (downward)
+        ax3[0].plot([10, 10], [sig_fit[-1], 2], linewidth=1, color='black', linestyle='--')
+        # Draw a horizontal line (leftward)
+        ax3[0].plot([10, 9.5], [2, 2], linewidth=1, color='black', linestyle='--')
+        # Draw arrowhead
+        ax3[0].arrow(9.9, 2, -0.001, 0, linewidth=1, head_width=0.5, head_length=0.3, 
+                            fc='black', ec='black')
+    
     
     ax2.plot(t_arr, rad_fit, linestyle='', marker=marker[vary_idx], 
              color=colors[vary_idx], markersize=ms[vary_idx], markeredgecolor='k', markeredgewidth=0.5,
              label= 'Meshing: {0} elements of order {1}'.format(nx*ny*nz, el_order))
+    ax3[1].plot(t_arr, rad_fit, linestyle='', marker=marker[vary_idx], 
+             color=colors[vary_idx], markersize=ms[vary_idx], markeredgecolor='k', markeredgewidth=0.5,
+             label= 'Meshing: {0} elements of order {1}'.format(nx*ny*nz, el_order))
+    
+    if vary_idx==0:
+        ## Draw arrow (t=0)
+        # Draw a vertical line (upward)
+        ax3[1].plot([0, 0], [rad_fit[0], 64], linewidth=1, color='black', linestyle='--')
+        # Draw a vertical line (rightward)
+        ax3[1].plot([0, 3.5], [64, 64], linewidth=1, color='black', linestyle='--')
+        # Draw arrowhead
+        ax3[1].arrow(3, 64, 0.001, 0, linewidth=1, head_width=0.5, head_length=0.3, 
+                            fc='black', ec='black')
+        
+        ## Draw arrow (t=end)
+        # Draw a vertical line (downward)
+        ax3[1].plot([10, 10], [rad_fit[-1], 64], linewidth=1, color='black', linestyle='--')
+        # Draw a horizontal line (leftward)
+        ax3[1].plot([10, 9.5], [64, 64], linewidth=1, color='black', linestyle='--')
+        # Draw arrowhead
+        ax3[1].arrow(9.9, 64, -0.001, 0, linewidth=1, head_width=0.5, head_length=0.3, 
+                            fc='black', ec='black')
 
 
 ax1.plot(t_arr, sig_ana, 'gray', zorder=-10, label= 'Simulation value')
@@ -304,3 +432,31 @@ ax2.set_ylim([rad-4,rad+4])
 plot_file_name='rad_fit_{0}.pdf'.format(sim_model)
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig2.savefig(plot_file, format='pdf')
+
+# zusammen plot
+ax3[0].plot(t_arr, sig_ana, 'gray', zorder=-10, label= 'Simulation value')
+ax3[1].plot(t_arr, rad_ana, 'gray', zorder=-10, label= 'Simulation value')
+
+# top plot formatting
+## legend
+ax3[0].legend(loc='upper left')
+## labels
+# ax3[0].set_xlabel('Time [s]')
+ax3[0].set_xticklabels([])
+ax3[0].set_ylabel('Fuzzyness [$\mathrm{\AA}$]')
+## limits
+ax3[0].grid(True)
+
+# bottom plot formatting
+# ## legend
+# ax3[0].legend(loc='upper left')
+## labels
+ax3[1].set_xlabel('Time [s]')
+ax3[1].set_ylabel('Radius of grain [$\mathrm{\AA}$]')
+## limits
+ax3[1].set_ylim([rad-1,rad+5])
+ax3[1].grid(True)
+
+plot_file_name='all_fit_{0}.pdf'.format(sim_model)
+plot_file=os.path.join(plot_dir,plot_file_name)
+fig3.savefig(plot_file, format='pdf', )
