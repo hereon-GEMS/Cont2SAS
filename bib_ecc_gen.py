@@ -33,13 +33,13 @@ dt=1
 n_ensem=1
 
 ### model_param ###
-rad=15
+rad=10
 sld_in=2
 sld_out=1
-ecc_vec=np.array([2, 2, 2])
+ecc_vec=np.array([0, 0, 0])
 
 ### scatt_cal ###
-num_cat=3
+num_cat=5
 method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=2
@@ -48,7 +48,7 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0, 1])
 num_points=100
-num_orientation=200
+num_orientation=300
 
 ### run_vars ###
 struct_gen_run=1
