@@ -170,9 +170,10 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
     b_min=b_sort[0]
     b_max=b_sort[-1]
     b_range=b_max-b_min
+    pseudo_b_cat=np.zeros_like(pseudo_b)
     # no categorization
     if num_cat==0:
-        return pseudo_b
+        return pseudo_b_cat
     else:
         if method=='simple':
             """
@@ -227,10 +228,10 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
                 b_sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=cat_val_arr[i]
                 sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=i#print(prop_sort_cat)
         # undo sorting of b values
-        pseudo_b[b_arg_sort]=b_sort_cat
-        cat=np.zeros(len(pseudo_b), dtype='int')
+        pseudo_b_cat[b_arg_sort]=b_sort_cat
+        cat=np.zeros(len(pseudo_b_cat), dtype='int')
         cat[b_arg_sort]=sort_cat
-        return pseudo_b, cat
+        return pseudo_b_cat, cat
     
 def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx):
     points=np.float32(pseudo_pos)
