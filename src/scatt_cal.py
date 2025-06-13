@@ -267,8 +267,8 @@ for i in range(len(t_arr)):
         sass_out_file='sass.log'
         if os.path.exists(signal_file):
             os.remove(signal_file)
-        print('mpirun -np 4 {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file))
-        os.system('mpirun -np 4 {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file))
+        print('mpirun -np {3} {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file, mpi_procs))
+        os.system('mpirun -np {3} {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file, mpi_procs))
         os.chdir(parent_dir)
 
         # read and save Iq data from current ensem
