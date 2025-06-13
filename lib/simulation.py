@@ -27,12 +27,28 @@ def model_run(sim_model,nodes, midpoint, t, t_end):
         return model_phase_field()
 
 def model_phase_field():
-    file_name='phase_field.h5'
+    # read model_run_param from xml
+    xml_folder='./xml/'
+    model_xml=os.path.join(xml_folder, 'model_phase_field.xml')
+    tree=ET.parse(model_xml)
+    root = tree.getroot()
+    # read params
+    name=root.find('name').text
+    time=float(root.find('time').text)
+    # run simulation
+    file_name='moose/{0}_{1:0>5}.h5'.format(name, int(time))
     file=h5py.File(file_name,'r')
     sim_sld=file['SLD'][:]
     sld_max=np.max(sim_sld)
     sld_min=np.min(sim_sld)
     return sim_sld, sld_max, sld_min
+    # return sim_sld
+    # file_name='phase_field.h5'
+    # file=h5py.File(file_name,'r')
+    # sim_sld=file['SLD'][:]
+    # sld_max=np.max(sim_sld)
+    # sld_min=np.min(sim_sld)
+    # return sim_sld, sld_max, sld_min
 
 
 def model_ball(nodes, midpoint, t):
