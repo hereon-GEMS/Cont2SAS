@@ -245,6 +245,29 @@ def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out):
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
 
+# write model_phase_field.xml
+def model_phase_field_xml_write(xml_dir, name, time, qclean_sld):
+    # Create the root element
+    root = ET.Element("root")
+
+    # details for phase field simulation input file
+    ET.SubElement(root, "name").text=str(name)
+    ET.SubElement(root, "time").text=str(time)
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
+
+    # Convert to a string and format
+    xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
+
+    # Save to a file
+    xml_file_name='model_phase_field.xml'
+    xml_file=os.path.join(xml_dir, xml_file_name)
+    formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
+
+    with open(xml_file, "w", encoding="utf-8") as f:
+        f.write(formatted_xml)
+    
+    print("model_phase_field xml file created successfully!")
+
 # write scatt_cal.xml file
 def scatt_cal_xml_write(xml_dir, num_cat, method_cat, 
                         sassena_exe, mpi_procs, num_threads, 
@@ -320,4 +343,3 @@ def sig_eff_xml_write(xml_dir, instrument, facility,
         f.write(formatted_xml)
     
     print("sig_eff xml file created successfully!")
-
