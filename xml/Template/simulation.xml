@@ -19,7 +19,7 @@ list params:
 -->
 
 <root>
-    <model>sld_grow</model>
+    <model>gg</model>
     <sim_param>
         <dt>1</dt>
         <tend>10</tend>
