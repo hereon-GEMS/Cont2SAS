@@ -18,6 +18,7 @@ list params:
     2c) number of ensemble per time step - n_ensem
 -->
 
+<!-- example script -->
 <root>
     <model>gg</model>
     <sim_param>
