@@ -9,6 +9,7 @@ list params:
 5) vector defining positing of beam center w.r.t. detector center - beam_center
 -->
 
+<!-- example script -->
 <root>
     <instrument>SANS-1</instrument>
     <facility>MLZ</facility>
