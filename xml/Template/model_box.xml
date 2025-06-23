@@ -1,11 +1,16 @@
 <!-- 
+input xml for the static cube model (box)
+static  means one time step
 model names:
 static model: cube (box)
 list params:
 (maintain the order)
-1) sld of ball - sld
+1) sld of box - sld
+2) sld of box subtracted in reciprocal space - qclean_sld
 -->
 
+<!-- example script -->
 <root>
     <sld>2</sld>
+    <qclean_sld>0</qclean_sld>
 </root>
