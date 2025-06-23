@@ -113,7 +113,6 @@ scan_vec_x=float(root.find('scatt_cal').find('scan_vec').find('x').text)
 scan_vec_y=float(root.find('scatt_cal').find('scan_vec').find('y').text)
 scan_vec_z=float(root.find('scatt_cal').find('scan_vec').find('z').text)
 scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
-# signal_file=root.find('scatt_cal').find('sig_file').text
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
     + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(resolution_num)
 scatt_settings=scatt_settings.replace('.', 'p')
@@ -143,15 +142,11 @@ if el_type=='lagrangian':
 
 
 sim_dir=os.path.join('./data/', struct_folder_name +'/simulation')
-# sim_dir=os.path.join('../data/',
-#                         length_a_str+'_'+length_b_str+'_'+length_c_str+'_'+
-#                         nx_str+'_'+ny_str+'_'+nz_str+'/simulation')
 os.makedirs(sim_dir, exist_ok=True)
 
 # read structure info
 data_filename=os.path.join(sim_dir,'../structure/struct.h5')
 nodes, cells, con, mesh = sg.mesh_read(data_filename)
-# nodes, cells, con = dsv.mesh_read(data_filename)
 
 # folder name for model
 model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
@@ -214,7 +209,6 @@ for i in range(len(t_arr)):
         cell_dz=length_b/nz
         cell_vol=cell_dx*cell_dy*cell_dz
         pseudo_b=scatt.pseudo_b(nodes,cells,node_sld,con,cell_vol,el_info)
-        #sld_dyn_cell_cat, cat = procs.categorize_prop_3d_t(sld_dyn_cell, 10)
 
         # categorize SLD
         pseudo_b_cat_val, pseudo_b_cat_idx = scatt.pseudo_b_cat(pseudo_b,num_cat,method=method_cat)
@@ -249,8 +243,6 @@ for i in range(len(t_arr)):
         scatt.db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx)
         
         ### scatter.xml generate ###
-        # original command 
-        # dsv.scatterxml_generator(time_dir, sigfile='signal.h5')
         # detailed version
         scatter_xml_file_name='scatter.xml'
         scatter_xml_file=os.path.join(scatt_dir,scatter_xml_file_name)
@@ -263,7 +255,6 @@ for i in range(len(t_arr)):
         print('Running sassena')
         parent_dir=os.getcwd()
         os.chdir(os.path.join(parent_dir,scatt_dir))
-        #sassena_exec='/home/amajumda/Documents/Softwares/sassena/compile/sassena'
         sass_out_file='sass.log'
         if os.path.exists(signal_file):
             os.remove(signal_file)
