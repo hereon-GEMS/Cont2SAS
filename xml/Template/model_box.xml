@@ -1,8 +1,6 @@
 <!-- 
 input xml for the static cube model (box)
 static  means one time step
-model names:
-static model: cube (box)
 list params:
 (maintain the order)
 1) sld of box - sld
