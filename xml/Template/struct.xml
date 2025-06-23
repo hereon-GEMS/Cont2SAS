@@ -16,6 +16,7 @@ list params:
         4bc) plot mesh - mesh (time consuming plot)
 -->
 
+<!-- example script -->
 <root>
     <lengths>
         <x>40</x>
