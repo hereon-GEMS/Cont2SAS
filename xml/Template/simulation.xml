@@ -3,14 +3,15 @@ input xml for assigning SLD to mesh nodes
 list params:
 (maintain the order)
 1) name of simulation model - model
-    1a) ball - sphere
-    1b) box - parallelepiped
-    1c) bib - sphere in the center of parallelepiped
-    1d) bib_ecc - sphere off the center of parallelepiped
-    1e) gg - grain growth
-    1f) fs - fuzzy sphere
-    1g) sld_grow - SLD changing sphere 
-    1h) phase_field - SLD simulated by phase field
+    options:
+        1a) sphere - ball
+        1b) parallelepiped - box
+        1c) sphere in the center of parallelepiped (ballinbox) - bib 
+        1d) sphere off the center of parallelepiped (ballinbox_eccentric) - bib_ecc
+        1e) grain growth - gg
+        1f) fuzzy sphere - fs
+        1g) SLD changing sphere - sld_grow
+        1h) SLD simulated by phase field - phase_field
 2) params for simulating - sim_param
     2a) length of time step - dt
     2b) total time - tend
