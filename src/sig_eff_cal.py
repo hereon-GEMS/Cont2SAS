@@ -228,6 +228,7 @@ for i in range(len(t_arr)):
     # q cut
     q_cut = q[(q >= Q_range[0]) & (q <= Q_range[1])]
     Iq_cut= Iq[(q >= Q_range[0]) & (q <= Q_range[1])]
+    # # Uncomment till plt.show() if you want I vs Q to appear
     # # plotitng I vs Q in time folder
     # plt.loglog(q_cut,Iq_cut)
     # plt.xlabel('Q')
