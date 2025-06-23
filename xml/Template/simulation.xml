@@ -3,12 +3,14 @@ input xml for effective cross-section calculation
 list params:
 (maintain the order)
 1) name of simulation model - model
- 1a) ball - sphere
- 2a) box - parallelepiped
- 3a) bib - sphere in the center of parallelepiped
- 4a) bib_ecc - sphere off the center of parallelepiped
- 5a) gg - grain growth
- 6a) fs - fuzzy sphere
+    1a) ball - sphere
+    1b) box - parallelepiped
+    1c) bib - sphere in the center of parallelepiped
+    1d) bib_ecc - sphere off the center of parallelepiped
+    1e) gg - grain growth
+    1f) fs - fuzzy sphere
+    1g) sld_grow - SLD changing sphere 
+    1h) phase_field - SLD simulated by phase field
 2) params for simulating - sim_param
     2a) length of time step - dt
     2b) total time - tend
