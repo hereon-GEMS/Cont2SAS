@@ -16,7 +16,8 @@ from lib import struct_gen as sg
 # from lib import plotter as pltr
 # from lib import simulation as sim
 # from lib import processing as procs
-from lib import datasaver as dsv
+# from lib import datasaver as dsv
+from lib import simulation as sim
 from lib import scatt_cal as scatt
 
 
@@ -26,11 +27,10 @@ import time
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
-import mdtraj as md
+# import imageio.v2 as imageio
+# import mdtraj as md
 
 
 #timer counter initial
