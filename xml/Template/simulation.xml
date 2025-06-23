@@ -1,5 +1,5 @@
 <!-- 
-input xml for effective cross-section calculation
+input xml for assigning SLD to mesh nodes
 list params:
 (maintain the order)
 1) name of simulation model - model
