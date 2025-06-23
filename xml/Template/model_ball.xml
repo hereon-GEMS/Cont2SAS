@@ -1,13 +1,16 @@
 <!-- 
-model names:
-static model: sphere (ball)
+input xml for the static sphere model (ball)
+static  means one time step
 list params:
 (maintain the order)
 1) radius - rad
 2) sld of ball - sld
+3) sld of box subtracted in reciprocal space - qclean_sld
 -->
 
+<!-- example script -->
 <root>
     <rad>15</rad>
     <sld>2</sld>
+    <qclean_sld>0</qclean_sld>
 </root>
