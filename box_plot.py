@@ -1,37 +1,28 @@
 """
-This creates a 3D strcuture and saves it in the data folder
+This plots necessary figures for box model
+Plots are saved in figure folder
 
-Created on Fri Jun 23 10:28:09 2023
-
-@author: amajumda
+Author: Arnab Majumdar
+Date: 24.06.2025
 """
 import sys
 import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import simulation as sim
-from lib import processing as procs
-from lib import datasaver as dsv
-from lib import scatt_cal as scatt
-
-
-
 import os
-import time
-import argparse
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
-import mdtraj as md
 from matplotlib.patches import Rectangle
 
+# ignore warnings
+import warnings
+warnings.filterwarnings("ignore")
+
+# analytical SAS function
 def arrange_order(a,b,c):
     zusammen=[a,b,c]
     zusammen.sort()
@@ -76,54 +67,66 @@ def box (qmax,qmin,Npts,scale,bg,sld,sld_sol,length_a,length_b,length_c):
 """
 Input data
 """
+### file locations ###
+# xml location
+xml_folder='./xml/'
 # script dir and working dir
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
-
 ### struct gen ###
-xml_dir=os.path.join(working_dir, './xml') 
+# box side lengths (float values)
 length_a=40. 
 length_b=40. 
 length_c=40.
+# number of cells in each direction (int values)
 nx=40 
 ny=40 
-nz=40 
+nz=40
+# element details 
 el_type='lagrangian'
 el_order=1
-update_val=True
-plt_node=False
-plt_cell=False
-plt_mesh=False
+# calculate mid point of structure (simulation box)
+mid_point=np.array([length_a/2, length_b/2, length_c/2])
+
 
 ### sim_gen ###
+# model name
 sim_model='box'
+# simulation parameters
 dt=1.
 t_end=0.
 n_ensem=1
+# calculate time array
+t_arr=np.arange(0,t_end+dt, dt)
 
-### model_param ###
-sld=2
+### model param ###
+# model params
+box_sld=2
+qclean_sld=0
+# dir name for model param
+model_param_dir_name = ('sld' + '_' + str(box_sld) + 
+                        '_' + 'qclean_sld' + '_' + str(qclean_sld)
+                        ).replace('.', 'p')
 
 ### scatt_cal ###
+# decreitization params
+# number of categories and method of categorization
 num_cat=3
 method_cat='extend'
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.])
 num_points=100
-num_orientation=200
+num_orientation=10
+# scatt settengs
+scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
+    + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
+scatt_settings=scatt_settings.replace('.', 'p')
 
 """
-calculate vars and create folder structure
+read folder structure
 """
-
-xml_folder=xml_dir
-
-### struct xml ###
-
-# calculate mid point of structure (simulation box)
-mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
 # folder structure
 ## mother folder name
@@ -149,15 +152,8 @@ mother_dir = os.path.join(data_dir, mother_dir_name)
 # read structure info
 data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
-### sim xml entries ###
-
-# time array
-t_arr=np.arange(0,t_end+dt, dt)
-
-# dir name
+# folder name for simulation
 sim_dir=os.path.join(mother_dir, 'simulation')
-
-
 
 ### model xml entries ###
 # folder name for model
@@ -165,29 +161,21 @@ model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
     + '_ensem_' + str(n_ensem)).replace('.','p')
 model_dir=os.path.join(sim_dir,model_dir_name)
 
-# dir name for model param
-model_param_dir_name = ('sld' + '_' + str(sld)).replace('.', 'p')
-
 # folder name for model with particular run param
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
 
 
-### scatt_cal xml entries ###
+# ### scatt_cal xml entries ###
 
-# scatt_cal params
-start_length=Q_range[0]
-end_length=Q_range[1]
-num_points=100 #int(root.find('scatt_cal').find('num_points').text)
+# # scatt_cal params
+# start_length=Q_range[0]
+# end_length=Q_range[1]
+# num_points=100 #int(root.find('scatt_cal').find('num_points').text)
 
-# dir name
-scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-    + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(num_orientation)
-scatt_settings=scatt_settings.replace('.', 'p')
-
-
-"""
-read folder structure
-"""
+# # dir name
+# scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
+#     + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(num_orientation)
+# scatt_settings=scatt_settings.replace('.', 'p')
 
 # create folder for figure (one level up from data folder)
 figure_dir=os.path.join(mother_dir, '../../figure/')
@@ -196,10 +184,10 @@ os.makedirs(figure_dir, exist_ok=True)
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
 
-if os.path.exists(model_param_dir):
-    print('model folder exists')
-else:
-    print('model folder does not exist')
+# if os.path.exists(model_param_dir):
+#     print('model folder exists')
+# else:
+#     print('model folder does not exist')
 
 for i in range(len(t_arr)):
     t=t_arr[i]
@@ -241,7 +229,6 @@ for i in range(len(t_arr)):
 
 
         if idx_ensem==0:
-            print('plotting for the first ensemble')
             if el_type=='lagrangian':
                 num_node_x=el_order*nx+1
                 num_node_y=el_order*ny+1
@@ -265,7 +252,7 @@ for i in range(len(t_arr)):
                             origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
+            cbar_label=r"Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val, r"$\mathrm{\AA}$")
@@ -306,14 +293,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -341,14 +328,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_cat_val_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -388,7 +375,7 @@ for i in range(len(t_arr)):
     # ananlytical intensity 
     ## Intensity unit 10^-10 \AA^2
     Iq_ana,q_ana= box(qmax=np.max(q),qmin=np.min(q),Npts=100,
-                scale=1,bg=0,sld=sld,sld_sol=0,
+                scale=1,bg=0,sld=box_sld,sld_sol=0,
                 length_a=length_a, length_b=length_b, length_c=length_c)
     ## Normalize by volume
     ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
@@ -406,8 +393,8 @@ for i in range(len(t_arr)):
     ## legend
     ax.legend()
     ## labels
-    ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-    ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+    ax.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+    ax.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
     ## SANS upper boundary Q=1 \AA^-1
     ax.set_xlim(right=1)
     ## save plot
