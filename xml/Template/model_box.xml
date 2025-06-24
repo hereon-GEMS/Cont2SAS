@@ -4,7 +4,7 @@ static  means one time step
 list params:
 (maintain the order)
 1) sld of box - sld
-2) sld of box subtracted in reciprocal space - qclean_sld
+2) sld ouside simulation box - qclean_sld
 -->
 
 <!-- example script -->
