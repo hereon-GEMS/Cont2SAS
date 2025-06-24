@@ -9,6 +9,7 @@ plot_scripts/plot_IQ_fs_check.py
 ppt
 graphical abstract
 moose
+lib_old
 
 # __pycache__
 lib/__pycache__
