@@ -15,7 +15,6 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
-import mdtraj as md
 from matplotlib.patches import Rectangle
 
 # ignore warnings
