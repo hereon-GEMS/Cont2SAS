@@ -51,8 +51,8 @@ sld=2
 qclean_sld=0
 
 ### scatt cal ###
-num_cat=101
-method_cat='direct'
+num_cat=3
+method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=4
 num_threads=2
