@@ -104,14 +104,7 @@ scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.])
 num_points=100
 num_orientation=10
-# resolution_num=10
-# start_length=0.
-# end_length=1.
-# num_points=100
-# scan_vec_x=1.
-# scan_vec_y=0.
-# scan_vec_z=0.
-# scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
+# scatt settengs
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
     + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
 scatt_settings=scatt_settings.replace('.', 'p')
@@ -162,11 +155,6 @@ os.makedirs(figure_dir, exist_ok=True)
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
 
-# if os.path.exists(model_param_dir):
-#     print('model folder exists')
-# else:
-#     print('model folder does not exist')
-
 for i in range(len(t_arr)):
     t=t_arr[i]
     # time_dir name
@@ -204,8 +192,6 @@ for i in range(len(t_arr)):
         # determine sld min and max for plotting
         sld_min=np.min(node_sld,0)
         sld_max=np.max(node_sld,0)
-
-
         if idx_ensem==0:
             print('plotting for the first ensemble')
             if el_type=='lagrangian':
