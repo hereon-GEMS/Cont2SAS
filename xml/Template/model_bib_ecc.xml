@@ -1,14 +1,17 @@
 <!-- 
-model names:
-static model: eccentric sphere in cube (eccentric ball in box)
+input xml for the static sphere off center of cube model 
+ball in box eccentric (bib_ecc)
+static  means one time step
 list params:
 (maintain the order)
 1) radius - rad
 2) sld of ball - sld_in
 3) sld of box - sld_out
 4) eccentricity vector - ecc
+5) sld ouside simulation box - qclean_sld
 -->
 
+<!-- example script -->
 <root>
     <rad>15</rad>
     <sld_in>2</sld_in>
@@ -18,5 +21,5 @@ list params:
         <y>2</y>
         <z>2</z>
     </ecc>
-
+    <qclean_sld>0<qclean_sld>
 </root>
