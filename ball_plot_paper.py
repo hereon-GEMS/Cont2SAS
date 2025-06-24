@@ -1,40 +1,31 @@
 """
-This creates a 3D strcuture and saves it in the data folder
+This plots figure used in publication for ball model
+Plots are saved in figure folder
 
-Created on Fri Jun 23 10:28:09 2023
-
-@author: amajumda
+Author: Arnab Majumdar
+Date: 24.06.2025
 """
 import sys
 import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import simulation as sim
-from lib import processing as procs
-from lib import datasaver as dsv
-from lib import scatt_cal as scatt
-
-
-
 import os
 import time
-import argparse
 import sys
 import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
-import h5py
-import imageio.v2 as imageio
-import mdtraj as md
 from matplotlib.patches import Rectangle
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.colors import ListedColormap
+import h5py
 
-# function
+# ignore warnings
+import warnings
+warnings.filterwarnings("ignore", category=SyntaxWarning)
+
+# analytical SAS function
 def J1(x):
     if x==0:
         return 0
@@ -59,23 +50,17 @@ def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
     Iq_arr = ((scale)*np.abs(FormFactor)**2+bg)
     return Iq_arr, q_arr
 
-
-#timer counter initial
-tic = time.perf_counter()
-
 """
 read input from xml file
 """
 
-### struct xml ###
-
+### xml location ###
 xml_folder='./xml/'
 
 """
 Input data
 """
-### struct.xml entries ###
-
+### struct gen ###
 # box side lengths (float values)
 length_a= 40.  
 length_b=40. 
@@ -84,55 +69,44 @@ length_c=40.
 nx= 40
 ny= 40
 nz= 40
-# calculate mid point of structure (simulation box)
-mid_point=np.array([length_a/2, length_b/2, length_c/2])
 # element details
 el_type='lagrangian'
 el_order=1
+# calculate mid point of structure (simulation box)
+mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
-
-### sim xml entries ###
-
+### sim gen ###
 # model name
-sim_model= 'ball' #root.find('model').text
-
+sim_model= 'ball'
 # simulation parameters
 dt= 1. 
 t_end= 0.
 n_ensem=1
+# calculate time array
 t_arr=np.arange(0,t_end+dt, dt)
 
-
-
-### model xml entries ###
-
+### model param ###
 # model params
 ball_rad=10
 ball_sld=2
+qclean_sld=0
 # dir name for model param
-model_param_dir_name = ('rad' + '_' + str(ball_rad) + '_' + 'sld' + '_' + str(ball_sld)).replace('.', 'p')
+model_param_dir_name = ('rad' + '_' + str(ball_rad) + 
+                        '_' + 'sld' + '_' + str(ball_sld)
+                        + '_' + 'qclean_sld' + '_' + str(qclean_sld)
+                        ).replace('.', 'p')
 
-### scatt_cal xml entries ###
-
+### scatt cal ###
 # decreitization params
 # number of categories and method of categorization
 num_cats= [3, 101, 3] 
-method_cats=['simple', 'simple', 'extend']
-
+method_cats=['direct', 'direct', 'extend']
 # scatt_cal params
-signal_file='signal.h5'
-resolution_num=10
-start_length=0.
-end_length=1.
+sig_file='signal.h5'
+scan_vec=np.array([1, 0, 0])
+Q_range=np.array([0., 1.])
 num_points=100
-scan_vec_x=1.
-scan_vec_y=0.
-scan_vec_z=0.
-scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
-# scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-#     + str(start_length) + '_' + str(end_length) + '_' + 'orien__' + str(resolution_num)
-# scatt_settings=scatt_settings.replace('.', 'p')
-
+num_orientation=10
 
 """
 read folder structure
@@ -176,35 +150,29 @@ model_param_dir=os.path.join(model_dir,model_param_dir_name)
 figure_dir=os.path.join(mother_dir, '../../figure/')
 os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
-plot_dir=os.path.join(figure_dir, sim_model +'_method_cat')
+plot_dir=os.path.join(figure_dir, sim_model +'_paper')
 os.makedirs(plot_dir, exist_ok=True)
-
-if os.path.exists(model_param_dir):
-    print('model folder exists')
-else:
-    print('model folder does not exist')
+# plott setting 
+# plot according to categorization methods
+fig, ax = plt.subplots(figsize=(7, 5))
+markers=['o', '^', 's']
+colors=['m', 'r', 'k']
+ms_arr=[3, 5, 3]
 
 for i in range(len(t_arr)):
     t=t_arr[i]
     # time_dir name
     t_dir_name='t{0:0>3}'.format(i)
     t_dir=os.path.join(model_param_dir, t_dir_name)
-    # plotting accoring to categorization methods
-    fig, ax = plt.subplots(figsize=(7, 
-                                    )
-    markers=['o', '^', 's']
-    colors=['m', 'r', 'k']
-    ms_arr=[3, 5, 3]
     for idx in range(len(method_cats)):
         method_cat=method_cats[idx]
-        # method_cat_idx=method_cats.index(method_cat)
         num_cat=num_cats[idx]
-        print(idx)
 
-        print(method_cat)
+        # retrieve scattering setting for this particular case
         scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-            + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(resolution_num)
+            + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien_' + '_' + str(num_orientation)
         scatt_settings=scatt_settings.replace('.', 'p')
+        
         # ball geometry
         vol_ball=(4/3)*np.pi*ball_rad**3
         vol_box=length_a*length_b*length_c
@@ -243,8 +211,8 @@ for i in range(len(t_arr)):
     ## legend
     ax.legend()
     ## labels
-    ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-    ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+    ax.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+    ax.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
     ## SANS upper boundary Q=1 \AA^-1
     ax.set_xlim(right=1)
 
@@ -306,13 +274,6 @@ for i in range(len(t_arr)):
             rect_center_y=idx2*cell_y
             ax_ins.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
                                     edgecolor='k', facecolor='none', linewidth=0.5))
-
-    # # Add arrow with optional text
-    # ax.annotate('',
-    #             xy=(0.1, 1e6),             # Tip of the arrow
-    #             xytext=(0.06, 1e2),         # Start of the arrow (text position)
-    #             arrowprops=dict(facecolor='black', shrink=0.05, width=1, headwidth=8),
-    #             fontsize=10)
 
     plt.savefig(plot_file, format='pdf')
     plt.close(fig)

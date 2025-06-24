@@ -192,7 +192,6 @@ for i in range(len(t_arr)):
         sld_min=np.min(node_sld,0)
         sld_max=np.max(node_sld,0)
         if idx_ensem==0:
-            print('plotting for the first ensemble')
             if el_type=='lagrangian':
                 num_node_x=el_order*nx+1
                 num_node_y=el_order*ny+1
@@ -216,7 +215,7 @@ for i in range(len(t_arr)):
                             origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
+            cbar_label=r"Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val, r"$\mathrm{\AA}$")
@@ -256,14 +255,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -291,14 +290,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_cat_val_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -355,8 +354,8 @@ for i in range(len(t_arr)):
     ## legend
     ax.legend()
     ## labels
-    ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-    ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+    ax.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+    ax.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
     ## SANS upper boundary Q=1 \AA^-1
     ax.set_xlim(right=1)
     ## save plot
