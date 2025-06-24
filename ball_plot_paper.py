@@ -190,7 +190,8 @@ for i in range(len(t_arr)):
     t_dir_name='t{0:0>3}'.format(i)
     t_dir=os.path.join(model_param_dir, t_dir_name)
     # plotting accoring to categorization methods
-    fig, ax = plt.subplots(figsize=(7, 5))
+    fig, ax = plt.subplots(figsize=(7, 
+                                    )
     markers=['o', '^', 's']
     colors=['m', 'r', 'k']
     ms_arr=[3, 5, 3]
