@@ -1,3 +1,11 @@
+"""
+This generates data for ball model
+data is saved in data folder
+
+Author: Arnab Majumdar
+Date: 24.06.2025
+"""
+
 from lib import xml_gen
 import subprocess
 import numpy as np
