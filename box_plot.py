@@ -90,7 +90,7 @@ el_order=1
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
 
-### sim_gen ###
+### sim gen ###
 # model name
 sim_model='box'
 # simulation parameters
@@ -109,7 +109,7 @@ model_param_dir_name = ('sld' + '_' + str(box_sld) +
                         '_' + 'qclean_sld' + '_' + str(qclean_sld)
                         ).replace('.', 'p')
 
-### scatt_cal ###
+### scatt cal ###
 # decreitization params
 # number of categories and method of categorization
 num_cat=3
