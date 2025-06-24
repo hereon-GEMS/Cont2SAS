@@ -62,7 +62,7 @@ Q_range=np.array([0, 1])
 num_points=100
 num_orientation=10
 
-### run_vars ###
+### run vars ###
 struct_gen_run=1
 sim_run=1
 scatt_cal_run=1
