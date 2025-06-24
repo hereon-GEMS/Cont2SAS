@@ -4,8 +4,19 @@ Software package for calculating Small Angle Scattering (SAS) pattern from conti
 
 # Installation
 
+**Run from source**
+
+**Required packages**
+
 # Steps to run
+**Mesh generation**
 
-# model structures
+**Assign SLD values to nodes**
 
-# moose structure
+**Calculation of SAS patterns**
+
+**Calculation of effective cross-section**
+
+# Model structures
+
+# FEM simulation using Moose
