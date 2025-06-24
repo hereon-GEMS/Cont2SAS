@@ -73,13 +73,14 @@ def sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem):
     print("simulation xml file created successfully!")
 
 # write model_ball.xml file
-def model_ball_xml_write(xml_dir, rad, sld):
+def model_ball_xml_write(xml_dir, rad, sld, qclean_sld):
     # Create the root element
     root = ET.Element("root")
 
     # details for simulation box
     ET.SubElement(root, "rad").text=str(rad)
     ET.SubElement(root, "sld").text=str(sld)
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
     tree = ET.ElementTree(root)
