@@ -93,7 +93,6 @@ model_param_dir_name = ('rad' + '_' + str(ball_rad) +
                         ).replace('.', 'p')
 
 ### scatt cal ###
-
 # decreitization params
 # number of categories and method of categorization
 num_cat= 3
