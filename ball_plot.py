@@ -1,38 +1,28 @@
 """
-This creates a 3D strcuture and saves it in the data folder
+This plots necessary figures for ball model
+Plots are saved in figure folder
 
-Created on Fri Jun 23 10:28:09 2023
-
-@author: amajumda
+Author: Arnab Majumdar
+Date: 24.06.2025
 """
 import sys
 import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import simulation as sim
-from lib import processing as procs
-from lib import datasaver as dsv
-from lib import scatt_cal as scatt
-
-
-
 import os
-import time
-import argparse
 import sys
-import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
 import mdtraj as md
 from matplotlib.patches import Rectangle
 
-# function
+# ignore warnings
+import warnings
+warnings.filterwarnings("ignore")
+
+# analytical SAS function
 def J1(x):
     if x==0:
         return 0
@@ -57,23 +47,17 @@ def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
     Iq_arr = ((scale)*np.abs(FormFactor)**2+bg)
     return Iq_arr, q_arr
 
-
-#timer counter initial
-tic = time.perf_counter()
-
 """
 read input from xml file
 """
 
-### struct xml ###
-
+### xml location ###
 xml_folder='./xml/'
 
 """
 Input data
 """
-### struct.xml entries ###
-
+### struct gen ###
 # box side lengths (float values)
 length_a= 40.  
 length_b=40. 
@@ -82,53 +66,55 @@ length_c=40.
 nx= 40
 ny= 40
 nz= 40
-# calculate mid point of structure (simulation box)
-mid_point=np.array([length_a/2, length_b/2, length_c/2])
 # element details
 el_type='lagrangian'
 el_order=1
+# calculate mid point of structure (simulation box)
+mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
-
-### sim xml entries ###
-
+### sim gen ###
 # model name
-sim_model= 'ball' #root.find('model').text
-
+sim_model= 'ball'
 # simulation parameters
 dt= 1. 
 t_end= 0.
 n_ensem=1
+# calculate time array
 t_arr=np.arange(0,t_end+dt, dt)
 
-
-
-### model xml entries ###
-
+### model param ###
 # model params
-ball_rad=15
+ball_rad=10
 ball_sld=2
+qclean_sld=0
 # dir name for model param
-model_param_dir_name = ('rad' + '_' + str(ball_rad) + '_' + 'sld' + '_' + str(ball_sld)).replace('.', 'p')
+model_param_dir_name = ('rad' + '_' + str(ball_rad) + 
+                        '_' + 'sld' + '_' + str(ball_sld)
+                        + '_' + 'qclean_sld' + '_' + str(qclean_sld)
+                        ).replace('.', 'p')
 
-### scatt_cal xml entries ###
+### scatt cal ###
 
 # decreitization params
 # number of categories and method of categorization
-num_cat= 101
-method_cat='extend'
-
+num_cat= 3
+method_cat='direct'
 # scatt_cal params
-signal_file='signal.h5'
-resolution_num=10
-start_length=0.
-end_length=1.
+sig_file='signal.h5'
+scan_vec=np.array([1, 0, 0])
+Q_range=np.array([0., 1.])
 num_points=100
-scan_vec_x=1.
-scan_vec_y=0.
-scan_vec_z=0.
-scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
+num_orientation=10
+# resolution_num=10
+# start_length=0.
+# end_length=1.
+# num_points=100
+# scan_vec_x=1.
+# scan_vec_y=0.
+# scan_vec_z=0.
+# scan_vector=[scan_vec_x, scan_vec_y, scan_vec_z]
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-    + str(start_length) + '_' + str(end_length) + '_' + 'orien__' + str(resolution_num)
+    + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
 scatt_settings=scatt_settings.replace('.', 'p')
 
 
@@ -177,10 +163,10 @@ os.makedirs(figure_dir, exist_ok=True)
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
 
-if os.path.exists(model_param_dir):
-    print('model folder exists')
-else:
-    print('model folder does not exist')
+# if os.path.exists(model_param_dir):
+#     print('model folder exists')
+# else:
+#     print('model folder does not exist')
 
 for i in range(len(t_arr)):
     t=t_arr[i]
