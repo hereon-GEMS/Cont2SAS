@@ -96,7 +96,7 @@ model_param_dir_name = ('rad' + '_' + str(ball_rad) +
 # decreitization params
 # number of categories and method of categorization
 num_cat= 3
-method_cat='direct'
+method_cat='extend'
 # scatt_cal params
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
