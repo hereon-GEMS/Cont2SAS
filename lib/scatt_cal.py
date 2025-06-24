@@ -175,7 +175,7 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
     if num_cat==0:
         return pseudo_b_cat
     else:
-        if method=='simple':
+        if method=='direct':
             """
             range of b values
             [o......o......o      ...      o] 
