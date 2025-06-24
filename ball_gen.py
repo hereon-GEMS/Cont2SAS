@@ -31,18 +31,18 @@ plt_node=False
 plt_cell=False
 plt_mesh=False
 
-### sim_gen ###
+### sim gen ###
 sim_model='ball'
 dt=1
 t_end=0
 n_ensem=1
 
-### model_param ###
+### model param ###
 rad=10
 sld=2
 qclean_sld=0
 
-### scatt_cal ###
+### scatt cal ###
 num_cat=101
 method_cat='direct'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
