@@ -426,23 +426,26 @@ def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_le
 def qclean_sld(model, xml_dir):
     model_xml_name='model_{0}.xml'.format(model)
     model_xml=os.path.join(xml_dir, model_xml_name)
-    if model == 'gg':
-        tree=ET.parse(model_xml)
-        root = tree.getroot()
-        return float(root.find('sld_out').text)
-    elif model == 'fs':
-        tree=ET.parse(model_xml)
-        root = tree.getroot()
-        return float(root.find('sld_out').text)
-    elif model == 'sld_grow':
-        tree=ET.parse(model_xml)
-        root = tree.getroot()
-        return float(root.find('sld_out').text)
-    elif model == 'phase_field':
-        tree=ET.parse(model_xml)
-        root = tree.getroot()
-        return float(root.find('qclean_sld').text)
-    else:
-        return 0
+    tree=ET.parse(model_xml)
+    root = tree.getroot()
+    return float(root.find('qclean_sld').text)
+    # if model == 'gg':
+    #     tree=ET.parse(model_xml)
+    #     root = tree.getroot()
+    #     return float(root.find('sld_out').text)
+    # elif model == 'fs':
+    #     tree=ET.parse(model_xml)
+    #     root = tree.getroot()
+    #     return float(root.find('sld_out').text)
+    # elif model == 'sld_grow':
+    #     tree=ET.parse(model_xml)
+    #     root = tree.getroot()
+    #     return float(root.find('sld_out').text)
+    # elif model == 'phase_field':
+    #     tree=ET.parse(model_xml)
+    #     root = tree.getroot()
+    #     return float(root.find('qclean_sld').text)
+    # else:
+    #     return 0
     
     
