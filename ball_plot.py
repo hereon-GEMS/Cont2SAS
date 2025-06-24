@@ -50,8 +50,12 @@ def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
 read input from xml file
 """
 
-### xml location ###
+### file locations ###
+# xml location
 xml_folder='./xml/'
+# script dir and working dir
+script_dir = "src"  # Full path of the script
+working_dir = "."  # Directory to run the script in
 
 """
 Input data
@@ -132,11 +136,13 @@ el_order_str='lagrangian_' + str(el_order)
 
 mother_dir_name = length_a_str+'_' + length_b_str+'_' + length_c_str\
       + '_' + nx_str + '_' + ny_str+'_' + nz_str + '_' + el_order_str
-mother_dir = os.path.join('./data/', mother_dir_name)
+data_dir=os.path.join(working_dir, 'data')
+mother_dir = os.path.join(data_dir, mother_dir_name)
 
 # read structure info
 data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
+# folder name for simulation 
 sim_dir=os.path.join(mother_dir, 'simulation')
 
 # folder name for model
