@@ -164,30 +164,12 @@ model_dir=os.path.join(sim_dir,model_dir_name)
 # folder name for model with particular run param
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
 
-
-# ### scatt_cal xml entries ###
-
-# # scatt_cal params
-# start_length=Q_range[0]
-# end_length=Q_range[1]
-# num_points=100 #int(root.find('scatt_cal').find('num_points').text)
-
-# # dir name
-# scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-#     + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(num_orientation)
-# scatt_settings=scatt_settings.replace('.', 'p')
-
 # create folder for figure (one level up from data folder)
 figure_dir=os.path.join(mother_dir, '../../figure/')
 os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
-
-# if os.path.exists(model_param_dir):
-#     print('model folder exists')
-# else:
-#     print('model folder does not exist')
 
 for i in range(len(t_arr)):
     t=t_arr[i]
