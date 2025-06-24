@@ -13,10 +13,10 @@ lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
 from lib import struct_gen as sg
-from lib import plotter as pltr
+# from lib import plotter as pltr
 from lib import simulation as sim
-from lib import processing as procs
-from lib import datasaver as dsv
+# from lib import processing as procs
+# from lib import datasaver as dsv
 from lib import scatt_cal as scatt
 from lib import sig_eff as sigeff
 
@@ -167,7 +167,7 @@ os.makedirs(sim_dir, exist_ok=True)
 
 # read structure info
 data_filename=os.path.join(sim_dir,'../structure/struct.h5')
-nodes, cells, con = dsv.mesh_read(data_filename)
+nodes, cells, con, mesh = sg.mesh_read(data_filename)
 
 # folder name for model
 model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
@@ -183,6 +183,7 @@ for elem in root.iter():
     if elem.text and elem.text.strip():  # Avoid None or empty texts
         model_param_dir_name+= f"{elem.tag}_{elem.text.strip()}_"
 model_param_dir_name=model_param_dir_name[0:-1]
+model_param_dir_name=model_param_dir_name.replace('.', 'p')
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
 
 if os.path.exists(model_param_dir):
