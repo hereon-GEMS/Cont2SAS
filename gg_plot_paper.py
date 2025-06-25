@@ -181,7 +181,7 @@ model_param_dir=os.path.join(model_dir,model_param_dir_name)
 figure_dir=os.path.join(mother_dir, '../../figure/')
 os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
-plot_dir=os.path.join(figure_dir, sim_model + '_final')
+plot_dir=os.path.join(figure_dir, sim_model + '_paper')
 os.makedirs(plot_dir, exist_ok=True)
 # initialize figures (1: SAS pattern, 2: Fit param)
 fig_scatt_all, ax_scatt_all = plt.subplots(figsize=(7, 5))
