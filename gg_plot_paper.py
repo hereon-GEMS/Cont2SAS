@@ -1,5 +1,5 @@
 """
-This plots figure used in publication for box model
+This plots figure used in publication for grain growth model
 Plots are saved in figure folder
 
 Author: Arnab Majumdar
