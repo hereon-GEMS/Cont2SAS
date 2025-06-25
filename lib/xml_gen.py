@@ -204,7 +204,7 @@ def model_gg_xml_write(xml_dir, rad_0, rad_end, sld_in, sld_out, qclean_sld):
     print("model_gg xml file created successfully!")
 
 # write model_fs.xml file
-def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out):
+def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out, qclean_sld):
     # Create the root element
     root = ET.Element("root")
 
@@ -214,6 +214,7 @@ def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out):
     ET.SubElement(root, "sig_end").text=str(sig_end)
     ET.SubElement(root, "sld_in").text=str(sld_in)
     ET.SubElement(root, "sld_out").text=str(sld_out)
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
     tree = ET.ElementTree(root)
