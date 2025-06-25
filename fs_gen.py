@@ -29,11 +29,11 @@ xml_dir='./xml'
 length_a=200.
 length_b=length_a
 length_c=length_a
-nx=50 
+nx=100 
 ny=nx 
 nz=nx 
 el_type='lagrangian'
-el_order=2
+el_order=1
 update_val=True
 plt_node=False
 plt_cell=False
@@ -116,7 +116,7 @@ if sim_run==1:
     # model xml
     print(info_str + 'Generating model_fs.xml')
     #xml_gen.model_ball_xml_write(xml_dir, rad, sld)
-    xml_gen.model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out)
+    xml_gen.model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out, qclean_sld)
 
     # generate structure
     print(info_str + 'Executing sim_gen.py')
