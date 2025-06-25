@@ -10,8 +10,6 @@ import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-
-
 import os
 import sys
 import numpy as np
