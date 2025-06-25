@@ -120,7 +120,7 @@ def model_box_xml_write(xml_dir, sld, qclean_sld):
     print("model_box xml file created successfully!")
 
 # write model_bib.xml file
-def model_bib_xml_write(xml_dir, rad, sld_in, sld_out):
+def model_bib_xml_write(xml_dir, rad, sld_in, sld_out, qclean_sld):
     # Create the root element
     root = ET.Element("root")
 
@@ -128,6 +128,7 @@ def model_bib_xml_write(xml_dir, rad, sld_in, sld_out):
     ET.SubElement(root, "rad").text=str(rad)
     ET.SubElement(root, "sld_in").text=str(sld_in)
     ET.SubElement(root, "sld_out").text=str(sld_out)
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
     tree = ET.ElementTree(root)
@@ -144,7 +145,7 @@ def model_bib_xml_write(xml_dir, rad, sld_in, sld_out):
     print("model_bib xml file created successfully!")
 
 # write model_bib_ecc.xml file
-def model_bib_ecc_xml_write(xml_dir, rad, sld_in, sld_out, ecc_vec):
+def model_bib_ecc_xml_write(xml_dir, rad, sld_in, sld_out, ecc_vec, qclean_sld):
     # Create the root element
     root = ET.Element("root")
 
@@ -158,6 +159,9 @@ def model_bib_ecc_xml_write(xml_dir, rad, sld_in, sld_out, ecc_vec):
     ET.SubElement(ecc_vec_el, "x").text=str(ecc_vec[0])
     ET.SubElement(ecc_vec_el, "y").text=str(ecc_vec[1])
     ET.SubElement(ecc_vec_el, "z").text=str(ecc_vec[2])
+
+    # remaining details for simulation box
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
     tree = ET.ElementTree(root)
