@@ -178,7 +178,7 @@ def model_bib_ecc_xml_write(xml_dir, rad, sld_in, sld_out, ecc_vec, qclean_sld):
     print("model_bib_ecc xml file created successfully!")
 
 # write model_gg.xml file
-def model_gg_xml_write(xml_dir, rad_0, rad_end, sld_in, sld_out):
+def model_gg_xml_write(xml_dir, rad_0, rad_end, sld_in, sld_out, qclean_sld):
     # Create the root element
     root = ET.Element("root")
 
@@ -187,6 +187,7 @@ def model_gg_xml_write(xml_dir, rad_0, rad_end, sld_in, sld_out):
     ET.SubElement(root, "rad_end").text=str(rad_end)
     ET.SubElement(root, "sld_in").text=str(sld_in)
     ET.SubElement(root, "sld_out").text=str(sld_out)
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
     tree = ET.ElementTree(root)
