@@ -12,13 +12,9 @@ sys.path.append(lib_dir)
 
 import os
 import sys
-import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
-import mdtraj as md
 from matplotlib.patches import Rectangle
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.colors import ListedColormap
