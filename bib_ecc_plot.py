@@ -192,11 +192,6 @@ mother_dir = os.path.join(data_dir, mother_dir_name)
 # read structure info
 data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
-# ### sim xml entries ###
-
-# # time array
-# t_arr=np.arange(0,t_end+dt, dt)
-
 # folder name for simulation
 sim_dir=os.path.join(mother_dir, 'simulation')
 
