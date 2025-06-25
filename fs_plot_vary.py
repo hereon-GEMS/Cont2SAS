@@ -1,41 +1,29 @@
 """
-This creates a 3D strcuture and saves it in the data folder
+This plots figure used in publication for interdiffusion model
+Plots are saved in figure folder
 
-Created on Fri Jun 23 10:28:09 2023
-
-@author: amajumda
+Author: Arnab Majumdar
+Date: 24.06.2025
 """
 import sys
 import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import simulation as sim
-from lib import processing as procs
-from lib import datasaver as dsv
-from lib import scatt_cal as scatt
-from lib import fitter as fit
-
-
-
 import os
-import time
-import argparse
 import sys
-import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
-import mdtraj as md
 from matplotlib.patches import Rectangle
 from scipy.optimize import curve_fit
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-from matplotlib.lines import Line2D
 
+# ignore warnings
+import warnings
+warnings.filterwarnings("ignore", category=SyntaxWarning)
+
+# analytical SAS function
 def J1(x):
     if x==0:
         return 0
@@ -68,53 +56,58 @@ def fit_func(q_in, sig_opt, rad_opt):
     return Iq
 
 """
-Input data
+read input from xml file
 """
+
+### file locations ###
+# xml location
+xml_folder='./xml/'
 # script dir and working dir
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
-
+"""
+Input data
+"""
+# mesh details
 nx_arr=[50,100,50]
 el_order_arr=[1,1,2]
-
-
-# plot fit fuzz value or sigma for all time step
-# plot_file_name='sig_fit_{0}.pdf'.format(sim_model)
-# plot_file=os.path.join(plot_dir,plot_file_name)
+# figure initialize
 fig1, ax1 = plt.subplots(figsize=(7, 5))
 fig2, ax2 = plt.subplots(figsize=(7, 5))
 fig3, ax3 = plt.subplots(2,figsize=(7, 5), gridspec_kw={'hspace': 0.1, 'height_ratios': [3, 1]})
-
+# plot settings
 marker=['s', '^', 'o']
 colors=['lime', 'm', 'yellow']
 ms=[6,6,4]
 
 for vary_idx in range(len(nx_arr)):
     ### struct gen ###
-    xml_dir=os.path.join(working_dir, './xml') 
+    # box side lengths (float values)
     length_a=200. 
     length_b=length_a 
     length_c=length_a
+    # number of cells in each direction (int values)
     nx=nx_arr[vary_idx] 
     ny=nx 
     nz=nx 
+    # element details
     el_type='lagrangian'
     el_order=el_order_arr[vary_idx]
-    update_val=True
-    plt_node=False
-    plt_cell=False
-    plt_mesh=False
+    # calculate mid point of structure (simulation box)
+    mid_point=np.array([length_a/2, length_b/2, length_c/2])
+    # #calculate cell lengths
+    # cell_x=length_a/nx
+    # cell_y=length_a/nx
+    # cell_z=length_a/nx
 
-    cell_x=length_a/nx
-    cell_y=length_a/nx
-    cell_z=length_a/nx
-
-    ### sim_gen ###
+    ### sim gen ###
     sim_model='fs'
     dt=1.
     t_end=10.
     n_ensem=1
+    # calculate time array
+    t_arr=np.arange(0,t_end+dt, dt)
 
     ### model_param ###
     rad=60
@@ -122,6 +115,16 @@ for vary_idx in range(len(nx_arr)):
     sig_end=10
     sld_in=5
     sld_out=1
+    qclean_sld=sld_out
+    # dir name for model param
+    model_param_dir_name = ('rad' + '_' + str(rad) + '_' +
+                            'sig_0' + '_' + str(sig_0) + '_' +
+                            'sig_end' + '_' + str(sig_end) + '_' +
+                            'sld_in' + '_' + str(sld_in) + '_' +
+                            'sld_out' + '_' + str(sld_out) + '_' + 
+                            'qclean_sld' + '_' + str(qclean_sld)
+                            ).replace('.', 'p')
+
 
     ### scatt_cal ###
     num_cat=501
@@ -131,17 +134,14 @@ for vary_idx in range(len(nx_arr)):
     Q_range=np.array([0., 0.2])
     num_points=100
     num_orientation=100
+    # scatt settengs
+    scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
+        + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
+    scatt_settings=scatt_settings.replace('.', 'p')
 
     """
-    calculate vars and create folder structure
+    read folder structure
     """
-
-    xml_folder=xml_dir
-
-    ### struct xml ###
-
-    # calculate mid point of structure (simulation box)
-    mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
     # folder structure
     ## mother folder name
@@ -167,70 +167,31 @@ for vary_idx in range(len(nx_arr)):
     # read structure info
     data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
-    ### sim xml entries ###
-
-    # time array
-    t_arr=np.arange(0,t_end+dt, dt)
-
-    # dir name
+    # folder name for simulation
     sim_dir=os.path.join(mother_dir, 'simulation')
 
-
-
-    ### model xml entries ###
     # folder name for model
     model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
         + '_ensem_' + str(n_ensem)).replace('.','p')
     model_dir=os.path.join(sim_dir,model_dir_name)
-
-    # dir name for model param
-    model_param_dir_name = ('rad' + '_' + str(rad) + '_' +
-                            'sig_0' + '_' + str(sig_0) + '_' +
-                            'sig_end' + '_' + str(sig_end) + '_' +
-                            'sld_in' + '_' + str(sld_in) + '_' +
-                            'sld_out' + '_' + str(sld_out)).replace('.', 'p')
-
+    
     # folder name for model with particular run param
     model_param_dir=os.path.join(model_dir,model_param_dir_name)
-
-
-    ### scatt_cal xml entries ###
-
-    # scatt_cal params
-    start_length=Q_range[0]
-    end_length=Q_range[1]
-    num_points=100 #int(root.find('scatt_cal').find('num_points').text)
-
-    # dir name
-    scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-        + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(num_orientation)
-    scatt_settings=scatt_settings.replace('.', 'p')
-
-
-    """
-    read folder structure
-    """
 
     # create folder for figure (one level up from data folder)
     figure_dir=os.path.join(mother_dir, '../../figure/')
     os.makedirs(figure_dir, exist_ok=True)
     ## folder for this suit of figures
-    plot_dir=os.path.join(figure_dir, sim_model + '_vary')
+    plot_dir=os.path.join(figure_dir, sim_model + '_paper')
     os.makedirs(plot_dir, exist_ok=True)
+    # color scheme
+    color_rainbow = plt.cm.rainbow(np.linspace(0, 1, len(t_arr)))
 
-    if os.path.exists(model_param_dir):
-        print('model folder exists')
-    else:
-        print('model folder does not exist')
-
-    # initialize fit_params (radius)
+    # initialize fit_params (radius, fuzz value)
     rad_fit=np.zeros_like(t_arr)
     rad_ana=np.ones_like(t_arr)*rad
     sig_fit=np.zeros_like(t_arr)
     sig_ana=sig_0+t_arr*(sig_end-sig_0)/t_end
-
-    # color scheme
-    color_rainbow = plt.cm.rainbow(np.linspace(0, 1, len(t_arr)))
 
     for i in range(len(t_arr)):
         t=t_arr[i]
@@ -411,7 +372,7 @@ ax1.plot(t_arr, sig_ana, 'gray', zorder=-10, label= 'Simulation value')
 ax1.legend()
 ## labels
 ax1.set_xlabel('Time [s]')
-ax1.set_ylabel('Fuzzyness [$\mathrm{\AA}$]')
+ax1.set_ylabel(r'Fuzzyness [$\mathrm{\AA}$]')
 ## limits
 #ax1.grid(True)
 plot_file_name='sig_fit_{0}.pdf'.format(sim_model)
@@ -425,7 +386,7 @@ ax2.plot(t_arr, rad_ana, 'gray', zorder=-10, label= 'Simulation value')
 ax2.legend(loc='upper left')
 ## labels
 ax2.set_xlabel('Time [s]')
-ax2.set_ylabel('Radius of grain [$\mathrm{\AA}$]')
+ax2.set_ylabel(r'Radius of grain [$\mathrm{\AA}$]')
 ## limits
 ax2.set_ylim([rad-4,rad+4])
 #ax2.grid(True)
@@ -443,7 +404,7 @@ ax3[0].legend(loc='upper left')
 ## labels
 # ax3[0].set_xlabel('Time [s]')
 ax3[0].set_xticklabels([])
-ax3[0].set_ylabel('Fuzzyness [$\mathrm{\AA}$]')
+ax3[0].set_ylabel(r'Fuzzyness [$\mathrm{\AA}$]')
 ## limits
 ax3[0].grid(True)
 
@@ -452,7 +413,7 @@ ax3[0].grid(True)
 # ax3[0].legend(loc='upper left')
 ## labels
 ax3[1].set_xlabel('Time [s]')
-ax3[1].set_ylabel('Radius of grain [$\mathrm{\AA}$]')
+ax3[1].set_ylabel(r'Radius of grain [$\mathrm{\AA}$]')
 ## limits
 ax3[1].set_ylim([rad-1,rad+5])
 ax3[1].grid(True)
