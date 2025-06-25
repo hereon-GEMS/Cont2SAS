@@ -193,7 +193,7 @@ model_dir=os.path.join(sim_dir,model_dir_name)
 figure_dir=os.path.join(mother_dir, '../../figure/')
 os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
-plot_dir=os.path.join(figure_dir, sim_model + '_vary')
+plot_dir=os.path.join(figure_dir, sim_model + '_paper')
 os.makedirs(plot_dir, exist_ok=True)
 # plott setting 
 # plotting according to ecc vector
@@ -260,8 +260,8 @@ for idx in range(len(ecc_vec_arr)):
         ## legend
         ax.legend(loc='lower left')
         ## labels
-        ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-        ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+        ax.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+        ax.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
         ## SANS upper boundary Q=1 \AA^-1
         ax.set_xlim(right=1)
 
