@@ -97,7 +97,7 @@ model_param_dir_name = ('rad' + '_' + str(rad) + '_' +
                         'sig_0' + '_' + str(sig_0) + '_' +
                         'sig_end' + '_' + str(sig_end) + '_' +
                         'sld_in' + '_' + str(sld_in) + '_' +
-                        'sld_out' + '_' + str(sld_out)+ '_' +
+                        'sld_out' + '_' + str(sld_out) + '_' +
                         'qclean_sld' + '_' + str(qclean_sld)
                         ).replace('.', 'p')
 
