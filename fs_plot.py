@@ -145,7 +145,7 @@ mother_dir = os.path.join(data_dir, mother_dir_name)
 # read structure info
 data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
-# read structure info
+# folder name for simulation
 sim_dir=os.path.join(mother_dir, 'simulation')
 
 # folder name for model
@@ -166,7 +166,6 @@ os.makedirs(plot_dir, exist_ok=True)
 fig_scatt_all, ax_scatt_all = plt.subplots(figsize=(7, 5))
 # color scheme
 color_rainbow = plt.cm.rainbow(np.linspace(0, 1, len(t_arr)))
-
 
 # initialize fit_params (radius, fuzz value)
 rad_fit=np.zeros_like(t_arr)
