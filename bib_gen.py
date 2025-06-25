@@ -1,5 +1,5 @@
 """
-This generates data for ball offcenter in box model
+This generates data for ball at center in box model
 data is saved in data folder
 
 Author: Arnab Majumdar
