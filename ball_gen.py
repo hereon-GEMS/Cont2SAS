@@ -58,7 +58,7 @@ mpi_procs=4
 num_threads=2
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
-Q_range=np.array([0, 1])
+Q_range=np.array([0., 1.])
 num_points=100
 num_orientation=10
 
