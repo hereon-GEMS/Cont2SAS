@@ -82,7 +82,7 @@ el_order=1
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
 
-### sim_gen ###
+### sim gen ###
 # model name
 sim_model='gg'
 # simulation parameters
