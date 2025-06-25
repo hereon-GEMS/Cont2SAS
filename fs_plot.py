@@ -1,36 +1,20 @@
 """
-This creates a 3D strcuture and saves it in the data folder
+This plots necessary figures for interdiffusion model
+Plots are saved in figure folder
 
-Created on Fri Jun 23 10:28:09 2023
-
-@author: amajumda
+Author: Arnab Majumdar
+Date: 24.06.2025
 """
 import sys
 import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import simulation as sim
-from lib import processing as procs
-from lib import datasaver as dsv
-from lib import scatt_cal as scatt
-from lib import fitter as fit
-
-
-
 import os
-import time
-import argparse
 import sys
-import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
-import mdtraj as md
 from matplotlib.patches import Rectangle
 from scipy.optimize import curve_fit
 
@@ -39,24 +23,6 @@ def J1(x):
         return 0
     else:
         return (np.sin(x)-x*np.cos(x))/x**2
-
-# def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
-#     vol=(4/3)*np.pi*rad**3
-#     # SLD unit 10^-5 \AA^-2
-#     del_rho=sld-sld_sol
-#     q_arr=np.linspace(qmin,qmax,Npts)
-#     FormFactor=np.zeros(len(q_arr))
-#     for i in range(len(q_arr)):
-#         q=q_arr[i]
-#         if q==0:
-#             # Form factor unit 10^-5 \AA
-#             FormFactor[i]=vol*del_rho
-#         else:
-#             # Form factor unit 10^-5 \AA
-#             FormFactor[i]=3*vol*del_rho*J1(q*rad)/(q*rad)
-#     # Intensity unit 10^-10 \AA^2
-#     Iq_arr = ((scale)*np.abs(FormFactor)**2+bg)
-#     return Iq_arr, q_arr
 
 def fuzzysph(qmax,qmin,Npts,scale,bg,sld,sld_sol,sig_fuzz,radius):
     vol=(4/3)*np.pi*radius**3
@@ -86,58 +52,74 @@ def fit_func(q_in, sig_opt, rad_opt):
 """
 Input data
 """
+### file locations ###
+# xml location
+xml_folder='./xml/'
 # script dir and working dir
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
-
 ### struct gen ###
-xml_dir=os.path.join(working_dir, './xml') 
+# box side lengths (float values)
 length_a=200. 
 length_b=length_a 
 length_c=length_a
+# number of cells in each direction (int values)
 nx=50 
 ny=nx 
 nz=nx 
+# element details 
 el_type='lagrangian'
-el_order=2
-update_val=True
-plt_node=False
-plt_cell=False
-plt_mesh=False
+el_order=1
+# calculate mid point of structure (simulation box)
+mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
-### sim_gen ###
+### sim gen ###
+# model name
 sim_model='fs'
+# simulation parameters
 dt=1.
 t_end=10.
 n_ensem=1
+# calculate time array
+t_arr=np.arange(0,t_end+dt, dt)
 
-### model_param ###
+### model param ###
+# model params
 rad=60
 sig_0=2
 sig_end=10
 sld_in=5
 sld_out=1
+qclean_sld=sld_out
+# dir name for model param
+model_param_dir_name = ('rad' + '_' + str(rad) + '_' +
+                        'sig_0' + '_' + str(sig_0) + '_' +
+                        'sig_end' + '_' + str(sig_end) + '_' +
+                        'sld_in' + '_' + str(sld_in) + '_' +
+                        'sld_out' + '_' + str(sld_out)+ '_' +
+                        'qclean_sld' + '_' + str(qclean_sld)
+                        ).replace('.', 'p')
+
 
 ### scatt_cal ###
+# decreitization params
+# number of categories and method of categorization
 num_cat=501
 method_cat='extend'
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
-Q_range=np.array([0., 0.2])
+Q_range=np.array([0., 0.2]) # mention integers as float
 num_points=100
 num_orientation=100
+# scatt settengs
+scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
+    + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
+scatt_settings=scatt_settings.replace('.', 'p')
 
 """
-calculate vars and create folder structure
+read folder structure
 """
-
-xml_folder=xml_dir
-
-### struct xml ###
-
-# calculate mid point of structure (simulation box)
-mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
 # folder structure
 ## mother folder name
@@ -163,49 +145,16 @@ mother_dir = os.path.join(data_dir, mother_dir_name)
 # read structure info
 data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
-### sim xml entries ###
-
-# time array
-t_arr=np.arange(0,t_end+dt, dt)
-
-# dir name
+# read structure info
 sim_dir=os.path.join(mother_dir, 'simulation')
 
-
-
-### model xml entries ###
 # folder name for model
 model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
     + '_ensem_' + str(n_ensem)).replace('.','p')
 model_dir=os.path.join(sim_dir,model_dir_name)
 
-# dir name for model param
-model_param_dir_name = ('rad' + '_' + str(rad) + '_' +
-                        'sig_0' + '_' + str(sig_0) + '_' +
-                        'sig_end' + '_' + str(sig_end) + '_' +
-                        'sld_in' + '_' + str(sld_in) + '_' +
-                        'sld_out' + '_' + str(sld_out)).replace('.', 'p')
-
 # folder name for model with particular run param
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
-
-
-### scatt_cal xml entries ###
-
-# scatt_cal params
-start_length=Q_range[0]
-end_length=Q_range[1]
-num_points=100 #int(root.find('scatt_cal').find('num_points').text)
-
-# dir name
-scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-    + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(num_orientation)
-scatt_settings=scatt_settings.replace('.', 'p')
-
-
-"""
-read folder structure
-"""
 
 # create folder for figure (one level up from data folder)
 figure_dir=os.path.join(mother_dir, '../../figure/')
@@ -213,23 +162,17 @@ os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
+# initialize figures (1: SAS pattern)
+fig_scatt_all, ax_scatt_all = plt.subplots(figsize=(7, 5))
+# color scheme
+color_rainbow = plt.cm.rainbow(np.linspace(0, 1, len(t_arr)))
 
-if os.path.exists(model_param_dir):
-    print('model folder exists')
-else:
-    print('model folder does not exist')
 
-# initialize fit_params (radius)
+# initialize fit_params (radius, fuzz value)
 rad_fit=np.zeros_like(t_arr)
 rad_ana=np.ones_like(t_arr)*rad
 sig_fit=np.zeros_like(t_arr)
 sig_ana=sig_0+t_arr*(sig_end-sig_0)/t_end
-
-# initialize fit_params (1: radius, 2: NA)
-fig_scatt_all, ax_scatt_all = plt.subplots(figsize=(7, 5))
-
-# color scheme
-color_rainbow = plt.cm.rainbow(np.linspace(0, 1, len(t_arr)))
 
 for i in range(len(t_arr)):
     t=t_arr[i]
@@ -237,6 +180,7 @@ for i in range(len(t_arr)):
     # time_dir name
     t_dir_name='t{0:0>3}'.format(i)
     t_dir=os.path.join(model_param_dir, t_dir_name)
+    print(f'plotting fot time: {t/t_end} [t/tmax]')
     for j in range(n_ensem):
         idx_ensem=j
         # create ensemble dir
@@ -272,7 +216,6 @@ for i in range(len(t_arr)):
 
 
         if idx_ensem==0:
-            print('plotting for the first ensemble')
             if el_type=='lagrangian':
                 num_node_x=el_order*nx+1
                 num_node_y=el_order*ny+1
@@ -296,7 +239,7 @@ for i in range(len(t_arr)):
                             origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
+            cbar_label=r"Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val, r"$\mathrm{\AA}$")
@@ -337,14 +280,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -372,14 +315,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_cat_val_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -446,8 +389,8 @@ for i in range(len(t_arr)):
     ## legend
     ax.legend()
     ## labels
-    ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-    ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+    ax.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+    ax.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
     ## SANS upper boundary Q=1 \AA^-1
     ax.set_xlim(right=Q_range[1])
     ## save plot
@@ -469,7 +412,7 @@ for i in range(len(t_arr)):
     ax.legend()
     ## labels
     ax.set_xlabel('Time [s]')
-    ax.set_ylabel('Fuzz value ($\sigma$) [$\mathrm{\AA}$]')
+    ax.set_ylabel(r'Fuzz value ($\sigma$) [$\mathrm{\AA}$]')
     ## limits
     #ax.set_xlim([t_arr[0], t_arr[-1]])
     #ax.set_ylim([rad_0,rad_end])
@@ -493,7 +436,7 @@ for i in range(len(t_arr)):
     ax.legend()
     ## labels
     ax.set_xlabel('Time [s]')
-    ax.set_ylabel('Radius ($r$) [$\mathrm{\AA}$]')
+    ax.set_ylabel(r'Radius ($r$) [$\mathrm{\AA}$]')
     ## limits
     #ax.set_xlim([t_arr[0], t_arr[-1]])
     ax.set_ylim([rad-cell_x,rad+cell_x])
@@ -511,8 +454,8 @@ for i in range(len(t_arr)):
 ## legend
 ax_scatt_all.legend(ncol=2)
 ## labels
-ax_scatt_all.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-ax_scatt_all.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
 ## SANS upper boundary Q=1 \AA^-1
 ax_scatt_all.set_xlim(right=Q_range[1])
 ## save plot
@@ -534,7 +477,7 @@ ax.plot(t_arr, sig_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Fit
 ax.legend()
 ## labels
 ax.set_xlabel('Time [s]')
-ax.set_ylabel('Fuzzyness [$\mathrm{\AA}$]')
+ax.set_ylabel(r'Fuzzyness [$\mathrm{\AA}$]')
 ## limits
 ax.grid(True)
 ## save plot
@@ -554,7 +497,7 @@ ax.plot(t_arr, rad_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Fit
 ax.legend()
 ## labels
 ax.set_xlabel('Time [s]')
-ax.set_ylabel('Radius of grain [$\mathrm{\AA}$]')
+ax.set_ylabel(r'Radius of grain [$\mathrm{\AA}$]')
 ## limits
 ax.set_ylim([rad-cell_x,rad+cell_x])
 ax.grid(True)
