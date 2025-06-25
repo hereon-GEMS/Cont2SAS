@@ -61,7 +61,7 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0, 1])
 num_points=100
-num_orientation=200
+num_orientation=300
 
 ### run_vars ###
 struct_gen_run=1
