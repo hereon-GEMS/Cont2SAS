@@ -12,7 +12,6 @@ sys.path.append(lib_dir)
 
 import os
 import sys
-import xml.etree.ElementTree as ET
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
