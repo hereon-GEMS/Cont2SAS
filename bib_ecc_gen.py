@@ -48,7 +48,7 @@ n_ensem=1
 rad=10
 sld_in=2
 sld_out=1
-ecc_vec=np.array([5, 5, 5])
+ecc_vec=np.array([0, 0, 0])
 qclean_sld=0
 
 ### scatt_cal ###
