@@ -152,7 +152,6 @@ data_file=os.path.join(mother_dir, 'structure/struct.h5')
 # folder name for simulation
 sim_dir=os.path.join(mother_dir, 'simulation')
 
-### model xml entries ###
 # folder name for model
 model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
     + '_ensem_' + str(n_ensem)).replace('.','p')
