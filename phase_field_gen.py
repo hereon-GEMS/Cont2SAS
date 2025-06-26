@@ -28,6 +28,13 @@ working_dir = "."  # Directory to run the script in
 # phase field simulation details 
 phenm='spinodal_fe_cr'
 sim_times=(np.array([0, 2, 4, 6, 8, 8.64]) * 10000).astype(int)
+# sim_times=(np.array([8.64]) * 10000).astype(int) # uncomment when using 3 categories
+
+# initialize time vars
+ttot_sg_sum=0
+ttot_sim_sum=0
+ttot_scatt_sum=0
+ttot_sum=0
 
 for t_idx, sim_time in enumerate(sim_times):
     print(f'-------------------------------------------------')
@@ -66,7 +73,7 @@ for t_idx, sim_time in enumerate(sim_times):
     qclean_sld=moose_inp['qclean_sld'][()]
 
     ### scatt_cal ###
-    num_cat=501
+    num_cat=501 # use 3 for the categorization picture
     method_cat='extend'
     sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
     mpi_procs=4
@@ -183,4 +190,19 @@ for t_idx, sim_time in enumerate(sim_times):
     print(f'Total           :{ttot_sg + ttot_sim + ttot_scatt} s')
     print(f'-------------------------------------------------')
 
-# add time stats for all
+    # total time taken
+    ttot_sg_sum+=ttot_sg
+    ttot_sim_sum+=ttot_sim
+    ttot_scatt_sum+=ttot_scatt
+    ttot_sum+=ttot_sg + ttot_sim + ttot_scatt
+
+# Time satistics for all
+print('')
+print(f'-------------------------------------------------')
+print(f'Time statistics')
+print(f'-------------------------------------------------')
+print(f'Mesh generation :{ttot_sg_sum} s')
+print(f'SLD assign      :{ttot_sim_sum} s')
+print(f'SAS calculation :{ttot_scatt_sum} s')
+print(f'Total           :{ttot_sum} s')
+print(f'-------------------------------------------------')
