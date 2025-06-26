@@ -52,6 +52,14 @@ method_cat = categorization method (allowed : 'direct', 'extend')
 
 **Calculation of effective cross-section**
 
+detector generation
+
+- nx, ny = num pixels in detector in x, y dimensions
+- dx, dy = pixel width in x and y dimensions
+- bs_wx, bs_wy = beam stopper width in x and y dimensions
+
+params
+
 - instrument = instrument name (allowed: 'SANS-1')
 - facility = name of facility (allowed: 'MLZ')
 - distance = distance between detector and sample
@@ -131,3 +139,7 @@ Description: Change of chemical composition of spherical grain
 
 
 # FEM simulation using Moose
+
+- name = name of the model (= 'spinodal_fe_cr')
+- time = simulation time
+- qclean sld = SLD outside simulation box
