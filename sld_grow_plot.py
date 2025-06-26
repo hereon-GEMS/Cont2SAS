@@ -1,39 +1,27 @@
 """
-This creates a 3D strcuture and saves it in the data folder
+This plots necessary figures for chemical composition change model
+Plots are saved in figure folder
 
-Created on Fri Jun 23 10:28:09 2023
-
-@author: amajumda
+Author: Arnab Majumdar
+Date: 24.06.2025
 """
 import sys
 import os
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
-from lib import struct_gen as sg
-from lib import plotter as pltr
-from lib import simulation as sim
-from lib import processing as procs
-from lib import datasaver as dsv
-from lib import scatt_cal as scatt
-from lib import fitter as fit
-
-
-
 import os
-import time
-import argparse
 import sys
-import xml.etree.ElementTree as ET
 import numpy as np
-import subprocess
 import matplotlib.pyplot as plt
 import h5py
-import imageio.v2 as imageio
-import mdtraj as md
 from matplotlib.patches import Rectangle
 from scipy.optimize import curve_fit
+# ignore warnings
+import warnings
+warnings.filterwarnings("ignore")
 
+# analytical SAS function
 def J1(x):
     if x==0:
         return 0
@@ -68,58 +56,74 @@ def fit_func_sld_grow(q_in, sld_opt):
 """
 Input data
 """
+### file locations ###
+# xml location
+xml_folder='./xml/'
 # script dir and working dir
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
 
 ### struct gen ###
-xml_dir=os.path.join(working_dir, './xml') 
-length_a=200. 
-length_b=200. 
-length_c=200.
-nx=50 
-ny=50 
-nz=50 
+# box side lengths (float values) 
+length_a=40.
+length_b=length_a
+length_c=length_a
+# number of cells in each direction (int values)
+nx=40 
+ny=nx 
+nz=nx
+# element details
 el_type='lagrangian'
 el_order=1
-update_val=True
-plt_node=False
-plt_cell=False
-plt_mesh=False
-
-### sim_gen ###
-sim_model='sld_grow'
-dt=1.
-t_end=10.
-n_ensem=1
-
-### model_param ###
-rad_grain=75
-sld_in_0=2
-sld_in_end=5
-sld_out=1
-
-### scatt_cal ###
-num_cat=101
-method_cat='extend'
-sig_file='signal.h5'
-scan_vec=np.array([1, 0, 0])
-Q_range=np.array([0.0029, 0.05])
-num_points=100
-num_orientation=100
-
-"""
-calculate vars and create folder structure
-"""
-
-xml_folder=xml_dir
-
-### struct xml ###
-
 # calculate mid point of structure (simulation box)
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
+
+### sim gen ###
+# model name
+sim_model='sld_grow'
+# simulation parameters
+dt=1.
+t_end=10.
+n_ensem=1
+# calculate time array
+t_arr=np.arange(0,t_end+dt, dt)
+
+### model param ###
+# model params
+rad_grain=10
+sld_in_0=2
+sld_in_end=5
+sld_out=1
+qclean_sld=sld_out
+# dir name for model param
+model_param_dir_name = ('rad' + '_' + str(rad_grain) + '_' +
+                        'sld_in_0' + '_' + str(sld_in_0) + '_' +
+                        'sld_in_end' + '_' + str(sld_in_end) + '_' +
+                        'sld_out' + '_' + str(sld_out)+ '_' +
+                        'qclean_sld' + '_' + str(qclean_sld)
+                        ).replace('.', 'p')
+
+
+### scatt_cal ###
+num_cat=101 # also check with 3
+method_cat='extend'
+sig_file='signal.h5'
+scan_vec=np.array([1, 0, 0])
+# these values are taken from publication
+# doi: https://doi.org/10.3233/JNR-190116
+Q_range=np.array([0.0029, 0.05])
+num_points=100
+num_orientation=10
+# scatt settengs
+scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
+    + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
+scatt_settings=scatt_settings.replace('.', 'p')
+
+"""
+read folder structure
+"""
 # folder structure
 ## mother folder name
 ### save length values as strings
@@ -144,48 +148,16 @@ mother_dir = os.path.join(data_dir, mother_dir_name)
 # read structure info
 data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
-### sim xml entries ###
-
-# time array
-t_arr=np.arange(0,t_end+dt, dt)
-
-# dir name
+# folder name for simulation
 sim_dir=os.path.join(mother_dir, 'simulation')
 
-
-
-### model xml entries ###
 # folder name for model
 model_dir_name= (sim_model + '_tend_' + str(t_end) + '_dt_' + str(dt) \
     + '_ensem_' + str(n_ensem)).replace('.','p')
 model_dir=os.path.join(sim_dir,model_dir_name)
 
-# dir name for model param
-model_param_dir_name = ('rad' + '_' + str(rad_grain) + '_' +
-                        'sld_in_0' + '_' + str(sld_in_0) + '_' +
-                        'sld_in_end' + '_' + str(sld_in_end) + '_' +
-                        'sld_out' + '_' + str(sld_out)).replace('.', 'p')
-
 # folder name for model with particular run param
 model_param_dir=os.path.join(model_dir,model_param_dir_name)
-
-
-### scatt_cal xml entries ###
-
-# scatt_cal params
-start_length=Q_range[0]
-end_length=Q_range[1]
-num_points=100 #int(root.find('scatt_cal').find('num_points').text)
-
-# dir name
-scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
-    + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(num_orientation)
-scatt_settings=scatt_settings.replace('.', 'p')
-
-
-"""
-read folder structure
-"""
 
 # create folder for figure (one level up from data folder)
 figure_dir=os.path.join(mother_dir, '../../figure/')
@@ -193,11 +165,6 @@ os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
-
-if os.path.exists(model_param_dir):
-    print('model folder exists')
-else:
-    print('model folder does not exist')
 
 # initialize fit_params (radius)
 sld_fit=np.zeros_like(t_arr)
@@ -251,7 +218,6 @@ for i in range(len(t_arr)):
 
 
         if idx_ensem==0:
-            print('plotting for the first ensemble')
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
@@ -271,7 +237,7 @@ for i in range(len(t_arr)):
                             origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
+            cbar_label=r"Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val, r"$\mathrm{\AA}$")
@@ -312,14 +278,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -347,14 +313,14 @@ for i in range(len(t_arr)):
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_cat_val_xy, s=3, cmap='viridis')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
-            cbar_label="Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
+            cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
             title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
-            ax.set_xlabel('X [$\mathrm{\AA}$]')
-            ax.set_ylabel('Y [$\mathrm{\AA}$]')
+            ax.set_xlabel(r'X [$\mathrm{\AA}$]')
+            ax.set_ylabel(r'Y [$\mathrm{\AA}$]')
             # other formatting
             ax.set_aspect('equal')
             ax.set_xlim([0, length_a])
@@ -394,13 +360,11 @@ for i in range(len(t_arr)):
     # fit radius w.r.t. numerical intensity
     popt, pcov = curve_fit(fit_func_sld_grow, q_num, Iq_num_raw)
     sld_fit[i]=popt[0]+sld_out
-    print('fit sld is', sld_fit[i])
 
     # ananlytical intensity 
     ## Intensity unit 10^-10 \AA^2
     Iq_ana_raw,q_ana= ball(qmax=np.max(q_num),qmin=np.min(q_num),Npts=100,
                 scale=1,bg=0,sld=sld_fit[i], sld_sol=sld_out, rad=rad_grain)
-    print(sld_ana[i])
     ## Normalize by volume
     ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
     ## (after * 10**2) Intensity unit cm^-1
@@ -419,8 +383,8 @@ for i in range(len(t_arr)):
     ## legend
     ax.legend()
     ## labels
-    ax.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-    ax.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+    ax.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+    ax.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
     ## SANS upper boundary Q=1 \AA^-1
     ax.set_xlim([Q_range[0], Q_range[1]])
     #ax.set_ylim([1e4, 1e6])
@@ -443,7 +407,7 @@ for i in range(len(t_arr)):
     ax.legend()
     ## labels
     ax.set_xlabel('Time [{s}]')
-    ax.set_ylabel('SLD [$10^{-5} \cdot \mathrm{\AA}^{-2}$]')
+    ax.set_ylabel(r'SLD [$10^{-5} \cdot \mathrm{\AA}^{-2}$]')
     ## limits
     #ax.set_xlim([t_arr[0], t_arr[-1]])
     #ax.set_ylim([rad_0,rad_end])
@@ -461,8 +425,8 @@ for i in range(len(t_arr)):
 ## legend
 ax_scatt_all.legend(ncol=2)
 ## labels
-ax_scatt_all.set_xlabel('Q [$\mathrm{\AA}^{-1}$]')
-ax_scatt_all.set_ylabel('I(Q) [$\mathrm{cm}^{-1}$]')
+ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
+ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
 ## SANS upper boundary Q=1 \AA^-1
 ax_scatt_all.set_xlim([Q_range[0], Q_range[1]])
 ax_scatt_all.set_ylim(bottom=1e5 )
@@ -485,7 +449,7 @@ ax.plot(t_arr, sld_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Fit
 ax.legend()
 ## labels
 ax.set_xlabel('Time [s]')
-ax.set_ylabel('SLD of grain [$10^{-5} \cdot \mathrm{\AA}^{-2}$]')
+ax.set_ylabel(r'SLD of grain [$10^{-5} \cdot \mathrm{\AA}^{-2}$]')
 ## limits
 ax.grid(True)
 ## save plot
@@ -515,7 +479,7 @@ ax.plot(sig_eff_t, factor*contrast_arr**2, 'r', linestyle='', marker='^', marker
 ax.legend()
 ## labels
 ax.set_xlabel('Time [s]')
-ax.set_ylabel('Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]')
+ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]')
 ## limits
 ax.grid(True)
 ## save plot
