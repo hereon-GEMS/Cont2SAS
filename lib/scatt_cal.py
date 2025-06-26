@@ -408,17 +408,10 @@ def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_le
     ET.SubElement(vectors, "algorithm").text = 'boost_uniform_on_sphere'
     ET.SubElement(vectors, "resolution").text = str(resolution_num)
 
-    #limits
-    # decomposition=ET.SubElement(limits, "decomposition")
-    # ET.SubElement(decomposition, "utilization").text = '0.5'
-
     # stage memory data
     stage=ET.SubElement(limits, "stage")
     memory=ET.SubElement(stage, "memory")
     ET.SubElement(memory, "data").text=str(800000000)
-    # # threads
-    # computation=ET.SubElement(limits, "computation")
-    # ET.SubElement(computation, "threads").text=str(2)
 
     tree = ET.ElementTree(root)
     tree.write(scatter_xml_file)
@@ -429,23 +422,5 @@ def qclean_sld(model, xml_dir):
     tree=ET.parse(model_xml)
     root = tree.getroot()
     return float(root.find('qclean_sld').text)
-    # if model == 'gg':
-    #     tree=ET.parse(model_xml)
-    #     root = tree.getroot()
-    #     return float(root.find('sld_out').text)
-    # elif model == 'fs':
-    #     tree=ET.parse(model_xml)
-    #     root = tree.getroot()
-    #     return float(root.find('sld_out').text)
-    # elif model == 'sld_grow':
-    #     tree=ET.parse(model_xml)
-    #     root = tree.getroot()
-    #     return float(root.find('sld_out').text)
-    # elif model == 'phase_field':
-    #     tree=ET.parse(model_xml)
-    #     root = tree.getroot()
-    #     return float(root.find('qclean_sld').text)
-    # else:
-    #     return 0
     
     
