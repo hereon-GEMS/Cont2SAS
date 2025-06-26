@@ -231,7 +231,7 @@ def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out, qclean_sld
     print("model_fs xml file created successfully!")
 
 # write model_sld_grow.xml file
-def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out):
+def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out, qclean_sld):
     # Create the root element
     root = ET.Element("root")
 
@@ -240,6 +240,7 @@ def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out):
     ET.SubElement(root, "sld_in_0").text=str(sld_in_0)
     ET.SubElement(root, "sld_in_end").text=str(sld_in_end)
     ET.SubElement(root, "sld_out").text=str(sld_out)
+    ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
     tree = ET.ElementTree(root)
