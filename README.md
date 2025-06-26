@@ -52,6 +52,12 @@ method_cat = categorization method (allowed : 'direct', 'extend')
 
 **Calculation of effective cross-section**
 
+- instrument = instrument name (allowed: 'SANS-1')
+- facility = name of facility (allowed: 'MLZ')
+- distance = distance between detector and sample
+- wl = wavelength of neutron
+- beam_center_coord = vector defining center of beam w.r.t. detector center (e.g. np.array([0, 0, 0]))
+
 # Model structures
 
 # FEM simulation using Moose
