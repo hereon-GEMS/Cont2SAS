@@ -60,4 +60,74 @@ method_cat = categorization method (allowed : 'direct', 'extend')
 
 # Model structures
 
+**ball**
+
+Description: Sphere
+
+- rad = radius of sphere
+- sld = SLD of sphere
+- qclean_sld = SLD outside simulation box
+
+**box**
+
+Description: Parallelepiped
+
+- sld = SLD of parallelepiped
+- qclean_sld = SLD outside simulation box
+
+**bib**
+
+Description: Sphere at the ceneter of parallepiped
+
+- rad = radius of sphere (must be <= simulation box length/2)
+- sld_in = SLD of sphere
+- sld_out = SLD of environment
+- qclean_sld = SLD outside simulation box
+
+**bib_ecc**
+
+Description: Sphere off the ceneter of parallepiped
+
+- rad = radius of sphere (must be <= simulation box length/2)
+- sld_in = SLD of sphere
+- sld_out = SLD of environment
+- ecc = vector w.r.t. simulation box center
+    - x = x value of vector
+    - y = y value of vector
+    - z = z value of vector
+- qclean_sld = SLD outside simulation box
+
+**gg**
+
+Description: Growth of spherical grain
+
+- rad_0 = starting radius of sphere
+- rad_end = end radius of sphere
+- sld_in = SLD of sphere
+- sld_out = SLD of environment
+- qclean_sld = SLD outside simulation box
+
+**fs**
+
+Description: Interdiffusion between spherical grain and its environment
+
+- rad = sphere radius
+- sig_0 = starting fuzz value (>=0)
+- sig_end = end fuzz value (>=0)
+- sld_in = SLD of sphere
+- sld_out = SLD of environment
+- qclean_sld = SLD outside simulation box
+
+**sld_grow**
+
+Description: Change of chemical composition of spherical grain
+
+- rad = sphere radius
+- sld_in_0 = starting SLD of sphere
+- sld_in_end = end SLD of sphere
+- sld_out = SLD of environment
+- qclean_sld = SLD outside simulation box
+
+
+
 # FEM simulation using Moose
