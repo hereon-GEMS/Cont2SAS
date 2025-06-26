@@ -1,5 +1,5 @@
 """
-This plots necessary figures for grain growth model
+This plots necessary figures for phase field model
 Plots are saved in figure folder
 
 Author: Arnab Majumdar
@@ -53,7 +53,7 @@ N = len(sim_times)
 # Generate an array of colors (RGBA format)
 colors = cmap(np.linspace(0, 1, N))
 
-# initialize fit params (radius)
+# initialize fit params (characteristic length)
 ch_len_arr=np.zeros_like(sim_times, dtype='float')
 
 for sim_t_idx, sim_time in enumerate(sim_times):
