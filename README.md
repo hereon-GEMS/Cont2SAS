@@ -41,7 +41,7 @@ for models check below
 
 - num_cat = num categories for categorization
 method_cat = categorization method (allowed : 'direct', 'extend')
-- sassena_exe = Sassena executable location ![Check here]([OpenAI](https://openai.com))
+- sassena_exe = Sassena executable location ![Check here](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/)
 - mpi_procs = number of mpi processes used by Sassena
 - num_threads = number of threads used by Sassena
 - sig_file = signal file name (preferred: 'signal.h5', must include '.h5' in the end)
