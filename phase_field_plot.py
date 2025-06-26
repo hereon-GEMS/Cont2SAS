@@ -41,6 +41,7 @@ working_dir = "."  # Directory to run the script in
 # phase field simulation details 
 phenm='spinodal_fe_cr'
 sim_times=(np.array([0, 2, 4, 6, 8, 8.64]) * 10000).astype(int)
+# sim_times=(np.array([8.64]) * 10000).astype(int) # uncomment when using 3 categories
 
 # figure initialize
 fig_scatt, ax_scatt = plt.subplots(figsize=(7, 5))
@@ -98,7 +99,7 @@ for sim_t_idx, sim_time in enumerate(sim_times):
                             ).replace('.','p')
 
     ### scatt_cal ###
-    num_cat=501
+    num_cat=501 # use 3 for the categorization picture
     method_cat='extend'
     sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
     mpi_procs=4
