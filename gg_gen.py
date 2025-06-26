@@ -52,7 +52,7 @@ sld_in=2
 sld_out=1
 qclean_sld=sld_out
 
-### scatt_cal ###
+### scatt cal ###
 num_cat=3
 method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
@@ -64,7 +64,7 @@ Q_range=np.array([0., 1.])
 num_points=100
 num_orientation=10
 
-### run_vars ###
+### run vars ###
 struct_gen_run=1
 sim_run=1
 scatt_cal_run=1
@@ -152,7 +152,7 @@ else:
 # time counter end - SAS calculation
 toc_scatt = time.perf_counter()
 ttot_scatt= round(toc_scatt - tic_scatt,3)
-print(f'Time taken for calculating SAS pattern: {ttot_sim} s')
+print(f'Time taken for calculating SAS pattern: {ttot_scatt} s')
 print(f'-------------------------------------------------')
 
 # Time satistics
