@@ -1,14 +1,16 @@
 <!-- 
-model names:
-static model: interdiffusion (ana model: fuzzy sphere)
-list params:
+input xml for the dynamic interdiffusion model (fs)
+dynamic  means multiple time step
 (maintain the order)
 1) radius of grain  - rad
 2) sigma at (t=0) - sig_0
 3) sigma at (t=t_end) - sig_end
 4) sld of grain - sld_in
 5) sld of environment - sld_out
+6) sld ouside simulation box - qclean_sld (should be = sld_out)
 -->
+
+<!-- example script -->
 
 <root>
     <rad>10</rad>
@@ -16,4 +18,5 @@ list params:
     <sig_end>2</sig_end>
     <sld_in>2</sld_in>
     <sld_out>1</sld_out>
+    <qclean_sld>1</qclean_sld>
 </root>
