@@ -89,7 +89,7 @@ mpirun -n 16 ./Sassena.AppImage --config scatter.xml
 </a> is licensed under 
 <a href="https://creativecommons.org/licenses/by/4.0/"> 
 CC BY 4.0 
-</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 0.2em;max-height:0.2em;margin-left: .2em;">
+</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 0.2em;max-height:0.2em;margin-left: .1em;">
 <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
 See legal code locally: 
