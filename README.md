@@ -60,13 +60,13 @@ Default location: Sassena/sassena.AppImage
 
 ```
 # download app image 
-$ mkdir -p ./Sassena
-$ wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
+mkdir -p ./Sassena
+wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
 # run sassena
-$ chmod +x Sassena.AppImage
-$ ./Sassena.AppImage # --config scatter.xml etc.
+chmod +x Sassena.AppImage
+./Sassena.AppImage # --config scatter.xml etc.
 # or to use mpi:
-$ mpirun -n 16 ./Sassena.AppImage --config scatter.xml
+mpirun -n 16 ./Sassena.AppImage --config scatter.xml
 
 ```
 
