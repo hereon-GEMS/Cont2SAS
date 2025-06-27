@@ -54,7 +54,7 @@ $python ./src/struct_gen.py
 
 Check the output in following location:
 
-- Folder name = ${proj_home}/data
+- Folder name = ``${proj_home}/data``
 
 ### Assign SLD values to nodes
 
