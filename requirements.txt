@@ -1,0 +1,7 @@
+fitz
+h5py
+imageio
+matplotlib
+netCDF4
+numpy
+scipy
