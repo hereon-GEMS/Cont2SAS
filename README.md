@@ -81,15 +81,11 @@ mpirun -n 16 ./Sassena.AppImage --config scatter.xml
 
 ## License
 
-<a href="https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/tree/develop?ref_type=heads">
-    Cont2Sas
-</a> 
+<a href="https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/tree/develop?ref_type=heads"> Cont2Sas </a> 
 © 2025 by 
-<a href="https://codebase.helmholtz.cloud/arnab.majumdar"> Arnab Majumdar 
-</a> is licensed under 
-<a href="https://creativecommons.org/licenses/by/4.0/"> 
-CC BY 4.0 
-</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 0.2em;max-height:0.2em;margin-left: .1em;">
+<a href="https://codebase.helmholtz.cloud/arnab.majumdar"> Arnab Majumdar </a> is licensed under 
+<a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>
+<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="width: 0.2em;height:0.2em;margin-left: .1em;">
 <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
 See legal code locally: 
