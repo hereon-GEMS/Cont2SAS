@@ -2,7 +2,6 @@
 import numpy as np
 from scipy import special
 from scipy.optimize import minimize
-#from numba import njit, prange
 from scipy.special import erf
 import xml.etree.ElementTree as ET
 import os
