@@ -14,11 +14,6 @@ sys.path.append(lib_dir)
 
 from lib import struct_gen as sg
 from lib import simulation as sim
-# from lib import plotter as pltr
-# from lib import processing as procs
-# from lib import datasaver as dsv
-
-
 
 import os
 import time
