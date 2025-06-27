@@ -1,0 +1,47 @@
+<!-- 
+input xml for scattering calculation
+list params:
+(maintain the order)
+1) discretization - discretization
+    1a) number of categories - num_cat
+    1b) method of categorization - method_cat
+        Options:
+            1aa) extend method - extend 
+            1ab) direct method - direct
+2) sassena run params - sassena
+    2a) Full path of sassena executable - exe_loc
+    2b) num of MPI processes - mpi_procs
+    2c) num of threads - num_threads
+3) params for calculating scattering function - scatt_cal
+    3a) name of signal file (sassena output)- sig_file
+    3b) scan vector (along which Q vectors will be calculated) - scan_vec
+    3c) lower bound of Q - Q_start
+    3d) upper bound of Q - Q_end
+    3e) number of Q points - num_points
+    3f) number of Q oriantation (orientational average) - num_orientation
+-->
+
+<!-- example script -->
+<root>
+    <discretization>
+        <num_cat>101</num_cat>
+        <method_cat>extend</method_cat>
+    </discretization>
+    <sassena>
+        <exe_loc>/home/amajumda/Documents/Softwares/sassena/compile/sassena</exe_loc>
+        <mpi_procs>4</mpi_procs>
+        <num_threads>1</num_threads>
+    </sassena>
+    <scatt_cal>
+        <sig_file>signal.h5</sig_file>
+        <scan_vec>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </scan_vec>
+        <Q_start>0.0029</Q_start>
+        <Q_end>0.05</Q_end>
+        <num_points>100</num_points>
+        <num_orientation>100</num_orientation>
+    </scatt_cal>
+</root>

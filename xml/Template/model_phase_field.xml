@@ -1,0 +1,16 @@
+<!-- 
+input xml for the reading FEM simulation output (gg)
+this one focuses on phase field modelling by moose
+(maintain the order)
+1) name of the simulation model - name
+2) simulation time - time
+5) sld ouside simulation box - qclean_sld
+-->
+
+<!-- example script -->
+
+<root>
+  <name>spinodal_fe_cr</name>
+  <time>86400</time>
+  <qclean_sld>0.5408560149631366</qclean_sld>
+</root>

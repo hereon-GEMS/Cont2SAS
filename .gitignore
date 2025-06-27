@@ -1,3 +1,37 @@
 # folder (data and non required)
 data
 garbage
+figure
+test*
+old_scripts
+plot_scripts/plot_IQ0_fs_check.py
+plot_scripts/plot_IQ_fs_check.py
+ppt
+graphical abstract
+moose
+lib_old
+old_src
+Sassena
+
+# __pycache__
+lib/__pycache__
+lib/__init__.pyc
+lib/xml_gen.pyc
+lib/plotter.pyc
+lib/struct_gen.pyc
+
+# images
+*.jpg
+*.png
+
+#tempcode
+*tempCodeRunnerFile.py
+
+#xml
+xml/*.xml
+
+#pdf
+*.pdf
+
+# moose output
+moose_read/*.e

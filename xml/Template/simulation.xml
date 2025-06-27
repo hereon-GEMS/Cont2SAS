@@ -1,0 +1,29 @@
+<!-- 
+input xml for assigning SLD to mesh nodes
+list params:
+(maintain the order)
+1) name of simulation model - model
+    options:
+        1a) sphere - ball
+        1b) parallelepiped - box
+        1c) sphere in the center of parallelepiped (ballinbox) - bib 
+        1d) sphere off the center of parallelepiped (ballinbox_eccentric) - bib_ecc
+        1e) grain growth - gg
+        1f) fuzzy sphere - fs
+        1g) SLD changing sphere - sld_grow
+        1h) SLD simulated by phase field - phase_field
+2) params for simulating - sim_param
+    2a) length of time step - dt
+    2b) total time - tend
+    2c) number of ensemble per time step - n_ensem
+-->
+
+<!-- example script -->
+<root>
+    <model>gg</model>
+    <sim_param>
+        <dt>1</dt>
+        <tend>10</tend>
+        <n_ensem>1</n_ensem>
+    </sim_param>
+</root>
