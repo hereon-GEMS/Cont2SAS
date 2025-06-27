@@ -101,6 +101,20 @@ Check the output in following location:
 
 ### Calculation of SAS patterns
 
+#### Functionalities
+
+1. read mesh info
+2. read assigned slds 
+3. calculate SAS pattern numerically
+4. repeat 3 for all time steps
+
+#### Run using xml
+
+##### Define scatt_cal.xml
+
+1. create scatt_cal.xml in xml folder
+2. define the following (find [template](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/develop/xml/Template/scatt_cal.xml?ref_type=heads)):
+
 - num_cat = num categories for categorization
 method_cat = categorization method (allowed : 'direct', 'extend')
 - sassena_exe = Sassena executable location ([Check here](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/))
@@ -112,27 +126,86 @@ method_cat = categorization method (allowed : 'direct', 'extend')
 - num_points = number of Q points
 - num_orientation = number of orientations used for numerical orientational averaging
 
+##### Calculate SAS pattern
+
+Run following code:
+
+``` 
+cd $proj_home
+
+$python ./src/scatt_cal.py
+```
+
+##### Output
+
+Check the output in following location:
+
+- Folder name = ``${proj_home}/data/${struct_dir}/simulation/${simu_dir}/${model_dir}/${time}``
+
 ### Calculation of effective cross-section
 
-detector generation
+#### Functionalities
+
+1. generate pixels of detector
+2. read SAS pattern and detctor pixel info 
+3. calculate effective cross-section
+4. repeat 2,3 for all time steps
+
+#### generate pixels of detector
+
+This step is required only of ``detector.h5`` does not exist in ``/detector_geometry/${instru_name}_${facility_name}/``.
+
+``` 
+cd $proj_home/detector_geometry/${instru_name}_${facility_name}/
+
+$python ./simu_detector.py
+
+cd $proj_home
+```
+
+The output ``detector.h5`` contains following:
 
 - nx, ny = num pixels in detector in x, y dimensions
 - dx, dy = pixel width in x and y dimensions
 - bs_wx, bs_wy = beam stopper width in x and y dimensions
 
-params
+#### Run using xml
 
-- instrument = instrument name (allowed: 'SANS-1')
-- facility = name of facility (allowed: 'MLZ')
-- distance = distance between detector and sample
-- wl = wavelength of neutron
-- beam_center_coord = vector defining center of beam w.r.t. detector center (e.g. np.array([0, 0, 0]))
+##### Define sig_eff.xml
+
+1. create sig_eff.xml in xml folder
+2. define the following (find [template](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/develop/xml/Template/sig_eff.xml?ref_type=heads)):
+
+    - instrument = instrument name (allowed: 'SANS-1')
+    - facility = name of facility (allowed: 'MLZ')
+    - distance = distance between detector and sample
+    - wl = wavelength of neutron
+    - beam_center_coord = vector defining center of beam w.r.t. detector center (e.g. np.array([0, 0, 0]))
+
+##### Calculate effective cross-section
+
+Run following code:
+
+``` 
+cd $proj_home
+
+$python ./src/sig_eff.py
+```
+
+##### Output
+
+Check the output in following location:
+
+- Folder name = ``${proj_home}/data/${struct_dir}/simulation/${simu_dir}/${model_dir}/${time}``
 
 ## Model structures
 
 ### ball
 
-Description: Sphere
+Description: Spherical nanoparticle</br>
+Name: ball
+
+Structure of ``model_ball.xml``:
 
 - rad = radius of sphere
 - sld = SLD of sphere
@@ -140,14 +213,20 @@ Description: Sphere
 
 ### box
 
-Description: Parallelepiped
+Description: Parallelepiped naniparticle</br>
+Name: box
+
+Structure of ``model_box.xml``:
 
 - sld = SLD of parallelepiped
 - qclean_sld = SLD outside simulation box
 
 ### bib
 
-Description: Sphere at the ceneter of parallepiped
+Description: Parallepiped nanoparticle with spherical region at the center</br>
+Name: ball in box (bib)
+
+Structure of ``model_bib.xml``:
 
 - rad = radius of sphere (must be <= simulation box length/2)
 - sld_in = SLD of sphere
@@ -156,7 +235,10 @@ Description: Sphere at the ceneter of parallepiped
 
 ### bib_ecc
 
-Description: Sphere off the ceneter of parallepiped
+Description: Parallepiped nanoparticle with spherical region off the center</br>
+Name: ball in box eccentric (bib_ecc)
+
+Structure of ``model_box.xml``:
 
 - rad = radius of sphere (must be <= simulation box length/2)
 - sld_in = SLD of sphere
@@ -169,7 +251,10 @@ Description: Sphere off the ceneter of parallepiped
 
 ### gg
 
-Description: Growth of spherical grain
+Description: Growth of spherical grain over time</br>
+Name: grain growth (gg)
+
+Structure of ``model_gg.xml``:
 
 - rad_0 = starting radius of sphere
 - rad_end = end radius of sphere
@@ -179,7 +264,10 @@ Description: Growth of spherical grain
 
 ### fs
 
-Description: Interdiffusion between spherical grain and its environment
+Description: Interdiffusion between spherical grain and its environment over time</br>
+Name: fuzzy sphere (fs)
+
+Structure of ``model_fs.xml``:
 
 - rad = sphere radius
 - sig_0 = starting fuzz value (>=0)
@@ -190,14 +278,16 @@ Description: Interdiffusion between spherical grain and its environment
 
 ### sld_grow
 
-Description: Change of chemical composition of spherical grain
+Description: Change of chemical composition of spherical grain over time</br>
+Name: sld growth (sld_grow)
+
+Structure of ``model_sld_grow.xml``:
 
 - rad = sphere radius
 - sld_in_0 = starting SLD of sphere
 - sld_in_end = end SLD of sphere
 - sld_out = SLD of environment
 - qclean_sld = SLD outside simulation box
-
 
 
 ## FEM simulation
