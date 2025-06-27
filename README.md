@@ -58,7 +58,8 @@ conda remove --name Cont2Sas --all
 
 ```
 # dowload
-$ wget https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
+mkdir -p ./Sassena
+wget -O ./Sassena/sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
 $ chmod +x Sassena.AppImage
 $ ./Sassena.AppImage # --config scatter.xml etc.
 # or to use mpi:
