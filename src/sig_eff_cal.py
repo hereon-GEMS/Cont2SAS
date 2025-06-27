@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This creates a 3D strcuture and saves it in the data folder
+This calculates effective cross-section
 
 Created on Fri Jun 23 10:28:09 2023
 
