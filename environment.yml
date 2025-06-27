@@ -3,7 +3,7 @@ channels:
   - defaults
 dependencies:
   - python=3.12.1
-  - pip              # Make sure pip is included
+  - pip=25.1  # Make sure pip is included
   - pip:
       - fitz
       - h5py
