@@ -45,7 +45,7 @@ conda activate Cont2Sas
 pip install -r requirements.txt
 ```
 
-
+Remove conda
 
 ```
 conda remove --name Cont2Sas --all
@@ -56,7 +56,7 @@ conda remove --name Cont2Sas --all
 
 Download app image and use
 
-Default location: Sassena/sassena.AppImage
+Default location: ``Sassena/sassena.AppImage``
 
 ```
 # download app image 
