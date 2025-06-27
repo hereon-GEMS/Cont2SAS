@@ -31,7 +31,17 @@ conda remove --name test --all
 
 #### Sassena
 
-https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
+
+
+```
+# dowload
+$ wget https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
+$ chmod +x Sassena.AppImage
+$ ./Sassena.AppImage # --config scatter.xml etc.
+# or to use mpi:
+$ mpirun -n 16 ./Sassena.AppImage --config scatter.xml
+
+```
 
 ## Steps to run
 ### Mesh generation
