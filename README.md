@@ -23,19 +23,22 @@ Software package for calculating Small Angle Scattering (SAS) pattern from conti
 
 #### Run using xml
 
-##### Define following in the xml file:
+##### Define struct.xml
 
-- lengths = dimension of simulation box in x,y,z
-- num_cell = num elements in x,y,z directions
-- element
-    - type = type of element (allowed: 'lagrangian')
-    - order = order of element (allowed: 1 or 2)
-- decision
-    - update_val = whether to rewrite the structure or not (preferred= 'True')
-    - plot
-        - node = decision to plot nodes (preffered: 'False') 
-        - cell = decision to plot element centers (preffered: 'False')
-        - mesh = decision to plot mesh (preffered: 'False')
+1. create struct.xml in xml folder
+2. define the following (find [template](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/develop/xml/Template/struct.xml?ref_type=heads)):
+
+    - lengths = dimension of simulation box in x,y,z
+    - num_cell = num elements in x,y,z directions
+    - element
+        - type = type of element (allowed: 'lagrangian')
+        - order = order of element (allowed: 1 or 2)
+    - decision
+        - update_val = whether to rewrite the structure or not (preferred= 'True')
+        - plot
+            - node = decision to plot nodes (preffered: 'False') 
+            - cell = decision to plot element centers (preffered: 'False')
+            - mesh = decision to plot mesh (preffered: 'False')
 
 ##### Generate mesh
 
@@ -53,17 +56,48 @@ Check the output in following location:
 
 - Folder name = ${proj_home}/data
 
-
 ### Assign SLD values to nodes
 
-only linear time step possible
+#### Functionalities
 
-- sim_model = name of the model (e.g.'sld_grow')
-- dt = time step length
-- t_end = end time (start time is 0)
-- n_ensem = number of structures per time step (ensemble of structure in one time step)
+1. define time step (only cons time steps possible)
+2. read mesh info 
+3. assign slds to nodes
+4. repeat 3 for all time steps
 
-for models check below
+#### Run using xml
+
+##### Define simulation.xml
+
+1. create simulation.xml in xml folder
+2. define the following (find [template](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/develop/xml/Template/simulation.xml?ref_type=heads)):
+
+    - sim_model = name of the model (e.g.'sld_grow')
+    - dt = time step length
+    - t_end = end time (start time is 0)
+    - n_ensem = number of structures per time step (ensemble of structure in one time step)
+
+##### Define model xml
+
+1. create model_{modelname}.xml in xml folder
+2. need to create your own
+3. see below for example models
+
+##### assign sld to nodes
+
+Run following code:
+
+``` 
+cd $proj_home
+
+$python ./src/simulation.py
+```
+
+##### Output
+
+Check the output in following location:
+
+- Folder name = ``${proj_home}/data/${struct_dir}/simulation/${simu_dir}/${model_dir}``
 
 ### Calculation of SAS patterns
 
