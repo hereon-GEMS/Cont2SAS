@@ -85,6 +85,7 @@ mpirun -n 16 ./Sassena.AppImage --config scatter.xml
 © 2025 by 
 <a href="https://codebase.helmholtz.cloud/arnab.majumdar"> Arnab Majumdar </a> is licensed under 
 <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>
+<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="Description" width="1" height="1">
 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="width: 0.2em;height:0.2em;margin-left: .1em;">
 <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
