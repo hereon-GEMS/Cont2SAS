@@ -21,14 +21,16 @@ Software package for calculating Small Angle Scattering (SAS) pattern from conti
 
 ### Run from source
 
-Download the repository
+#### Download the repository
 
 ```
 git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.git
 cd continuum-to-scattering
 ```
 
-Create conda environemnt 
+#### Create conda environemnt 
+
+##### Option 1
 
 Install packages using ``.yml``
 
@@ -36,6 +38,8 @@ Install packages using ``.yml``
 conda env create -f environment.yml
 conda activate Cont2Sas
 ```
+
+##### Option1
 
 Install using ``pip``
 
@@ -45,11 +49,16 @@ conda activate Cont2Sas
 pip install -r requirements.txt
 ```
 
-Remove conda
+#### Uninstall
+
+Remove conda environment, git repository
 
 ```
 conda remove --name Cont2Sas --all
+cd ..
+rm ./continuum-to-scattering
 ```
+
 ### Required packages
 
 #### Sassena
