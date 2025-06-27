@@ -2,9 +2,11 @@ fitz
 h5py
 matplotlib
 mpl_toolkits
+netCDF4
 numpy
 os
 scipy
+shutil
 subprocess
 sys
 time
