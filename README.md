@@ -1,8 +1,8 @@
-# Calculation of SAS pattern from simulated continuum structures
-
-<p align="right">
-<img src="logo/Cont2Sas.png" alt="Description" width="100"/>
+<p align="center">
+<img src="logo/Cont2Sas.png" alt="Description" width="300"/>
 </p>
+
+# Calculation of SAS pattern from simulated continuum structures
 
 <!-- <p align="center">
   <img src="path/to/image.png" alt="Description" width="300"/>
