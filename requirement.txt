@@ -1,0 +1,12 @@
+fitz
+h5py
+matplotlib
+mpl_toolkits
+numpy
+os
+scipy
+subprocess
+sys
+time
+warnings
+xml
