@@ -10,6 +10,7 @@ ppt
 graphical abstract
 moose
 lib_old
+old_src
 
 # __pycache__
 lib/__pycache__
