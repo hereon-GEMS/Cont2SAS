@@ -1,6 +1,8 @@
-<p align="center">
+<!-- <p align="center">
 <img src="logo/Cont2Sas.png" alt="Description" width="300"/>
-</p>
+</p> -->
+
+![](logo/Cont2Sas.png)
 
 # Calculation of SAS pattern from simulated continuum structures
 
