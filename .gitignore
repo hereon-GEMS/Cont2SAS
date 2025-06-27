@@ -30,3 +30,6 @@ xml/*.xml
 
 #pdf
 *.pdf
+
+# moose output
+moose_read/*.e
