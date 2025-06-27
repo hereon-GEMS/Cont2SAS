@@ -1,15 +1,19 @@
-# Description
+# Calculation of SAS pattern from simulated continuum structures
+
+## Description
 
 Software package for calculating Small Angle Scattering (SAS) pattern from continuum simulations.
 
-# Installation
+## Installation
 
-**Run from source**
+### Run from source
 
-**Required packages**
+### Required packages
 
-# Steps to run
-**Mesh generation**
+## Steps to run
+### Mesh generation
+
+#### Functionalities
 
 1. define simulation box (only rectangular possible)
 2. define node positions
@@ -17,16 +21,40 @@ Software package for calculating Small Angle Scattering (SAS) pattern from conti
 4. define connectivity matrix
 4. define element type (only lagrangian of order 1 and 2 possible)
 
-- length_a, length_b, length_c = dimension of simulation box (a,b,c -> x,y,z)
-- nx, ny, nz = num elements in x,y,z directions
-- el_type = type of element (allowed: 'lagrangian')
-- el_order=order of element (allowed: 1 or 2)
-- update_val= whether to rewrite the structure or not (preferred= 'True')
-- plt_node=decision to plot nodes (preffered: 'False') 
-- plt_cell=decision to plot element centers (preffered: 'False')
-- plt_mesh=decision to plot mesh (preffered: 'False')
+#### Run using xml
 
-**Assign SLD values to nodes**
+##### Define following in the xml file:
+
+- lengths = dimension of simulation box in x,y,z
+- num_cell = num elements in x,y,z directions
+- element
+    - type = type of element (allowed: 'lagrangian')
+    - order = order of element (allowed: 1 or 2)
+- decision
+    - update_val = whether to rewrite the structure or not (preferred= 'True')
+    - plot
+        - node = decision to plot nodes (preffered: 'False') 
+        - cell = decision to plot element centers (preffered: 'False')
+        - mesh = decision to plot mesh (preffered: 'False')
+
+##### Generate mesh
+
+Run following code:
+
+``` 
+cd $proj_home
+
+$python ./src/struct_gen.py
+```
+
+##### Output
+
+Check the output in following location:
+
+- Folder name = ${proj_home}/data
+
+
+### Assign SLD values to nodes
 
 only linear time step possible
 
@@ -37,7 +65,7 @@ only linear time step possible
 
 for models check below
 
-**Calculation of SAS patterns**
+### Calculation of SAS patterns
 
 - num_cat = num categories for categorization
 method_cat = categorization method (allowed : 'direct', 'extend')
@@ -50,7 +78,7 @@ method_cat = categorization method (allowed : 'direct', 'extend')
 - num_points = number of Q points
 - num_orientation = number of orientations used for numerical orientational averaging
 
-**Calculation of effective cross-section**
+### Calculation of effective cross-section
 
 detector generation
 
@@ -66,9 +94,9 @@ params
 - wl = wavelength of neutron
 - beam_center_coord = vector defining center of beam w.r.t. detector center (e.g. np.array([0, 0, 0]))
 
-# Model structures
+## Model structures
 
-**ball**
+### ball
 
 Description: Sphere
 
@@ -76,14 +104,14 @@ Description: Sphere
 - sld = SLD of sphere
 - qclean_sld = SLD outside simulation box
 
-**box**
+### box
 
 Description: Parallelepiped
 
 - sld = SLD of parallelepiped
 - qclean_sld = SLD outside simulation box
 
-**bib**
+### bib
 
 Description: Sphere at the ceneter of parallepiped
 
@@ -92,7 +120,7 @@ Description: Sphere at the ceneter of parallepiped
 - sld_out = SLD of environment
 - qclean_sld = SLD outside simulation box
 
-**bib_ecc**
+### bib_ecc
 
 Description: Sphere off the ceneter of parallepiped
 
@@ -105,7 +133,7 @@ Description: Sphere off the ceneter of parallepiped
     - z = z value of vector
 - qclean_sld = SLD outside simulation box
 
-**gg**
+### gg
 
 Description: Growth of spherical grain
 
@@ -115,7 +143,7 @@ Description: Growth of spherical grain
 - sld_out = SLD of environment
 - qclean_sld = SLD outside simulation box
 
-**fs**
+### fs
 
 Description: Interdiffusion between spherical grain and its environment
 
@@ -126,7 +154,7 @@ Description: Interdiffusion between spherical grain and its environment
 - sld_out = SLD of environment
 - qclean_sld = SLD outside simulation box
 
-**sld_grow**
+### sld_grow
 
 Description: Change of chemical composition of spherical grain
 
@@ -138,7 +166,10 @@ Description: Change of chemical composition of spherical grain
 
 
 
-# FEM simulation using Moose
+## FEM simulation
+
+### phase_field
+Description: Iron - Chromium spinodal decomposition
 
 - name = name of the model (= 'spinodal_fe_cr')
 - time = simulation time
