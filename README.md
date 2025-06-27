@@ -83,7 +83,7 @@ Check the output in following location:
 2. need to create your own
 3. see below for example models
 
-##### assign sld to nodes
+##### Assign sld to nodes
 
 Run following code:
 
