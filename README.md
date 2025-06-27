@@ -1,31 +1,52 @@
 # Calculation of SAS pattern from simulated continuum structures
 
+<p align="right">
+<img src="logo/Cont2Sas.png" alt="Description" width="100"/>
+</p>
+
+<!-- <p align="center">
+  <img src="path/to/image.png" alt="Description" width="300"/>
+</p> -->
+
 ## Description
 
 Software package for calculating Small Angle Scattering (SAS) pattern from continuum simulations.
+
+<!-- ![Alt text](logo/Cont2Sas.png) -->
+
 
 ## Installation
 
 ### Run from source
 
-clone from git
+Download the repository
 
 ```
 $ git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.git
 $ cd continuum-to-scattering
 ```
 
+Create conda environemnt 
+
+Install packages using ``.yml``
+
+```
+$ conda env create -f environment.yml
+$ conda activate Cont2Sas
+```
+
+Install using ``pip``
+
 ```
 $ conda create -n Cont2Sas -n test python=3.12.1
 $ conda activate Cont2Sas
 $ pip install -r requirements.txt
 ```
+
+
+
 ```
-$ conda env create -f environment.yml
-$ conda activate Cont2Sas
-```
-```
-conda remove --name test --all
+conda remove --name Cont2Sas --all
 ```
 ### Required packages
 
