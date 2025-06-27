@@ -8,7 +8,30 @@ Software package for calculating Small Angle Scattering (SAS) pattern from conti
 
 ### Run from source
 
+clone from git
+
+```
+$ git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.git
+$ cd continuum-to-scattering
+```
+
+```
+$ conda create -n Cont2Sas -n test python=3.12.1
+$ conda activate Cont2Sas
+$ pip install -r requirements.txt
+```
+```
+$ conda env create -f environment.yml
+$ conda activate Cont2Sas
+```
+```
+conda remove --name test --all
+```
 ### Required packages
+
+#### Sassena
+
+https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
 
 ## Steps to run
 ### Mesh generation
