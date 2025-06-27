@@ -75,7 +75,7 @@ for t_idx, sim_time in enumerate(sim_times):
     ### scatt_cal ###
     num_cat=501 # use 3 for the categorization picture
     method_cat='extend'
-    sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+    sassena_exe= './Sassena/Sassena.AppImage'
     mpi_procs=4
     num_threads=2
     sig_file='signal.h5'
