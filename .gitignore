@@ -35,3 +35,6 @@ xml/*.xml
 
 # moose output
 moose_read/*.e
+
+# python files
+phase_field_Iq_plot_JF.py
