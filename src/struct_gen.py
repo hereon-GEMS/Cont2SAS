@@ -9,13 +9,12 @@ Created on Fri Jun 23 10:28:09 2023
 """
 import sys
 import os
-lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(lib_dir)
-
-from lib import struct_gen as sg
-
 import time
 import xml.etree.ElementTree as ET
+
+lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(lib_dir)
+from lib import struct_gen as sg
 
 #timer counter initial
 tic = time.perf_counter()
@@ -32,7 +31,7 @@ tree=ET.parse(struct_xml)
 root = tree.getroot()
 
 # box side lengths
-length_a=float(root.find('lengths').find('x').text) 
+length_a=float(root.find('lengths').find('x').text)
 length_b=float(root.find('lengths').find('y').text)
 length_c=float(root.find('lengths').find('z').text)
 
@@ -55,7 +54,7 @@ update=sg.str_to_bool(root.find('decision').find('update').text)
 
 # True: new figures created
 # False: new figures not created
-# three figs: points at nodes,points at cells,Line figure showing mesh connectivity 
+# three figs: points at nodes,points at cells,Line figure showing mesh connectivity
 plot_node = sg.str_to_bool(root.find('decision').find('plot').find('node').text)
 plot_cell = sg.str_to_bool(root.find('decision').find('plot').find('cell').text)
 plot_mesh = sg.str_to_bool(root.find('decision').find('plot').find('mesh').text)
@@ -64,7 +63,7 @@ plot_mesh = sg.str_to_bool(root.find('decision').find('plot').find('mesh').text)
 create folder structure
 """
 
-# create folders 
+# create folders
 os.makedirs('./data', exist_ok=True)
 
 # save length values as strings
@@ -92,31 +91,31 @@ res_dir=os.path.join('./data/', struct_folder_name +'/structure')
 if os.path.exists(res_dir):
     is_dir=True
     if not update:
-        print('structure exists at {0}'.format(res_dir))
+        print(f'structure exists at {res_dir}')
         print('!abort!')
         sys.exit()
     else:
-        print('structure exists at {0} but figures will be updated'.format(res_dir))
+        print(f'structure exists at {res_dir} but figures will be updated')
         if plot_node:
-            print('node figure exists at {0} but will be updated'.format(res_dir))
+            print(f'node figure exists at {res_dir} but will be updated')
         if plot_cell:
-            print('cell figure exists at {0} but will be updated'.format(res_dir))
+            print(f'cell figure exists at {res_dir} but will be updated')
         if plot_mesh:
-            print('mesh figure exists at {0} but will be updated'.format(res_dir))
+            print(f'mesh figure exists at {res_dir} but will be updated')
 else:
     is_dir=False
-    print('new structure will be created at {0}'.format(res_dir))
+    print(f'new structure will be created at {res_dir}')
     if plot_node:
-        print('node figure will be created at {0}'.format(res_dir))
+        print(f'node figure will be created at {res_dir}')
     if plot_cell:
-        print('cell figure will be created at {0}'.format(res_dir))
+        print(f'cell figure will be created at {res_dir}')
     if plot_mesh:
-        print('mesh figure will be created at {0}'.format(res_dir))
-
+        print(f'mesh figure will be created at {res_dir}')
 
 """
-structure read (if exist) or generation (if not exist)
-""" 
+if exist: read structure
+if not exist: generate structure 
+"""
 
 if is_dir:
     # read structure for updating figures
@@ -135,7 +134,7 @@ else:
 
 """
 Create figures
-""" 
+"""
 # images of nodes , cells , mesh
 os.makedirs(os.path.join(res_dir, 'figures'), exist_ok=True)
 if plot_node:
@@ -147,9 +146,9 @@ if plot_cell:
 if plot_mesh:
     sg.mesh_plotter_3d(nodes, mesh, save_plot=True,save_dir=os.path.join(res_dir, 'figures'),
                 filename='mesh', figsize=(10,10))
-    
+
 toc = time.perf_counter()
 tcomp=toc-tic
 
 print('Program finished running')
-print('Total time taken is {0}s'.format(tcomp))
+print(f'Total time taken is {tcomp}s')
