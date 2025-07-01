@@ -19,7 +19,7 @@ Software package for calculating Small Angle Scattering (SAS) pattern from conti
 
 ## Installation
 
-### Run from source
+### Source code
 
 #### Download the repository
 
@@ -28,38 +28,79 @@ git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.gi
 cd continuum-to-scattering
 ```
 
-#### Create conda environemnt 
+### Required packages
 
-##### Option 1
+#### Python packages 
 
-Install packages using ``.yml``
+##### Option 1: Using conda
+
+###### Install
 
 ```
 conda env create -f environment.yml
 conda activate Cont2Sas
 ```
-
-##### Option1
-
-Install using ``pip``
-
-```
-conda create -n Cont2Sas -n test python=3.12.1
-conda activate Cont2Sas
-pip install -r requirements.txt
-```
-
-#### Uninstall
+###### Uninstall
 
 Remove conda environment, git repository
 
 ```
 conda remove --name Cont2Sas --all
-cd ..
-rm ./continuum-to-scattering
 ```
 
-### Required packages
+##### Option 2: Using conda and pip
+
+###### Install
+
+```
+conda create -n Cont2Sas python=3.12.1
+conda activate Cont2Sas
+pip install -r requirements.txt
+```
+
+###### Uninstall
+
+```
+pip uninstall -r requirements.txt
+deactivate
+conda remove --name Cont2Sas --all
+```
+
+##### Option 3: Using pip and venv
+
+###### Install
+
+```
+sudo apt update
+sudo apt install python3-venv
+pip -m venv Cont2Sas
+source Cont2Sas\bin\activate
+pip install -r requirements.txt
+```
+
+###### Uninstall
+
+```
+pip uninstall -r requirements.txt
+deactivate
+rm -rf Cont2Sas
+```
+
+##### Option 4: Using pip
+
+###### Install
+
+```
+pip install -r requirements.txt
+```
+
+###### Uninstall
+
+```
+pip uninstall -r requirements.txt
+```
+
+### Other packages
 
 #### Sassena
 
