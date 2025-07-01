@@ -17,9 +17,11 @@ import h5py
 import imageio.v2 as imageio
 
 
+# find current dir and and ..
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-print(lib_dir)
+# add .. in path
 sys.path.append(lib_dir)
+# lib imports
 from lib import struct_gen as sg # pylint: disable=import-error, wrong-import-position
 from lib import simulation as sim # pylint: disable=import-error, wrong-import-position
 

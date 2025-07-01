@@ -12,16 +12,19 @@ import os
 import time
 import xml.etree.ElementTree as ET
 
+# find current dir and and ..
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# add .. in path
 sys.path.append(lib_dir)
-from lib import struct_gen as sg
+# lib imports
+from lib import struct_gen as sg # pylint: disable=import-error, wrong-import-position
 
 #timer counter initial
 tic = time.perf_counter()
 
-"""
-read input from xml file
-"""
+##########################
+# read input from xml file
+##########################
 
 xml_folder='./xml/'
 
@@ -59,9 +62,9 @@ plot_node = sg.str_to_bool(root.find('decision').find('plot').find('node').text)
 plot_cell = sg.str_to_bool(root.find('decision').find('plot').find('cell').text)
 plot_mesh = sg.str_to_bool(root.find('decision').find('plot').find('mesh').text)
 
-"""
-create folder structure
-"""
+#########################
+# create folder structure
+#########################
 
 # create folders
 os.makedirs('./data', exist_ok=True)
@@ -112,10 +115,10 @@ else:
     if plot_mesh:
         print(f'mesh figure will be created at {res_dir}')
 
-"""
-if exist: read structure
-if not exist: generate structure 
-"""
+##################################
+# if exist: read structure
+# if not exist: generate structure
+##################################
 
 if is_dir:
     # read structure for updating figures
@@ -132,9 +135,10 @@ else:
     sg.mesh_write(struct_file, nodes, cells, con, mesh)
 
 
-"""
-Create figures
-"""
+################
+# Create figures
+################
+
 # images of nodes , cells , mesh
 os.makedirs(os.path.join(res_dir, 'figures'), exist_ok=True)
 if plot_node:
