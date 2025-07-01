@@ -29,9 +29,9 @@ from lib import simulation as sim # pylint: disable=import-error, wrong-import-p
 #timer counter initial
 tic = time.perf_counter()
 
-"""
-read input from xml file
-"""
+##########################
+# read input from xml file
+##########################
 
 ### struct xml ###
 
@@ -78,9 +78,9 @@ t_arr=np.arange(0,t_end+dt, dt)
 n_ensem=int(root.find('sim_param').find('n_ensem').text)
 
 
-"""
-create folder structure and read structure info
-"""
+#################################################
+# create folder structure and read structure info
+#################################################
 
 # folder structure
 ## mother folder for simulation
