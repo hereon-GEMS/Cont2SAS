@@ -249,10 +249,10 @@ for i, t in enumerate(t_arr):
             print(f'{sassena_exec} > {sass_out_file} 2>&1')
             os.system(f'{sassena_exec} > {sass_out_file} 2>&1')
         else:
-            print(f'mpiexec -np {mpi_procs} {sassena_exec}\
-                   --limits.computation.threads {num_threads} > {sass_out_file} 2>&1')
-            os.system(f'mpiexec -np {mpi_procs} {sassena_exec}\
-                       --limits.computation.threads {num_threads} > {sass_out_file} 2>&1')
+            print(f'mpiexec -np {mpi_procs} {sassena_exec}'
+                  f' --limits.computation.threads {num_threads} > {sass_out_file} 2>&1')
+            os.system(f'mpiexec -np {mpi_procs} {sassena_exec}'
+                      f' --limits.computation.threads {num_threads} > {sass_out_file}')
         os.chdir(parent_dir)
 
         # read and save Iq data from current ensem
