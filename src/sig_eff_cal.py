@@ -1,40 +1,34 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-This calculates effective cross-section
+This calculates effective cross-section from SAS pattern
 
 Created on Fri Jun 23 10:28:09 2023
 
-@author: amajumda
+@author: Arnab Majumdar
 """
 import sys
 import os
-lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(lib_dir)
-
-from lib import struct_gen as sg
-
-
-
-import os
 import time
-import sys
 import xml.etree.ElementTree as ET
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import patches
 import h5py
-import matplotlib.patches as patches
 
+# find current dir and and ..
+lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# add .. in path
+sys.path.append(lib_dir)
+# lib imports
+from lib import struct_gen as sg # pylint: disable=import-error, wrong-import-position
 
 #timer counter initial
 tic = time.perf_counter()
 
-"""
-read input from xml file
-"""
+##########################
+# read input from xml file
+##########################
 
 ### struct xml ###
-
 xml_folder='./xml/'
 
 struct_xml=os.path.join(xml_folder, 'struct.xml')
@@ -43,7 +37,7 @@ tree=ET.parse(struct_xml)
 root = tree.getroot()
 
 # box side lengths
-length_a=float(root.find('lengths').find('x').text) 
+length_a=float(root.find('lengths').find('x').text)
 length_b=float(root.find('lengths').find('y').text)
 length_c=float(root.find('lengths').find('z').text)
 # number of cells in each direction
@@ -129,7 +123,7 @@ create folder structure, read structure and sld info
 """
 
 # folder structure
-## mother folder for simulation 
+## mother folder for simulation
 ### save length values as strings
 ### decimal points are replaced with p
 length_a_str=str(length_a).replace('.','p')
@@ -183,7 +177,7 @@ else:
 
 ## read detector geometry
 detector_file_name='detector.h5'
-detector_dir='./detector_geometry/{0}_{1}'.format(instrument, facility)
+detector_dir=f'./detector_geometry/{instrument}_{facility}'
 detector_file=os.path.join(detector_dir, detector_file_name)
 detector_file_data=h5py.File(detector_file,'r')
 nx_det=detector_file_data['num_pixel_x'][()]
@@ -204,13 +198,12 @@ Q_range=[min(pixel_Q), max(pixel_Q)]
 
 # initialize sigma_eff
 sig_eff=np.zeros(len(t_arr))
-for i in range(len(t_arr)):
-    t=t_arr[i]
+for i, t in enumerate(t_arr):
     # time_dir name
-    t_dir_name='t{0:0>3}'.format(i)
+    t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
     # read I and Q
-    Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings)
+    Iq_data_file_name=f'Iq_{scatt_settings}.h5'
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
     Iq_data=h5py.File(Iq_data_file,'r')
     Iq=Iq_data['Iq'][:]
@@ -231,8 +224,7 @@ for i in range(len(t_arr)):
     q_cat=np.zeros_like(pixel_Q)
     w_cat=np.zeros_like(pixel_Q)
     wq=np.zeros_like(q_cut)
-    for q_cat_idx in range(len(q_cut)):
-        q_cat_val=q_cut[q_cat_idx]
+    for q_cat_idx, q_cat_val in enumerate(q_cut):
         if q_cat_idx == 0:
             cat_low_bound=Q_range[0]
         else:
@@ -244,7 +236,7 @@ for i in range(len(t_arr)):
         q_cat[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)]=q_cat_val
         wq[q_cat_idx]=len(pixel_Q[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)])
         w_cat[(pixel_Q >= cat_low_bound) & (pixel_Q <= cat_upper_bound)]=wq[q_cat_idx]
-        
+
     # plotitng I vs Q in time folder
     plt.scatter(pixel_coord_det[:,0], pixel_coord_det[:,1], c=w_cat, cmap='viridis_r', s=1)
     plt.axis('equal')
@@ -254,20 +246,20 @@ for i in range(len(t_arr)):
     beam_stop = patches.Rectangle(((nx_det*dx_det-bs_wx_det)/2, (nx_det*dy_det-bs_wy_det)/2),
                                    0.085, 0.085, color='orange', fill=True)
     plt.gca().add_patch(beam_stop)
-    outercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
-                                     np.sqrt((nx_det*dx_det/2)**2+(ny_det*dy_det/2)**2), 
-                                     color='r', fill=False)
-    outercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
-                                     (nx_det*dx_det/2), 
-                                     color='r', fill=False)
+    outercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                      np.sqrt((nx_det*dx_det/2)**2+(ny_det*dy_det/2)**2),
+                                        color='r', fill=False)
+    outercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                     (nx_det*dx_det/2),
+                                       color='r', fill=False)
     plt.gca().add_patch(outercircle_out)
     plt.gca().add_patch(outercircle_in)
-    innercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
-                                     np.sqrt((bs_wx_det/2)**2+(bs_wy_det/2)**2), 
-                                     color='k', fill=False)
-    innercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2), 
-                                     (bs_wx_det/2), 
-                                     color='k', fill=False)
+    innercircle_out = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                      np.sqrt((bs_wx_det/2)**2+(bs_wy_det/2)**2),
+                                        color='k', fill=False)
+    innercircle_in = patches.Circle(((nx_det*dx_det)/2, (nx_det*dy_det)/2),
+                                     (bs_wx_det/2),
+                                       color='k', fill=False)
     plt.gca().add_patch(innercircle_out)
     plt.gca().add_patch(innercircle_in)
     fig_org=[(nx_det*dx_det)/2, (nx_det*dy_det)/2]
@@ -278,17 +270,20 @@ for i in range(len(t_arr)):
     wq_plot_file_name='weightvsq.jpg'
     wq_plot_file = os.path.join(t_dir, wq_plot_file_name)
     plt.savefig(wq_plot_file, format='jpg')
-    plt.show()
+    # uncomment if you want to see detector pixels
+    # coloered as per weights
+    # plt.show()
 
     # combine intensity and weights
     Iq_total=Iq_cut*wq
 
     # calculate sigma eff
-    
     for j in range(len(q_cut)-1):
         del_q=q_cut[j+1]-q_cut[j]
         sig_eff[i]+=0.5*del_q*(Iq_total[j+1]+Iq_total[j])
-sig_eff_data_file_name='sig_eff_{0}.h5'.format(scatt_settings)
+
+# save calculated effective cross-section
+sig_eff_data_file_name=f'sig_eff_{scatt_settings}.h5'
 sig_eff_data_file=os.path.join(model_param_dir,sig_eff_data_file_name)
 sig_eff_data=h5py.File(sig_eff_data_file,'w')
 sig_eff_data['sig_eff']=sig_eff
@@ -296,7 +291,8 @@ sig_eff_data['t']=t_arr
 sig_eff_data.close()
 
 plt.plot(t_arr, sig_eff)
-sig_eff_plot_file_name='sig_eff_{0}.jpg'.format(scatt_settings)
+sig_eff_plot_file_name=f'sig_eff_{scatt_settings}.jpg'
 sig_eff_plot_file = os.path.join(model_param_dir, sig_eff_plot_file_name)
 plt.savefig(sig_eff_plot_file, format='jpg')
-plt.show()
+# uncomment if you want to see sig_eff vs t
+# plt.show()
