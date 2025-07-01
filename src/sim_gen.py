@@ -136,7 +136,6 @@ images_1=[] # cut at z = 1/4 * z_max
 images_2=[] # cut at z = 2/4 * z_max (2/4 = 1/2)
 images_3=[] # cut at z = 3/4 * z_max
 for i, t in enumerate(t_arr):
-    # t=t_arr[i]
     # create time_dir
     t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
