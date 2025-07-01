@@ -9,20 +9,19 @@ Created on Fri Jun 23 10:28:09 2023
 """
 import sys
 import os
+import time
+import xml.etree.ElementTree as ET
+import numpy as np
+import matplotlib.pyplot as plt
+import h5py
+import imageio.v2 as imageio
 lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
 from lib import struct_gen as sg
 from lib import simulation as sim
 
-import os
-import time
-import sys
-import xml.etree.ElementTree as ET
-import numpy as np
-import matplotlib.pyplot as plt
-import h5py
-import imageio.v2 as imageio
+
 
 
 #timer counter initial
@@ -42,7 +41,7 @@ tree=ET.parse(struct_xml)
 root = tree.getroot()
 
 # box side lengths
-length_a=float(root.find('lengths').find('x').text) 
+length_a=float(root.find('lengths').find('x').text)
 length_b=float(root.find('lengths').find('y').text)
 length_c=float(root.find('lengths').find('z').text)
 # number of cells in each direction
@@ -82,7 +81,7 @@ create folder structure and read structure info
 """
 
 # folder structure
-## mother folder for simulation 
+## mother folder for simulation
 ### save length values as strings
 ### decimal points are replaced with p
 length_a_str=str(length_a).replace('.','p')
@@ -160,13 +159,15 @@ for i in range(len(t_arr)):
         ## z = 1/4 * z_max
         nodes_3d=nodes.reshape(num_node_x, num_node_y, num_node_z, 3)
         z_val=nodes_3d[0, 0, num_node_z//4, 2]
-        ### .T is required to exchange x and y axis 
-        ### origin is 'lower' to put it in lower left corner 
-        plt.imshow(sld_3d[:,:,num_node_z//4].T, extent=[0, length_a, 0, length_b], origin='lower', vmin=sld_min, vmax=sld_max)
-        plot_file_1=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
+        ### .T is required to exchange x and y axis
+        ### origin is 'lower' to put it in lower left corner
+        plt.imshow(sld_3d[:,:,num_node_z//4].T, 
+                   extent=[0, length_a, 0, length_b], 
+                   origin='lower', 
+                   vmin=sld_min, vmax=sld_max)
+        plot_file_1=os.path.join(ensem_dir,f'snap_z_{z_val}.jpg')
         plt.colorbar()
-        plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \
-            \n z = {2}$\AA$'.format(t,idx_ensem+1,z_val))
+        plt.title(' time = {0:0>3}s \n emsemble step = {1:0>3} \n z = {2}{3}'.format(t,idx_ensem+1,z_val, r'$\AA$'))
         plt.savefig(plot_file_1, format='jpg', bbox_inches='tight')
         ### add images of ensemble 1 for video
         if idx_ensem==0:  
@@ -178,10 +179,10 @@ for i in range(len(t_arr)):
         ## z = 2/4 * z_max
         nodes_3d=nodes.reshape(num_node_x, num_node_y, num_node_z, 3)
         z_val=nodes_3d[0, 0, (num_node_z)//2, 2]
-        ### .T is required to exchange x and y axis 
-        ### origin is 'lower' to put it in lower left corner 
+        ### .T is required to exchange x and y axis
+        ### origin is 'lower' to put it in lower left corner
         plt.imshow(sld_3d[:,:,(num_node_z)//2].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
-        plot_file_2=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
+        plot_file_2=os.path.join(ensem_dir,f'snap_z_{z_val}.jpg')
         plt.colorbar()
         plt.title('time = {0:0>3}s, ensmbl num = {1}, z = {2}{3}'.format(t,idx_ensem+1,z_val,r'$\mathrm{\AA}$'))
         #plt.title(r"time = {0:0>3}s, {1}".format(t,r'$\mathrm{\AA}$'))
@@ -198,7 +199,7 @@ for i in range(len(t_arr)):
         ### .T is required to exchange x and y axis 
         ### origin is 'lower' to put it in lower left corner 
         plt.imshow(sld_3d[:,:,3*(num_node_z)//4].T, extent=[0, length_a, 0, length_b], origin='lower',vmin=sld_min, vmax=sld_max)
-        plot_file_3=os.path.join(ensem_dir,'snap_z_{}.jpg'.format(z_val))
+        plot_file_3=os.path.join(ensem_dir,'snap_z_{z_val}.jpg')
         plt.colorbar()
         plt.title(" time = {0:0>3}s, emsemble step = {1:0>3} \
             \n z = {2}$\AA$".format(t,idx_ensem+1,z_val))
