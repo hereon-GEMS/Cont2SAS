@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 This assigns SLD to the 3D strcuture and saves it in the data folder
 
 Created on Fri Jun 23 10:28:09 2023
 
-@author: amajumda
+@author: Arnab Majumdar
 """
 import sys
 import os

@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-This creates a 3D strcuture and saves it in the data folder
+This script creates mesh
+and 
+saves it in the data folder
 
 Created on Fri Jun 23 10:28:09 2023
 
-@author: amajumda
+@author: Arnab Majumdar
 """
 import sys
 import os
