@@ -76,8 +76,8 @@ for t_idx, sim_time in enumerate(sim_times):
     num_cat=501 # use 3 for the categorization picture
     method_cat='extend'
     sassena_exe= './Sassena/Sassena.AppImage'
-    mpi_procs=4
-    num_threads=2
+    mpi_procs=1
+    num_threads=1
     sig_file='signal.h5'
     scan_vec=np.array([1, 0, 0])
     Q_range=np.array([2*np.pi/length_a, 1])

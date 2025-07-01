@@ -55,9 +55,9 @@ qclean_sld=sld_out
 ### scatt cal ###
 num_cat=101 # also check with 3
 method_cat='extend'
-sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
-mpi_procs=4
-num_threads=2
+sassena_exe= './Sassena/Sassena.AppImage'
+mpi_procs=1
+num_threads=1
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 # these values are taken from publication
