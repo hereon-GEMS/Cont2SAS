@@ -115,7 +115,7 @@ if struct_gen_run==1:
     print(info_str + 'Executing struct_gen.py')
     script_path = os.path.join(script_dir, 'struct_gen.py')  # Full path of the script
     #working_dir = "."  # Directory to run the script in
-    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
+    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
 else:
     print(info_str + 'structure generation not attempted')
 # time counter end - struct gen
@@ -143,7 +143,7 @@ if sim_run==1:
     print(info_str + 'Executing sim_gen.py')
     script_path = os.path.join(script_dir, 'sim_gen.py')  # Full path of the script
     #working_dir = "."  # Directory to run the script in
-    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
+    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
 else:
     print(info_str + 'simulation not attempted')
 # time counter end - simulation gen
@@ -169,7 +169,7 @@ if scatt_cal_run==1:
     print(info_str + 'Executing scatt_cal.py')
     script_path = os.path.join(script_dir, 'scatt_cal.py')  # Full path of the script
     #working_dir = "."  # Directory to run the script in
-    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
+    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
 else:
     print(info_str + 'Calculation of scattring function not attempted')
 # time counter end - SAS calculation
@@ -193,7 +193,7 @@ if sig_eff_cal_run==1:
     print(info_str + 'Executing sig_eff.py')
     script_path = os.path.join(script_dir, 'sig_eff_cal.py')  # Full path of the script
     #working_dir = "."  # Directory to run the script in
-    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
+    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
 else:
     print(info_str + 'Calculation of effective cross-section not attempted')
 # time counter end - sig_eff calculation
