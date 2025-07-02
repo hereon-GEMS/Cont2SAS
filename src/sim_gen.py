@@ -172,8 +172,9 @@ for i, t in enumerate(t_arr):
         ### add images of ensemble 1 for video
         if idx_ensem==0:
             images_1.append(imageio.imread(plot_file_1))
-            if sim_model=='bib_ecc':
-                plt.show()
+            # uncomment below two lines for showing simulated struct
+            # if sim_model=='bib_ecc':
+            #     plt.show()
         plt.close()
 
         ## z = 2/4 * z_max
@@ -193,7 +194,8 @@ for i, t in enumerate(t_arr):
         ### add images of ensemble 1 for video
         if idx_ensem==0:
             images_2.append(imageio.imread(plot_file_2))
-            plt.show()
+            # uncomment below line for showing simulated struct
+            # plt.show()
         plt.close()
 
         ## z = 3/4 * z_max
@@ -212,8 +214,9 @@ for i, t in enumerate(t_arr):
         ### add images of ensemble 1 for video
         if idx_ensem==0:
             images_3.append(imageio.imread(plot_file_3))
-            if sim_model=='bib_ecc':
-                plt.show()
+            # uncomment below two lines for showing simulated struct
+            # if sim_model=='bib_ecc':
+            #     plt.show()
         plt.close()
 
         ###########
