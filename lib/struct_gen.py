@@ -1,21 +1,36 @@
+"""
+libraries for structure generation
+
+Created on Fri Jun 23 10:28:09 2023
+
+@author: Arnab Majumdar
+"""
 import numpy as np
 import matplotlib.pyplot as plt
-import h5py 
+import h5py
 
-# decide the element type
 def node_cell_gen_3d (a, b, c, nx, ny, nz, el_info):
+    # pylint: disable=too-many-arguments
+    """
+    function desc: 
+    decide the element type
+    """
     el_type = el_info['type']
     if el_type == 'lagrangian':
         el_order=el_info['order']
-        return lagrangian(a, b, c, nx, ny, nz, el_order)
+    return lagrangian(a, b, c, nx, ny, nz, el_order)
 
-
-# generates nodes, connectivity and cells (used in the node_cell version)
-def lagrangian (a, b, c, nx, ny, nz, el_order): 
+def lagrangian (a, b, c, nx, ny, nz, el_order):
+    # pylint: disable=too-many-arguments, too-many-locals, too-many-branches, too-many-statements
+    """
+    function desc: 
+    generates nodes, connectivity and cells
+    (used in the node_cell version)
+    """
     if el_order==1:
         #a = length_a, b = length_b c = length_c
         #nx = no. of divisions in x direction (same for ny and nz)
-        
+
         # cell dimension
         dx=a/(nx)
         dy=b/(ny)
@@ -24,7 +39,7 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
         # total number of nodes and cells
         num_nodes=(nx+1)*(ny+1)*(nz+1)
         num_cells=nx*ny*nz
-        
+
         # create node matrix
         nodes=np.zeros((num_nodes,3))
         idx=0
@@ -33,12 +48,12 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
                 for k in range(nz+1):
                     nodes[idx,:]=np.array([i*dx, j*dy, k*dz])
                     idx+=1
-        
+
         # create connectivity matrix
-        el=np.array([0, 1, 
-                     (nz+1), (nz+1)+1, 
-                     (nz+1)*(ny+1),(nz+1)*(ny+1)+1, 
-                     (nz+1)*(ny+1)+(nz+1), (nz+1)*(ny+1)+(nz+1)+1])
+        el=np.array([0, 1,
+                      (nz+1), (nz+1)+1,
+                        (nz+1)*(ny+1),(nz+1)*(ny+1)+1,
+                          (nz+1)*(ny+1)+(nz+1), (nz+1)*(ny+1)+(nz+1)+1])
         con_3d=np.zeros((num_cells,len(el)), dtype=int)
         cur=0
         idx=0
@@ -50,10 +65,10 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
                     cur=cur+1
                 cur=cur+1
             cur=cur+1+nz
-        
+
         # corner nodes for plotting mesh
         mesh=con_3d[:,[0,1,3,2,4,5,7,6]]
-        
+        #
         # create cell matrix
         cells=np.zeros((num_cells,3))
         idx=0
@@ -65,7 +80,7 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
     elif el_order==2:
         #a = length_a, b = length_b c = length_c
         #nx = no. of divisions in x direction (same for ny and nz)
-        
+        #
         # cell dimension
         dx=a/(nx)
         dy=b/(ny)
@@ -74,7 +89,7 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
         # total number of nodes and cells
         num_nodes=(2*nx+1)*(2*ny+1)*(2*nz+1)
         num_cells=nx*ny*nz
-        
+        #
         # create node matrix
         nodes=np.zeros((num_nodes,3))
         idx=0
@@ -83,17 +98,17 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
                 for k in range(2*nz+1):
                     nodes[idx,:]=np.array([i*dx/2, j*dy/2, k*dz/2])
                     idx+=1
-        
+        #
         # create connectivity matrix
         el=np.array([0, 1, 2,
                     (2*nz+1), (2*nz+1)+1, (2*nz+1)+2,
                     2*(2*nz+1), 2*(2*nz+1)+1, 2*(2*nz+1)+2,
                     (2*nz+1)*(2*ny+1), (2*nz+1)*(2*ny+1)+1, (2*nz+1)*(2*ny+1)+2,
-                    (2*nz+1)*(2*ny+1)+(2*nz+1), (2*nz+1)*(2*ny+1)+(2*nz+1)+1, (2*nz+1)*(2*ny+1)+(2*nz+1)+2,
-                    (2*nz+1)*(2*ny+1)+2*(2*nz+1), (2*nz+1)*(2*ny+1)+2*(2*nz+1)+1, (2*nz+1)*(2*ny+1)+2*(2*nz+1)+2,
-                    2*(2*nz+1)*(2*ny+1), 2*(2*nz+1)*(2*ny+1)+1, 2*(2*nz+1)*(2*ny+1)+2,
-                    2*(2*nz+1)*(2*ny+1)+(2*nz+1), 2*(2*nz+1)*(2*ny+1)+(2*nz+1)+1, 2*(2*nz+1)*(2*ny+1)+(2*nz+1)+2,
-                    2*(2*nz+1)*(2*ny+1)+2*(2*nz+1), 2*(2*nz+1)*(2*ny+1)+2*(2*nz+1)+1, 2*(2*nz+1)*(2*ny+1)+2*(2*nz+1)+2])
+                    (2*nz+1)*(2*ny+1)+(2*nz+1), (2*nz+1)*(2*ny+1)+(2*nz+1)+1, (2*nz+1)*(2*ny+1)+(2*nz+1)+2,# pylint: disable=line-too-long
+                    (2*nz+1)*(2*ny+1)+2*(2*nz+1), (2*nz+1)*(2*ny+1)+2*(2*nz+1)+1, (2*nz+1)*(2*ny+1)+2*(2*nz+1)+2,# pylint: disable=line-too-long
+                    2*(2*nz+1)*(2*ny+1), 2*(2*nz+1)*(2*ny+1)+1, 2*(2*nz+1)*(2*ny+1)+2,# pylint: disable=line-too-long
+                    2*(2*nz+1)*(2*ny+1)+(2*nz+1), 2*(2*nz+1)*(2*ny+1)+(2*nz+1)+1, 2*(2*nz+1)*(2*ny+1)+(2*nz+1)+2,# pylint: disable=line-too-long
+                    2*(2*nz+1)*(2*ny+1)+2*(2*nz+1), 2*(2*nz+1)*(2*ny+1)+2*(2*nz+1)+1, 2*(2*nz+1)*(2*ny+1)+2*(2*nz+1)+2])# pylint: disable=line-too-long
         con_3d=np.zeros((num_cells,len(el)), dtype=int)
         cur=0
         idx=0
@@ -105,10 +120,10 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
                     cur=cur+2
                 cur=cur+(2*nz+1) +1
             cur=cur+(2*nz+1) + (2*nz+1)*(2*ny+1)
-        
+        #
         # corner nodes for plotting mesh
         mesh=con_3d[:,[0,2,8,6,18,20,26,24]]
-        
+        #
         # create cell matrix
         cells=np.zeros((num_cells,3))
         idx=0
@@ -120,10 +135,14 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
 
     return nodes, cells, con_3d, mesh
 
-# plot script of nodes or cells
 def plotter_3d(points_3d, save_plot=False, save_dir='.',
                filename='plot', figsize=(10,10)):
-    fig = plt.figure(figsize=figsize)
+    # pylint: disable=too-many-arguments
+    """
+    function desc: 
+    plot script of nodes or cells
+    """
+    fig = plt.figure(figsize=figsize) # pylint: disable=unused-variable
     ax = plt.axes(projection='3d')
     #ax = plt.axes()
     points_3d=np.array(points_3d)
@@ -132,15 +151,19 @@ def plotter_3d(points_3d, save_plot=False, save_dir='.',
         plt.savefig(save_dir+'/'+filename+'.png', format='png')
     plt.close()
 
-# plot mesh
-def mesh_plotter_3d(points_3d, con_3d, save_plot=False, 
-                    save_dir='.', filename='plot', figsize=(10,10)):
+def mesh_plotter_3d(points_3d, con_3d, save_plot=False,
+                     save_dir='.', filename='plot', figsize=(10,10)):
+    # pylint: disable=too-many-arguments
+    """
+    function desc: 
+    plot mesh
+    """
     points_3d=np.array(points_3d)
-    fig=plt.figure(figsize=figsize)
+    fig=plt.figure(figsize=figsize) # pylint: disable=unused-variable
     ax=plt.axes(projection='3d')
     for connec in con_3d:
         point=points_3d[connec]
-        draw1=np.array([0,1,2,3,0])    
+        draw1=np.array([0,1,2,3,0])
         ax.plot(point[draw1,0], point[draw1,1],point[draw1,2],'k')
         draw2=draw1+4
         ax.plot(point[draw2,0], point[draw2,1],point[draw2,2],'k')
@@ -151,18 +174,23 @@ def mesh_plotter_3d(points_3d, con_3d, save_plot=False,
     if save_plot:
         plt.savefig(save_dir+'/'+ filename+'.png', format='png')
 
-# write node, cell, connectivity , mesh 
 def mesh_write(file_name, nodes, cells, con, mesh):
-    #file_full=os.path.join(Folder,filename)
-    #os.makedirs(Folder, exist_ok=True)
+    """
+    function desc: 
+    write node, cell, connectivity , mesh
+    """
     file=h5py.File(file_name,'w')
     file['nodes']=nodes
     file['cells']=cells
     file['connectivity']=con
     file['mesh']=mesh
     file.close()
-# read node, cell, connectivity , mesh    
+
 def mesh_read(file_name):
+    """
+    function desc: 
+    read node, cell, connectivity , mesh
+    """
     file=h5py.File(file_name,'r')
     nodes=file['nodes'][:]
     cells=file['cells'][:]
@@ -171,10 +199,13 @@ def mesh_read(file_name):
     file.close()
     return nodes, cells, con, mesh
 
-# function for converting string to boolean
 def str_to_bool(value):
+    """
+    function desc: 
+    convert string to boolean
+    """
     if value.lower() in ['true', '1', 'yes']:
         return True
-    elif value.lower() in ['false', '0', 'no']:
+    if value.lower() in ['false', '0', 'no']:
         return False
     return None

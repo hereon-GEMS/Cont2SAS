@@ -1,38 +1,35 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-This creates a 3D strcuture and saves it in the data folder
+This calculates SAS pattern from SLD distributions
+and
+saves it in the data folder
 
 Created on Fri Jun 23 10:28:09 2023
 
-@author: amajumda
+@author: Arnab Majumdar
 """
 import sys
 import os
-lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(lib_dir)
-
-from lib import struct_gen as sg
-from lib import simulation as sim
-from lib import scatt_cal as scatt
-
-
-
-import os
 import time
-import sys
 import xml.etree.ElementTree as ET
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
 
 
+# find current dir and and ..
+lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# add .. in path
+sys.path.append(lib_dir)
+# lib imports
+from lib import struct_gen as sg # pylint: disable=import-error, wrong-import-position
+from lib import scatt_cal as scatt # pylint: disable=import-error, wrong-import-position
+
 #timer counter initial
 tic = time.perf_counter()
 
-"""
-read input from xml file
-"""
+##########################
+# read input from xml file
+##########################
 
 ### struct xml ###
 
@@ -44,7 +41,7 @@ tree=ET.parse(struct_xml)
 root = tree.getroot()
 
 # box side lengths
-length_a=float(root.find('lengths').find('x').text) 
+length_a=float(root.find('lengths').find('x').text)
 length_b=float(root.find('lengths').find('y').text)
 length_c=float(root.find('lengths').find('z').text)
 # number of cells in each direction
@@ -111,12 +108,12 @@ scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
     + str(start_length) + '_' + str(end_length) + '_' + 'orien_' + '_' + str(resolution_num)
 scatt_settings=scatt_settings.replace('.', 'p')
 
-"""
-create folder structure, read structure and sld info
-"""
+######################################################
+# create folder structure, read structure and sld info
+######################################################
 
 # folder structure
-## mother folder for simulation 
+## mother folder for simulation
 ### save length values as strings
 ### decimal points are replaced with p
 length_a_str=str(length_a).replace('.','p')
@@ -163,24 +160,21 @@ if os.path.exists(model_param_dir):
 else:
     print('create simulation first')
 
-for i in range(len(t_arr)):
-    t=t_arr[i]
+for i, t in enumerate(t_arr):
     # time_dir name
-    t_dir_name='t{0:0>3}'.format(i)
+    t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
     Iq_all_ensem=np.zeros((num_points,n_ensem))
     q_all_ensem=np.zeros((num_points,n_ensem))
     for j in range(n_ensem):
         idx_ensem=j
-        print('time step: {0}, emsemble: {1}'.format(t,idx_ensem))
+        print(f'time step: {t}, emsemble: {idx_ensem}')
         # create ensemble dir
-        ensem_dir_name='ensem{0:0>3}'.format(idx_ensem)
+        ensem_dir_name=f'ensem{idx_ensem:0>3}'
         ensem_dir=os.path.join(t_dir, ensem_dir_name)
-        
-        """
-        discretization
-        """
-
+        ################
+        # discretization
+        ################
         print('Discretizing to pseudo atoms')
         # read node sld
         sim_data_file_name='sim.h5'
@@ -219,12 +213,11 @@ for i in range(len(t_arr)):
         scatt_cal_data['pseudo_b_cat_idx']=pseudo_b_cat_idx
         scatt_cal_data.close()
 
-        """
-        calculate I vs Q
-        """
-        
-        print('preparing for sassena run')
+        ##################
+        # calculate I vs Q
+        ##################
 
+        print('preparing for sassena run')
         ### pdb dcd generation ###
         pdb_dcd_dir=os.path.join(scatt_dir,'pdb_dcd')
         os.makedirs(pdb_dcd_dir, exist_ok=True)
@@ -235,7 +228,7 @@ for i in range(len(t_arr)):
         db_dir=os.path.join(scatt_dir,db_dir_name)
         os.makedirs(db_dir, exist_ok=True)
         scatt.db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx)
-        
+
         ### scatter.xml generate ###
         # detailed version
         scatter_xml_file_name='scatter.xml'
@@ -252,8 +245,14 @@ for i in range(len(t_arr)):
         sass_out_file='sass.log'
         if os.path.exists(signal_file):
             os.remove(signal_file)
-        print('mpirun -np {3} {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file, mpi_procs))
-        os.system('mpirun -np {3} {0} --limits.computation.threads {1} > {2} 2>&1'.format(sassena_exec, num_threads, sass_out_file, mpi_procs))
+        if mpi_procs ==1:
+            print(f'{sassena_exec} > {sass_out_file} 2>&1')
+            os.system(f'{sassena_exec} > {sass_out_file} 2>&1')
+        else:
+            print(f'mpiexec -np {mpi_procs} {sassena_exec}'
+                  f' --limits.computation.threads {num_threads} > {sass_out_file} 2>&1')
+            os.system(f'mpiexec -np {mpi_procs} {sassena_exec}'
+                      f' --limits.computation.threads {num_threads} > {sass_out_file}')
         os.chdir(parent_dir)
 
         # read and save Iq data from current ensem
@@ -281,12 +280,12 @@ for i in range(len(t_arr)):
     plt.loglog(q,Iq)
     plt.xlabel('Q')
     plt.ylabel('I(Q)')
-    Iq_plot_file_name='Iq_{0}.jpg'.format(scatt_settings) 
+    Iq_plot_file_name=f'Iq_{scatt_settings}.jpg'
     Iq_plot_file=os.path.join(t_dir, Iq_plot_file_name)
     plt.savefig(Iq_plot_file, format='jpg')
     # plt.show()
     # saving I vs Q in time folder
-    Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings) 
+    Iq_data_file_name=f'Iq_{scatt_settings}.h5'
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
     Iq_data=h5py.File(Iq_data_file,'w')
     Iq_data['Iq']=Iq

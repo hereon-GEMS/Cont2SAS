@@ -11,9 +11,9 @@ import subprocess
 import numpy as np
 import os
 import time
+import warnings
 
 # ignore warnings
-import warnings
 warnings.filterwarnings("ignore")
 
 """
@@ -25,13 +25,13 @@ working_dir = "."  # Directory to run the script in
 
 
 ### struct gen ###
-xml_dir='./xml' 
+xml_dir='./xml'
 length_a=40.
 length_b=40. 
 length_c=40.
-nx=40 
-ny=40 
-nz=40 
+nx=40
+ny=40
+nz=40
 el_type='lagrangian'
 el_order=1
 update_val=True
