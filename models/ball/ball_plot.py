@@ -7,48 +7,58 @@ Date: 24.06.2025
 """
 import sys
 import os
-lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(lib_dir)
-
-import os
-import sys
+import warnings
 import numpy as np
 import matplotlib.pyplot as plt
-import h5py
 from matplotlib.patches import Rectangle
+import h5py
+
+
+# find current dir and and ..
+lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+# add .. in path
+sys.path.append(lib_dir)
+# lib imports (if any)
 
 # ignore warnings
-import warnings
 warnings.filterwarnings("ignore")
 
 # analytical SAS function
 def J1(x):
+    """
+    function desc:
+    spherical bessel function
+    """
     if x==0:
-        return 0
+        y = 0
     else:
-        return (np.sin(x)-x*np.cos(x))/x**2
+        y = (np.sin(x)-x*np.cos(x))/x**2
+    return y
 
 def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
+    # pylint: disable=too-many-arguments
+    """
+    function desc:
+    analytical SAS pattern of sphere
+    """
     vol=(4/3)*np.pi*rad**3
     # SLD unit 10^-5 \AA^-2
     del_rho=sld-sld_sol
     q_arr=np.linspace(qmin,qmax,Npts)
     FormFactor=np.zeros(len(q_arr))
-    for i in range(len(q_arr)):
-        q=q_arr[i]
-        if q==0:
+    for q_idx, q_cur in enumerate(q_arr):
+        if q_cur==0:
             # Form factor unit 10^-5 \AA
-            FormFactor[i]=1
+            FormFactor[q_idx]=vol*del_rho
         else:
             # Form factor unit 10^-5 \AA
-            FormFactor[i]=3*vol*del_rho*J1(q*rad)/(q*rad)
-    # Intensity unit 10^-10 \AA^2
-    Iq_arr = ((scale)*np.abs(FormFactor)**2+bg)
+            FormFactor[q_idx]=3*vol*del_rho*J1(q_cur*rad)/(q_cur*rad)
+    Iq_arr = (scale)*np.abs(FormFactor)**2+bg
     return Iq_arr, q_arr
 
-"""
-read input from xml file
-"""
+##########################
+# read input from xml file
+##########################
 
 ### file locations ###
 # xml location
@@ -57,14 +67,14 @@ xml_folder='./xml/'
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
-"""
-Input data
-"""
+############
+# Input data
+############
 ### struct gen ###
 # box side lengths (float values)
-length_a= 40.  
-length_b=40. 
-length_c=40. 
+length_a= 40.
+length_b=40.
+length_c=40.
 # number of cells in each direction (int values)
 nx= 40
 ny= 40
@@ -79,7 +89,7 @@ mid_point=np.array([length_a/2, length_b/2, length_c/2])
 # model name
 sim_model= 'ball'
 # simulation parameters
-dt= 1. 
+dt= 1.
 t_end= 0.
 n_ensem=1
 # calculate time array
@@ -91,10 +101,10 @@ ball_rad=10
 ball_sld=2
 qclean_sld=0
 # dir name for model param
-model_param_dir_name = ('rad' + '_' + str(ball_rad) + 
-                        '_' + 'sld' + '_' + str(ball_sld)
-                        + '_' + 'qclean_sld' + '_' + str(qclean_sld)
-                        ).replace('.', 'p')
+model_param_dir_name = ('rad' + '_' + str(ball_rad) +
+                         '_' + 'sld' + '_' + str(ball_sld)
+                           + '_' + 'qclean_sld' + '_' + str(qclean_sld)
+                           ).replace('.', 'p')
 
 ### scatt cal ###
 # decreitization params
@@ -113,9 +123,9 @@ scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
 scatt_settings=scatt_settings.replace('.', 'p')
 
 
-"""
-read folder structure
-"""
+#######################
+# read folder structure
+#######################
 
 # folder structure
 ## mother folder name
@@ -142,7 +152,7 @@ mother_dir = os.path.join(data_dir, mother_dir_name)
 # read structure info
 data_file=os.path.join(mother_dir, 'structure/struct.h5')
 
-# folder name for simulation 
+# folder name for simulation
 sim_dir=os.path.join(mother_dir, 'simulation')
 
 # folder name for model
@@ -160,15 +170,14 @@ os.makedirs(figure_dir, exist_ok=True)
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
 
-for i in range(len(t_arr)):
-    t=t_arr[i]
+for i,t in enumerate(t_arr):
     # time_dir name
-    t_dir_name='t{0:0>3}'.format(i)
+    t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
     for j in range(n_ensem):
         idx_ensem=j
         # create ensemble dir
-        ensem_dir_name='ensem{0:0>3}'.format(idx_ensem)
+        ensem_dir_name=f'ensem{idx_ensem:0>3}'
         ensem_dir=os.path.join(t_dir, ensem_dir_name)
 
         # create scatt dir
@@ -176,9 +185,9 @@ for i in range(len(t_arr)):
         scatt_dir=os.path.join(ensem_dir, scatt_dir_name)
 
 
-        """
-        read pseudo atom info from scatt_cal.h5
-        """
+        #########################################
+        # read pseudo atom info from scatt_cal.h5
+        #########################################
         # read node sld
         # save pseudo atom info
         scatt_cal_dir_name='scatt_cal_' + scatt_settings
@@ -187,10 +196,15 @@ for i in range(len(t_arr)):
         scatt_cal_data_file=os.path.join(scatt_cal_dir, scatt_cal_data_file_name)
         scatt_cal_data=h5py.File(scatt_cal_data_file,'r')
         node_pos=scatt_cal_data['node_pos'][:]
+        node_pos=np.array(node_pos)
         node_sld=scatt_cal_data['node_sld'][:]
+        node_sld=np.array(node_sld)
         pseudo_pos=scatt_cal_data['pseudo_pos'][:]
+        pseudo_pos=np.array(pseudo_pos)
         pseudo_b=scatt_cal_data['pseudo_b'][:]
+        pseudo_b=np.array(pseudo_b)
         pseudo_b_cat_val=scatt_cal_data['pseudo_b_cat_val'][:]
+        pseudo_b_cat_val=np.array(pseudo_b_cat_val)
         pseudo_b_cat_idx=scatt_cal_data['pseudo_b_cat_idx'][:]
         scatt_cal_data.close()
 
@@ -205,7 +219,7 @@ for i in range(len(t_arr)):
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
-            node_pos_3d=node_pos.reshape(num_node_x, num_node_y, num_node_z, 3)
+            node_pos_3d=node_pos.reshape((num_node_x, num_node_y, num_node_z, 3))
             z_idx= np.floor(cut_frac*(num_node_z)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
@@ -213,12 +227,13 @@ for i in range(len(t_arr)):
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## image plot
-            ### .T is required to exchange x and y axis 
-            ### origin is 'lower' to put it in lower left corner 
-            node_sld_3d=node_sld.reshape(num_node_x, num_node_y, num_node_z)
-            img = ax.imshow(node_sld_3d[:,:,z_idx].T, 
-                            extent=[0, length_a, 0, length_b], 
-                            origin='lower', vmin=sld_min, vmax=sld_max, interpolation='bilinear')
+            ### .T is required to exchange x and y axis
+            ### origin is 'lower' to put it in lower left corner
+            node_sld_3d=node_sld.reshape((num_node_x, num_node_y, num_node_z))
+            img = ax.imshow(node_sld_3d[:,:,z_idx].T,
+                             extent=[0, length_a, 0, length_b],
+                               origin='lower', vmin=sld_min, vmax=sld_max,
+                                 interpolation='bilinear')
             ## color bar
             cbar = plt.colorbar(img, ax=ax)  # Add colorbar to subplot 1
             cbar_label=r"Scattering length density (SLD) [$10^{-5} \cdot \mathrm{\AA}^{-2}$]"
@@ -236,8 +251,8 @@ for i in range(len(t_arr)):
                 for idx2 in range(ny):
                     rect_center_x=idx1*cell_x
                     rect_center_y=idx2*cell_y
-                    ax.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
-                                           edgecolor='k', facecolor='none', linewidth=0.5))
+                    ax.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y,
+                                            edgecolor='k', facecolor='none', linewidth=0.5))
             plt.savefig(plot_file, format='pdf')
             plt.close(fig)
 
@@ -246,8 +261,8 @@ for i in range(len(t_arr)):
             # cell_z= length_c/nz
             # z_val_pseudo=z_val+cell_z
             cut_frac=0.5
-            pseudo_pos_3d=pseudo_pos.reshape(nx, ny, nz, 3)
-            pseudo_b_3d=pseudo_b.reshape(nx, ny, nz)
+            pseudo_pos_3d=pseudo_pos.reshape((nx, ny, nz, 3))
+            pseudo_b_3d=pseudo_b.reshape((nx, ny, nz))
             z_idx_pseudo= nz//2-1 #z_idx-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
@@ -280,8 +295,8 @@ for i in range(len(t_arr)):
                 for idx2 in range(ny):
                     rect_center_x=idx1*cell_x
                     rect_center_y=idx2*cell_y
-                    ax.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
-                                           edgecolor='k', facecolor='none', linewidth=0.5))
+                    ax.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y,
+                                            edgecolor='k', facecolor='none', linewidth=0.5))
             plt.savefig(plot_file, format='pdf')
             plt.close(fig)
 
@@ -291,7 +306,7 @@ for i in range(len(t_arr)):
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
-            pseudo_b_cat_val_3d=pseudo_b_cat_val.reshape(nx, ny, nz)
+            pseudo_b_cat_val_3d=pseudo_b_cat_val.reshape((nx, ny, nz))
             pseudo_b_cat_val_xy=pseudo_b_cat_val_3d[:,:,z_idx_pseudo]
             img = ax.scatter(pseudo_pos_x, pseudo_pos_y, c=pseudo_b_cat_val_xy, s=3, cmap='viridis')
             ## color bar
@@ -319,11 +334,11 @@ for i in range(len(t_arr)):
                 for idx2 in range(ny):
                     rect_center_x=idx1*cell_x
                     rect_center_y=idx2*cell_y
-                    ax.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
-                                           edgecolor='k', facecolor='none', linewidth=0.5))
+                    ax.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y,
+                                            edgecolor='k', facecolor='none', linewidth=0.5))
             plt.savefig(plot_file, format='pdf')
             plt.close(fig)
-    
+
     # ball geometry
     vol_ball=(4/3)*np.pi*ball_rad**3
 
@@ -332,7 +347,7 @@ for i in range(len(t_arr)):
 
     # numerical intensity
     ## read I vs Q signal file
-    Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings) 
+    Iq_data_file_name=f'Iq_{scatt_settings}.h5'
     Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
     Iq_data=h5py.File(Iq_data_file,'r')
     Iq=Iq_data['Iq'][:] # unit fm^2
@@ -340,7 +355,7 @@ for i in range(len(t_arr)):
     q=Iq_data['Q'][:]
     Iq_data.close()
 
-    # ananlytical intensity 
+    # ananlytical intensity
     ## Intensity unit 10^-10 \AA^2
     Iq_ana,q_ana=ball(qmax=np.max(q),qmin=np.min(q),Npts=100,
                 scale=1,bg=0,sld=ball_sld,sld_sol=0,rad=ball_rad)
@@ -351,11 +366,11 @@ for i in range(len(t_arr)):
     plot_file_name='Iq_ball.pdf'
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
-    
+
     # loglog plot
     ax.loglog(q_ana, Iq_ana, 'b', label='Analytical calculation')
     ax.loglog(q, Iq,'r', linestyle='', marker='o', markersize=3, label='Numerical calculation')
-    
+
     # plot formatting
     ## legend
     ax.legend()
