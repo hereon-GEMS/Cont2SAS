@@ -86,7 +86,7 @@ deactivate
 rm -rf Cont2Sas
 ```
 
-##### Option 4: Using pip
+##### Option 4: Using pip (not recommended)
 
 ###### Install
 
