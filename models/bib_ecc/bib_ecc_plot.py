@@ -1,5 +1,5 @@
 """
-This plots necessary figures for box model
+This plots necessary figures for ball off center if box model
 Plots are saved in figure folder
 
 Author: Arnab Majumdar
@@ -24,7 +24,19 @@ sys.path.append(lib_dir)
 warnings.filterwarnings("ignore")
 
 # analytical SAS function
+def J1(x):
+    """
+    function desc:
+    spherical bessel function
+    """
+    if x==0:
+        y= 0
+    else:
+        y = (np.sin(x)-x*np.cos(x))/x**2
+    return y
+
 def arrange_order(a,b,c):
+    # pylint: disable=too-many-arguments
     """
     function desc:
     sort values
@@ -52,32 +64,61 @@ def gauss_legendre_double_integrate(func, domain1, domain2, deg):
     a2 = (domain2[1] + domain2[0])/2
     return np.sum(s1*s2*w1*w2*func(s1*x + a1,s2*y + a2))
 
-def box (qmax,qmin,Npts,scale,bg,sld,sld_sol,len_x,len_y,len_z):
+def ball_in_box_ecc(qmax,qmin,Npts,scale,scale2,bg,sld_box, sld_ball,sld_sol,
+                    len_x,len_y,len_z,radius, origin_shift):
     # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
-    analytical SAS pattern of parallelepiped
+    analytical SAS pattern of sphere in parallelepiped
     """
-    len_x, len_y, len_z= arrange_order(len_x,len_y,len_z)
+    len_x,len_y,len_z=arrange_order(len_x,len_y,len_z)
     vol_box=len_x*len_y*len_z
+    vol_ball=(4/3)*np.pi*radius**3
     # SLD unit 10^-5 \AA^-2
-    del_rho_box=sld-sld_sol
+    del_rho_box=sld_box-sld_sol
+    del_rho_ball=sld_ball-sld_sol
     q_arr=np.linspace(qmin,qmax,Npts)
     Aq_arr=np.zeros(len(q_arr))
-    for q_idx, q_cur in enumerate(q_arr):
+    for q_idx, q_cur in enumerate(q_arr): # pylint: disable=unused-variable
         # pylint: disable=cell-var-from-loop, unnecessary-lambda-assignment
-        func=lambda alpha, psi:\
-            (del_rho_box*vol_box*(np.sinc((1/np.pi)*q_cur*len_x/2*np.sin(alpha)*np.sin(psi)))*\
-            (np.sinc((1/np.pi)*q_cur*len_y/2*np.sin(alpha)*np.cos(psi)))*\
-            (np.sinc((1/np.pi)*q_cur*len_z/2*np.cos(alpha))))**2*\
-            np.sin(alpha)
+        if q_cur==0:
+            func=lambda alpha, psi:\
+                np.abs(del_rho_box*vol_box
+                       *
+                       (np.sinc((1/np.pi)*q_cur*length_a/2*np.sin(alpha)*np.sin(psi)))
+                       *
+                       (np.sinc((1/np.pi)*q_cur*length_b/2*np.sin(alpha)*np.cos(psi)))
+                       *
+                       (np.sinc((1/np.pi)*q_cur*length_c/2*np.cos(alpha)))
+                       )**2*np.sin(alpha)
+        else:
+            func=lambda alpha, psi:\
+                np.abs(del_rho_box*vol_box
+                       *
+                       (np.sinc((1/np.pi)*q_cur*length_a/2*np.sin(alpha)*np.sin(psi)))
+                       *
+                       (np.sinc((1/np.pi)*q_cur*length_b/2*np.sin(alpha)*np.cos(psi)))
+                       *
+                       (np.sinc((1/np.pi)*q_cur*length_c/2*np.cos(alpha)))
+                       -
+                       scale2*3*vol_ball
+                       *
+                       (del_rho_box-del_rho_ball)
+                       *
+                       J1(q_cur*radius)/(q_cur*radius)*
+                       np.vectorize(complex)(
+                           np.cos(q_cur * np.sin(alpha) * np.sin(psi) * origin_shift[0]
+                                   + q_cur * np.sin(alpha) * np.cos(psi) * origin_shift[1]
+                                     + q_cur *  np.cos(psi) * origin_shift[2])
+                                     ,
+                                       np.sin(q_cur * np.sin(alpha) * np.sin(psi) * origin_shift[0]
+                                               + q_cur * np.sin(alpha) * np.cos(psi) * origin_shift[1]# pylint: disable=line-too-long
+                                                 + q_cur *  np.cos(psi) * origin_shift[2]))
+                                                 )**2*np.sin(alpha)
         psi_lim=np.pi
         alpha_lim=np.pi/2
         # Amplitude unit (\AA^3 * 10^-5 \AA^-2)^2 = 10^-10 \AA^2
-        Aq_arr[q_idx]=(1/psi_lim) * \
-            gauss_legendre_double_integrate(func,
-                                             [0, alpha_lim],
-                                               [0, psi_lim],76)
+        Aq_arr[i]=(1/psi_lim)*gauss_legendre_double_integrate(func,[0, alpha_lim],[0, psi_lim],76)
     Iq_arr = scale*Aq_arr + bg # Intensity unit 10^-10 \AA^2
     return Iq_arr, q_arr
 
@@ -107,10 +148,8 @@ el_order=1
 # calculate mid point of structure (simulation box)
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
-
 ### sim gen ###
-# model name
-sim_model='box'
+sim_model='bib_ecc'
 # simulation parameters
 dt=1.
 t_end=0.
@@ -120,14 +159,21 @@ t_arr=np.arange(0,t_end+dt, dt)
 
 ### model param ###
 # model params
-box_sld=2
+ball_rad=10
+sld_in=2
+sld_out=1
+ecc_vec=np.array([5, 5, 5])
 qclean_sld=0
 # dir name for model param
-model_param_dir_name = ('sld' + '_' + str(box_sld) +
-                         '_' + 'qclean_sld' + '_' + str(qclean_sld)
-                         ).replace('.', 'p')
+model_param_dir_name = ('rad' + '_' + str(ball_rad) + '_' +
+                        'sld_in' + '_' + str(sld_in) + '_' +
+                        'sld_out' + '_' + str(sld_out) + '_' +
+                        'x' + '_' + str(ecc_vec[0]) + '_' + 
+                        'y' + '_' + str(ecc_vec[1]) + '_' + 
+                        'z' + '_' + str(ecc_vec[2]) + '_' +
+                        'qclean_sld' + '_' + str(qclean_sld)).replace('.', 'p')
 
-### scatt cal ###
+### scatt_cal ###
 # decreitization params
 # number of categories and method of categorization
 num_cat=3
@@ -136,7 +182,7 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.]) # mention integers as float
 num_points=100
-num_orientation=10
+num_orientation=300
 # scatt settengs
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
     + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
@@ -189,7 +235,6 @@ os.makedirs(figure_dir, exist_ok=True)
 plot_dir=os.path.join(figure_dir, sim_model)
 os.makedirs(plot_dir, exist_ok=True)
 
-# for i in range(len(t_arr)):
 for i, t in enumerate(t_arr):
     # time_dir name
     t_dir_name=f't{i:0>3}'
@@ -242,11 +287,11 @@ for i, t in enumerate(t_arr):
             # plotting node SLD
             ## cutting at z = cut_frac * length_z
             cut_frac=0.5
-            node_pos_3d=node_pos.reshape((nx+1, ny+1, nz+1, 3))
+            node_pos_3d=node_pos.reshape((num_node_x, num_node_y, num_node_z, 3))
             z_idx= np.floor(cut_frac*(nz+1)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
-            plot_file_name='SLD_box.pdf'
+            plot_file_name='SLD_bib_ecc.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## image plot
@@ -286,10 +331,10 @@ for i, t in enumerate(t_arr):
             cut_frac=0.5
             pseudo_pos_3d=pseudo_pos.reshape((nx, ny, nz, 3))
             pseudo_b_3d=pseudo_b.reshape((nx, ny, nz))
-            z_idx_pseudo= nz//2-1 # z_idx-1
+            z_idx_pseudo= z_idx-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
-            plot_file_name='pseudo_box.pdf'
+            plot_file_name='pseudo_bib_ecc.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -325,7 +370,7 @@ for i, t in enumerate(t_arr):
 
             # plotting categorized pseudo atoms
             ## figure specification
-            plot_file_name='pseudo_cat_box.pdf'
+            plot_file_name='pseudo_cat_bib_ecc.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -363,7 +408,7 @@ for i, t in enumerate(t_arr):
             plt.close(fig)
 
     # volume for normalization
-    vol_norm=length_a*length_b*length_c # volume of box
+    vol_norm=length_a*length_b*length_c # vol box
 
     # numerical intensity
     ## read I vs Q signal file
@@ -377,20 +422,23 @@ for i, t in enumerate(t_arr):
 
     # ananlytical intensity
     ## Intensity unit 10^-10 \AA^2
-    Iq_ana,q_ana= box(qmax=np.max(q),qmin=np.min(q),Npts=100,
-                scale=1,bg=0,sld=box_sld,sld_sol=0,
-                len_x=length_a, len_y=length_b, len_z=length_c)
+    Iq_ana,q_ana= ball_in_box_ecc(qmax=np.max(q),qmin=np.min(q),Npts=100,
+                                   scale=1, scale2=1, bg=0,
+                                     sld_box = sld_out, sld_ball = sld_in, sld_sol = 0,
+                                       len_x=length_a, len_y=length_b, len_z=length_c,
+                                         radius=ball_rad, origin_shift=ecc_vec)
+
     ## Normalize by volume
     ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
     ## (after * 10**2) Intensity unit cm^-1
     Iq_ana = (Iq_ana / vol_norm) * 10**2
-    plot_file_name='Iq_box.pdf'
+    plot_file_name='Iq_bib_ecc.pdf'
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
 
     # loglog plot
-    ax.loglog(q_ana, Iq_ana, 'b', label= 'Analytical calculation')
     ax.loglog(q, Iq,'r', linestyle='', marker='o', markersize=3, label= 'Numerical calculation')
+    ax.loglog(q_ana, Iq_ana, 'gray', label= 'Analytical calculation')
 
     # plot formatting
     ## legend
