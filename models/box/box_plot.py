@@ -191,7 +191,6 @@ os.makedirs(plot_dir, exist_ok=True)
 
 # for i in range(len(t_arr)):
 for i, t in enumerate(t_arr):
-    # t=t_arr[i]
     # time_dir name
     t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
