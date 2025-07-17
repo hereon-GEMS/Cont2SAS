@@ -1,5 +1,5 @@
 ---
-title: 'Gala: A Python package for galactic dynamics'
+title: 'Cont2SAS: A python package for calculating SAS pattern from continuum structures'
 tags:
   - Python
   - astronomy
