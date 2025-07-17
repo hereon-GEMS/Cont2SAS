@@ -69,7 +69,7 @@ def ball_in_box_ecc(qmax,qmin,Npts,scale,scale2,bg,sld_box, sld_ball,sld_sol,
     # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
-    analytical SAS pattern of sphere in parallelepiped
+    analytical SAS pattern of eccentric sphere in parallelepiped
     """
     len_x,len_y,len_z=arrange_order(len_x,len_y,len_z)
     vol_box=len_x*len_y*len_z
@@ -85,21 +85,21 @@ def ball_in_box_ecc(qmax,qmin,Npts,scale,scale2,bg,sld_box, sld_ball,sld_sol,
             func=lambda alpha, psi:\
                 np.abs(del_rho_box*vol_box
                        *
-                       (np.sinc((1/np.pi)*q_cur*length_a/2*np.sin(alpha)*np.sin(psi)))
+                       (np.sinc((1/np.pi)*q_cur*len_x/2*np.sin(alpha)*np.sin(psi)))
                        *
-                       (np.sinc((1/np.pi)*q_cur*length_b/2*np.sin(alpha)*np.cos(psi)))
+                       (np.sinc((1/np.pi)*q_cur*len_y/2*np.sin(alpha)*np.cos(psi)))
                        *
-                       (np.sinc((1/np.pi)*q_cur*length_c/2*np.cos(alpha)))
+                       (np.sinc((1/np.pi)*q_cur*len_z/2*np.cos(alpha)))
                        )**2*np.sin(alpha)
         else:
             func=lambda alpha, psi:\
                 np.abs(del_rho_box*vol_box
                        *
-                       (np.sinc((1/np.pi)*q_cur*length_a/2*np.sin(alpha)*np.sin(psi)))
+                       (np.sinc((1/np.pi)*q_cur*len_x/2*np.sin(alpha)*np.sin(psi)))
                        *
-                       (np.sinc((1/np.pi)*q_cur*length_b/2*np.sin(alpha)*np.cos(psi)))
+                       (np.sinc((1/np.pi)*q_cur*len_y/2*np.sin(alpha)*np.cos(psi)))
                        *
-                       (np.sinc((1/np.pi)*q_cur*length_c/2*np.cos(alpha)))
+                       (np.sinc((1/np.pi)*q_cur*len_z/2*np.cos(alpha)))
                        -
                        scale2*3*vol_ball
                        *
@@ -277,7 +277,6 @@ for i, t in enumerate(t_arr):
         # determine sld min and max for plotting
         sld_min=np.min(node_sld,0)
         sld_max=np.max(node_sld,0)
-
 
         if idx_ensem==0:
             if el_type=='lagrangian':
