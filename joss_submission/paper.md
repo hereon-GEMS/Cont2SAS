@@ -15,6 +15,7 @@ authors:
     equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
     affiliation: "1, 2, 3"
   - name: Sebastian Busch
+    orcid: 0000-0002-9815-909X
     corresponding: true # (This is how to denote the corresponding author)
     affiliation: 1
 affiliations:
@@ -30,46 +31,38 @@ bibliography: paper.bib
 
 # Summary
 
-Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS) are experimental techniques to characterize material structure at the nanometer length scale. The experiments records a Small Angle Scattering (SAS) pattern realized by an intensity $(I)$ vs scattering vector $(\vec{Q})$ curve. A direct retrieval of material structure from SAS pattern is not possible. So, physics-based continuum (Cont) simulation are used to simulate the material structures, from which SAS patterns can be calculated using the `Cont2SAS` software. The calculations and measurements can be compared to validate simulations and investigate SAS patterns.
+Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS) are experimental techniques to characterize material structure at the nanometer length scale. The experiments record Small Angle Scattering (SAS) patterns realized by intensity $(I)$ vs scattering vector magnitude $(Q)$ curves. A direct retrieval of material structure from SAS pattern is not possible. So, physics-based continuum (Cont) simulation are used to simulate the material structures, from which SAS patterns can be calculated using the `Cont2SAS` software. The calculations and measurements can be compared to validate simulations, tune simulation parametrs, and investigate SAS patterns.
 
 # Statement of need
 
-`Gala` is an Astropy-affiliated Python package for galactic dynamics. Python
-enables wrapping low-level languages (e.g., C) for speed without losing
-flexibility or ease-of-use in the user-interface. The API for `Gala` was
-designed to provide a class-based and user-friendly interface to fast (C or
-Cython-optimized) implementations of common operations such as gravitational
-potential and force evaluation, orbit integration, dynamical transformations,
-and chaos indicators for nonlinear dynamics. `Gala` also relies heavily on and
-interfaces well with the implementations of physical units and astronomical
-coordinate systems in the `Astropy` package [@astropy] (`astropy.units` and
-`astropy.coordinates`).
+The complementary use of simulations and SAS patterns can be performed with different simulations methodogies, which can broadly be classified into two categories: Atomistic simulations and continuum simulations. The atomistic simulations produce nanoscopic structures with atomic resolution, from which SAS pattern can be calculated in a fast and error-free manner using the software solution `Sassena`. The continuum simulation produces nanoscopic structures as continuous distribution of density and composition. To calculate SAS patterns from these continuous distributions, a new software was required that facilitates fast and error-free calculations. 
 
-`Gala` was designed to be used by both astronomical researchers and by
-students in courses on gravitational dynamics or astronomy. It has already been
-used in a number of scientific publications [@Pearson:2017] and has also been
-used in graduate courses on Galactic dynamics to, e.g., provide interactive
-visualizations of textbook material [@Binney:2008]. The combination of speed,
-design, and support for Astropy functionality in `Gala` will enable exciting
-scientific explorations of forthcoming data releases from the *Gaia* mission
-[@gaia] by students and experts alike.
+`Cont2SAS` was created for calculating SAS patterns from continuum structures, realised through the spatial distribution of Scattering Length Density (SLD). The SLD distribution can either be calculated from local density and composition obtained from physics-based simulations or be generated based on knowledge of the sample. The generated or simulated structure is taken as an input to `Cont2SAS`, which is then discretized to an atom-like structure, from which SAS patterns are calculated using `Sassena`. Using Sassena, ensures fast and error-free calculation.
+
+From SANS patterns, a new quantity named `effective cross-section` can also be calculated using `Cont2SAS`. `effective cross-section` can be understood as neutron count rate per unit neutron flux. Comparing `effective cross-section` and `neutron count rate` can be usefull for samples that does not change its nanoscopic structure during a process, but the chemical composition is changed.
+
+The integration of continuum simulation and SAS measurements opens the door for simulating materials for bigger sample volumes for longer times. This is an essential improvement because the SAS technique also probes macroscopic volumes for time scale in the rage in seconds.
 
 # Mathematics
+Calculation of SLD from local density and composition:
+$$
+\beta(\vec{r})= \rho_{\text{m}}(\vec{r}) \cdot N_{\text{A}} \cdot \sum_{\alpha} \chi_{\alpha}(\vec{r}) \cdot \sum_{\text{el}} c_{\alpha, \text{el}} \cdot b_{\text{el}}
+$$
 
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
+Analytical calculation of SAS pattern from SLD distribution:
+$$
+I(Q)=\left\langle\left|\iiint\limits_V \beta(\vec{r})\,\mathrm{e}^{\mathrm{i} \vec{Q} \cdot \vec{r}}\,\mathrm{d}\vec{r}\,\right|^2\right\rangle_{\Omega}
+$$
 
-Double dollars make self-standing equations:
+Numerical calculation of SAS pattern from discretized SLD distribution:
+$$
+I(Q)=\left\langle\left|\sum_{j=1}^{N}\sum_{k=1}^{N} b_j b_k e^{\mathrm{i} \vec{Q} \cdot (\vec{R}_j -\vec{R}_k)}\right|^2\right\rangle_{\Omega}
+$$
 
-$$\Theta(x) = \left\{\begin{array}{l}
-0\textrm{ if } x < 0\cr
-1\textrm{ else}
-\end{array}\right.$$
-
-You can also use plain \LaTeX for equations
-\begin{equation}\label{eq:fourier}
-\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
-\end{equation}
-and refer to \autoref{eq:fourier} from text.
+Numerical calculation of effctive cross-section $\sigma_{\text{eff}}$ from SAS pattern:
+$$
+\sigma_{\text{eff}}=\int_{Q}w(Q)I(Q)
+$$
 
 # Citations
 
@@ -96,7 +89,11 @@ Figure sizes can be customized by adding an optional second parameter:
 
 # Acknowledgements
 
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
+This publication was written in the context of the work of the consortium DAPHNE4NFDI in
+association with the German National Research Data Infrastructure (NFDI) e.V. NFDI is financed by
+the Federal Republic of Germany and the 16 federal states and the consortium is funded by the
+Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) - project number
+460248799. The authors would like to thank for the funding and support. Furthermore, thanks go to
+all institutions and actors who are committed to the association and its goals.
 
 # References
