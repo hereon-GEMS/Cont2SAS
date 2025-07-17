@@ -10,13 +10,13 @@ authors:
   - name: Arnab Majumdar
     orcid: 0000-0003-4049-4060
     equal-contrib: true
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
+    affiliation: "1, 3" # (Multiple affiliations must be quoted)
   - name: Martin Mueller
     equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
-    affiliation: 2
+    affiliation: "1, 2, 3"
   - name: Sebastian Busch
     corresponding: true # (This is how to denote the corresponding author)
-    affiliation: 3
+    affiliation: 1
 affiliations:
  - name: German Engineering Materials Science Centre (GEMS) at Heinz Maier-Leibnitz Zentrum (MLZ), Helmholtz-Zentrum Hereon GmbH, Lichtenbergstr. 1, 85748 Garching, Germany
    index: 1
@@ -26,24 +26,11 @@ affiliations:
    index: 3
 date: 17 July 2025
 bibliography: paper.bib
-
-# Optional fields if submitting to a AAS journal too, see this blog post:
-# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
-# aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
-# aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
 # Summary
 
-The forces on stars, galaxies, and dark matter under external gravitational
-fields lead to the dynamical evolution of structures in the universe. The orbits
-of these bodies are therefore key to understanding the formation, history, and
-future state of galaxies. The field of "galactic dynamics," which aims to model
-the gravitating components of galaxies to study their structure and evolution,
-is now well-established, commonly taught, and frequently used in astronomy.
-Aside from toy problems and demonstrations, the majority of problems require
-efficient numerical tools, many of which require the same base code (e.g., for
-performing numerical orbit integration).
+Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS) are experimental techniques to characterize material structure at the nanometer length scale. The experiments records a Small Angle Scattering (SAS) pattern realized by an intensity $(I)$ vs scattering vector $(\vec{Q})$ curve. A direct retrieval of material structure from SAS pattern is not possible. So, physics-based continuum (Cont) simulation are used to simulate the material structures, from which SAS patterns can be calculated using the `Cont2SAS` software. The calculations and measurements can be compared to validate simulations and investigate SAS patterns.
 
 # Statement of need
 
