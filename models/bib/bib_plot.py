@@ -1,5 +1,5 @@
 """
-This plots necessary figures for ball off center if box model
+This plots necessary figures for ball at center if box model
 Plots are saved in figure folder
 
 Author: Arnab Majumdar
@@ -64,12 +64,14 @@ def gauss_legendre_double_integrate(func, domain1, domain2, deg):
     a2 = (domain2[1] + domain2[0])/2
     return np.sum(s1*s2*w1*w2*func(s1*x + a1,s2*y + a2))
 
-def ball_in_box_ecc(qmax,qmin,Npts,scale,scale2,bg,sld_box, sld_ball,sld_sol,
-                    len_x,len_y,len_z,radius, origin_shift):
+def ball_in_box(qmax,qmin,Npts,
+                scale,scale2,
+                bg,sld_box, sld_ball,sld_sol,
+                len_x,len_y,len_z,radius):
     # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
-    analytical SAS pattern of eccentric sphere in parallelepiped
+    analytical SAS pattern of sphere in parallelepiped
     """
     len_x,len_y,len_z=arrange_order(len_x,len_y,len_z)
     vol_box=len_x*len_y*len_z
@@ -83,38 +85,21 @@ def ball_in_box_ecc(qmax,qmin,Npts,scale,scale2,bg,sld_box, sld_ball,sld_sol,
         # pylint: disable=cell-var-from-loop, unnecessary-lambda-assignment
         if q_cur==0:
             func=lambda alpha, psi:\
-                np.abs(del_rho_box*vol_box
-                       *
-                       (np.sinc((1/np.pi)*q_cur*len_x/2*np.sin(alpha)*np.sin(psi)))
-                       *
-                       (np.sinc((1/np.pi)*q_cur*len_y/2*np.sin(alpha)*np.cos(psi)))
-                       *
-                       (np.sinc((1/np.pi)*q_cur*len_z/2*np.cos(alpha)))
-                       )**2*np.sin(alpha)
+                (del_rho_box*vol_box*(np.sinc((1/np.pi)*q_cur*len_x/2*np.sin(alpha)*np.sin(psi)))*\
+                (np.sinc((1/np.pi)*q_cur*len_y/2*np.sin(alpha)*np.cos(psi)))*\
+                (np.sinc((1/np.pi)*q_cur*len_z/2*np.cos(alpha)))-\
+                scale2*1+\
+                scale2*1)**2*\
+                np.sin(alpha)
         else:
             func=lambda alpha, psi:\
-                np.abs(del_rho_box*vol_box
-                       *
-                       (np.sinc((1/np.pi)*q_cur*len_x/2*np.sin(alpha)*np.sin(psi)))
-                       *
-                       (np.sinc((1/np.pi)*q_cur*len_y/2*np.sin(alpha)*np.cos(psi)))
-                       *
-                       (np.sinc((1/np.pi)*q_cur*len_z/2*np.cos(alpha)))
-                       -
-                       scale2*3*vol_ball
-                       *
-                       (del_rho_box-del_rho_ball)
-                       *
-                       J1(q_cur*radius)/(q_cur*radius)*
-                       np.vectorize(complex)(
-                           np.cos(q_cur * np.sin(alpha) * np.sin(psi) * origin_shift[0]
-                                   + q_cur * np.sin(alpha) * np.cos(psi) * origin_shift[1]
-                                     + q_cur *  np.cos(psi) * origin_shift[2])
-                                     ,
-                                       np.sin(q_cur * np.sin(alpha) * np.sin(psi) * origin_shift[0]
-                                               + q_cur * np.sin(alpha) * np.cos(psi) * origin_shift[1]# pylint: disable=line-too-long
-                                                 + q_cur *  np.cos(psi) * origin_shift[2]))
-                                                 )**2*np.sin(alpha)
+                (del_rho_box*vol_box*(np.sinc((1/np.pi)*q_cur*len_x/2*np.sin(alpha)*np.sin(psi)))*\
+                (np.sinc((1/np.pi)*q_cur*len_y/2*np.sin(alpha)*np.cos(psi)))*\
+                (np.sinc((1/np.pi)*q_cur*len_z/2*np.cos(alpha)))-\
+                scale2*3*vol_ball*del_rho_box*J1(q_cur*radius)/(q_cur*radius)+\
+                scale2*3*vol_ball*del_rho_ball*J1(q_cur*radius)/(q_cur*radius))**2*\
+                np.sin(alpha)
+
         psi_lim=np.pi
         alpha_lim=np.pi/2
         # Amplitude unit (\AA^3 * 10^-5 \AA^-2)^2 = 10^-10 \AA^2
@@ -133,6 +118,7 @@ xml_folder='./xml/'
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
+
 ### struct gen ###
 # box side lengths (float values)
 length_a=40.
@@ -149,7 +135,8 @@ el_order=1
 mid_point=np.array([length_a/2, length_b/2, length_c/2])
 
 ### sim gen ###
-sim_model='bib_ecc'
+# model name
+sim_model='bib'
 # simulation parameters
 dt=1.
 t_end=0.
@@ -162,18 +149,15 @@ t_arr=np.arange(0,t_end+dt, dt)
 ball_rad=10
 sld_in=2
 sld_out=1
-ecc_vec=np.array([5, 5, 5])
 qclean_sld=0
 # dir name for model param
-model_param_dir_name = ('rad' + '_' + str(ball_rad) + '_' +
-                        'sld_in' + '_' + str(sld_in) + '_' +
-                        'sld_out' + '_' + str(sld_out) + '_' +
-                        'x' + '_' + str(ecc_vec[0]) + '_' + 
-                        'y' + '_' + str(ecc_vec[1]) + '_' + 
-                        'z' + '_' + str(ecc_vec[2]) + '_' +
-                        'qclean_sld' + '_' + str(qclean_sld)).replace('.', 'p')
+model_param_dir_name = ('rad' + '_' + str(ball_rad) +
+                         '_' + 'sld_in' + '_' + str(sld_in) +
+                           '_' + 'sld_out' + '_' + str(sld_out) +
+                             '_' + 'qclean_sld' + '_' + str(qclean_sld)
+                             ).replace('.', 'p')
 
-### scatt_cal ###
+### scatt cal ###
 # decreitization params
 # number of categories and method of categorization
 num_cat=3
@@ -182,15 +166,15 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.]) # mention integers as float
 num_points=100
-num_orientation=300
+num_orientation=200
 # scatt settengs
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
     + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
 scatt_settings=scatt_settings.replace('.', 'p')
 
-#######################
-# read folder structure
-#######################
+"""
+read folder structure
+"""
 
 # folder structure
 ## mother folder name
@@ -239,8 +223,8 @@ for i, t in enumerate(t_arr):
     # time_dir name
     t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
-    for j in range(n_ensem):
-        idx_ensem=j
+    for idx_ensem in range(n_ensem):
+        # idx_ensem=j
         # create ensemble dir
         ensem_dir_name=f'ensem{idx_ensem:0>3}'
         ensem_dir=os.path.join(t_dir, ensem_dir_name)
@@ -250,10 +234,9 @@ for i, t in enumerate(t_arr):
         scatt_dir=os.path.join(ensem_dir, scatt_dir_name)
 
 
-        #########################################
-        # read pseudo atom info from scatt_cal.h5
-        #########################################
-
+        """
+        read pseudo atom info from scatt_cal.h5
+        """
         # read node sld
         # save pseudo atom info
         scatt_cal_dir_name='scatt_cal_' + scatt_settings
@@ -290,7 +273,7 @@ for i, t in enumerate(t_arr):
             z_idx= np.floor(cut_frac*(nz+1)).astype(int)
             z_val=node_pos_3d[0, 0, z_idx , 2]
             ## figure specification
-            plot_file_name='SLD_bib_ecc.pdf'
+            plot_file_name='SLD_bib.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## image plot
@@ -333,7 +316,7 @@ for i, t in enumerate(t_arr):
             z_idx_pseudo= z_idx-1
             z_val_pseudo=pseudo_pos_3d[0, 0, z_idx_pseudo , 2]
             ## figure specification
-            plot_file_name='pseudo_bib_ecc.pdf'
+            plot_file_name='pseudo_bib.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -346,7 +329,7 @@ for i, t in enumerate(t_arr):
             cbar_label=r"Scattering length (b) [$10^{-5} \cdot \mathrm{\AA} = \mathrm{fm}$]"
             cbar.set_label(cbar_label, labelpad=10)
             ## plot title
-            title_text=" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
+            title_text=r" Cut at Z = {0} {1}".format(z_val_pseudo, r"$\mathrm{\AA}$")
             ax.set_title(title_text)
             # labels
             ax.set_xlabel(r'X [$\mathrm{\AA}$]')
@@ -369,7 +352,7 @@ for i, t in enumerate(t_arr):
 
             # plotting categorized pseudo atoms
             ## figure specification
-            plot_file_name='pseudo_cat_bib_ecc.pdf'
+            plot_file_name='pseudo_cat_bib.pdf'
             plot_file=os.path.join(plot_dir,plot_file_name)
             fig, ax = plt.subplots(figsize=(5, 5))
             ## scatter plot
@@ -407,7 +390,7 @@ for i, t in enumerate(t_arr):
             plt.close(fig)
 
     # volume for normalization
-    vol_norm=length_a*length_b*length_c # vol box
+    vol_norm=length_a*length_b*length_c # box volume for normalization
 
     # numerical intensity
     ## read I vs Q signal file
@@ -421,17 +404,14 @@ for i, t in enumerate(t_arr):
 
     # ananlytical intensity
     ## Intensity unit 10^-10 \AA^2
-    Iq_ana,q_ana= ball_in_box_ecc(qmax=np.max(q),qmin=np.min(q),Npts=100,
-                                   scale=1, scale2=1, bg=0,
-                                     sld_box = sld_out, sld_ball = sld_in, sld_sol = 0,
-                                       len_x=length_a, len_y=length_b, len_z=length_c,
-                                         radius=ball_rad, origin_shift=ecc_vec)
-
+    Iq_ana,q_ana= ball_in_box(qmax=np.max(q),qmin=np.min(q),Npts=100,
+                scale=1,scale2=1,bg=0,sld_box=sld_out, sld_ball=sld_in, sld_sol=0,
+                len_x=length_a, len_y=length_b, len_z=length_c, radius=ball_rad)
     ## Normalize by volume
     ## (Before * 10**2) Intensity unit 10^-10 \AA^-1 = 10 ^-2 cm^-1
     ## (after * 10**2) Intensity unit cm^-1
     Iq_ana = (Iq_ana / vol_norm) * 10**2
-    plot_file_name='Iq_bib_ecc.pdf'
+    plot_file_name='Iq_bib.pdf'
     plot_file=os.path.join(plot_dir,plot_file_name)
     fig, ax = plt.subplots(figsize=(7, 5))
 
