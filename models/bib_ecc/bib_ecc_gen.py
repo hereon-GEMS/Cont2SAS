@@ -160,7 +160,7 @@ else:
 # time counter end - SAS calculation
 toc_scatt = time.perf_counter()
 ttot_scatt= round(toc_scatt - tic_scatt,3)
-print(f'Time taken for calculating SAS pattern: {ttot_sim} s')
+print(f'Time taken for calculating SAS pattern: {ttot_scatt} s')
 print('-------------------------------------------------')
 
 
