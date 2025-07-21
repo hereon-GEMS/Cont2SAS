@@ -1,5 +1,21 @@
 # Continuum to scattering
 
+## sphere model
+
+```
+# generate data
+python models/ball/ball_gen.py
+# generate plots
+python models/ball/ball_plot.py
+# see nano structure
+xdg-open figure/ball/SLD_ball.pdf
+# see discretized nano structure
+xdg-open figure/ball/pseudo_ball.pdf
+# see categorized nano structure
+xdg-open figure/ball/pseudo_cat_ball.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/ball/Iq_ball.pdf
+```
 
 
 ## Getting started
