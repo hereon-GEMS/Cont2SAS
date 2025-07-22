@@ -2,20 +2,18 @@
 
 1. generate mesh
 2. assign SLD
-3.  
-4. define connectivity matrix
-4. define element type (only lagrangian of order 1 and 2 possible)
-
+3. calculate SAS pattern
+4. calculate effective cross-section
 
 ## Mesh generation
 
-#### Functionalities
-
-1. define simulation box (only rectangular possible)
-2. define node positions
-3. define element centres 
-4. define connectivity matrix
-4. define element type (only lagrangian of order 1 and 2 possible)
+### Quick start
+```
+# run from main folder
+# relative position ../
+cp xml/Template/struct.xml xml/
+python struct_gen.py
+```
 
 #### Run using xml
 
