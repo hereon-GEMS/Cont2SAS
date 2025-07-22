@@ -1,5 +1,13 @@
-## Steps to run
-### Mesh generation
+# Steps to run
+
+1. generate mesh
+2. assign SLD
+3.  
+4. define connectivity matrix
+4. define element type (only lagrangian of order 1 and 2 possible)
+
+
+## Mesh generation
 
 #### Functionalities
 
