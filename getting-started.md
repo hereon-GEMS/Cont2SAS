@@ -1,4 +1,4 @@
-# Continuum to scattering
+# Quick start guide
 
 ## Link to README
 
