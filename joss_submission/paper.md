@@ -11,7 +11,7 @@ authors:
     orcid: 0000-0003-4049-4060
     equal-contrib: true
     affiliation: "1, 3" # (Multiple affiliations must be quoted)
-  - name: Martin Mueller
+  - name: Martin M\"{u}ller
     equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
     affiliation: "1, 2, 3"
   - name: Sebastian Busch
@@ -31,15 +31,21 @@ bibliography: paper.bib
 
 # Summary
 
-Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS) are experimental techniques to characterize material structure at the nanometer length scale. The experiments record Small Angle Scattering (SAS) patterns realized by intensity $(I)$ vs scattering vector magnitude $(Q)$ curves. A direct retrieval of material structure from SAS pattern is not possible. So, physics-based continuum (Cont) simulation are used to simulate the material structures, from which SAS patterns can be calculated using the `Cont2SAS` software. The calculations and measurements can be compared to validate simulations, tune simulation parametrs, and investigate SAS patterns.
+Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS) are experimental techniques for characterizing material structure at the nanometer length scale. The experiments record Small Angle Scattering (SAS) intensity $(I)$ vs scattering vector magnitude $(Q)$ curves. A direct retrieval of the material structure from a SAS pattern is not possible. So, SAS patterns are calculated from simulated or generated continuum structures using the `Cont2SAS` software. Simulation of structure can be done based of physics, using other software, e.g. moose. The generation of structure can be performed based on knowledge of the sample using `Cont2SAS`. The calculated SAS pattern from continuum structures are compared with measuremed data to validate simulations, tune simulation parametrs, and analyze SAS patterns `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
 
 # Statement of need
 
-The complementary use of simulations and SAS patterns can be performed with different simulations methodogies, which can broadly be classified into two categories: Atomistic simulations and continuum simulations. The atomistic simulations produce nanoscopic structures with atomic resolution, from which SAS pattern can be calculated in a fast and error-free manner using the software solution `Sassena`. The continuum simulation produces nanoscopic structures as continuous distribution of density and composition. To calculate SAS patterns from these continuous distributions, a new software was required that facilitates fast and error-free calculations. 
+The simulation of material structure at the nanometer length scale can be performed using different simulations methodogies, which can broadly be classified into two categories: Atomistic simulations and continuum simulations. Atomistic simulations produce nanoscopic structures with atomic resolution, which makes them more accurate than continuum simutations that produce continuum structures. However, atomistic simulations are limited in length and time scales. Continuum simulations have no such limit and can simulate with sufficient accuracy provide a better alternative 
 
-`Cont2SAS` was created for calculating SAS patterns from continuum structures, realised through the spatial distribution of Scattering Length Density (SLD). The SLD distribution can either be calculated from local density and composition obtained from physics-based simulations or be generated based on knowledge of the sample. The generated or simulated structure is taken as an input to `Cont2SAS`, which is then discretized to an atom-like structure, from which SAS patterns are calculated using `Sassena`. Using Sassena, ensures fast and error-free calculation.
+Since SAS intensities contain information of a macroscopic volume and can probe nanoscopic phenomena occuring in the range of milliseconds, Continuum simulations are better alternative for 
 
-From SANS patterns, a new quantity named `effective cross-section` can also be calculated using `Cont2SAS`. `effective cross-section` can be understood as neutron count rate per unit neutron flux. Comparing `effective cross-section` and `neutron count rate` can be usefull for samples that does not change its nanoscopic structure during a process, but the chemical composition is changed.
+Different simulation methodologies 
+
+The complementary use of simulations and SAS patterns can be performed with different simulations methodogies, which can broadly be classified into two categories: Atomistic simulations and continuum simulations. The atomistic simulations produce nanoscopic structures with atomic resolution, from which SAS pattern can be calculated in a fast and error-free manner using the software solution `Sassena` `[@lindner2012sassena; @lindner2012towards; @sassena:2017; @sassena:2023; @majumdar2024computation]`. The continuum simulation produces nanoscopic structures as continuous distribution of density and composition. To calculate SAS patterns from these continuous distributions, a new software was required that facilitates fast and error-free calculations. 
+
+`Cont2SAS` was created for calculating SAS patterns from continuum structures, realised through the spatial distribution of Scattering Length Density (SLD). The SLD distribution can either be calculated from local density and composition obtained from physics-based simulations or be generated based on knowledge of the sample. The generated or simulated structure is taken as an input to `Cont2SAS`, which is then discretized to an atom-like structure, from which SAS patterns are calculated using `Sassena`. Using Sassena, ensures fast and error-free calculation `[@majumdar2024computation]`.
+
+From SANS patterns, a new quantity named `effective cross-section` can also be calculated using `Cont2SAS`. `effective cross-section` can be understood as neutron count rate per unit neutron flux. Comparing `effective cross-section` and `neutron count rate` can be usefull for samples that does not change its nanoscopic structure during a process, but the chemical composition is changed `[@aslan2019high]`.
 
 The integration of continuum simulation and SAS measurements opens the door for simulating materials for bigger sample volumes for longer times. This is an essential improvement because the SAS technique also probes macroscopic volumes for time scale in the rage in seconds.
 

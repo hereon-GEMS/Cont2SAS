@@ -70,6 +70,7 @@ working_dir = "."  # Directory to run the script in
 ############
 # Input data
 ############
+
 ### struct gen ###
 # box side lengths (float values)
 length_a= 40.

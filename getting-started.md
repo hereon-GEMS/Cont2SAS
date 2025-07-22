@@ -1,92 +1,226 @@
 # Continuum to scattering
 
+## Link to README
 
+[README](./README.md)
 
-## Getting started
+## List of models
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- Generated models
+    - Structure
+        - Sphere (ball)
+        - Cube (box)
+        - Sphere at the center of cube (bib)
+        - Sphere off the center of cube (bib_ecc)
+    - Phenomena
+        - Growth of sphere (gg)
+        - interdiffusion of sphere and environment (fs)
+        - Change of chemical composition of sphere (sld_growth)
+- Simulated models
+    - Phase field
+        - Spinodal decomposition of Fe-Cr (phase_field)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## ball
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+### Instruction
 
 ```
-cd existing_repo
-git remote add origin https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering.git
-git branch -M main
-git push -uf origin main
+# generate data
+python models/ball/ball_gen.py
+# generate plots
+python models/ball/ball_plot.py
+# see nano structure
+xdg-open figure/ball/SLD_ball.pdf
+# see discretized nano structure
+xdg-open figure/ball/pseudo_ball.pdf
+# see categorized nano structure
+xdg-open figure/ball/pseudo_cat_ball.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/ball/Iq_ball.pdf
 ```
 
-## Integrate with your tools
+### See detailed explanation
 
-- [ ] [Set up project integrations](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/settings/integrations)
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/ball.md)
 
-## Collaborate with your team
+## box
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Instruction
 
-## Test and Deploy
+```
+# generate data
+python models/box/box_gen.py
+# generate plots
+python models/box/box_plot.py
+# see nano structure
+xdg-open figure/box/SLD_box.pdf
+# see discretized nano structure
+xdg-open figure/box/pseudo_box.pdf
+# see categorized nano structure
+xdg-open figure/box/pseudo_cat_box.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/box/Iq_box.pdf
+```
 
-Use the built-in continuous integration in GitLab.
+### See detailed explanation
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/box.md)
 
-***
+## bib
 
-# Editing this README
+### Instruction
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```
+# generate data
+python models/bib/bib_gen.py
+# generate plots
+python models/bib/bib_plot.py
+# see nano structure
+xdg-open figure/bib/SLD_bib.pdf
+# see discretized nano structure
+xdg-open figure/bib/pseudo_bib.pdf
+# see categorized nano structure
+xdg-open figure/bib/pseudo_cat_bib.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/bib/Iq_bib.pdf
+```
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### See detailed explanation
 
-## Name
-Choose a self-explaining name for your project.
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/bib.md)
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## bib_ecc
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Instruction
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```
+# generate data
+python models/bib_ecc/bib_ecc_gen.py
+# generate plots
+python models/bib_ecc/bib_ecc_plot.py
+# see nano structure
+xdg-open figure/bib_ecc/SLD_bib_ecc.pdf
+# see discretized nano structure
+xdg-open figure/bib_ecc/pseudo_bib_ecc.pdf
+# see categorized nano structure
+xdg-open figure/bib_ecc/pseudo_cat_bib_ecc.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/bib_ecc/Iq_bib_ecc.pdf
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### See detailed explanation
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/bib_ecc.md)
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## gg
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Instruction
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```
+# generate data
+python models/gg/gg_gen.py
+# generate plots
+python models/gg/gg_plot.py
+# see nano structure (t = 1.0)
+xdg-open figure/gg/SLD_gg_1p0.pdf
+# see discretized nano structure (t = 1.0)
+xdg-open figure/gg/pseudo_gg_1p0.pdf
+# see categorized nano structure (t = 1.0)
+xdg-open figure/gg/pseudo_cat_gg_1p0.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/gg/Iq_gg.pdf
+# see simulation vs retrieved radius
+xdg-open figure/gg/rad_fit_gg.pdf
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### See detailed explanation
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/gg.md)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## fs
 
-## License
-For open source projects, say how it is licensed.
+### Instruction
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```
+# generate data
+python models/fs/fs_gen.py
+# generate plots
+python models/fs/fs_plot.py
+# see nano structure (t = 1.0)
+xdg-open figure/fs/SLD_fs_1p0.pdf
+# see discretized nano structure (t = 1.0)
+xdg-open figure/fs/pseudo_fs_1p0.pdf
+# see categorized nano structure (t = 1.0)
+xdg-open figure/fs/pseudo_cat_fs_1p0.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/fs/Iq_fs.pdf
+# see simulation vs retrieved radius
+xdg-open figure/fs/rad_fit_fs.pdf
+# see simulation vs retrieved sigma value
+xdg-open figure/fs/sig_fit_fs.pdf
+```
+
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/fs.md)
+
+## sld_grow
+
+### Instruction
+
+```
+# generate data
+python models/sld_grow/sld_grow_gen.py
+# generate plots
+python models/sld_grow/sld_grow_plot.py
+# see nano structure (t = 1.0)
+xdg-open figure/sld_grow/SLD_sld_grow_1p0.pdf
+# see discretized nano structure (t = 1.0)
+xdg-open figure/sld_grow/pseudo_sld_grow_1p0.pdf
+# see categorized nano structure (t = 1.0)
+xdg-open figure/sld_grow/pseudo_cat_sld_grow_1p0.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/sld_grow/Iq_sld_grow.pdf
+# see simulation vs retrieved sld value
+xdg-open figure/sld_grow/sld_fit_sld_grow.pdf
+# see effective c.s. prop to contrast square
+xdg-open figure/sld_grow/sig_eff_fit_sld_grow.pdf
+```
+
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/sld_grow.md)
+
+## phase_field
+
+### Instruction
+
+```
+# generate data
+python models/phase_field/phase_field_gen.py
+# generate plots
+python models/phase_field/phase_field_plot.py
+# see nano structure (t = 86400)
+xdg-open figure/phase_field/SLD_phase_field_86400.pdf
+# see discretized nano structure (t = 86400)
+xdg-open figure/phase_field/pseudo_phase_field_86400.pdf
+# see categorized nano structure (t = 86400)
+xdg-open figure/phase_field/pseudo_cat_phase_field_86400.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/phase_field/Iq.pdf
+# see characteristic length vs t plot
+# initial step eliminated
+xdg-open figure/phase_field/ch_len.pdf
+```
+
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/phase_field.md)

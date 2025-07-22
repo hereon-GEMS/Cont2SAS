@@ -63,8 +63,8 @@ qclean_sld=0
 num_cat=3
 method_cat='extend'
 sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
-mpi_procs=4
-num_threads=2
+mpi_procs=1
+num_threads=1
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0, 1])
@@ -159,7 +159,7 @@ else:
 # time counter end - SAS calculation
 toc_scatt = time.perf_counter()
 ttot_scatt= round(toc_scatt - tic_scatt,3)
-print(f'Time taken for calculating SAS pattern: {ttot_sim} s')
+print(f'Time taken for calculating SAS pattern: {ttot_scatt} s')
 print('-------------------------------------------------')
 
 

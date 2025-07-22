@@ -103,7 +103,7 @@ def ball_in_box(qmax,qmin,Npts,
         psi_lim=np.pi
         alpha_lim=np.pi/2
         # Amplitude unit (\AA^3 * 10^-5 \AA^-2)^2 = 10^-10 \AA^2
-        Aq_arr[i]=(1/psi_lim)*gauss_legendre_double_integrate(func,[0, alpha_lim],[0, psi_lim],76)
+        Aq_arr[q_idx]=(1/psi_lim)*gauss_legendre_double_integrate(func,[0, alpha_lim],[0, psi_lim],76)
     Iq_arr = scale*Aq_arr + bg # Intensity unit 10^-10 \AA^2
     return Iq_arr, q_arr
 
