@@ -132,7 +132,13 @@ chmod +x ./shell_scripts/*
 
 Some models are provided for generating or simulating nanostructures. From these structures SAS patterns can be calculated. One of the models also facilitates calculation of effective cross-section. 
 
-To run `Cont2SAS` with provided models and parameters, [read the guide](./getting-started.md).
+To run `Cont2SAS` with provided models and parameters, read the [getting started](./getting-started.md) guide.
+
+## Acknowledgement
+
+This work was supported by the consortium DAPHNE4NFDI in the context of the work of the
+NFDI e.V. The consortium is funded by the Deutsche Forschungsgemeinschaft (DFG, German
+Research Foundation) - project number 460248799. 
 
 ## License
 
