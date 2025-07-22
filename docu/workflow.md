@@ -7,13 +7,39 @@
 
 ## Mesh generation
 
-### Quick start
+### Copy input xml template
+
 ```
 # run from main folder
 # relative position ../
+cd $C2S_HOME
 cp xml/Template/struct.xml xml/
-python struct_gen.py
+nano xml/struct.xml
 ```
+
+### Edit input xml
+
+- lengths = dimension of simulation box in x,y,z
+- num_cell = num elements in x,y,z directions
+- element
+    - type = type of element (allowed: 'lagrangian')
+    - order = order of element (allowed: 1 or 2)
+- decision
+    - update_val = whether to rewrite the structure or not (preferred= 'True')
+    - plot
+        - node = decision to plot nodes (preffered: 'False') 
+        - cell = decision to plot element centers (preffered: 'False')
+        - mesh = decision to plot mesh (preffered: 'False')
+
+### Generate mesh
+
+```
+python ./src/struct_gen.py
+```
+
+### Output data
+
+Output is saved in `data\lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder\structure\` folder in `.h5` file.
 
 #### Run using xml
 
