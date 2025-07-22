@@ -109,6 +109,10 @@ chmod +x ./Sassena/Sassena.AppImage
 mpirun -n 2 ./Sassena/Sassena.AppImage --help
 ```
 
+## Getting started
+
+[Read the guide](./getting-started.md)
+
 ## License
 
 <a href="https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/tree/develop?ref_type=heads">
