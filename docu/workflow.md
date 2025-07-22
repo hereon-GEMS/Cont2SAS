@@ -37,9 +37,9 @@ nano xml/struct.xml
 python ./src/struct_gen.py
 ```
 
-### Output data
+### Output data location
 
-Output is saved in `data\lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder\structure\` folder in `.h5` file.
+Output is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder` `->` `structure` folder in `struct.h5` file.
 
 #### Run using xml
 
