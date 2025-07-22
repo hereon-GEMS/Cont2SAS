@@ -78,9 +78,73 @@ python models/gg/gg_plot.py
 # see nano structure (t = 1.0)
 xdg-open figure/gg/SLD_gg_1p0.pdf
 # see discretized nano structure (t = 1.0)
-xdg-open figure/bib_ecc/pseudo_gg_1p0.pdf
-# see categorized nano structure
-xdg-open figure/bib_ecc/pseudo_cat_bib_ecc.pdf
+xdg-open figure/gg/pseudo_gg_1p0.pdf
+# see categorized nano structure (t = 1.0)
+xdg-open figure/gg/pseudo_cat_gg_1p0.pdf
 # see SAS intensity vs Q plot
-xdg-open figure/bib_ecc/Iq_bib_ecc.pdf
+xdg-open figure/gg/Iq_gg.pdf
+# see simulation vs retrieved radius
+xdg-open figure/gg/rad_fit_gg.pdf
+```
+
+## fs
+
+```
+# generate data
+python models/fs/fs_gen.py
+# generate plots
+python models/fs/fs_plot.py
+# see nano structure (t = 1.0)
+xdg-open figure/fs/SLD_fs_1p0.pdf
+# see discretized nano structure (t = 1.0)
+xdg-open figure/fs/pseudo_fs_1p0.pdf
+# see categorized nano structure (t = 1.0)
+xdg-open figure/fs/pseudo_cat_fs_1p0.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/fs/Iq_fs.pdf
+# see simulation vs retrieved radius
+xdg-open figure/fs/rad_fit_fs.pdf
+# see simulation vs retrieved sigma value
+xdg-open figure/fs/sig_fit_fs.pdf
+```
+
+## sld_grow
+
+```
+# generate data
+python models/sld_grow/sld_grow_gen.py
+# generate plots
+python models/sld_grow/sld_grow_plot.py
+# see nano structure (t = 1.0)
+xdg-open figure/sld_grow/SLD_sld_grow_1p0.pdf
+# see discretized nano structure (t = 1.0)
+xdg-open figure/sld_grow/pseudo_sld_grow_1p0.pdf
+# see categorized nano structure (t = 1.0)
+xdg-open figure/sld_grow/pseudo_cat_sld_grow_1p0.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/sld_grow/Iq_sld_grow.pdf
+# see simulation vs retrieved sld value
+xdg-open figure/sld_grow/sld_fit_sld_grow.pdf
+# see effective c.s. prop to contrast square
+xdg-open figure/sld_grow/sig_eff_fit_sld_grow.pdf
+```
+
+## phase_field
+
+```
+# generate data
+python models/phase_field/phase_field_gen.py
+# generate plots
+python models/phase_field/phase_field_plot.py
+# see nano structure (t = 86400)
+xdg-open figure/phase_field/SLD_phase_field_86400.pdf
+# see discretized nano structure (t = 86400)
+xdg-open figure/phase_field/pseudo_phase_field_86400.pdf
+# see categorized nano structure (t = 86400)
+xdg-open figure/phase_field/pseudo_cat_phase_field_86400.pdf
+# see SAS intensity vs Q plot
+xdg-open figure/phase_field/Iq.pdf
+# see characteristic length vs t plot
+# initial step eliminated
+xdg-open figure/phase_field/ch_len.pdf
 ```
