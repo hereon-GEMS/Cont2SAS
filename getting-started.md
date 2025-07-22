@@ -1,9 +1,5 @@
 # Quick start guide
 
-## Link to README
-
-[README](./README.md)
-
 ## List of models
 
 Provided models either generates SLD based on analytical formula or simulates SLD solving physics-based simulations (e.g. phase-field simulation). Within generated models, some produces structure at one time step; some produces time-evolving structures representing phenomena.
@@ -228,3 +224,7 @@ xdg-open figure/phase_field/ch_len.pdf
 
 - [See Workflow](./docu/workflow.md)
 - [See model](./docu/models/phase_field.md)
+
+## Link to README
+
+[README](./README.md)
