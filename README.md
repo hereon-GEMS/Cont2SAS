@@ -109,6 +109,25 @@ chmod +x ./Sassena/Sassena.AppImage
 mpirun -n 2 ./Sassena/Sassena.AppImage --help
 ```
 
+#### Define environment variable
+
+##### Install
+
+```
+# define for current session
+export C2S_HOME=$PWD
+# define for further session
+chmod +x ./shell_scripts/*
+./shell_scripts/install.sh
+```
+
+##### Install
+
+```
+# remove env var
+./shell_scripts/uninstall.sh
+```
+
 ## Getting started
 
 [Read the guide](./getting-started.md)
