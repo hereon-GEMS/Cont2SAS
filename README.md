@@ -121,7 +121,7 @@ chmod +x ./shell_scripts/*
 ./shell_scripts/install.sh
 ```
 
-##### Install
+##### Uninstall
 
 ```
 # remove env var
@@ -130,7 +130,9 @@ chmod +x ./shell_scripts/*
 
 ## Getting started
 
-[Read the guide](./getting-started.md)
+Some models are provided for generating or simulating nanostructures. From these structures SAS patterns can be calculated. One of the models also facilitates calculation of effective cross-section. 
+
+To run `Cont2SAS` with provided models and parameters, [read the guide](./getting-started.md).
 
 ## License
 
