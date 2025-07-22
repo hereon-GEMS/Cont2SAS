@@ -1,10 +1,14 @@
-# Continuum to scattering
+# Quick start guide
 
 ## Link to README
 
 [README](./README.md)
 
 ## List of models
+
+Provided models either generates SLD based on analytical formula or simulates SLD solving physics-based simulations (e.g. phase-field simulation). Within generated models, some produces structure at one time step; some produces time-evolving structures representing phenomena.
+
+Following are the list of models:
 
 - Generated models
     - Structure
