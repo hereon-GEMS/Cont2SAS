@@ -1,6 +1,28 @@
 # Continuum to scattering
 
+## Link to README
+
+[README](./README.md)
+
+## List of models
+
+- Generated models
+    - Structure
+        - Sphere (ball)
+        - Cube (box)
+        - Sphere at the center of cube (bib)
+        - Sphere off the center of cube (bib_ecc)
+    - Phenomena
+        - Growth of sphere (gg)
+        - interdiffusion of sphere and environment (fs)
+        - Change of chemical composition of sphere (sld_growth)
+- Simulated models
+    - Phase field
+        - Spinodal decomposition of Fe-Cr (phase_field)
+
 ## ball
+
+### Instruction
 
 ```
 # generate data
@@ -17,7 +39,14 @@ xdg-open figure/ball/pseudo_cat_ball.pdf
 xdg-open figure/ball/Iq_ball.pdf
 ```
 
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/ball.md)
+
 ## box
+
+### Instruction
 
 ```
 # generate data
@@ -34,7 +63,14 @@ xdg-open figure/box/pseudo_cat_box.pdf
 xdg-open figure/box/Iq_box.pdf
 ```
 
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/box.md)
+
 ## bib
+
+### Instruction
 
 ```
 # generate data
@@ -51,7 +87,14 @@ xdg-open figure/bib/pseudo_cat_bib.pdf
 xdg-open figure/bib/Iq_bib.pdf
 ```
 
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/bib.md)
+
 ## bib_ecc
+
+### Instruction
 
 ```
 # generate data
@@ -68,7 +111,14 @@ xdg-open figure/bib_ecc/pseudo_cat_bib_ecc.pdf
 xdg-open figure/bib_ecc/Iq_bib_ecc.pdf
 ```
 
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/bib_ecc.md)
+
 ## gg
+
+### Instruction
 
 ```
 # generate data
@@ -87,7 +137,14 @@ xdg-open figure/gg/Iq_gg.pdf
 xdg-open figure/gg/rad_fit_gg.pdf
 ```
 
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/gg.md)
+
 ## fs
+
+### Instruction
 
 ```
 # generate data
@@ -108,7 +165,14 @@ xdg-open figure/fs/rad_fit_fs.pdf
 xdg-open figure/fs/sig_fit_fs.pdf
 ```
 
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/fs.md)
+
 ## sld_grow
+
+### Instruction
 
 ```
 # generate data
@@ -129,7 +193,14 @@ xdg-open figure/sld_grow/sld_fit_sld_grow.pdf
 xdg-open figure/sld_grow/sig_eff_fit_sld_grow.pdf
 ```
 
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/sld_grow.md)
+
 ## phase_field
+
+### Instruction
 
 ```
 # generate data
@@ -148,3 +219,8 @@ xdg-open figure/phase_field/Iq.pdf
 # initial step eliminated
 xdg-open figure/phase_field/ch_len.pdf
 ```
+
+### See detailed explanation
+
+- [See Workflow](./docu/workflow.md)
+- [See model](./docu/models/phase_field.md)
