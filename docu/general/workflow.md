@@ -69,7 +69,7 @@ Check necessary steps for provided simulation models (sim_model):
 5. [gg](../models/gg.md)
 6. [fs](../models/fs.md)
 7. [sld_growth](../models/sld_grow.md)
-8. [phase_field](../models/sld_grow.md)
+8. [phase_field](../models/phase_field.md)
 
 ### Assign sld to nodes
 
