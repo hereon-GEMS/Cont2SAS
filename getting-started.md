@@ -41,8 +41,7 @@ xdg-open figure/ball/Iq_ball.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/ball.md)
+- [Link to documentation](./docu/index.md)
 
 ## box
 
@@ -65,8 +64,7 @@ xdg-open figure/box/Iq_box.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/box.md)
+- [Link to documentation](./docu/index.md)
 
 ## bib
 
@@ -89,8 +87,7 @@ xdg-open figure/bib/Iq_bib.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/bib.md)
+- [Link to documentation](./docu/index.md)
 
 ## bib_ecc
 
@@ -113,8 +110,7 @@ xdg-open figure/bib_ecc/Iq_bib_ecc.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/bib_ecc.md)
+- [Link to documentation](./docu/index.md)
 
 ## gg
 
@@ -139,8 +135,7 @@ xdg-open figure/gg/rad_fit_gg.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/gg.md)
+- [Link to documentation](./docu/index.md)
 
 ## fs
 
@@ -167,8 +162,7 @@ xdg-open figure/fs/sig_fit_fs.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/fs.md)
+- [Link to documentation](./docu/index.md)
 
 ## sld_grow
 
@@ -195,8 +189,7 @@ xdg-open figure/sld_grow/sig_eff_fit_sld_grow.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/sld_grow.md)
+- [Link to documentation](./docu/index.md)
 
 ## phase_field
 
@@ -222,8 +215,7 @@ xdg-open figure/phase_field/ch_len.pdf
 
 ### See detailed explanation
 
-- [See Workflow](./docu/workflow.md)
-- [See model](./docu/models/phase_field.md)
+- [Link to documentation](./docu/index.md)
 
 ## Link to README
 
