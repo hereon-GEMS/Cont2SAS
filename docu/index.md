@@ -2,6 +2,7 @@
 
 ## Index
 
+- [Quick start guide](../getting-started.md)
 - General
     - [Workflow](./general/workflow.md)
 - Models
