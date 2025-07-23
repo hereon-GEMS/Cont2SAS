@@ -4,6 +4,8 @@ Description: Change of chemical composition of spherical grain over time
 
 Name: sld growth (sld_grow)
 
+<!-- <img src="../fig/sld_grow.gif" alt="Demo" width="200"/> -->
+
 ## Copy model_sld_grow.xml template
 
 ```
