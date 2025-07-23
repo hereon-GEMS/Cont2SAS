@@ -1,13 +1,13 @@
-# Steps to run
+# Workflow
 
-1. generate mesh
-2. assign SLD
-3. calculate SAS pattern
-4. calculate effective cross-section
+1. mesh generation
+2. SLD assignment
+3. SAS pattern calculation
+4. Effective cross-section calculation
 
 ## Mesh generation
 
-### Copy input xml template
+### Copy struct.xml template
 
 ```
 # run from main folder
@@ -17,7 +17,7 @@ cp xml/Template/struct.xml xml/
 nano xml/struct.xml
 ```
 
-### Edit input xml
+### Edit struct.xml
 
 - lengths = dimension of simulation box in x,y,z
 - num_cell = num elements in x,y,z directions
