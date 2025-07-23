@@ -1,4 +1,4 @@
-### gg
+# gg
 
 Description: Growth of spherical grain over time
 
