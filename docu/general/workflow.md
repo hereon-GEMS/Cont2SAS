@@ -75,9 +75,9 @@ Check necessary steps for provided simulation models (sim_model):
 
 Run following code:
 
-``` 
+```
 cd $C2S_HOME
-python src/simulation.py
+python src/sim_gen.py
 ```
 
 ### Output data location
