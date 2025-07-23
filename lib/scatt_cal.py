@@ -427,5 +427,3 @@ def qclean_sld(model, xml_dir):
     tree=ET.parse(model_xml)
     root = tree.getroot()
     return float(root.find('qclean_sld').text)
-    
-    
