@@ -134,6 +134,8 @@ Some models are provided for generating or simulating nanostructures. From these
 
 To run `Cont2SAS` with provided models and parameters, read the [getting started](./getting-started.md) guide.
 
+To check detailed documentation, [click](./docu/index.md) here. 
+
 ## Acknowledgement
 
 This work was supported by the consortium DAPHNE4NFDI in the context of the work of the
