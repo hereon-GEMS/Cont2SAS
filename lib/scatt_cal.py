@@ -1,37 +1,53 @@
+"""
+library for scattering calculation
 
-import numpy as np
+Arnab Majumdar
+24.07.2025
+"""
 # from scipy import special
 # from scipy.optimize import minimize
 #from numba import njit, prange
 # from scipy.special import erf
 import xml.etree.ElementTree as ET
 import os
+import warnings
 import mdtraj as md
+import numpy as np
 
-# lagrangian function first order
+# ignore warnings
+warnings.filterwarnings("ignore")
+
 def L1(x,x1,x2):
     """
+    func desc:
+    lagrangian function first order
     x = postion in side element
     x1 = position of shape function node
     x2 = position of other node
     """
     return (x-x2)/(x1-x2)
 
-# lagrangian function second order
 def L2(x,x1,x2,x3):
     """
+    func desc.
+    lagrangian function second order
     x = postion in side element
     x1 = position of shape function node
     x2, x3 = position of other node
     """
     return ((x-x2)*(x-x3))/((x1-x2)*(x1-x3))
 
-def pseudo_b(nodes,cells,node_sld,connec,cell_vol,el_info):
+def pseudo_b_cal(nodes,cells,node_sld,connec,cell_vol,el_info):
+    #pylint: disable=too-many-arguments, too-many-locals, too-many-statements
+    """
+    func desc.
+    calculate scattering length of pseudo atoms
+    """
     el_type=el_info['type']
     el_order=el_info['order']
     if el_type=='lagrangian':
         if el_order==1:
-            num_node=len(node_sld)
+            num_node=len(node_sld) # pylint: disable=unused-variable
             num_cell=len(connec)
             pseudo_b=np.zeros(num_cell)
             for i in range(num_cell):
@@ -39,16 +55,16 @@ def pseudo_b(nodes,cells,node_sld,connec,cell_vol,el_info):
                 cell_i_nodes = nodes[cell_i_node_idx,:]
                 cell_i_node_sld = node_sld[cell_i_node_idx]
                 cell_i=cells[i,:]
-                """
-                0 - 1,1,1
-                1 - 1,1,2
-                2 - 1,2,1
-                3 - 1,2,2
-                4 - 2,1,1
-                5 - 2,1,2
-                6 - 2,2,1
-                7 - 2,2,2
-                """
+                ###########
+                # 0 - 1,1,1
+                # 1 - 1,1,2
+                # 2 - 1,2,1
+                # 3 - 1,2,2
+                # 4 - 2,1,1
+                # 5 - 2,1,2
+                # 6 - 2,2,1
+                # 7 - 2,2,2
+                ###########
                 p_111=cell_i_nodes[0,:]
                 p_112=cell_i_nodes[1,:]
                 p_121=cell_i_nodes[2,:]
@@ -77,35 +93,35 @@ def pseudo_b(nodes,cells,node_sld,connec,cell_vol,el_info):
                 cell_i_nodes = nodes[cell_i_node_idx,:]
                 cell_i_node_sld = node_sld[cell_i_node_idx]
                 cell_i=cells[i,:]
-                """
-                0 - 1,1,1
-                1 - 1,1,2
-                2 - 1,1,3
-                3 - 1,2,1
-                4 - 1,2,2
-                5 - 1,2,3
-                6 - 1,3,1
-                7 - 1,3,2
-                8 - 1,3,3
-                9 - 2,1,1
-                10- 2,1,2
-                11- 2,1,3
-                12- 2,2,1
-                13- 2,2,2
-                14- 2,2,3
-                15- 2,3,1
-                16- 2,3,2
-                17- 2,3,3
-                18- 3,1,1
-                19- 3,1,2
-                20- 3,1,3
-                21- 3,2,1
-                22- 3,2,2
-                23- 3,2,3
-                24- 3,3,1
-                25- 3,3,2
-                26- 3,3,3
-                """
+                ###########
+                # 0 - 1,1,1
+                # 1 - 1,1,2
+                # 2 - 1,1,3
+                # 3 - 1,2,1
+                # 4 - 1,2,2
+                # 5 - 1,2,3
+                # 6 - 1,3,1
+                # 7 - 1,3,2
+                # 8 - 1,3,3
+                # 9 - 2,1,1
+                # 10- 2,1,2
+                # 11- 2,1,3
+                # 12- 2,2,1
+                # 13- 2,2,2
+                # 14- 2,2,3
+                # 15- 2,3,1
+                # 16- 2,3,2
+                # 17- 2,3,3
+                # 18- 3,1,1
+                # 19- 3,1,2
+                # 20- 3,1,3
+                # 21- 3,2,1
+                # 22- 3,2,2
+                # 23- 3,2,3
+                # 24- 3,3,1
+                # 25- 3,3,2
+                # 26- 3,3,3
+                ###########
                 p_111=cell_i_nodes[0,:]
                 p_112=cell_i_nodes[1,:]
                 p_113=cell_i_nodes[2,:]
@@ -164,7 +180,12 @@ def pseudo_b(nodes,cells,node_sld,connec,cell_vol,el_info):
                 pseudo_b[i] = cell_vol*cell_i_cell_sld
     return pseudo_b
 
-def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
+def pseudo_b_cat_cal(pseudo_b,num_cat,method='extend'):
+    # pylint: disable=too-many-locals
+    """
+    func desc.
+    categorize scattering length of pseudo atoms
+    """
     # sorting of b_values
     b_sort=np.sort(pseudo_b)
     b_arg_sort=np.argsort(pseudo_b)
@@ -174,15 +195,15 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
     pseudo_b_cat=np.zeros_like(pseudo_b)
     # no categorization
     if num_cat==0:
-        return pseudo_b_cat
+        output = pseudo_b_cat
     else:
         if method=='direct':
-            """
-            range of b values
-            [o......o......o      ...      o] 
-              div1    div2    div3...  divN
-            |o......|o......|o    ...      o|
-            """
+            ###################################
+            # range of b values
+            # [o......o......o      ...      o]
+            #   div1    div2    div3...  divN
+            # |o......|o......|o    ...      o|
+            ###################################
             cat_min=b_min
             cat_max=b_max
             cat_width=(cat_max-cat_min)/num_cat
@@ -190,7 +211,7 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
             cat_range_arr=np.linspace(cat_min,cat_max,num_cat+1)
             b_sort_cat=np.zeros(len(b_sort))
             sort_cat=np.zeros(len(b_sort))
-            for i in range(len(cat_val_arr)):
+            for i, cat_val in enumerate(cat_val_arr):
                 # lower and upper bound of current category in sorted b array
                 cat_low_bound=cat_range_arr[i]
                 cat_low_bound_arg=len(b_sort[b_sort<cat_low_bound])
@@ -199,17 +220,17 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
                 # cut sorted b array between lower and upper bound of current category
                 # reset categorical b array values to b value of category
                 # reset category array values to current category
-                b_sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=cat_val_arr[i]
+                b_sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=cat_val
                 sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=i#print(prop_sort_cat)
         elif method=='extend':
-            """
-            range of b values
-                [o ......o......o      ...      o] 
-              div1    div2    div3    ...     divN
-            |...o...|...o...|...o...|  ...  |...o...|
-            """
+            ###########################################
+            # range of b values
+            #     [o ......o......o      ...      o]
+            #   div1    div2    div3    ...     divN
+            # |...o...|...o...|...o...|  ...  |...o...|
+            ###########################################
             cat_range_extend=(b_max-b_min)/(2*(num_cat-1))
-            cat_range=b_range+2*cat_range_extend
+            cat_range=b_range+2*cat_range_extend # pylint: disable=unused-variable
             cat_min=b_min-cat_range_extend
             cat_max=b_max+cat_range_extend
             cat_width=(cat_max-cat_min)/num_cat
@@ -217,7 +238,7 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
             cat_range_arr=np.linspace(cat_min,cat_max,num_cat+1)
             b_sort_cat=np.zeros(len(b_sort))
             sort_cat=np.zeros(len(b_sort))
-            for i in range(len(cat_val_arr)):
+            for i, cat_val in enumerate(cat_val_arr):
                 # lower and upper bound of current category in sorted b array
                 cat_low_bound=cat_range_arr[i]
                 cat_low_bound_arg=len(b_sort[b_sort<cat_low_bound])
@@ -226,17 +247,23 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
                 # cut sorted b array between lower and upper bound of current category
                 # reset categorical b array values to b value of category
                 # reset category array values to current category
-                b_sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=cat_val_arr[i]
+                b_sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=cat_val
                 sort_cat[cat_low_bound_arg:cat_upper_bound_arg]=i#print(prop_sort_cat)
         # undo sorting of b values
         pseudo_b_cat[b_arg_sort]=b_sort_cat
         cat=np.zeros(len(pseudo_b_cat), dtype='int')
         cat[b_arg_sort]=sort_cat
-        return pseudo_b_cat, cat
+        output = pseudo_b_cat, cat
+    return output
 
 def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx):
+    # pylint: disable=too-many-locals
+    """
+    func desc.
+    generate pdb and dcd files
+    """
     points=np.float32(pseudo_pos)
-    cat_prop=np.float32(pseudo_b_cat_val)
+    cat_prop=np.float32(pseudo_b_cat_val) # pylint:disable=unused-variable
     topo=md.Topology() #= md.Topology()
     ch=topo.add_chain()
     res=topo.add_residue('RES', ch)
@@ -255,10 +282,15 @@ def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx):
     dcd_file_name=os.path.join(pdb_dcd_dir, 'sample.dcd')
     with md.formats.DCDTrajectoryFile(dcd_file_name, 'w') as f:
         n_frames = 1
-        for j in range(n_frames):
+        for j in range(n_frames):# pylint: disable=unused-variable
             f.write(points)
 
 def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
+    # pylint: disable=too-many-locals, too-many-statements
+    """
+    func desc.
+    generate database for sassena
+    """
     b_val=np.unique(pseudo_b_cat_val)
     b_cat=np.unique(pseudo_b_cat_idx)
     cur_num_cat=len(b_cat)
@@ -307,8 +339,7 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
         el_name='Pseudo'+str(b_cat[i])
         el_sym='P'+str(b_cat[i])
         ET.SubElement(element, "name").text = el_name
-        ET.SubElement(element, "param").text = '^ *'+el_sym #+'.*'  
-        # ET.SubElement(element, "param").text = '/ '+el_sym+'/g'  
+        ET.SubElement(element, "param").text = '^ *'+el_sym #+'.*'
         tree = ET.ElementTree(names)
     tree.write(xml_file)
 
@@ -323,7 +354,7 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
         # el_sym='P'+str(i)
         ET.SubElement(element, "name").text = el_name
         ET.SubElement(element, "type").text = '1'
-        ET.SubElement(element, "param").text = '1'  
+        ET.SubElement(element, "param").text = '1'
         tree = ET.ElementTree(sizes)
     tree.write(xml_file)
 
@@ -331,7 +362,7 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
     # scatterfactors-neutron-coherent.xml
     filename='scatterfactors-neutron-coherent.xml'
     xml_file=os.path.join(definition_dir, filename)
-    
+
     root = ET.Element("scatterfactors")
     for i in range(cur_num_cat):
         element = ET.SubElement(root, "element")
@@ -339,26 +370,31 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
         # el_sym='P'+str(i)
         ET.SubElement(element, "name").text = el_name
         ET.SubElement(element, "type").text = '0'
-        ET.SubElement(element, "param").text = str(b_val[i]) 
+        ET.SubElement(element, "param").text = str(b_val[i])
         tree = ET.ElementTree(root)
     tree.write(xml_file)
 
 def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_length,
                   num_points, resolution_num, sld, xlength, ylength, zlength, mid_point):
+    # pylint: disable=too-many-statements, too-many-locals, too-many-arguments
+    """
+    func desc.
+    generate scatter.xml: input to sassena
+    """
     pdb_file=os.path.join('pdb_dcd','sample.pdb')
     dcd_file=os.path.join('pdb_dcd','sample.dcd')
 
     root=ET.Element("root")
-    
+
     #tier 1 subelements
-    
+
     sample = ET.SubElement(root, "sample")
     database = ET.SubElement(root, "database")
     scattering = ET.SubElement(root, "scattering")
     limits = ET.SubElement(root, "limits")
 
     #sample
-    
+
     structure = ET.SubElement(sample, "structure")
     ET.SubElement(structure, "file").text = pdb_file
     ET.SubElement(structure, "format").text = 'pdb'
@@ -368,11 +404,11 @@ def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_le
     ET.SubElement(frameset, "format").text = 'dcd'
 
     #database
-    
+
     ET.SubElement(database, "file").text = 'database/db-neutron-coherent.xml'
 
     #scattering
-    
+
     ET.SubElement(scattering, "type").text = 'all'
     bg= ET.SubElement(scattering, "background")
     cut= ET.SubElement(bg, "cut")
@@ -422,7 +458,7 @@ def qclean_sld(model, xml_dir):
     func desc:
     get qclean sld
     """
-    model_xml_name='model_{0}.xml'.format(model)
+    model_xml_name=f'model_{model}.xml'
     model_xml=os.path.join(xml_dir, model_xml_name)
     tree=ET.parse(model_xml)
     root = tree.getroot()

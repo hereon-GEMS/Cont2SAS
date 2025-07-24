@@ -196,10 +196,10 @@ for i, t in enumerate(t_arr):
         cell_dy=length_b/ny
         cell_dz=length_b/nz
         cell_vol=cell_dx*cell_dy*cell_dz
-        pseudo_b=scatt.pseudo_b(nodes,cells,node_sld,con,cell_vol,el_info)
+        pseudo_b=scatt.pseudo_b_cal(nodes,cells,node_sld,con,cell_vol,el_info)
 
         # categorize SLD
-        pseudo_b_cat_val, pseudo_b_cat_idx = scatt.pseudo_b_cat(pseudo_b,num_cat,method=method_cat)
+        pseudo_b_cat_val, pseudo_b_cat_idx = scatt.pseudo_b_cat_cal(pseudo_b,num_cat,method=method_cat)
 
         # save pseudo atom info
         scatt_cal_data_file_name='scatt_cal.h5'
