@@ -20,6 +20,25 @@ git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.gi
 cd continuum-to-scattering
 ```
 
+#### Define environment variable
+
+##### Install
+
+```
+# define for current session
+export C2S_HOME=$PWD
+# define for further session
+chmod +x ./shell_scripts/*
+./shell_scripts/install.sh
+```
+
+##### Uninstall
+
+```
+# remove env var
+./shell_scripts/uninstall.sh
+```
+
 ### Required packages
 
 #### Python packages 
@@ -109,30 +128,13 @@ chmod +x ./Sassena/Sassena.AppImage
 mpirun -n 2 ./Sassena/Sassena.AppImage --help
 ```
 
-#### Define environment variable
-
-##### Install
-
-```
-# define for current session
-export C2S_HOME=$PWD
-# define for further session
-chmod +x ./shell_scripts/*
-./shell_scripts/install.sh
-```
-
-##### Uninstall
-
-```
-# remove env var
-./shell_scripts/uninstall.sh
-```
-
 ## Getting started
 
 Some models are provided for generating or simulating nanostructures. From these structures SAS patterns can be calculated. One of the models also facilitates calculation of effective cross-section. 
 
 To run `Cont2SAS` with provided models and parameters, read the [getting started](./getting-started.md) guide.
+
+To check detailed documentation, [click](./docu/index.md) here. 
 
 ## Acknowledgement
 
