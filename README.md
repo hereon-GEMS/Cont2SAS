@@ -20,6 +20,25 @@ git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.gi
 cd continuum-to-scattering
 ```
 
+#### Define environment variable
+
+##### Install
+
+```
+# define for current session
+export C2S_HOME=$PWD
+# define for further session
+chmod +x ./shell_scripts/*
+./shell_scripts/install.sh
+```
+
+##### Uninstall
+
+```
+# remove env var
+./shell_scripts/uninstall.sh
+```
+
 ### Required packages
 
 #### Python packages 
@@ -107,25 +126,6 @@ wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/proje
 # run sassena
 chmod +x ./Sassena/Sassena.AppImage
 mpirun -n 2 ./Sassena/Sassena.AppImage --help
-```
-
-#### Define environment variable
-
-##### Install
-
-```
-# define for current session
-export C2S_HOME=$PWD
-# define for further session
-chmod +x ./shell_scripts/*
-./shell_scripts/install.sh
-```
-
-##### Uninstall
-
-```
-# remove env var
-./shell_scripts/uninstall.sh
 ```
 
 ## Getting started
