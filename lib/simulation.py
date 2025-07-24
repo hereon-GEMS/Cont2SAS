@@ -8,29 +8,39 @@ Created on Fri Jun 23 10:28:09 2023
 import os
 import xml.etree.ElementTree as ET
 import numpy as np
-from scipy import special
-from scipy.optimize import minimize
+from scipy.special import erf # pylint: disable=no-name-in-module
 import h5py
 
 def model_run(sim_model,nodes, midpoint, t, t_end):
+    """
+    Function desc:
+    a) Choosing which model to run
+    b) Assign sld to mesh : sim_sld
+    c) max and min sld for cbar in gif : sld_max, sld_min
+    """
     if sim_model=='ball':
-        return model_ball(nodes, midpoint, t)
+        sim_sld, sld_max, sld_min = model_ball(nodes, midpoint)
     if sim_model=='box':
-        return model_box(nodes, midpoint, t)
+        sim_sld, sld_max, sld_min = model_box(nodes)
     if sim_model=='bib':
-        return model_bib(nodes, midpoint, t)
+        sim_sld, sld_max, sld_min = model_bib(nodes, midpoint)
     if sim_model=='bib_ecc':
-        return model_bib_ecc(nodes, midpoint, t)
+        sim_sld, sld_max, sld_min = model_bib_ecc(nodes, midpoint)
     if sim_model=='gg':
-        return model_gg(nodes, midpoint, t, t_end)
+        sim_sld, sld_max, sld_min = model_gg(nodes, midpoint, t, t_end)
     if sim_model=='fs':
-        return model_fs(nodes, midpoint, t, t_end)
+        sim_sld, sld_max, sld_min = model_fs(nodes, midpoint, t, t_end)
     if sim_model=='sld_grow':
-        return model_sld_grow(nodes, midpoint, t, t_end)
+        sim_sld, sld_max, sld_min = model_sld_grow(nodes, midpoint, t, t_end)
     if sim_model=='phase_field':
-        return model_phase_field()
+        sim_sld, sld_max, sld_min = model_phase_field()
+    return sim_sld, sld_max, sld_min
 
 def model_phase_field():
+    """
+    Function desc:
+    define sld, man and min for phase field model 
+    """
     # read model_run_param from xml
     xml_folder='./xml/'
     model_xml=os.path.join(xml_folder, 'model_phase_field.xml')
@@ -40,7 +50,8 @@ def model_phase_field():
     name=root.find('name').text
     time=float(root.find('time').text)
     # run simulation
-    file_name='moose/{0}_{1:0>5}.h5'.format(name, int(time))
+    time_int=int(time)
+    file_name=f'moose/{name}_{time_int:0>5}.h5'
     file=h5py.File(file_name,'r')
     sim_sld=file['SLD'][:]
     sld_max=np.max(sim_sld)
@@ -48,7 +59,11 @@ def model_phase_field():
     return sim_sld, sld_max, sld_min
 
 
-def model_ball(nodes, midpoint, t):
+def model_ball(nodes, midpoint):
+    """
+    Function desc:
+    define sld, man and min for ball model 
+    """
     # read model_run_param from xml
     xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_ball.xml')
@@ -65,9 +80,12 @@ def model_ball(nodes, midpoint, t):
     sld_max=sld
     sld_min=0
     return sim_sld, sld_max, sld_min
-    # return sim_sld
 
-def model_box(nodes, midpoint, t):
+def model_box(nodes):
+    """
+    Function desc:
+    define sld, man and min for box model 
+    """
     # read model_run_param from xml
     xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_box.xml')
@@ -82,7 +100,11 @@ def model_box(nodes, midpoint, t):
     sld_min=0
     return sim_sld, sld_max, sld_min
 
-def model_bib(nodes, midpoint, t):
+def model_bib(nodes, midpoint):
+    """
+    Function desc:
+    define sld, man and min for bib model 
+    """
     # read model_run_param from xml
     xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_bib.xml')
@@ -101,7 +123,12 @@ def model_bib(nodes, midpoint, t):
     sld_min=sld_box
     return sim_sld, sld_max, sld_min
 
-def model_bib_ecc(nodes, midpoint, t):
+def model_bib_ecc(nodes, midpoint):
+    # pylint: disable=too-many-locals
+    """
+    Function desc:
+    define sld, man and min for bib_ecc model 
+    """
     # read model_run_param from xml
     xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_bib_ecc.xml')
@@ -126,6 +153,11 @@ def model_bib_ecc(nodes, midpoint, t):
     return sim_sld, sld_max, sld_min
 
 def model_gg(nodes, midpoint, t, t_end):
+    # pylint: disable=too-many-locals
+    """
+    Function desc:
+    define sld, man and min for gg model 
+    """
     # read model_run_param from xml
     xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_gg.xml')
@@ -147,6 +179,11 @@ def model_gg(nodes, midpoint, t, t_end):
     return sim_sld, sld_max, sld_min
 
 def model_fs(nodes, midpoint, t, t_end):
+    # pylint: disable=too-many-locals
+    """
+    Function desc:
+    define sld, man and min for fs model 
+    """
     # read model_run_param from xml
     xml_folder='./xml/'
     struct_xml=os.path.join(xml_folder, 'model_fs.xml')
@@ -167,15 +204,16 @@ def model_fs(nodes, midpoint, t, t_end):
         sim_sld=(sld_env-sld_grain)*np.heaviside(coord_r-rad,0)+sld_grain
     else:
         #sld=-np.heaviside(coord_r-r,0)+1
-        sim_sld=((sld_grain-sld_env)/2)*(1-special.erf((coord_r-rad)/(np.sqrt(2)*sig)))+sld_env
+        sim_sld=((sld_grain-sld_env)/2)*(1-erf((coord_r-rad)/(np.sqrt(2)*sig)))+sld_env
     sld_max=sld_grain
     sld_min=sld_env
     return sim_sld, sld_max, sld_min
 
 def model_sld_grow(nodes, midpoint, t, t_end):
+    # pylint: disable=too-many-locals
     """
-    function desc: 
-    Define sld distribution for chemical composition change model
+    Function desc:
+    define sld, man and min for sld_grow model 
     """
     # read model_run_param from xml
     xml_folder='./xml/'
@@ -196,234 +234,3 @@ def model_sld_grow(nodes, midpoint, t, t_end):
     sld_max=max(sld_start, sld_end, sld_env)
     sld_min=min(sld_start, sld_end, sld_env)
     return sim_sld, sld_max, sld_min
-
-#####################################################################
-#                         old functions (archive)                   #
-#####################################################################
-
-# def sph_grain(coords,origin,r,sld_in,sld_out):
-#     """
-#     function desc: 
-#     Define sld distribution for spherical grain 2d
-#     """
-#     coords = np.array(coords)
-#     sld = sld_out*np.ones(len(coords))
-#     cord_ed = np.sum((coords-origin)**2,axis=1)
-#     sld [cord_ed <= r**2] = sld_in
-#     return sld
-
-# def sph_grain_3d(coords,origin,r,sld_in,sld_out):
-#     """
-#     function desc: 
-#     Define sld distribution for spherical grain 3d
-#     """
-#     coords = np.array(coords)
-#     sld = sld_out*np.ones(len(coords))
-#     cord_ed = np.sum((coords-origin)**2,axis=1)
-#     sld [cord_ed <= r**2] = sld_in
-#     return sld
-
-# def sph_grain_fs_3d(coords,origin,r,fuzz_val,sld_in,sld_out):
-#     """
-#     function desc: 
-#     Define sld distribution for fuzzy sphere
-#     """
-#     coords = np.array(coords)
-#     sld = np.zeros(len(coords))
-#     coord_r=np.sqrt(np.sum((coords-origin)**2,axis=1))
-#     max_sld=np.max(sld_in, sld_out)
-#     min_sld=np.min(sld_in, sld_out)
-#     if fuzz_val==0:
-#         sld=-np.heaviside(coord_r-r,0)+1
-#     else:
-#         sld=(1/2)*(1-special.erf((coord_r-r)/(np.sqrt(2)*fuzz_val)))
-#     #adjust with range
-#     sld_final = (sld_in-sld_out) * sld + sld_out
-#     return sld_final
-
-# def sph_grain_diffus_book_1_3d(nodes,origin,rad,D_coeff, time, sld_in,sld_out):
-#     """
-#     function desc: 
-#     SLD distribution for diffusion model
-#     """
-#     n=50 # num_term in series
-#     a=rad
-#     t=time
-#     c1=sld_in
-#     c0=sld_out
-#     nodes = np.array(nodes)
-#     sld = sld_out*np.ones(len(nodes))
-#     r=np.sqrt(np.sum((nodes-origin)**2,axis=1))
-#     if t==0:
-#         sld [r**2 <= rad**2] = sld_in
-#     else:
-#         if D_coeff*t<=0.1:
-#             for i in range(len(r)):
-#                 series=0
-#                 if r[i] <=rad:
-#                     if r[i]==0:
-#                         for j in range(1,n):
-#                             series+=((-1)**j) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
-#                         sld[i]=c1+(c0-c1)*(1+2*series)
-#                     else:
-#                         for j in range(n):
-#                             term_1=(2*j+1)*a
-#                             term_2=2* np.sqrt(D_coeff*t)
-#                             series+=special.erf((term_1-r[i])/term_2)-special.erf((term_1+r[i])/term_2)
-#                         sld[i]=c1+(c0-c1)*(a/r[i]*series)
-#         else:
-#             for i in range(len(r)):
-#                 series=0
-#                 if r[i] <=rad:
-#                     if r[i]==0:
-#                         for j in range(1,n):
-#                             series+=((-1)**j) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
-#                         sld[i]=c1+(c0-c1)*(1+2*series)
-#                     else:
-#                         for j in range(1,n):
-#                             series+=((-1)**j/j) * np.sin(j*np.pi*r[i]/a) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2))) # pylint: disable=line-too-long
-#                         sld[i]=c1+(c0-c1)*(1+((2*a)/(np.pi*r[i]))*series)
-#     return sld
-
-# def sph_grain_hydinout_3d(nodes,origin,rad,D_coeff, time, sld_hyd, sld_dehyd,sld_out, cur_cond):
-#     """
-#     function desc:
-#     Define sld distribution for probabilistic model
-#     """
-#     n=50 # num_term in series
-#     a=rad
-#     t=time
-#     if cur_cond=='hyd':
-#         c1= sld_hyd # sld_in
-#         c0= sld_dehyd # sld_out
-#     else:
-#         c1= sld_dehyd # sld_in
-#         c0= sld_hyd # sld_out
-
-#     nodes = np.array(nodes)
-#     sld = sld_out*np.ones(len(nodes))
-#     r=np.sqrt(np.sum((nodes-origin)**2,axis=1))
-#     if t==0:
-#         sld [r**2 <= rad**2] = c1
-            
-#     else:
-#         if D_coeff*t<=0.1:
-#             for i in range(len(r)):
-#                 series=0
-#                 if r[i] <=rad:
-#                     if r[i]==0:
-#                         for j in range(1,n):
-#                             series+=((-1)**j) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
-                    
-#                         sld[i]=c1+(c0-c1)*(1+2*series)
-#                     else:
-#                         for j in range(n):
-#                             #series+=((-1)**j/j) * np.sin(j*np.pi*r[i]/a) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
-#                             term_1=(2*j+1)*a
-#                             term_2=2* np.sqrt(D_coeff*t)
-#                             series+=special.erf((term_1-r[i])/term_2)-special.erf((term_1+r[i])/term_2)
-#                         sld[i]=c1+(c0-c1)*(a/r[i]*series)
-#         else:
-#             for i in range(len(r)):
-#                 series=0
-#                 if r[i] <=rad:
-#                     if r[i]==0:
-#                         for j in range(1,n):
-#                             series+=((-1)**j) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
-                    
-#                         sld[i]=c1+(c0-c1)*(1+2*series)
-#                     else:
-#                         for j in range(1,n):
-#                             series+=((-1)**j/j) * np.sin(j*np.pi*r[i]/a) * np.exp(-((D_coeff*(j**2)*(np.pi**2)*t)/(a**2)))
-                    
-#                         sld[i]=c1+(c0-c1)*(1+((2*a)/(np.pi*r[i]))*series)
-#     return sld
-    
-# def sph_multigrain_loc_3d(r_val, r_num, box_length):
-#     """
-#     function desc: 
-#     Define location of multiple grains
-#     """
-#     rad_val=r_val
-#     rad_num=r_num#np.array(r_num, dtype='int')
-#     radii=np.zeros(int(np.sum(rad_num)))
-#     idx=0
-#     for i in range(len(rad_val)):
-#         num=int(rad_num[i])
-#         radii[idx:idx+num]=np.repeat(rad_val[i], num)
-#         idx+=num
-    
-#     box_length_x=box_length
-#     box_length_y=box_length_x
-#     box_length_z=box_length_x
-#     initial_positions=np.row_stack((box_length_x*np.random.random(len(radii)), 
-#                              box_length_y*np.random.random(len(radii)), 
-#                              box_length_z*np.random.random(len(radii)))).T 
-    
-#     def lj_potential(positions, radii=radii):
-#         """
-#         function desc: 
-#         Define the Lennard-Jones potential function
-#         """
-#         potential_energy = 0.0
-#         tot_el=len(positions)
-#         positions=positions.reshape(int(tot_el/3),3)
-#         num_spheres = len(positions)
-    
-#         for i in range(num_spheres):
-#             for j in range(i + 1, num_spheres):
-#                 #print(i,j)
-#                 rij = np.linalg.norm(positions[i] - positions[j])
-#                 sigma = (radii[i] + radii[j]) / 2.0
-#                 epsilon = 1.0  # Adjust as needed
-#                 potential_energy += 4.0 * epsilon * ((sigma / rij) ** 12 - (sigma / rij) ** 6)
-#                 for k in range(3):
-#                     if positions[i,k]-radii[i] <=0:
-#                         potential_energy +=1e9
-    
-#         return potential_energy
-    
-#     def constraint_overlap(positions, radii=radii):
-#         """
-#         function desc: 
-#         Define constraints to prevent overlap
-#         """
-#         tot_el=len(positions)
-#         positions=positions.reshape(int(tot_el/3),3)
-#         num_spheres = len(positions)
-#         constraints = []
-    
-#         for i in range(num_spheres):
-#             for j in range(i + 1, num_spheres):
-#                 rij = np.linalg.norm(positions[i] - positions[j])
-#                 sigma = (radii[i] + radii[j]) / 2.0
-#                 #constraints.append(sigma - rij)
-#                 constraints.append(-sigma + rij) 
-        
-#         return constraints
-    
-#     # Perform energy minimization with constraints
-#     result = minimize(
-#         lj_potential,
-#         x0=initial_positions,
-#         args=(radii,),
-#         constraints={"type": "ineq", "fun": constraint_overlap, 'args': (radii,)},
-#         method="SLSQP"  # You can choose a different optimization method if needed
-#     )
-    
-#     for i in range(len(radii)):
-#         print('coordinate: {0}, radius: {1}'.format(result.x.reshape(len(radii),3)[i], radii[i]))
-    
-#     return result.x.reshape(len(radii),3), radii
-   
-# def sph_multigrain_3d(nodes,radii, r_dist, sld_in,sld_out):
-#     """
-#     function desc: 
-#     calculate sld of multiple grains with diff radii
-#     """
-#     nodes = np.array(nodes)
-#     sld = sld_out*np.ones(len(nodes))
-#     for i, (origin, r) in enumerate(zip(r_dist, radii)):
-#         cord_ed = np.sum((nodes-origin)**2,axis=1)
-#         sld [cord_ed <= r**2] = sld_in
-#     return sld

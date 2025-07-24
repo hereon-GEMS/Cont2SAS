@@ -1,9 +1,9 @@
 
 import numpy as np
-from scipy import special
-from scipy.optimize import minimize
+# from scipy import special
+# from scipy.optimize import minimize
 #from numba import njit, prange
-from scipy.special import erf
+# from scipy.special import erf
 import xml.etree.ElementTree as ET
 import os
 import mdtraj as md
@@ -57,6 +57,7 @@ def pseudo_b(nodes,cells,node_sld,connec,cell_vol,el_info):
                 p_212=cell_i_nodes[5,:]
                 p_221=cell_i_nodes[6,:]
                 p_222=cell_i_nodes[7,:]
+                # pylint: disable=line-too-long
                 cell_i_cell_sld = (L1(cell_i[0],p_111[0],p_211[0]) * L1(cell_i[1],p_111[1],p_121[1]) * L1(cell_i[2],p_111[2],p_112[2]) * cell_i_node_sld[0] +
                                    L1(cell_i[0],p_112[0],p_212[0]) * L1(cell_i[1],p_112[1],p_122[1]) * L1(cell_i[2],p_112[2],p_111[2]) * cell_i_node_sld[1] +
                                    L1(cell_i[0],p_121[0],p_221[0]) * L1(cell_i[1],p_121[1],p_111[1]) * L1(cell_i[2],p_121[2],p_122[2]) * cell_i_node_sld[2] +
@@ -132,6 +133,7 @@ def pseudo_b(nodes,cells,node_sld,connec,cell_vol,el_info):
                 p_331=cell_i_nodes[24,:]
                 p_332=cell_i_nodes[25,:]
                 p_333=cell_i_nodes[26,:]
+                #pylint: disable=line-too-long
                 cell_i_cell_sld = (L2(cell_i[0],p_111[0],p_211[0],p_311[0]) * L2(cell_i[1],p_111[1],p_121[1],p_131[1]) * L2(cell_i[2],p_111[2],p_112[2],p_113[2]) * cell_i_node_sld[0] +
                                    L2(cell_i[0],p_112[0],p_212[0],p_312[0]) * L2(cell_i[1],p_112[1],p_122[1],p_132[1]) * L2(cell_i[2],p_112[2],p_111[2],p_113[2]) * cell_i_node_sld[1] +
                                    L2(cell_i[0],p_113[0],p_213[0],p_313[0]) * L2(cell_i[1],p_113[1],p_123[1],p_133[1]) * L2(cell_i[2],p_113[2],p_111[2],p_112[2]) * cell_i_node_sld[2] +
@@ -159,7 +161,6 @@ def pseudo_b(nodes,cells,node_sld,connec,cell_vol,el_info):
                                    L2(cell_i[0],p_331[0],p_131[0],p_231[0]) * L2(cell_i[1],p_331[1],p_311[1],p_323[1]) * L2(cell_i[2],p_331[2],p_332[2],p_333[2]) * cell_i_node_sld[24] +
                                    L2(cell_i[0],p_332[0],p_132[0],p_232[0]) * L2(cell_i[1],p_332[1],p_312[1],p_322[1]) * L2(cell_i[2],p_332[2],p_331[2],p_333[2]) * cell_i_node_sld[25] +
                                    L2(cell_i[0],p_333[0],p_133[0],p_233[0]) * L2(cell_i[1],p_333[1],p_313[1],p_323[1]) * L2(cell_i[2],p_333[2],p_331[2],p_332[2]) * cell_i_node_sld[26])
-                #cell_i_cell_sld = np.average(cell_i_node_sld)
                 pseudo_b[i] = cell_vol*cell_i_cell_sld
     return pseudo_b
 
@@ -186,7 +187,7 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
             cat_max=b_max
             cat_width=(cat_max-cat_min)/num_cat
             cat_val_arr=np.linspace(cat_min+cat_width/2, cat_max-cat_width/2, num_cat)
-            cat_range_arr=np.linspace(cat_min,cat_max,num_cat+1)    
+            cat_range_arr=np.linspace(cat_min,cat_max,num_cat+1)
             b_sort_cat=np.zeros(len(b_sort))
             sort_cat=np.zeros(len(b_sort))
             for i in range(len(cat_val_arr)):
@@ -213,7 +214,7 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
             cat_max=b_max+cat_range_extend
             cat_width=(cat_max-cat_min)/num_cat
             cat_val_arr=np.linspace(cat_min+cat_width/2, cat_max-cat_width/2, num_cat)
-            cat_range_arr=np.linspace(cat_min,cat_max,num_cat+1)    
+            cat_range_arr=np.linspace(cat_min,cat_max,num_cat+1)
             b_sort_cat=np.zeros(len(b_sort))
             sort_cat=np.zeros(len(b_sort))
             for i in range(len(cat_val_arr)):
@@ -232,7 +233,7 @@ def pseudo_b_cat(pseudo_b,num_cat,method='extend'):
         cat=np.zeros(len(pseudo_b_cat), dtype='int')
         cat[b_arg_sort]=sort_cat
         return pseudo_b_cat, cat
-    
+
 def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx):
     points=np.float32(pseudo_pos)
     cat_prop=np.float32(pseudo_b_cat_val)
@@ -245,12 +246,12 @@ def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx):
         el_name='Pseudo'+str(pseudo_b_cat_idx[i])
         sym='P'+str(pseudo_b_cat_idx[i])
         try:
-            ele=(md.element.Element(10,el_name, sym, 10, 10))
+            ele=md.element.Element(10,el_name, sym, 10, 10)
         except AssertionError:
-            ele=(md.element.Element.getBySymbol(sym))
+            ele=md.element.Element.getBySymbol(sym)
         topo.add_atom(sym, ele, res)
     with md.formats.PDBTrajectoryFile(pdb_file_name,'w') as f:
-        f.write(points, topo) 
+        f.write(points, topo)
     dcd_file_name=os.path.join(pdb_dcd_dir, 'sample.dcd')
     with md.formats.DCDTrajectoryFile(dcd_file_name, 'w') as f:
         n_frames = 1
@@ -261,7 +262,7 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
     b_val=np.unique(pseudo_b_cat_val)
     b_cat=np.unique(pseudo_b_cat_idx)
     cur_num_cat=len(b_cat)
-    # copy xml files that are not reproducible by coding 
+    # copy xml files that are not reproducible by coding
     # this can be part of further work
     # check files in database_sassena dir
     os.system('cp -r database_sassena/*.xml ' + db_dir + '/')
@@ -271,14 +272,14 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
     # exclusionfactors-neutron.xml
     filename='exclusionfactors-neutron.xml'
     xml_file=os.path.join(definition_dir, filename)
-    
+
     exclusionfactors = ET.Element("exclusionfactors")
     for i in range(cur_num_cat):
         element = ET.SubElement(exclusionfactors, "element")
         el_name='Pseudo'+str(b_cat[i])
         ET.SubElement(element, "name").text = el_name
         ET.SubElement(element, "type").text = "1"
-        ET.SubElement(element, "param").text = "1"   
+        ET.SubElement(element, "param").text = "1"
         tree = ET.ElementTree(exclusionfactors)
     tree.write(xml_file)
 
@@ -291,10 +292,10 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
         element = ET.SubElement(masses, "element")
         el_name='Pseudo'+str(b_cat[i])
         ET.SubElement(element, "name").text = el_name
-        ET.SubElement(element, "param").text = "1"  
+        ET.SubElement(element, "param").text = "1"
         tree = ET.ElementTree(masses)
     tree.write(xml_file)
-    
+
     # names.xml
     filename='names.xml'
     xml_file=os.path.join(definition_dir, filename)
@@ -417,10 +418,12 @@ def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_le
     tree.write(scatter_xml_file)
 
 def qclean_sld(model, xml_dir):
+    """
+    func desc:
+    get qclean sld
+    """
     model_xml_name='model_{0}.xml'.format(model)
     model_xml=os.path.join(xml_dir, model_xml_name)
     tree=ET.parse(model_xml)
     root = tree.getroot()
     return float(root.find('qclean_sld').text)
-    
-    
