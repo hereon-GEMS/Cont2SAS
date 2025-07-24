@@ -1,4 +1,4 @@
-# phase_field
+# Phase field
 Description: Iron - Chromium spinodal decomposition
 
 Name: phase_field
