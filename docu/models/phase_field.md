@@ -3,7 +3,7 @@ Description: Iron - Chromium spinodal decomposition
 
 Name: phase_field
 
-## Copy model_ball.xml template
+## Copy phase_field.xml template
 
 ```
 # run from main folder
@@ -13,7 +13,7 @@ cp xml/Template/model_ball.xml xml/
 nano xml/model_ball.xml
 ```
 
-## Edit model_ball.xml
+## Edit phase_field.xml
 
 - name = name of the model (= 'spinodal_fe_cr')
 - time = simulation time
