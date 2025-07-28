@@ -31,15 +31,62 @@ bibliography: paper.bib
 
 # Summary
 
-Different Small Angle Scattering (SAS) techniques, such as Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS), are used to characterizing material structure at the nanometer length scale. The experiments record Small Angle Scattering (SAS) intensity $(I)$ vs scattering vector magnitude $(Q)$ curves -- also at different times for time-evolving structures.  The `Cont2SAS` software provides the software solution for calculating SAS patterns numerically from continuum structures. The software is built on the existing software solution `Sassena` -- known for calculating scattering patterns from atomic structures. In addition to SAS patterns, `Cont2SAS` can also calculate effective-cross-section for comparing with neutron count rate. This method can help characterizing evolution of composition, which structure are not changing `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
+<!-- Continuum nanostructures can be created using physics-based simulations or knowledge-based generations. The simulated or generated nanostructures must be validated by comparing them with data obtained from different Small Angle Scattering (SAS) experiments, such as Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS). To perform the comparison,  -->
+
+`Cont2SAS` software is used to calculate Small Angle Scattering (SAS) data from Continuum (Cont) nanostructures. `Cont2SAS` is built on the existing software solution `Sassena` -- known for calculating scattering patterns from atomic structures `[@lindner2012sassena; lindner2012towards; @sassena:2017, sassena:2023; majumdar2024computation]`. `Cont2SAS` can calculate: 
+1. SAS patterns ($I$ vs $Q$: SAS intensity vs scattering vector magnitude) 
+2. effective cross-section ($\sigma_{\text{eff}}$ vs $t$: neutron count rate per unit flux vs time)
+  
+Through the comparison of calculated and measured SAS data, simulations and SAS experiments can be used in a complementary manner to validate simulations, tune simulation parameters, and analyze SAS patterns `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
+
+
+
+
+<!-- , are used to characterize material structure at the nanometer length scale. The experiments record Small Angle Scattering (SAS) intensity $(I)$ vs scattering vector magnitude $(Q)$ curves -- also at different times to capture structural change during a phenomena. To analyze the recorded data, nanostructures are generated or simulated, from which SAS patterns are calculated and compared with 
+
+ The `Cont2SAS` software is used for calculating Small Angle Scattering (SAS) data numerically from continuum structures. The software is built on the existing software solution `Sassena` -- known for calculating scattering patterns from atomic structures. In addition to SAS patterns, `Cont2SAS` can also calculate effective-cross-section for comparing with neutron count rate. 
+ The calculated SAS pattern from continuum structures are compared with measuremed data to validate simulations, tune simulation parametrs, and analyze SAS patterns `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
+
+
+ This method can help characterizing evolution of composition, which structure are not changing `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
 
 However, a direct retrieval of the material structure from a SAS pattern is not possible. So, SAS patterns are often calculated from material structures simulated based on physics or generated based on knwledge of the sample. The calculated patterns are compared with measured data.
 
-continuum structures using the `Cont2SAS` software. Simulation of structure can be done based of physics, using other software, e.g. moose. The generation of structure can be performed based on knowledge of the sample using `Cont2SAS`. The calculated SAS pattern from continuum structures are compared with measuremed data to validate simulations, tune simulation parametrs, and analyze SAS patterns `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
+continuum structures using the `Cont2SAS` software. Simulation of structure can be done based of physics, using other software, e.g. moose. The generation of structure can be performed based on knowledge of the sample using `Cont2SAS`. The calculated SAS pattern from continuum structures are compared with measuremed data to validate simulations, tune simulation parametrs, and analyze SAS patterns `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`. -->
 
 # Statement of need
 
-The simulation of material structure at the nanometer length scale can be performed using different simulations methodogies, which can broadly be classified into two categories: Atomistic simulations and continuum simulations. Atomistic simulations produce nanoscopic structures with atomic resolution, which makes them more accurate than continuum simutations that produce continuum structures. However, atomistic simulations are limited in length and time scales. Continuum simulations have no such limit and can simulate with sufficient accuracy provide a better alternative 
+The simulation of material structure at the nanometer length scale can be performed using atomistic simulations and continuum simulations. Atomistic simulations produce nanoscopic structures with atomic resolution, which makes them more accurate than continuum simutations that produce continuum structures. However, continuum simulations have an advantage over atomistic ones as continuum simulations can simulate bigger volumes for a larger time. 
+
+The accuracy of continuum simulations can be checked by validating them against SAS experiments, such as Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS). The validation is performed by comparing SAS data calculated from simulated nanostrucres with measured ones. A validated simulation can also be used to analyze SAS data because a dicrect retrieval of nanstructure from SAS data is not possible. 
+
+Continuum nanostructures can also be generated based on knowledge of the sample, insteaf of simulating them based on physics based equations. Both generated and simulated structures are expected to output either Scattering Length Density (SLD) ($\beta$) values or a set of variables (e.g. density ($\rho$) and composition ($\chi$)) from which SLD values can be calculated. From the distribution of SLD, SAS patterns can be calculated numerically.
+
+In the `Cont2SAS` repository, several examples are provided for simple model structures, from which SAS patterns can be calculated numerically and validated against analytical formula. For one model the structure does not change but the chemical composition changes. For such a situation, effective cross-section ($\sigma_{\text{eff}}$) is proportional to the square of difference of SLD, which can be shown with the provided scripts. For one example, the nanostructure for Fe- Cr spinodal decomposition is simulated FEM and the script for calculating SAS pattern is included in the package.
+
+`Cont2SAS` provides the much needed software platform for calculating SAS pattern from continuum simulations. The addition of effective cross-section in the software package is going be helpful for analyzing phenomena that doesnot induce any structural change, instead a composition change `[@aslan2019high]`
+
+<!-- The numerical calculations are validated
+
+A direct retieval of the nanosctructure from SAS data is not possible due to under-determination. So, SAS data is calculated from simulated nanostrucres and compared to measured data. Such 
+
+Once the simulation method is validated, this
+
+A validated simulation can also be used for anal
+
+
+from can also be analyzed using simulations as a direct retrival of nanostructure is not possible from SAS data
+
+
+Since the SAS experients cover a large volume and can probe nanoscopic phenomema for a time scale in the range of seconds, continuum simulations are sometimes the only simulation method that can be used to
+
+
+atomistic simulations are limited in length and time scales. Whereas, continuum simulations can produce nanostructures that cover bigger volumes for larger times. So, the continuum simulations, validated against experiments, can be used to simulate big volumes for sugfficient time
+
+A bigger volume simulatedDifferent SAS techniques
+
+
+ and can simulate with sufficient accuracy provide a better alternative 
 
 Since SAS intensities contain information of a macroscopic volume and can probe nanoscopic phenomena occuring in the range of milliseconds, Continuum simulations are better alternative for 
 
@@ -51,7 +98,7 @@ The complementary use of simulations and SAS patterns can be performed with diff
 
 From SANS patterns, a new quantity named `effective cross-section` can also be calculated using `Cont2SAS`. `effective cross-section` can be understood as neutron count rate per unit neutron flux. Comparing `effective cross-section` and `neutron count rate` can be usefull for samples that does not change its nanoscopic structure during a process, but the chemical composition is changed `[@aslan2019high]`.
 
-The integration of continuum simulation and SAS measurements opens the door for simulating materials for bigger sample volumes for longer times. This is an essential improvement because the SAS technique also probes macroscopic volumes for time scale in the rage in seconds.
+The integration of continuum simulation and SAS measurements opens the door for simulating materials for bigger sample volumes for longer times. This is an essential improvement because the SAS technique also probes macroscopic volumes for time scale in the rage in seconds. -->
 
 # Mathematics
 Calculation of SLD from local density and composition:
@@ -59,20 +106,24 @@ $$
 \beta(\vec{r})= \rho_{\text{m}}(\vec{r}) \cdot N_{\text{A}} \cdot \sum_{\alpha} \chi_{\alpha}(\vec{r}) \cdot \sum_{\text{el}} c_{\alpha, \text{el}} \cdot b_{\text{el}}
 $$
 
-Analytical calculation of SAS pattern from SLD distribution:
-$$
-I(Q)=\left\langle\left|\iiint\limits_V \beta(\vec{r})\,\mathrm{e}^{\mathrm{i} \vec{Q} \cdot \vec{r}}\,\mathrm{d}\vec{r}\,\right|^2\right\rangle_{\Omega}
-$$
-
 Numerical calculation of SAS pattern from discretized SLD distribution:
 $$
 I(Q)=\left\langle\left|\sum_{j=1}^{N}\sum_{k=1}^{N} b_j b_k e^{\mathrm{i} \vec{Q} \cdot (\vec{R}_j -\vec{R}_k)}\right|^2\right\rangle_{\Omega}
+$$
+
+Analytical calculation of SAS pattern from SLD distribution:
+$$
+I(Q)=\left\langle\left|\iiint\limits_V \beta(\vec{r})\,\mathrm{e}^{\mathrm{i} \vec{Q} \cdot \vec{r}}\,\mathrm{d}\vec{r}\,\right|^2\right\rangle_{\Omega}
 $$
 
 Numerical calculation of effctive cross-section $\sigma_{\text{eff}}$ from SAS pattern:
 $$
 \sigma_{\text{eff}}=\int_{Q}w(Q)I(Q)
 $$
+
+
+
+
 
 # Citations
 
