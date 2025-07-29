@@ -1,11 +1,25 @@
 # Workflow
 
+The workflow of `Cont2SAS` can be divided into four steps:
+
 1. mesh generation
 2. SLD assignment
 3. SAS pattern calculation
 4. Effective cross-section calculation
 
 ## Mesh generation
+
+The mesh generation step creates a mesh, which includes the coordinates of nodes, cell center, connectivity matrix, element type. 
+
+Relevant files:
+1. Relevant input xml: struct.xml
+2. Relevant script: src/struct_gen.py
+
+Important points:
+1. Generated mesh should match the mesh used for simulation, when outside software is used (e.g. moose)
+2. The connectivity matrix should match the `Cont2SAS` meshing strategy.
+3. The current version can only generate regular meshing. 
+4. The current version supports only lagrangian elements of 1st and 2nd order.
 
 ### Copy struct.xml template
 
@@ -43,6 +57,15 @@ Output is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder`
 
 ## SLD assignment
 
+The SLD assignment step assigns SLD values to the nodes. For generated models, a formula is defined for assigning SLD values. For simulated models, the SLD values are read from `hdf5` files, which is created after postprocessing of simulated results.
+
+1. Relevant input xml: simulation.xml and appropiate model xmls
+2. Relevant script: src/sim_gen.py
+
+Important points:
+1. For different models, different model xml is input (see below for reference).
+2. For a new user defined model, definition of model xml must be added.
+
 ### Copy simulation.xml template
 
 ```
@@ -53,6 +76,9 @@ cp xml/Template/simulation.xml xml/
 # open with favourite editor (e.g. nano)
 nano xml/simulation.xml
 ```
+
+### Edit simulation.xml
+
 - sim_model = name of the model
 - dt = time step length
 - t_end = end time (start time is 0)

@@ -1,8 +1,8 @@
 # ball
 
-Description: Spherical nanoparticle
+The `ball` model represents a spherical nanoparticle surrounded by vaccum.
 
-Name: ball
+Relevant input xml: model_ball.xml
 
 ## Copy model_ball.xml template
 
