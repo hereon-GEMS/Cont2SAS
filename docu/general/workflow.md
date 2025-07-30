@@ -5,7 +5,7 @@ The workflow of `Cont2SAS` can be divided into four steps:
 1. mesh generation
 2. SLD assignment
 3. SAS pattern calculation
-4. Effective cross-section calculation
+4. effective cross-section calculation
 
 ## Mesh generation
 
@@ -20,6 +20,12 @@ Important points:
 2. The connectivity matrix should match the `Cont2SAS` meshing strategy.
 3. The current version can only generate regular meshing. 
 4. The current version supports only lagrangian elements of 1st and 2nd order.
+
+Workflow:
+1. [Copy struct.xml template](#copy-structxml-template)
+2. [Edit struct.xml](#edit-structxml)
+3. [Generate mesh](#generate-mesh)
+4. [Check output](#output-data-location)
 
 ### Copy struct.xml template
 
@@ -65,6 +71,13 @@ The SLD assignment step assigns SLD values to the nodes. For generated models, a
 Important points:
 1. For different models, different model xml is input (see below for reference).
 2. For a new user defined model, definition of model xml must be added.
+
+Workflow:
+1. [Copy simulation.xml template](#copy-simulationxml-template)
+2. [Edit simulation.xml](#edit-simulationxml)
+3. [Prepare model xml](#prepare-model-xml)
+4. [Assign sld to nodes](#assign-sld-to-nodes)
+5. [Check output](#output-data-location-1)
 
 ### Copy simulation.xml template
 
@@ -112,6 +125,20 @@ Output is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder`
 
 ## SAS pattern calculation
 
+The SAS pattern calculation step disctetizes the SLD distribution to pseudo atoms and calculates SAS pattern from pseudo atoms.
+
+1. Relevant input xml: scatt_cal.xml
+2. Relevant script: src/scatt_cal.py
+
+Important points:
+1. Uses Sassena under the hood
+
+Workflow:
+1. [Copy scatt_cal.xml template](#copy-scatt_calxml-template)
+2. [Edit scatt_cal.xml](#edit-scatt_calxml)
+3. [Calculate SAS pattern](#calculate-sas-pattern)
+4. [Check output](#output-data-location-2)
+
 ### Copy scatt_cal.xml template
 
 ```
@@ -157,15 +184,32 @@ SAS pattern is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elo
 
 ## Effective cross-section calculation
 
+The effective cross-section calculation step calculates effective cross-section from the SAS pattern at each time step. The time evolution of effective cross-section can be obtained by combining the values at different time steps
+
+1. Relevant input xml: simulation.xml and appropiate model xmls
+2. Relevant script: src/sim_gen.py
+
+Important points:
+1. For different models, different model xml is input (see below for reference).
+2. For a new user defined model, definition of model xml must be added.
+
+Workflow:
+1. [Generate pixelated detector geometry](#generate-pixelated-detector-geometry)
+1. [Copy sig_eff.xml template](#copy-sig_effxml-template)
+2. [Edit sig_eff.xml](#edit-sig_effxml)
+3. [Calculate effective cross-section](#calculate-effective-cross-section)
+4. [Check output](#output-data-location-3)
+
 ### Generate pixelated detector geometry
 
 This step is required only if ``detector.h5`` does not exist in ``/detector_geometry/${instru_name}_${facility_name}/``.
 
-``` 
+```
+# go to detector directory
 cd $C2S_HOME/detector_geometry/${instru_name}_${facility_name}/
-
+# generate pixelated detector geometry
 python ./simu_detector.py
-
+# change dir to repositoty home
 cd $C2S_HOME
 ```
 
@@ -179,9 +223,10 @@ The output ``detector.h5`` contains following:
 
 ```
 # run from main folder
-# relative position ../
 cd $C2S_HOME
+# copy tempate
 cp xml/Template/sig_eff.xml xml/
+# open xml
 nano xml/sig_eff.xml
 ```
 
@@ -196,15 +241,13 @@ nano xml/sig_eff.xml
     - y component
     - z component
 
-##### Calculate effective cross-section
-
-Run following code:
+### Calculate effective cross-section
 
 ``` 
 cd $C2S_HOME
 python ./src/sig_eff.py
 ```
 
-##### Output
+### Output data location
 
 Effective cross-section is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder` `->` `simulation` `->` `${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}` `->` `${model_dir}` folder in `sig_eff_cat_${method_cat}_${mum_cat}_Q_${Q_start}_${Q_end}_orien__${num_orientation}.h5`
