@@ -31,9 +31,10 @@ Workflow:
 
 ```
 # run from main folder
-# relative position ../
 cd $C2S_HOME
+# copy from template to xml folder
 cp xml/Template/struct.xml xml/
+# open with favourite editor (e.g. nano)
 nano xml/struct.xml
 ```
 
@@ -54,6 +55,9 @@ nano xml/struct.xml
 ### Generate mesh
 
 ```
+# run from main folder
+cd $C2S_HOME
+# run script to generate mesh 
 python ./src/struct_gen.py
 ```
 
@@ -65,6 +69,7 @@ Output is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder`
 
 The SLD assignment step assigns SLD values to the nodes. For generated models, a formula is defined for assigning SLD values. For simulated models, the SLD values are read from `hdf5` files, which is created after postprocessing of simulated results.
 
+Relevant files:
 1. Relevant input xml: simulation.xml and appropiate model xmls
 2. Relevant script: src/sim_gen.py
 
@@ -83,8 +88,8 @@ Workflow:
 
 ```
 # run from main folder
-# relative position ../
 cd $C2S_HOME
+# copy from template to xml folder
 cp xml/Template/simulation.xml xml/
 # open with favourite editor (e.g. nano)
 nano xml/simulation.xml
@@ -115,7 +120,9 @@ Check necessary steps for provided simulation models (sim_model):
 Run following code:
 
 ```
+# run from main folder
 cd $C2S_HOME
+# run script to assign sld to nodes
 python src/sim_gen.py
 ```
 
@@ -127,6 +134,7 @@ Output is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder`
 
 The SAS pattern calculation step disctetizes the SLD distribution to pseudo atoms and calculates SAS pattern from pseudo atoms.
 
+Relevant files:
 1. Relevant input xml: scatt_cal.xml
 2. Relevant script: src/scatt_cal.py
 
@@ -145,7 +153,9 @@ Workflow:
 # run from main folder
 # relative position ../
 cd $C2S_HOME
+# copy from template to xml folder
 cp xml/Template/scatt_cal.xml xml/
+# open with favourite editor (e.g. nano)
 nano xml/scatt_cal.xml
 ```
 
@@ -172,7 +182,9 @@ nano xml/scatt_cal.xml
 ### Calculate SAS pattern
 
 ```
+# run from main folder
 cd $C2S_HOME
+# run script to discretize and calculate SAS pattern
 python ./src/scatt_cal.py
 ```
 
@@ -186,12 +198,12 @@ SAS pattern is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elo
 
 The effective cross-section calculation step calculates effective cross-section from the SAS pattern at each time step. The time evolution of effective cross-section can be obtained by combining the values at different time steps
 
-1. Relevant input xml: simulation.xml and appropiate model xmls
-2. Relevant script: src/sim_gen.py
+Relevant files:
+1. Relevant input xml: sig_eff.xml
+2. Relevant script: src/sig_eff.py
 
 Important points:
-1. For different models, different model xml is input (see below for reference).
-2. For a new user defined model, definition of model xml must be added.
+1. Detector geometry and experimental conditions are required.
 
 Workflow:
 1. [Generate pixelated detector geometry](#generate-pixelated-detector-geometry)
@@ -224,9 +236,9 @@ The output ``detector.h5`` contains following:
 ```
 # run from main folder
 cd $C2S_HOME
-# copy tempate
+# copy tempate to cml folder
 cp xml/Template/sig_eff.xml xml/
-# open xml
+# open xml with favourite editor (e.g. nano)
 nano xml/sig_eff.xml
 ```
 
@@ -244,7 +256,9 @@ nano xml/sig_eff.xml
 ### Calculate effective cross-section
 
 ``` 
+# change to main folder
 cd $C2S_HOME
+# run script to calculate effective cross-section
 python ./src/sig_eff.py
 ```
 
