@@ -1,6 +1,6 @@
 # sld_grow
 
-This page documents the workflow for creating the input xml related to the `sld_grow` model, i.e. model_sld_grow.xml. The `sld_grow` model represents the phenomenon of the change of chemical composition of spherical grain over time.
+This page documents the workflow for creating the input xml related to the `sld_grow` model, i.e. model_sld_grow.xml. The `sld_grow` model represents the phenomenon of the change of chemical composition of spherical grain over time. The effective cross-section is also calculated for the `sld_grow` model.
 
 Relevant input xml: model_sld_grow.xml
 
