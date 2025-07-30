@@ -204,7 +204,7 @@ Relevant files:
 
 Important points:
 1. Detector geometry and experimental conditions are required.
-2. Only relevant model is [sld_grow](../models/sld_grow.md)
+2. Only relevant model is [sld_grow](../models/sld_grow.md).
 
 Workflow:
 1. [Generate pixelated detector geometry](#generate-pixelated-detector-geometry)
