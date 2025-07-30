@@ -1,16 +1,22 @@
 # bib_ecc
 
-Description: Parallepiped nanoparticle with spherical region off the center
+This page documents the workflow for creating the input xml related to the `bib_ecc` model, i.e. model_bib_ecc.xml. The name `bib_ecc` stands for ball in box eccentric. The `bib` model represents a parallepiped nanoparticle of one sld with spherical region of another sld shifted from the center.
 
-Name: ball in box eccentric (bib_ecc)
+Relevant input xml: model_bib_ecc.xml
+
+Workflow:
+1. [Copy model_bib_ecc.xml template](#copy-model_bib_eccxml-template)
+2. [Edit model_bib_ecc.xml](#edit-model_bib_eccxml)
+3. [Go back to main workflow](#go-to-workflow)
 
 ## Copy model_bib_ecc.xml template
 
 ```
 # run from main folder
-# relative position ../
 cd $C2S_HOME
+# copy xml template to xml folder
 cp xml/Template/model_bib_ecc.xml xml/
+# open template with favourite editor (e.g. nano)
 nano xml/model_bib_ecc.xml
 ```
 
@@ -27,4 +33,4 @@ nano xml/model_bib_ecc.xml
 
 ## Go to workflow
 
-[Workflow](../general/workflow.md#assign-sld-to-nodes)
+Go back to the main [workflow](../general/workflow.md#assign-sld-to-nodes) and continue.

@@ -1,26 +1,22 @@
 # bib
 
-Description: Parallepiped nanoparticle with spherical region at the center
+This page documents the workflow for creating the input xml related to the `bib` model, i.e. model_bib.xml. The name `bib` stands for ball in box. The `bib` model represents a parallepiped nanoparticle of one sld with spherical region of another sld at the center.
 
-Name: ball in box (bib)
+Relevant input xml: model_bib.xml
 
-## Copy model_bib.xml template
-
-```
-# run from main folder
-# relative position ../
-cd $C2S_HOME
-cp xml/Template/model_bib.xml xml/
-nano xml/model_bib.xml
-```
+Workflow:
+1. [Copy model_bib.xml template](#copy-model_bibxml-template)
+2. [Edit model_bib.xml](#edit-model_bibxml)
+3. [Go back to main workflow](#go-to-workflow)
 
 ## Copy model_bib.xml template
 
 ```
 # run from main folder
-# relative position ../
 cd $C2S_HOME
+# copy xml template to xml folder
 cp xml/Template/model_bib.xml xml/
+# open template with favourite editor (e.g. nano)
 nano xml/model_bib.xml
 ```
 
@@ -33,4 +29,4 @@ nano xml/model_bib.xml
 
 ## Go to workflow
 
-[Workflow](../general/workflow.md#assign-sld-to-nodes)
+Go back to the main [workflow](../general/workflow.md#assign-sld-to-nodes) and continue.
