@@ -120,10 +120,11 @@ cd $C2S_HOME
 
 ```
 # run from main folder
-# relative position ../
 cd $C2S_HOME
-cp xml/Template/model_ball.xml xml/
-nano xml/model_ball.xml
+# copy xml template to xml folder
+cp xml/Template/model_phase_field.xml xml/
+# open template with favourite editor (e.g. nano)
+nano xml/model_phase_field.xml
 ```
 
 ## Edit phase_field.xml
