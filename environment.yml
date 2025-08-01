@@ -1,13 +1,14 @@
 name: Cont2Sas
 channels:
   - conda-forge
+  - pypi
 dependencies:
   - python=3.12.1
-  - h5py=3.14.0
-  - imageio=2.37.0
-  - matplotlib=3.10.3
+  - h5py=3.10.0 # 3.14.0 # 3.10.0
+  - imageio=2.33.1 # 2.37.0 # 2.33.1
+  - matplotlib=3.8.2 # 3.10.3 # 3.8.2
   - mdtraj=1.9.9
-  - netCDF4=1.7.2
-  - numpy=2.3.1
+  - netCDF4=1.7.1 # 1.7.2 # 1.7.1.post2
+  - numpy=1.26.4 # 2.3.1 # 1.26.4
   - PyMuPDF==1.26.1
-  - scipy=1.16.0
+  - scipy=1.11.4 # 1.16.0 # 1.11.4
