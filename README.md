@@ -1,6 +1,6 @@
 ![logo](logo/Cont2Sas.png)
 
-# Calculation of SAS pattern from simulated continuum structures
+# Calculation of SAS parameters from simulated continuum structures
 
 ## Description
 
@@ -11,7 +11,7 @@ It can calculate
 1. SAS intensity ($I$ vs. $Q$)
 2. effective scattering cross-section ($\sigma_\text{eff}$), i.e. the count rate of the scattered radiation per unit flux.
 
-It takes distribution of scattering length density (SLD) as input provided by FEM simulation softwares, e.g., [MOOSE](https://mooseframework.inl.gov/) [Exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html).
+It takes a distribution of scattering length density (SLD) values as input that can be provided by FEM simulation softwares, e.g., [MOOSE](https://mooseframework.inl.gov/) [Exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html).
 
 Workflow:
 
@@ -20,7 +20,7 @@ Workflow:
 3. SAS pattern calculation
 4. effective scattering cross section calculation
 
-For validation, the SLD distribution of known structures can be generated and assigned for which the scatering quantities can be calculated analytically.
+For validation, the SLD distribution of known structures can be generated and assigned, for which the scatering quantities can be calculated analytically.
 
 As a functional test case, an exemplary MOOSE simulation is also included as `hdf` snapshots out of the Exodus file.
 
@@ -71,7 +71,7 @@ wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/proje
 # run sassena
 chmod +x ./Sassena/Sassena.AppImage
 ```
-To check if thedownload has worked, you can run
+To check if the download has worked, you can run
 ```
 ./Sassena/Sassena.AppImage --help
 ```
@@ -89,11 +89,13 @@ conda activate Cont2Sas
 ```
 ###### Uninstall
 
-Remove conda environment, git repository
+Remove the conda environment
 
 ```
+conda deactivate
 conda remove --name Cont2Sas --all
 ```
+and delete the source code directory by hand.
 
 ##### Option 2: Using conda and pip
 
