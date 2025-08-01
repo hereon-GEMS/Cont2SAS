@@ -111,7 +111,7 @@ pip install -r requirements.txt
 
 ```
 pip uninstall -r requirements.txt
-deactivate
+conda deactivate
 conda remove --name Cont2Sas --all
 ```
 
