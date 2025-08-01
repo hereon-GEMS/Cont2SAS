@@ -9,10 +9,8 @@ tags:
 authors:
   - name: Arnab Majumdar
     orcid: 0000-0003-4049-4060
-    equal-contrib: true
     affiliation: "1, 3" # (Multiple affiliations must be quoted)
   - name: Martin M\"{u}ller
-    equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
     affiliation: "1, 2, 3"
   - name: Sebastian Busch
     orcid: 0000-0002-9815-909X
@@ -31,21 +29,23 @@ bibliography: paper.bib
 
 # Summary
 
-`Cont2SAS` software facilitates calculation of Small Angle Scattering (SAS) data from Continuum (Cont) nanostructures. `Cont2SAS` is built on the existing software solution `Sassena` -- known for calculating scattering patterns from atomic structures `[@lindner2012sassena; lindner2012towards; @sassena:2017, sassena:2023; majumdar2024computation]`. `Cont2SAS` can calculate SAS patterns and effective cross-section $(\sigma_{\text{eff}})$. SAS patterns contain a SAS intensity $(I)$ vs scattering vector magnitude $(Q)$. The $\sigma_{\text{eff}}$ is neutron count rate per unit flux, whose time evolution is calculated from SAS patterns calculated at different time steps. Through the comparison of calculated and measured SAS data, simulations and SAS experiments can be used in a complementary manner to validate simulations, tune simulation parameters, and analyze SAS data obtained from experiments `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
+`Cont2SAS` facilitates the calculation of Small Angle Scattering (SAS) parameters from simulated Continuum (Cont) nanostructures. `Cont2SAS` is built on the existing software solution `Sassena` -- known for calculating scattering patterns from simulated atomic structures `[@lindner2012sassena; @lindner2012towards; @sassena:2017, @sassena:2023; @majumdar2024computation]`. `Cont2SAS` can calculate SAS patterns and the effective scattering cross-section $(\sigma_{\text{eff}})$. SAS patterns contain a SAS intensity $(I)$ vs. scattering vector magnitude $(Q)$. The $\sigma_{\text{eff}}$ is the count rate of scattered radiation per incident unit flux. The time evolution of $\sigma_{\text{eff}}$ is calculated from SAS patterns at different time steps. Through the comparison of calculated and measured SAS parameters, simulations and SAS experiments can be used complementarily for different purposes, such as validating simulations, tuning simulation parameters, and analyzing SAS data obtained from experiments `[@dorrell2020combined; @reich2022comparison; @majumdar2024computation]`.
 
 # Statement of need
 
-The simulation of material structure at the nanometer length scale can be performed using atomistic simulations and continuum simulations. Continuum simulations have an advantage over atomistic ones as continuum simulations can simulate bigger volumes for a larger time. However, continuum simulations are less accurate than the atomistic simulations. `Cont2SAS` is created to check the accuracy of continuum simulations by validating them against SAS experiments, such as Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS). The validation is performed by comparing SAS data calculated using `Cont2SAS` with measured ones. A validated simulation can also be used to retrieve nanostructure from SAS data because a direct retrieval of nanstructure from SAS data is not possible. Continuum nanostructures can also be generated based on knowledge of the sample, instead of simulating them based on physics based equations. 
+The simulation of material structure at the nanometer length scale can be performed using atomistic simulations and continuum simulations. Continuum simulations have the advantage over atomistic ones that they can simulate bigger volumes for a larger time. However, continuum simulations are less accurate than the atomistic simulations. `Cont2SAS` is created to check the accuracy of continuum simulations by validating them against SAS experiments, such as Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS). The validation is performed by comparing SAS parameters calculated using `Cont2SAS` with measured ones. A validated simulation can also be used to retrieve nanostructure from SAS data because a direct retrieval of nanstructure from SAS data is not possible `[@Sivia]`. Alternatively to simulating continuum nanostructures based on physics-based equations, they can also be simulated based on the user's knowledge of the sample to retrieve nanostructures from SAS data.
 
 ![Workflow of SAS pattern calculation.\label{fig:sas_workflow}](figures/workflow.png)
 
-Both generated and simulated structures are expected to output either Scattering Length Density (SLD) ($\beta$) values or a set of variables (e.g. local molar density ($\rho_{\text{m}}$) and composition ($\chi$)) from which SLD values can be calculated. `Cont2SAS` creates a mesh, assigns SLD based on generated or simulated values, and calculates SAS pattern from them, as shown in fig. \autoref{fig:sas_workflow}.
+Both physics- and knowledge-based simulated structures are expected to output either Scattering Length Density (SLD) ($\beta$) values or a set of variables (e.g. local molar density ($\rho_{\text{m}}$) and composition ($\chi$)) from which SLD values can be calculated. `Cont2SAS` creates a mesh, assigns SLD based on the simulated values, and calculates SAS pattern from them, as shown in fig. \autoref{fig:sas_workflow}.
 
 ![Calculation of effective cross-section from SAS patterns at different time steps.\label{fig:sig_eff_workflow}](figures/sig_eff.png)
 
-For some powder-like materials, the nanostructure does not change over time but the chemical composition changes. For such scenario, time evolution of neutron count rate is more useful parameter than SAS patterns `[@aslan2019high]`. Using `Cont2SAS`, the neutron count rate per unit neutron flux, which is named `effective cross-section` $(\sigma_{\text{eff}})$, can be calculated. Figure \autoref{figures/sig_eff.png} demonstrates such calculation from a series of SAS patterns. The calculated $(\sigma_{\text{eff}})$ must be multiplied by an empirical factor before comparing with measured neutron count rate.
+For some materials, the nanostructure does not change over time but the chemical composition does (e.g., ball-milled hydrogen storage materials). For such a scenario, the time evolution of the count rate is a useful parameter `[@aslan2019high]`. This count rate per incident unit flux is named `effective cross-section` $(\sigma_{\text{eff}})$, and can be calculated using `Cont2SAS`. Figure \autoref{figures/sig_eff.png} demonstrates such calculation from a series of SAS patterns. The calculated $\sigma_{\text{eff}}$ must be multiplied by an empirical factor before comparing with measured neutron count rate.
 
-`Cont2SAS` provides the much needed software platform for calculating SAS pattern from continuum simulations. The addition of effective cross-section in the software package is going be helpful for analyzing powder-like structures. One can also retrieve continuum nanostructures from SAS data using generated or simulated model structures.
+# Conclusion
+
+`Cont2SAS` provides the much needed software platform for calculating SAS pattern from continuum simulations of nanostructures. The addition of effective cross-section in the software package is going be helpful for analyzing powder-like structures. One can also retrieve continuum nanostructures from SAS data using simulated structures.
 
 # Acknowledgements
 
