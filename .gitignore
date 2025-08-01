@@ -12,6 +12,7 @@ moose
 lib_old
 old_src
 Sassena
+Cont2Sas
 
 # __pycache__
 lib/__pycache__

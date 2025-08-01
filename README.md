@@ -102,7 +102,7 @@ and delete the source code directory by hand.
 ###### Install
 
 ```
-conda create -n Cont2Sas python=3.12.1
+conda create -n Cont2Sas python=3.8.10
 conda activate Cont2Sas
 pip install -r requirements.txt
 ```
@@ -111,7 +111,7 @@ pip install -r requirements.txt
 
 ```
 pip uninstall -r requirements.txt
-deactivate
+conda deactivate
 conda remove --name Cont2Sas --all
 ```
 
@@ -135,7 +135,7 @@ deactivate
 rm -rf Cont2Sas
 ```
 
-##### Option 4: Using pip (not recommended)
+<!-- ##### Option 4: Using pip (not recommended)
 
 ###### Install
 
@@ -147,7 +147,7 @@ pip install -r requirements.txt
 
 ```
 pip uninstall -r requirements.txt
-```
+``` -->
 
 ## Getting started
 

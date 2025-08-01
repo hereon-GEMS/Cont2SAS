@@ -167,7 +167,8 @@ for i, t in enumerate(t_arr):
                    vmin=sld_min, vmax=sld_max)
         plot_file_1=os.path.join(ensem_dir,f'snap_z_{z_val}.jpg')
         plt.colorbar()
-        plt.title(f" time = {t:0>3}s \n emsemble step = {idx_ensem+1:0>3} \n z = {z_val}{r'$\AA$'}")
+        angstrom_str=r'$\AA$'
+        plt.title(f" time = {t:0>3}s \n emsemble step = {idx_ensem+1:0>3} \n z = {z_val}{angstrom_str}")
         plt.savefig(plot_file_1, format='jpg', bbox_inches='tight')
         ### add images of ensemble 1 for video
         if idx_ensem==0:
@@ -188,7 +189,8 @@ for i, t in enumerate(t_arr):
                         vmin=sld_min, vmax=sld_max)
         plot_file_2=os.path.join(ensem_dir,f'snap_z_{z_val}.jpg')
         plt.colorbar()
-        plt.title(f"time = {t:0>3} s, ensmbl num = {idx_ensem+1}, z = {z_val}{r'$\mathrm{\AA}$'}")
+        anstrom_str_rm=r'$\mathrm{\AA}$'
+        plt.title(f"time = {t:0>3} s, ensmbl num = {idx_ensem+1}, z = {z_val}{anstrom_str_rm}")
         #plt.title(r"time = {0:0>3}s, {1}".format(t,r'$\mathrm{\AA}$'))
         plt.savefig(plot_file_2, format='jpg')
         ### add images of ensemble 1 for video
@@ -209,7 +211,7 @@ for i, t in enumerate(t_arr):
                         vmin=sld_min, vmax=sld_max)
         plot_file_3=os.path.join(ensem_dir,'snap_z_{z_val}.jpg')
         plt.colorbar()
-        plt.title(f" time = {t:0>3}s, emsemble step = {idx_ensem+1:0>3} \n z = {z_val}{r'$\AA$'}")
+        plt.title(f" time = {t:0>3}s, emsemble step = {idx_ensem+1:0>3} \n z = {z_val}{angstrom_str}")
         plt.savefig(plot_file_3, format='jpg')
         ### add images of ensemble 1 for video
         if idx_ensem==0:
