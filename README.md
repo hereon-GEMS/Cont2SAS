@@ -120,8 +120,8 @@ conda remove --name Cont2Sas --all
 ```
 sudo apt update
 sudo apt install python3-venv
-pip -m venv Cont2Sas
-source Cont2Sas\bin\activate
+python3 -m venv Cont2Sas
+source Cont2Sas/bin/activate
 pip install -r requirements.txt
 ```
 
