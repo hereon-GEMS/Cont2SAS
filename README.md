@@ -1,13 +1,28 @@
-![](logo/Cont2Sas.png)
+![logo](logo/Cont2Sas.png)
 
 # Calculation of SAS pattern from simulated continuum structures
 
 ## Description
 
-Software package for calculating Small Angle Scattering (SAS) pattern from continuum simulations.
+Software package for calculating Small Angle Scattering (SAS) parameters from continuum simulations.
 
-<!-- ![Alt text](logo/Cont2Sas.png) -->
+It can calculate
 
+1. SAS intensity ($I$ vs. $Q$)
+2. effective scattering cross-section ($\sigma_\text{eff}$), i.e. the count rate of the scattered radiation per unit flux.
+
+It takes distribution of scattering length density (SLD) as input provided by FEM simulation softwares, e.g., [MOOSE](https://mooseframework.inl.gov/) [Exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html).
+
+Workflow:
+
+1. Mesh generation
+2. SLD assignment
+3. SAS pattern calculation
+4. effective scattering cross section calculation
+
+For validation, the SLD distribution of known structures can be generated and assigned for which the scatering quantities can be calculated analytically.
+
+As a functional test case, an exemplary MOOSE simulation is also included as `hdf` snapshots out of the Exodus file.
 
 ## Installation
 
@@ -21,6 +36,8 @@ cd continuum-to-scattering
 ```
 
 #### Define environment variable
+
+To ensure that the provided examples run on the user's computer regardless of the starting directory, the following environment variable is used.
 
 ##### Install
 
@@ -41,7 +58,26 @@ chmod +x ./shell_scripts/*
 
 ### Required packages
 
-#### Python packages 
+#### Sassena
+
+Download app image and use
+
+Default location: ``Sassena/sassena.AppImage``
+
+```
+# download app image
+mkdir -p ./Sassena
+wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
+# run sassena
+chmod +x ./Sassena/Sassena.AppImage
+```
+To check if thedownload has worked, you can run
+```
+./Sassena/Sassena.AppImage --help
+```
+which should print out messages about command line options of [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena) and end with an error message.
+
+#### Python packages
 
 ##### Option 1: Using conda
 
@@ -111,36 +147,19 @@ pip install -r requirements.txt
 pip uninstall -r requirements.txt
 ```
 
-#### Other packages
-
-##### Sassena
-
-Download app image and use
-
-Default location: ``Sassena/sassena.AppImage``
-
-```
-# download app image 
-mkdir -p ./Sassena
-wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
-# run sassena
-chmod +x ./Sassena/Sassena.AppImage
-mpirun -n 2 ./Sassena/Sassena.AppImage --help
-```
-
 ## Getting started
 
 Some models are provided for generating or simulating nanostructures. From these structures SAS patterns can be calculated. One of the models also facilitates calculation of effective cross-section. 
 
 To run `Cont2SAS` with provided models and parameters, read the [getting started](./getting-started.md) guide.
 
-To check detailed documentation, [click](./docu/index.md) here. 
+To check detailed documentation, [click](./docu/index.md) here.
 
 ## Acknowledgement
 
 This work was supported by the consortium DAPHNE4NFDI in the context of the work of the
 NFDI e.V. The consortium is funded by the Deutsche Forschungsgemeinschaft (DFG, German
-Research Foundation) - project number 460248799. 
+Research Foundation) - project number 460248799.
 
 ## License
 
