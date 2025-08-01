@@ -135,7 +135,7 @@ deactivate
 rm -rf Cont2Sas
 ```
 
-##### Option 4: Using pip (not recommended)
+<!-- ##### Option 4: Using pip (not recommended)
 
 ###### Install
 
@@ -147,7 +147,7 @@ pip install -r requirements.txt
 
 ```
 pip uninstall -r requirements.txt
-```
+``` -->
 
 ## Getting started
 
