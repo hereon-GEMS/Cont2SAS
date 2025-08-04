@@ -6,16 +6,22 @@ data is saved in data folder
 Author: Arnab Majumdar
 Date: 24.06.2025
 """
-from lib import xml_gen
-import subprocess
-import numpy as np
 import os
-import h5py
+import sys
+import subprocess
 import time
+import warnings
+import h5py
+import numpy as np
 
+# find current dir and and ..
+lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+# add .. in path
+sys.path.append(lib_dir)
+# lib imports
+from lib import xml_gen # pylint: disable=import-error, wrong-import-position
 
 # ignore warnings
-import warnings
 warnings.filterwarnings("ignore")
 
 """
