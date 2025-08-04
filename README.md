@@ -186,3 +186,13 @@ See legal code:</br>
 <a href="https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/develop/LICENSE?ref_type=heads"> 
 LICENSE
 </a>
+
+Copyright disclaimer from Helmholtz-Zentrum, Hereon (DE)
+
+Urheberrecht:
+Software unterliegt dem Urheberrecht. § 69a Urhebergesetz (UrhG) schützt Software in jeder
+Gestaltung, ein- schließlich Entwurfsmaterial, in allen Ausdrucksformen (QC, C, EXE, Module).
+Nicht geschützt sind dagegen Ideen und Grundsätze, die dem Werk zugrunde liegen.
+Das Urheberpersönlichkeitsrecht ist nach deutschem Recht zwar nicht übertragbar, zulässig
+sind jedoch die Einräumung von umfänglichen Nutzungsrechten sowie Vereinbarungen zu
+Verwertungsrechten. Legt man z. B. amerikanisches Recht zugrunde, dann ist auch eine Abtretung des gesamten Urheberrechts möglich.
