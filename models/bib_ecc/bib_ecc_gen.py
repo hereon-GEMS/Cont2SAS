@@ -57,13 +57,13 @@ n_ensem=1
 rad=10
 sld_in=2
 sld_out=1
-ecc_vec=np.array([0, 0, 0])
+ecc_vec=np.array([5, 5, 5])
 qclean_sld=0
 
 ### scatt_cal ###
 num_cat=3
 method_cat='extend'
-sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+sassena_exe= './Sassena/Sassena.AppImage'
 mpi_procs=1
 num_threads=1
 sig_file='signal.h5'
