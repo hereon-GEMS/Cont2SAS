@@ -62,12 +62,12 @@ qclean_sld=0
 ### scatt_cal ###
 num_cat=3
 method_cat='extend'
-sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+sassena_exe= './Sassena/Sassena.AppImage'
 mpi_procs=1
 num_threads=1
 sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
-Q_range=np.array([0, 1])
+Q_range=np.array([0., 1.])
 num_points=100
 num_orientation=200
 
