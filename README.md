@@ -165,15 +165,24 @@ Research Foundation) - project number 460248799.
 
 ## License
 
-<a href="https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/tree/develop?ref_type=heads"> Cont2Sas </a> 
-© 2025 by 
-<a href="https://codebase.helmholtz.cloud/arnab.majumdar"> Arnab Majumdar </a> is licensed under 
-<a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a>
-<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="Description" width="1" height="1">
-<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="width: 0.2em;height:0.2em;margin-left: .1em;">
-<img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+One line to give the program's name and an idea of what it does.
+Copyright (C) 2025  Arnab Majumdar
 
-See legal code locally: 
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<https://www.gnu.org/licenses/>.
+
+See legal code:</br>
 <a href="https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/develop/LICENSE?ref_type=heads"> 
 LICENSE
 </a>
