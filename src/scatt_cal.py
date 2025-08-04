@@ -91,6 +91,7 @@ method_cat=root.find('discretization').find('method_cat').text
 
 # sassena details
 sassena_exec=root.find('sassena').find('exe_loc').text
+sassena_exec=os.path.abspath(sassena_exec)
 mpi_procs=int(root.find('sassena').find('mpi_procs').text)
 num_threads=int(root.find('sassena').find('num_threads').text)
 
