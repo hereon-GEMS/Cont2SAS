@@ -4,6 +4,7 @@ garbage
 figure
 test*
 old_scripts
+old_plot_scripts
 plot_scripts/plot_IQ0_fs_check.py
 plot_scripts/plot_IQ_fs_check.py
 ppt
@@ -42,3 +43,6 @@ phase_field_Iq_plot_JF.py
 
 # lib files
 lib/simulation_old.py
+
+# h5 files
+phase_field.h5
