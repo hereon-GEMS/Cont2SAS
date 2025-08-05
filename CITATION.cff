@@ -1,0 +1,29 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Cont2SAS
+message: >-
+  Software package for calculating Small Angle Scattering
+  (SAS) parameters from continuum simulations.
+type: software
+authors:
+  - given-names: Arnab
+    family-names: Majumdar
+    email: arnab.majumdar@hereon.de
+    affiliation: Helmholtz-Zentrum Hereon
+    orcid: 'https://orcid.org/0000-0003-4049-4060'
+  - given-names: Martin
+    family-names: Müller
+    email: martin.mueller@hereon.de
+    affiliation: Helmholtz-Zentrum Hereon
+  - given-names: Sebastian
+    family-names: Busch
+    email: sebastian.busch@hereon.de
+    affiliation: Helmholtz-Zentrum Hereon
+    orcid: 'https://orcid.org/0000-0002-9815-909X'
+repository-code: >-
+  https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/
+license: GPL-3.0
+version: 1.0.0
+date-released: '2025-08-05'
