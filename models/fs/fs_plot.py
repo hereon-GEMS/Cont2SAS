@@ -112,7 +112,7 @@ length_a=200.
 length_b=length_a
 length_c=length_a
 # number of cells in each direction (int values)
-nx=50
+nx=100
 ny=nx
 nz=nx
 # element details
@@ -227,7 +227,7 @@ for i, t in enumerate(t_arr):
     # time_dir name
     t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
-    print(f'plotting fot time: {t/t_end} [t/tmax]')
+    print(f'plotting for time: {t/t_end} [t/tmax]')
     for j in range(n_ensem):
         idx_ensem=j
         # create ensemble dir
