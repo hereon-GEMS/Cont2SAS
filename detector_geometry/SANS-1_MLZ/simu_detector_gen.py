@@ -22,18 +22,20 @@ Author: Arnab Majumdar
 Date: 24.06.2025
 """
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+from matplotlib import patches
 import h5py
-import os
 
 # functions
-
-# Generate array of booleans (same size as pixels)
-# 1 = no beam stop
-# 0 = beam stop
-def bs_mask(nx,ny,dx,dy, bs_wx, bs_wy):    
+def bs_mask(nx,ny,dx,dy, bs_wx, bs_wy):
+    """
+    Function description:
+    Generate array of booleans (same size as pixels)
+    1 = no beam stop
+    0 = beam stop
+    """
     mask=np.ones((nx,ny))
     bs_x_low=(nx*dx-bs_wx)/2
     bs_x_up=(nx*dx+bs_wx)/2
@@ -53,9 +55,12 @@ def bs_mask(nx,ny,dx,dy, bs_wx, bs_wy):
                 mask[i,j]=0
     return mask
 
-# Generate array of pixel coordinates
-# (x, y, z)
 def detector(nx,ny,dx,dy):
+    """
+    Function description:
+    Generate array of pixel coordinates
+    (x, y, z)
+    """
     pixel=np.zeros((nx,ny, 2))
     for i in range(nx):
         for j in range(ny):
@@ -69,15 +74,15 @@ Input detector geometry
 
 # detector geometry details
 # num pixels
-nx=128
-ny=128
+nx_val=128
+ny_val=128
 # pixel width
-dx=0.008
-dy=0.008
+dx_val=0.008
+dy_val=0.008
 
 # beam stop geometry
-bs_wx=0.085
-bs_wy=0.085
+bs_wx_val=0.085
+bs_wy_val=0.085
 
 """
 Create simulated detector
@@ -85,12 +90,12 @@ Create simulated detector
 
 # create 2d matrices of pixel coordinates
 # create mask - array of booleans (same size as pixels)
-pixels_2d=detector(nx,ny,dx,dy)
-mask_2d=bs_mask(nx,ny,dx,dy, bs_wx, bs_wy)
+pixels_2d=detector(nx_val,ny_val,dx_val,dy_val)
+mask_2d=bs_mask(nx_val,ny_val,dx_val,dy_val, bs_wx_val, bs_wy_val)
 
 # convert 2d matrices to 1d matrices
-pixels_1d=pixels_2d.reshape(nx*ny,2)
-mask_1d=mask_2d.reshape(nx*ny)
+pixels_1d=pixels_2d.reshape(nx_val*ny_val,2)
+mask_1d=mask_2d.reshape(nx_val*ny_val)
 
 # merge mask and pixel coordinates
 pixels_bs_cut=pixels_1d[mask_1d==1]
@@ -98,8 +103,8 @@ pixels_bs_cut=pixels_1d[mask_1d==1]
 # plot pixels outside beam stop
 plt.scatter(pixels_bs_cut[:,0], pixels_bs_cut[:,1])
 plt.axis('equal')
-detector_border=patches.Rectangle((0, 0), nx*dx, nx*dx, color='k', fill=False)
-beam_stop = patches.Rectangle(((nx*dx-bs_wx)/2, (nx*dy-bs_wy)/2), 0.085, 0.085,
+detector_border=patches.Rectangle((0, 0), nx_val*dx_val, nx_val*dx_val, color='k', fill=False)
+beam_stop = patches.Rectangle(((nx_val*dx_val-bs_wx_val)/2, (nx_val*dy_val-bs_wy_val)/2), 0.085, 0.085,
                                color='r', fill=True)
 plt.gca().add_patch(detector_border)
 plt.gca().add_patch(beam_stop)
@@ -116,11 +121,11 @@ det_geo_data_file_name='detector.h5'
 det_geo_data_file=os.path.join('.',det_geo_data_file_name)
 det_geo_data=h5py.File(det_geo_data_file,'w')
 det_geo_data['pixel_coord']=pixels_bs_cut
-det_geo_data['num_pixel_x']=nx
-det_geo_data['num_pixel_y']=ny
-det_geo_data['width_pixel_x']=dx
-det_geo_data['width_pixel_y']=dy
-det_geo_data['beam_stop_width_x']=bs_wx
-det_geo_data['beam_stop_width_y']=bs_wy
+det_geo_data['num_pixel_x']=nx_val
+det_geo_data['num_pixel_y']=ny_val
+det_geo_data['width_pixel_x']=dx_val
+det_geo_data['width_pixel_y']=dy_val
+det_geo_data['beam_stop_width_x']=bs_wx_val
+det_geo_data['beam_stop_width_y']=bs_wy_val
 det_geo_data.close()
 print(f'detector gemetry saved in {det_geo_data_file}')
