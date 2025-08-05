@@ -41,14 +41,15 @@ from lib import xml_gen # pylint: disable=import-error, wrong-import-position
 # ignore warnings
 warnings.filterwarnings("ignore")
 
-"""
-input values
-"""
+##############
+# input values
+##############
+
 # script dir and working dir
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
-# phase field simulation details 
+# phase field simulation details
 phenm='spinodal_fe_cr'
 sim_times=(np.array([0, 2, 4, 6, 8, 8.64]) * 10000).astype(int)
 # sim_times=(np.array([8.64]) * 10000).astype(int) # uncomment when using 3 categories
@@ -60,17 +61,17 @@ ttot_scatt_sum=0
 ttot_sum=0
 
 for t_idx, sim_time in enumerate(sim_times):
-    print(f'-------------------------------------------------')
-    print(f'/////////////////////////////////////////////////')
+    print('-------------------------------------------------')
+    print('/////////////////////////////////////////////////')
     print(f'Simulation time: {sim_time}')
-    print(f'/////////////////////////////////////////////////')
-    print(f'-------------------------------------------------')
+    print('/////////////////////////////////////////////////')
+    print('-------------------------------------------------')
     # moose input file
-    moose_inp_file_name='{0}_{1:0>5}.h5'.format(phenm, sim_time)
+    moose_inp_file_name=f'{phenm}_{sim_time:0>5}.h5'
     moose_inp_file=os.path.join('moose', moose_inp_file_name)
     moose_inp=h5py.File(moose_inp_file,'r')
     ### struct gen ###
-    xml_dir='./xml' 
+    xml_dir='./xml'
     length_a=moose_inp['length_a'][()]
     length_b=moose_inp['length_b'][()]
     length_c=moose_inp['length_c'][()]
@@ -86,7 +87,7 @@ for t_idx, sim_time in enumerate(sim_times):
 
     ### sim_gen ###
     sim_model='phase_field'
-    dt=1 
+    dt=1
     t_end=0
     n_ensem=1
 
@@ -118,7 +119,7 @@ for t_idx, sim_time in enumerate(sim_times):
     part_str='Part>>>  '
     info_str='Info>>>  '
 
-    print(f'-------------------------------------------------')
+    print('-------------------------------------------------')
     print(part_str + 'Generating mesh')
     print('')
     # time counter start - struct gen
@@ -126,26 +127,26 @@ for t_idx, sim_time in enumerate(sim_times):
     if struct_gen_run==1:
         # generate xml for struct_gen
         print(info_str + 'Generating struct_gen.xml')
-        xml_gen.struct_xml_write(xml_dir, 
-                                length_a, length_b, length_c, 
-                                nx, ny, nz, 
-                                el_type, el_order,  
-                                update_val, plt_node, plt_cell, plt_mesh)
+        xml_gen.struct_xml_write(xml_dir,
+                                  length_a, length_b, length_c,
+                                    nx, ny, nz,
+                                      el_type, el_order,
+                                        update_val, plt_node, plt_cell, plt_mesh)
 
         # generate structure
         print(info_str + 'Executing struct_gen.py')
         script_path = os.path.join(script_dir, 'struct_gen.py')  # Full path of the script
         #working_dir = "."  # Directory to run the script in
-        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
+        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
     else:
         print(info_str + 'structure generation not attempted')
-    # time counter end - struct gen 
+    # time counter end - struct gen
     toc_sg = time.perf_counter()
     ttot_sg= round(toc_sg - tic_sg,3)
     print(f'Time taken for generating mesh: {ttot_sg} s')
-    print(f'-------------------------------------------------')
+    print('-------------------------------------------------')
 
-    print(f'-------------------------------------------------')
+    print('-------------------------------------------------')
     print(part_str + 'Assigning SLD values to nodes')
     print('')
     # time counter start - simulation gen
@@ -166,16 +167,16 @@ for t_idx, sim_time in enumerate(sim_times):
         print(info_str + 'Executing sim_gen.py')
         script_path = os.path.join(script_dir, 'sim_gen.py')  # Full path of the script
         #working_dir = "."  # Directory to run the script in
-        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
+        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
     else:
         print(info_str + 'simulation not attempted')
-    # time counter end - simulation gen 
+    # time counter end - simulation gen
     toc_sim = time.perf_counter()
     ttot_sim= round(toc_sim - tic_sim,3)
     print(f'Time taken for assigning SLD values: {ttot_sim} s')
-    print(f'-------------------------------------------------')
+    print('-------------------------------------------------')
 
-    print(f'-------------------------------------------------')
+    print('-------------------------------------------------')
     print(part_str + 'Calculating SAS pattern')
     print('')
     # time counter start - SAS calculation
@@ -192,26 +193,26 @@ for t_idx, sim_time in enumerate(sim_times):
         print(info_str + 'Executing scatt_cal.py')
         script_path = os.path.join(script_dir, 'scatt_cal.py')  # Full path of the script
         #working_dir = "."  # Directory to run the script in
-        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE)
+        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
     else:
         print(info_str + 'Calculation of scattring function not attempted')
     moose_inp.close()
     # time counter end - SAS calculation
     toc_scatt = time.perf_counter()
     ttot_scatt= round(toc_scatt - tic_scatt,3)
-    print(f'Time taken for calculating SAS pattern: {ttot_sim} s')
-    print(f'-------------------------------------------------')
+    print(f'Time taken for calculating SAS pattern: {ttot_scatt} s')
+    print('-------------------------------------------------')
 
     # Time satistics
     print('')
-    print(f'-------------------------------------------------')
-    print(f'Time statistics')
-    print(f'-------------------------------------------------')
+    print('-------------------------------------------------')
+    print('Time statistics')
+    print('-------------------------------------------------')
     print(f'Mesh generation :{ttot_sg} s')
     print(f'SLD assign      :{ttot_sim} s')
     print(f'SAS calculation :{ttot_scatt} s')
     print(f'Total           :{ttot_sg + ttot_sim + ttot_scatt} s')
-    print(f'-------------------------------------------------')
+    print('-------------------------------------------------')
 
     # total time taken
     ttot_sg_sum+=ttot_sg
@@ -221,11 +222,11 @@ for t_idx, sim_time in enumerate(sim_times):
 
 # Time satistics for all
 print('')
-print(f'-------------------------------------------------')
-print(f'Time statistics')
-print(f'-------------------------------------------------')
+print('-------------------------------------------------')
+print('Time statistics')
+print('-------------------------------------------------')
 print(f'Mesh generation :{ttot_sg_sum} s')
 print(f'SLD assign      :{ttot_sim_sum} s')
 print(f'SAS calculation :{ttot_scatt_sum} s')
 print(f'Total           :{ttot_sum} s')
-print(f'-------------------------------------------------')
+print('-------------------------------------------------')
