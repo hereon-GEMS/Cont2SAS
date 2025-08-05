@@ -30,6 +30,7 @@ import h5py
 
 # functions
 def bs_mask(nx,ny,dx,dy, bs_wx, bs_wy):
+    # pylint: disable=too-many-arguments, too-many-locals
     """
     Function description:
     Generate array of booleans (same size as pixels)
@@ -103,9 +104,13 @@ pixels_bs_cut=pixels_1d[mask_1d==1]
 # plot pixels outside beam stop
 plt.scatter(pixels_bs_cut[:,0], pixels_bs_cut[:,1])
 plt.axis('equal')
-detector_border=patches.Rectangle((0, 0), nx_val*dx_val, nx_val*dx_val, color='k', fill=False)
-beam_stop = patches.Rectangle(((nx_val*dx_val-bs_wx_val)/2, (nx_val*dy_val-bs_wy_val)/2), 0.085, 0.085,
-                               color='r', fill=True)
+detector_border=patches.Rectangle((0, 0),
+                                   nx_val*dx_val, nx_val*dx_val,
+                                     color='k', fill=False)
+beam_stop = patches.Rectangle(((nx_val*dx_val-bs_wx_val)/2,
+                                (nx_val*dy_val-bs_wy_val)/2),
+                                  0.085, 0.085,
+                                    color='r', fill=True)
 plt.gca().add_patch(detector_border)
 plt.gca().add_patch(beam_stop)
 plot_file='./detector_image.jpg'
