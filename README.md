@@ -211,12 +211,14 @@ To check detailed documentation, [click](./docu/index.md) here.
 
 ## Acknowledgement
 
-This work was supported by the consortium DAPHNE4NFDI in the context of the work of the
+`Cont2SAS` is developed at [Helmholtz-Zentrum Hereon](https://www.hereon.de/) and the development is supported by the consortium [DAPHNE4NFDI](https://www.daphne4nfdi.de/) in the context of the work of the
 NFDI e.V. The consortium is funded by the Deutsche Forschungsgemeinschaft (DFG, German
 Research Foundation) - project number 460248799.
 
 ## License
 
+The `Cont2SAS` source code is released under the [GNU General Public License Version 3](./LICENSE).
+<!-- 
 One line to give the program's name and an idea of what it does.
 Copyright (C) 2025  Arnab Majumdar
 
@@ -247,4 +249,4 @@ Gestaltung, ein- schließlich Entwurfsmaterial, in allen Ausdrucksformen (QC, C,
 Nicht geschützt sind dagegen Ideen und Grundsätze, die dem Werk zugrunde liegen.
 Das Urheberpersönlichkeitsrecht ist nach deutschem Recht zwar nicht übertragbar, zulässig
 sind jedoch die Einräumung von umfänglichen Nutzungsrechten sowie Vereinbarungen zu
-Verwertungsrechten. Legt man z. B. amerikanisches Recht zugrunde, dann ist auch eine Abtretung des gesamten Urheberrechts möglich.
+Verwertungsrechten. Legt man z. B. amerikanisches Recht zugrunde, dann ist auch eine Abtretung des gesamten Urheberrechts möglich. -->
