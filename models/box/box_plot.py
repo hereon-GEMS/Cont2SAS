@@ -153,7 +153,7 @@ sig_file='signal.h5'
 scan_vec=np.array([1, 0, 0])
 Q_range=np.array([0., 1.]) # mention integers as float
 num_points=100
-num_orientation=10
+num_orientation=200
 # scatt settengs
 scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
     + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien__' + str(num_orientation)
