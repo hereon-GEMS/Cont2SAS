@@ -209,11 +209,9 @@ To run `Cont2SAS` with provided models and parameters, read the [getting started
 
 To check detailed documentation, [click](./docu/index.md) here.
 
-## Acknowledgement
+## Referencing Cont2SAS
 
-`Cont2SAS` is developed at [Helmholtz-Zentrum Hereon](https://www.hereon.de/) and the development is supported by the consortium [DAPHNE4NFDI](https://www.daphne4nfdi.de/) in the context of the work of the
-NFDI e.V. The consortium is funded by the Deutsche Forschungsgemeinschaft (DFG, German
-Research Foundation) - project number 460248799.
+For the citation information of `Cont2SAS`, please see the [CITATION.cff](./CITATION.cff) file.
 
 ## License
 
@@ -250,3 +248,9 @@ Nicht geschützt sind dagegen Ideen und Grundsätze, die dem Werk zugrunde liege
 Das Urheberpersönlichkeitsrecht ist nach deutschem Recht zwar nicht übertragbar, zulässig
 sind jedoch die Einräumung von umfänglichen Nutzungsrechten sowie Vereinbarungen zu
 Verwertungsrechten. Legt man z. B. amerikanisches Recht zugrunde, dann ist auch eine Abtretung des gesamten Urheberrechts möglich. -->
+
+## Acknowledgement
+
+The `Cont2SAS` is developed at [Helmholtz-Zentrum Hereon](https://www.hereon.de/) and the development is supported by the consortium [DAPHNE4NFDI](https://www.daphne4nfdi.de/) in the context of the work of the
+NFDI e.V. The consortium is funded by the Deutsche Forschungsgemeinschaft (DFG, German
+Research Foundation) - project number 460248799.
