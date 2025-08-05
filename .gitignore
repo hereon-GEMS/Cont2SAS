@@ -43,3 +43,6 @@ phase_field_Iq_plot_JF.py
 
 # lib files
 lib/simulation_old.py
+
+# h5 files
+phase_field.h5
