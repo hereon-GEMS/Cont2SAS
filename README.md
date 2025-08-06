@@ -1,4 +1,8 @@
-![logo](logo/logo/Cont2SAS-horizontal.png)
+<p align="center">
+  <img src="logo/logo/Cont2SAS-horizontal.png" alt="Description" width="500"/>
+</p>
+
+<!-- ![logo](logo/logo/Cont2SAS-horizontal.png) -->
 
 # Calculation of SAS parameters from simulated continuum structures
 
