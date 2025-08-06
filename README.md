@@ -6,8 +6,6 @@
 
 ### Software package
 
-### Software package
-
 Software package for calculating Small Angle Scattering (SAS) parameters from continuum simulations.
 
 It can calculate
