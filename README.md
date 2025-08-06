@@ -26,11 +26,13 @@ The output data is stored in `data` folder. The detailed structure of `data` fol
 
 Test cases:
 
-For testing, the SLD distribution of known structures can be generated and assigned, for which the scatering quantities can be calculated analytically. Several test cases are provided to demonstrate this workflow of testing. As a functional test case, an `hdf` snapshot files of Exodus file obtained from exemplary MOOSE simulation is also included.
+For validation, the SLD distribution of known structures can be generated and assigned, from which the scatering quantities can be calculated using this software and compared with analytical expressions. Several models are provided as validation test cases that follow this workflow. 
+
+As a functional test case, snapshots of an Exodus file obtained from exemplary MOOSE simulation is also included as `hdf` files. The SLD values are assigned from these `hdf` snapshot files to a generated mesh and SAS quantities are calculated using this software.
 
 Following are the list of test cases:
 
-- Generated model SLD distribution
+- Validation test case: Generated model SLD distribution
     - One time step models (structures)
         - Sphere (ball)
         - Cube (box)
@@ -40,13 +42,13 @@ Following are the list of test cases:
         - Growth of sphere (gg)
         - interdiffusion of sphere and environment (fs)
         - Change of chemical composition of sphere (sld_growth)
-- Simulated model SLD distribution
+- Functional test case: Simulated model SLD distribution
     - Phase field modeling using MOOSE
         - Spinodal decomposition of Fe-Cr (phase_field)
 
 Test scripts:
 
-Scripts are provided in `models` folder that generate data and figures related to different test cases. All cases store generated data in `data` folder and figures in `figure` folder.
+Scripts are provided in `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication
 
 ### Files in repository
 
