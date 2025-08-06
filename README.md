@@ -28,7 +28,7 @@ Test cases:
 
 For validation, the SLD distribution of known structures can be generated and assigned, from which the scatering quantities can be calculated using this software and compared with analytical expressions. Several models are provided as validation test cases that follow this workflow. 
 
-As a functional test case, snapshots of an Exodus file obtained from exemplary MOOSE simulation is also included as `hdf` files. The SLD values are assigned from these `hdf` snapshot files to a generated mesh and SAS quantities are calculated using this software.
+As a functional test case, snapshots of an Exodus file obtained from exemplary MOOSE simulation are also included as `hdf` files. The SLD values are assigned from these `hdf` snapshot files to a generated mesh and SAS quantities are calculated using this software.
 
 Following are the list of test cases:
 
