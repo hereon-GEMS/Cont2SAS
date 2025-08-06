@@ -40,7 +40,7 @@ Following are the list of test cases:
         - Sphere off the center of cube (bib_ecc)
     - Several time step models (phenomena)
         - Growth of sphere (gg)
-        - interdiffusion of sphere and environment (fs)
+        - Interdiffusion of sphere and environment (fs)
         - Change of chemical composition of sphere (sld_growth)
 - Functional test case: Simulated model SLD distribution
     - Phase field modeling using MOOSE
