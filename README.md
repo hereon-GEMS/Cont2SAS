@@ -4,6 +4,8 @@
 
 ## Description
 
+### Software package
+
 Software package for calculating Small Angle Scattering (SAS) parameters from continuum simulations.
 
 It can calculate
@@ -20,13 +22,20 @@ Workflow:
 3. SAS pattern calculation
 4. effective scattering cross section calculation
 
-For validation, the SLD distribution of known structures can be generated and assigned, for which the scatering quantities can be calculated analytically.
+The output data is stored in `data` folder. The detailed structure of `data` folder can be found in [documentation](./docu/index.md).
 
-As a functional test case, an exemplary MOOSE simulation is also included as `hdf` snapshots out of the Exodus file.
+Test cases:
+
+For testing, the SLD distribution of known structures can be generated and assigned, for which the scatering quantities can be calculated analytically. 
+
+Several models or test cases are provided to demonstrate this workflow of testing. As a functional test case, an exemplary MOOSE simulation is also included as `hdf` snapshots out of the Exodus file.
+
+Scripts are provided to generate data and figures related to different test cases. All cases store generated data in `data` folder and figures in `figure` folder.
+### Files in repository
 
 Files in repository:
 
-1. `database_sassena`: 
+1. `database_sassena`:
     - Description: Copy of [sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/) database.
     - Purpose: Some files are copied for creating database while calculating from continuum simulated structures.
 2. `detector_geometry`
