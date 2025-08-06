@@ -52,7 +52,7 @@ Scripts are provided in `models` folder that generate data and figures related t
 
 ### Files in repository
 
-Files in repository:
+A description and purpose of the provided files are listed below:
 
 1. `database_sassena`:
     - Description: Copy of [sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/) database.
@@ -71,6 +71,7 @@ Files in repository:
     - Purpose: Required for relevant run scripts in `src` and test scripts in `models`.
 6. `logo`
     - Description: logo of `Cont2SAS`.
+    - Purpose: Required by `README` file.
 7. `models`
     - Description: data generation and plot generation scripts for provided models (see [quick start guide](./getting-started.md))
     - Purpose: Required for testing the functionality of `Cont2SAS`.
