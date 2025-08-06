@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo/logo/Cont2SAS-logo.png" alt="Description" width="500"/>
+  <img src="logo/logo/Cont2SAS-logo-transparent.png" alt="Description" width="500"/>
 </p>
 
 <!-- ![logo](logo/logo/Cont2SAS-horizontal.png) -->
