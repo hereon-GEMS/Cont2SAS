@@ -26,11 +26,28 @@ The output data is stored in `data` folder. The detailed structure of `data` fol
 
 Test cases:
 
-For testing, the SLD distribution of known structures can be generated and assigned, for which the scatering quantities can be calculated analytically. 
+For testing, the SLD distribution of known structures can be generated and assigned, for which the scatering quantities can be calculated analytically. Several test cases are provided to demonstrate this workflow of testing. As a functional test case, an `hdf` snapshot files of Exodus file obtained from exemplary MOOSE simulation is also included.
 
-Several models or test cases are provided to demonstrate this workflow of testing. As a functional test case, an exemplary MOOSE simulation is also included as `hdf` snapshots out of the Exodus file.
+Following are the list of test cases:
 
-Scripts are provided to generate data and figures related to different test cases. All cases store generated data in `data` folder and figures in `figure` folder.
+- Generated model SLD distribution
+    - One time step models (structures)
+        - Sphere (ball)
+        - Cube (box)
+        - Sphere at the center of cube (bib)
+        - Sphere off the center of cube (bib_ecc)
+    - Several time step models (phenomena)
+        - Growth of sphere (gg)
+        - interdiffusion of sphere and environment (fs)
+        - Change of chemical composition of sphere (sld_growth)
+- Simulated model SLD distribution
+    - Phase field modeling using MOOSE
+        - Spinodal decomposition of Fe-Cr (phase_field)
+
+Test scripts:
+
+Scripts are provided in `models` folder that generate data and figures related to different test cases. All cases store generated data in `data` folder and figures in `figure` folder.
+
 ### Files in repository
 
 Files in repository:
