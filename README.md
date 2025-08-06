@@ -6,6 +6,8 @@
 
 ### Software package
 
+### Software package
+
 Software package for calculating Small Angle Scattering (SAS) parameters from continuum simulations.
 
 It can calculate
@@ -26,14 +28,33 @@ The output data is stored in `data` folder. The detailed structure of `data` fol
 
 Test cases:
 
-For testing, the SLD distribution of known structures can be generated and assigned, for which the scatering quantities can be calculated analytically. 
+For validation, the SLD distribution of known structures can be generated and assigned, from which the scatering quantities can be calculated using this software and compared with analytical expressions. Several models are provided as validation test cases that follow this workflow. 
 
-Several models or test cases are provided to demonstrate this workflow of testing. As a functional test case, an exemplary MOOSE simulation is also included as `hdf` snapshots out of the Exodus file.
+As a functional test case, snapshots of an Exodus file obtained from exemplary MOOSE simulation are also included as `hdf` files. The SLD values are assigned from these `hdf` snapshot files to a generated mesh and SAS quantities are calculated using this software.
 
-Scripts are provided to generate data and figures related to different test cases. All cases store generated data in `data` folder and figures in `figure` folder.
+Following are the list of test cases:
+
+- Validation test case: Generated model SLD distribution
+    - One time step models (structures)
+        - Sphere (ball)
+        - Cube (box)
+        - Sphere at the center of cube (bib)
+        - Sphere off the center of cube (bib_ecc)
+    - Several time step models (phenomena)
+        - Growth of sphere (gg)
+        - Interdiffusion of sphere and environment (fs)
+        - Change of chemical composition of sphere (sld_growth)
+- Functional test case: Simulated model SLD distribution
+    - Phase field modeling using MOOSE
+        - Spinodal decomposition of Fe-Cr (phase_field)
+
+Test scripts:
+
+Scripts are provided in `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication
+
 ### Files in repository
 
-Files in repository:
+A description and purpose of the provided files are listed below:
 
 1. `database_sassena`:
     - Description: Copy of [sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/) database.
@@ -52,6 +73,7 @@ Files in repository:
     - Purpose: Required for relevant run scripts in `src` and test scripts in `models`.
 6. `logo`
     - Description: logo of `Cont2SAS`.
+    - Purpose: Required by `README` file.
 7. `models`
     - Description: data generation and plot generation scripts for provided models (see [quick start guide](./getting-started.md))
     - Purpose: Required for testing the functionality of `Cont2SAS`.
