@@ -5,9 +5,7 @@ stages:
 
 install_sassena:
   stage: install_sassena_stage
-  image: 
-    - alpine
-    - python:3.12.1
+  image: python:3.12-alpine
   script: 
     - mkdir -p ./Sassena
     - apk add --no-cache wget
