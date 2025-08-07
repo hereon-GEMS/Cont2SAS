@@ -1,7 +1,5 @@
-#
 # Simulation of an iron-chromium alloy using simplest possible code and a test
-# set of initial conditions.
-#
+# Framework taken from moose website
 
 [Mesh]
   # generate a 3D, 25nm x 25nm x 25 nm mesh
