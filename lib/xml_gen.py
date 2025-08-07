@@ -15,6 +15,15 @@
 # along with this program; if not, see
 # <https://www.gnu.org/licenses/>.
 
+"""
+Library:
+Collection of functions for creating input xml files
+used by models/*/*_gen.py files
+
+created by Arnab Majumdar
+date: 07.08.2025
+"""
+
 import xml.etree.ElementTree as ET
 from xml.dom.minidom import parseString
 import os
@@ -22,6 +31,9 @@ import os
 # write struct_gen.xml file
 def struct_xml_write(xml_dir, length_a, length_b, length_c, nx, ny, nz, el_type, el_order,
                      update_val=True, plt_node=False, plt_cell=False, plt_mesh=False):
+    """
+    xml structure for creating struct.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -41,7 +53,7 @@ def struct_xml_write(xml_dir, length_a, length_b, length_c, nx, ny, nz, el_type,
     element = ET.SubElement(root, "element")
     ET.SubElement(element, "type").text=str(el_type)
     ET.SubElement(element, "order").text=str(el_order)
-    
+
     # decision to update plot or not
     decision = ET.SubElement(root, "decision")
     ET.SubElement(decision, "update").text=str(update_val)
@@ -51,7 +63,6 @@ def struct_xml_write(xml_dir, length_a, length_b, length_c, nx, ny, nz, el_type,
     ET.SubElement(plot, "mesh").text=str(plt_mesh)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
     formatted_xml = parseString(xml_str).toprettyxml(indent="  ")
 
@@ -60,11 +71,14 @@ def struct_xml_write(xml_dir, length_a, length_b, length_c, nx, ny, nz, el_type,
     xml_file=os.path.join(xml_dir, xml_file_name)
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("structure generation xml file created successfully!")
 
 # write simulation.xml file
 def sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem):
+    """
+    xml structure for creating simulation.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -76,7 +90,6 @@ def sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem):
     ET.SubElement(sim_param, "n_ensem").text=str(n_ensem)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -86,11 +99,14 @@ def sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem):
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("simulation xml file created successfully!")
 
 # write model_ball.xml file
 def model_ball_xml_write(xml_dir, rad, sld, qclean_sld):
+    """
+    xml structure for creating model_ball.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -100,7 +116,6 @@ def model_ball_xml_write(xml_dir, rad, sld, qclean_sld):
     ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -110,11 +125,14 @@ def model_ball_xml_write(xml_dir, rad, sld, qclean_sld):
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("model_ball xml file created successfully!")
 
 # write model_box.xml file
 def model_box_xml_write(xml_dir, sld, qclean_sld):
+    """
+    xml structure for creating model_box.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -123,7 +141,6 @@ def model_box_xml_write(xml_dir, sld, qclean_sld):
     ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -133,11 +150,14 @@ def model_box_xml_write(xml_dir, sld, qclean_sld):
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("model_box xml file created successfully!")
 
 # write model_bib.xml file
 def model_bib_xml_write(xml_dir, rad, sld_in, sld_out, qclean_sld):
+    """
+    xml structure for creating model_bib.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -148,7 +168,6 @@ def model_bib_xml_write(xml_dir, rad, sld_in, sld_out, qclean_sld):
     ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -158,11 +177,14 @@ def model_bib_xml_write(xml_dir, rad, sld_in, sld_out, qclean_sld):
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("model_bib xml file created successfully!")
 
 # write model_bib_ecc.xml file
 def model_bib_ecc_xml_write(xml_dir, rad, sld_in, sld_out, ecc_vec, qclean_sld):
+    """
+    xml structure for creating model_bib_ecc.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -181,7 +203,6 @@ def model_bib_ecc_xml_write(xml_dir, rad, sld_in, sld_out, ecc_vec, qclean_sld):
     ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -191,11 +212,14 @@ def model_bib_ecc_xml_write(xml_dir, rad, sld_in, sld_out, ecc_vec, qclean_sld):
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("model_bib_ecc xml file created successfully!")
 
 # write model_gg.xml file
 def model_gg_xml_write(xml_dir, rad_0, rad_end, sld_in, sld_out, qclean_sld):
+    """
+    xml structure for creating model_gg.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -207,7 +231,6 @@ def model_gg_xml_write(xml_dir, rad_0, rad_end, sld_in, sld_out, qclean_sld):
     ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -217,11 +240,14 @@ def model_gg_xml_write(xml_dir, rad_0, rad_end, sld_in, sld_out, qclean_sld):
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("model_gg xml file created successfully!")
 
 # write model_fs.xml file
 def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out, qclean_sld):
+    """
+    xml structure for creating model_fs.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -234,7 +260,6 @@ def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out, qclean_sld
     ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -244,11 +269,14 @@ def model_fs_xml_write(xml_dir, rad, sig_0, sig_end, sld_in, sld_out, qclean_sld
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("model_fs xml file created successfully!")
 
 # write model_sld_grow.xml file
 def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out, qclean_sld):
+    """
+    xml structure for creating model_sld_grow.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -260,7 +288,6 @@ def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out, qclean
     ET.SubElement(root, "qclean_sld").text=str(qclean_sld)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -273,6 +300,9 @@ def model_sld_grow_xml_write(xml_dir, rad, sld_in_0, sld_in_end, sld_out, qclean
 
 # write model_phase_field.xml
 def model_phase_field_xml_write(xml_dir, name, time, qclean_sld):
+    """
+    xml structure for creating model_phase_field.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -291,15 +321,17 @@ def model_phase_field_xml_write(xml_dir, name, time, qclean_sld):
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("model_phase_field xml file created successfully!")
 
 # write scatt_cal.xml file
-def scatt_cal_xml_write(xml_dir, num_cat, method_cat, 
-                        sassena_exe, mpi_procs, num_threads, 
-                        sig_file, scan_vec_val, Q_range,
-                        num_points, num_orientation):
-    
+def scatt_cal_xml_write(xml_dir, num_cat, method_cat,
+                         sassena_exe, mpi_procs, num_threads,
+                           sig_file, scan_vec_val, Q_range,
+                             num_points, num_orientation):
+    """
+    xml structure for creating scatt_cal.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -327,7 +359,6 @@ def scatt_cal_xml_write(xml_dir, num_cat, method_cat,
     ET.SubElement(scatt_cal, "num_orientation").text=str(num_orientation)
 
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -337,12 +368,15 @@ def scatt_cal_xml_write(xml_dir, num_cat, method_cat,
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("scatt_cal xml file created successfully!")
 
 # write sig_eff.xml file
-def sig_eff_xml_write(xml_dir, instrument, facility, 
-                        distance, wl, beam_center_coord):
+def sig_eff_xml_write(xml_dir, instrument, facility,
+                       distance, wl, beam_center_coord):
+    """
+    xml structure for creating sig_eff.xml
+    """
     # Create the root element
     root = ET.Element("root")
 
@@ -355,9 +389,8 @@ def sig_eff_xml_write(xml_dir, instrument, facility,
     ET.SubElement(beam_center, "x").text=str(beam_center_coord[0])
     ET.SubElement(beam_center, "y").text=str(beam_center_coord[1])
     ET.SubElement(beam_center, "z").text=str(beam_center_coord[2])
-    
+
     # Convert to a string and format
-    tree = ET.ElementTree(root)
     xml_str = ET.tostring(root, encoding="utf-8", method="xml").decode()
 
     # Save to a file
@@ -367,5 +400,5 @@ def sig_eff_xml_write(xml_dir, instrument, facility,
 
     with open(xml_file, "w", encoding="utf-8") as f:
         f.write(formatted_xml)
-    
+
     print("sig_eff xml file created successfully!")
