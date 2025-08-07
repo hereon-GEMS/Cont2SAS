@@ -235,6 +235,15 @@ pip install -r requirements.txt
 pip uninstall -r requirements.txt
 ``` -->
 
+### Test installation
+
+To check whether the installation work run following script
+
+```
+conda install pytest
+pytest -v
+```
+
 ## Getting started
 
 Some models are provided for generating or simulating nanostructures. From these structures SAS patterns can be calculated. One of the models also facilitates calculation of effective cross-section. 
