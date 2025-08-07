@@ -11,9 +11,6 @@ install_sassena:
     # - apk add --no-cache wget
     # - wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
     # - chmod +x ./Sassena/Sassena.AppImage # run sassena
-    - apt-get install python3-venv
-    - python3 -m venv Cont2Sas
-    - source Cont2Sas/bin/activate
     - pip install -r requirements.txt
 
 # test_ball:
