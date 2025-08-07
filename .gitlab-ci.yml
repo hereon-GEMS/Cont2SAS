@@ -1,0 +1,16 @@
+# .gitlab-ci.yml
+
+stages:
+  - test_ball
+
+test_ball:
+  stage: test_ball
+  image: python:3.12.1  # Use a Docker image with Python
+  before_script:
+    - pip install -r requirements.txt
+    - pip install pytest
+    - mkdir -p ./Sassena
+    - wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
+    - chmod +x ./Sassena/Sassena.AppImage # run sassena
+  script:
+    - pytest -v
