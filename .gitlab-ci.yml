@@ -12,7 +12,6 @@ install_sassena:
     - wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
     - chmod +x ./Sassena/Sassena.AppImage # run sassena
     - ls -l ./Sassena/Sassena.AppImage
-    - ./Sassena/Sassena.AppImage --help
   artifacts:
     paths:
       - "Sassena"
