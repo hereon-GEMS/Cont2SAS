@@ -4,7 +4,7 @@ stages:
   - build_sassena_stage
 
 install_sassena:
-  stage: install_sassena_stage
+  stage: build_sassena_stage
   image: alpine
   script: 
     - mkdir -p ./Sassena
