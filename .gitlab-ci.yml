@@ -10,8 +10,8 @@ install_sassena:
     - mkdir -p ./Sassena
     - apk add --no-cache wget
     - wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
-    - chmod +x new # ./Sassena/Sassena.AppImage # run sassena
-    # - ./Sassena/Sassena.AppImage --help
+    - chmod +x ./Sassena/Sassena.AppImage # run sassena
+    - ls -l ./Sassena/Sassena.AppImage
   artifacts:
     paths:
       - "Sassena"
