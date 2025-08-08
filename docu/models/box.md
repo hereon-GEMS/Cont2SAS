@@ -11,7 +11,7 @@ Workflow:
 
 ## Copy model_box.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy xml template to xml folder
@@ -23,7 +23,7 @@ nano xml/model_box.xml
 ## Edit model_box.xml
 
 - sld = SLD of parallelepiped
-- qclean_sld = SLD outside simulation box
+- qclean_sld = SLD outside of the simulation box
 
 ## Go to workflow
 

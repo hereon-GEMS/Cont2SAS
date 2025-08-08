@@ -1,6 +1,6 @@
 # bib_ecc
 
-This page documents the workflow for creating the input xml related to the `bib_ecc` model, i.e. model_bib_ecc.xml. The name `bib_ecc` stands for ball in box eccentric. The `bib` model represents a parallepiped nanoparticle of one sld with spherical region of another sld shifted from the center.
+This page documents the workflow for creating the input xml related to the `bib_ecc` model, i.e. model_bib_ecc.xml. The name `bib_ecc` stands for ball in box eccentric. The `bib` model represents a parallepiped nanoparticle of one SLD containing a spherical region of another SLD, shifted from the center.
 
 Relevant input xml: model_bib_ecc.xml
 
@@ -11,7 +11,7 @@ Workflow:
 
 ## Copy model_bib_ecc.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy xml template to xml folder
@@ -25,11 +25,11 @@ nano xml/model_bib_ecc.xml
 - rad = radius of sphere (must be <= simulation box length/2)
 - sld_in = SLD of sphere
 - sld_out = SLD of environment
-- ecc = vector w.r.t. simulation box center
+- ecc = vector from the center of the simulation box to the center of the spherical region
     - x = x value of vector
     - y = y value of vector
     - z = z value of vector
-- qclean_sld = SLD outside simulation box
+- qclean_sld = SLD outside of the simulation box
 
 ## Go to workflow
 
