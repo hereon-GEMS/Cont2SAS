@@ -22,6 +22,6 @@ run_sassena:
   image: ubuntu:24.04
   before_script:
     - apt-get update && apt-get
-     install -y libfuse2 build-essential wget
+     install -y libfuse2
   script:
     - ./Sassena/Sassena.AppImage --help
