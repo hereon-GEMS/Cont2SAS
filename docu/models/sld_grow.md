@@ -1,12 +1,12 @@
 # sld_grow
 
-This page documents the workflow for creating the input xml related to the `sld_grow` model, i.e. model_sld_grow.xml. The `sld_grow` model represents the phenomenon of the change of chemical composition of spherical grain over time. The effective cross-section is also calculated for the `sld_grow` model.
+This page documents the workflow for creating the input xml related to the `sld_grow` model, i.e. model_sld_grow.xml. The `sld_grow` model represents the phenomenon of a changing chemical composition of a spherical grain inside a cubic nanoparticle over time. The effective cross-section is also calculated for the `sld_grow` model.
 
 Relevant input xml: model_sld_grow.xml
 
 ## Copy model_sld_grow.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy xml template to xml folder
@@ -20,8 +20,8 @@ nano xml/model_sld_grow.xml
 - rad = sphere radius
 - sld_in_0 = starting SLD of sphere
 - sld_in_end = end SLD of sphere
-- sld_out = SLD of environment
-- qclean_sld = SLD outside simulation box
+- sld_out = SLD of the cubic nanoparticle
+- qclean_sld = SLD outside of the simulation box
 
 ## Go to workflow
 

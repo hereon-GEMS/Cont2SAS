@@ -1,6 +1,6 @@
 # fs
 
-This page documents the workflow for creating the input xml related to the `fs` model, i.e. model_fs.xml. The name `fs` stands for fuzzy sphere. The `fs` model represents the interdiffusion phenomena between spherical grain and its environment over time. The model is named fuzzy sphere because the resulting model is fitted to the analytical formula of fuzzy sphere.
+This page documents the workflow for creating the input xml related to the `fs` model, i.e. model_fs.xml. The name `fs` stands for fuzzy sphere. The `fs` model represents the interdiffusion phenomena between a spherical grain and its environment (a cubic nanoparticle) over time. The model is named fuzzy sphere because the resulting model is fitted to the [analytical formula of a fuzzy sphere](https://www.sasview.org/docs/user/models/fuzzy_sphere.html).
 
 Relevant input xml: model_fs.xml
 
@@ -11,7 +11,7 @@ Workflow:
 
 ## Copy model_fs.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy xml template to xml folder
@@ -28,8 +28,8 @@ Structure of ``model_fs.xml``:
 - sig_0 = starting fuzz value (>=0)
 - sig_end = end fuzz value (>=0)
 - sld_in = SLD of sphere
-- sld_out = SLD of environment
-- qclean_sld = SLD outside simulation box
+- sld_out = SLD of the cubic nanoparticle
+- qclean_sld = SLD outside of the simulation box
 
 ## Go to workflow
 

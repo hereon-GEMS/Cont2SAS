@@ -11,7 +11,7 @@ Workflow:
 
 ## Copy model_ball.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy xml template to xml folder
@@ -24,7 +24,7 @@ nano xml/model_ball.xml
 
 - rad = radius of sphere
 - sld = SLD of sphere
-- qclean_sld = SLD outside simulation box
+- qclean_sld = SLD outside of the simulation box
 
 ## Go to workflow
 Go back to the main [workflow](../general/workflow.md#assign-sld-to-nodes) and continue.
