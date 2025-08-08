@@ -413,7 +413,7 @@ ax_scatt.set_xlim([Q_range[0], Q_range[1]])
 ## grid
 ax_scatt.grid()
 ## save plot for scattering
-plot_file=os.path.join(plot_dir, 'Iq.pdf')
+plot_file=os.path.join(plot_dir, f'Iq_{sim_model}.pdf')
 fig_scatt.savefig(plot_file, format='pdf')
 plt.close(fig_scatt)
 
