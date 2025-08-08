@@ -11,7 +11,7 @@ Software package for calculating Small Angle Scattering (SAS) parameters from co
 It can calculate
 
 1. SAS intensity ($I$ vs. $Q$)
-2. effective scattering cross-section ($\sigma_\text{eff}$), i.e. the count rate of the scattered radiation per unit flux.
+2. Effective scattering cross-section ($\sigma_\text{eff}$), i.e. the count rate of the scattered radiation per unit flux.
 
 It takes a distribution of scattering length density (SLD) values as input that can be provided by FEM simulation softwares, e.g., [Exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html) provided by [MOOSE](https://mooseframework.inl.gov/).
 
@@ -20,7 +20,7 @@ Workflow:
 1. Mesh generation
 2. Scattering length density (SLD) assignment
 3. SAS pattern calculation
-4. effective scattering cross section calculation
+4. Effective scattering cross section calculation
 
 The output data are stored in the `data` folder. Its detailed structure is described in the [documentation](./docu/index.md).
 
