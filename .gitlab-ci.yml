@@ -21,4 +21,4 @@ run_sassena:
   stage: run
   image: ubuntu22.04
   script:
-    - ./Sassena/Sassena.AppImage
+    - ./Sassena/Sassena.AppImage --help
