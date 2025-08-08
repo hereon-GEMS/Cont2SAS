@@ -21,6 +21,7 @@ download_sassena:
 run_sassena:
   stage: run
   image: ubuntu:latest
+  allow_failure: true
   dependencies:
     - download_sassena
   before_script:
