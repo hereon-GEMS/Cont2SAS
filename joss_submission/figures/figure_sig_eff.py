@@ -14,12 +14,22 @@
 # along with this program; if not, see
 # <https://www.gnu.org/licenses/>.
 
+"""
+script for creating figure 2 used in paper.md
+run dir $C2S_HOME
+
+created by Arnab Majumdar
+date: 08.08.2025
+"""
+
 from pdf2image import convert_from_path
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
-import matplotlib.patches as patches
 
 def create_pdf_figure(pdf_paths, output_image='figure.png', dpi=150):
+    """
+    function for creating 
+    one png from several pdf files
+    """
     images = []
     for path in pdf_paths:
         pages = convert_from_path(path, dpi=dpi)
@@ -27,14 +37,14 @@ def create_pdf_figure(pdf_paths, output_image='figure.png', dpi=150):
 
     cols = len(images)
     fig, axes = plt.subplots(1, cols, figsize=(5 * cols, 3))
-    
+
     if cols == 1:
         axes = [axes]
-    
+
     for ax, img in zip(axes, images):
         ax.imshow(img)
         ax.axis('off')
-    
+
     fig.tight_layout()
     fig.savefig(output_image, dpi=dpi)
     plt.close(fig)
