@@ -23,7 +23,6 @@ run_sassena:
   dependencies:
     - download_sassena
   before_script:
-    - apt-get update
-    - apt-get install -y libfuse2
+    - apt-get update && apt-get install -y libfuse2
   script:
     - ./Sassena/Sassena.AppImage --help
