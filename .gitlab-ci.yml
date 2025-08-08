@@ -3,6 +3,7 @@
 stages:
   - download
   - run
+  - test
 
 download_sassena:
   stage: download
@@ -28,3 +29,14 @@ run_sassena:
     - apt-get update && apt-get install -y mpi-default-dev
   script:
     - ./Sassena/Sassena.AppImage --appimage-extract-and-run --help
+
+test_c2s:
+  stage: test
+  image: ubuntu:latest
+  dependencies:
+    - download_sassena
+  before_script:
+    - apt-get update && apt-get install -y python pip pytest
+    - pip install -r requirements.txt
+  script:
+    - echo 'python works'
