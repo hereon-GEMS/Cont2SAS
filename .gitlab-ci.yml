@@ -38,7 +38,6 @@ test_c2s:
     - download_sassena
   before_script:
     - apt-get update && apt-get install -y python3 python3-pip 
-    - pip3 install pytest
     - pip3 install -r requirements.txt
   script:
     - echo 'python works'
