@@ -19,9 +19,10 @@ download_sassena:
 
 run_sassena:
   stage: run
-  image: ubuntu:18.04
+  image: ubuntu:22.04
   before_script:
     - apt-get update && apt-get
      install -y libfuse2
+     - apt-get install libstdc++6
   script:
     - ./Sassena/Sassena.AppImage --help
