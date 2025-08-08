@@ -14,12 +14,23 @@
 # along with this program; if not, see
 # <https://www.gnu.org/licenses/>.
 
+"""
+script for creating figure 1 used in paper.md
+run dir $C2S_HOME
+
+created by Arnab Majumdar
+date: 08.08.2025
+"""
+
 from pdf2image import convert_from_path
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-import matplotlib.patches as patches
 
 def create_pdf_figure(pdf_paths, output_image='figure.png', dpi=150):
+    """
+    function for creating 
+    one png from several pdf files
+    """
     images = []
     for path in pdf_paths:
         pages = convert_from_path(path, dpi=dpi)
@@ -27,34 +38,38 @@ def create_pdf_figure(pdf_paths, output_image='figure.png', dpi=150):
 
     cols = len(images)
     fig, axes = plt.subplots(1, cols, figsize=(5 * cols, 5))
-    
+
     if cols == 1:
         axes = [axes]
-    
+
     for ax, img in zip(axes, images):
         ax.imshow(img)
         ax.axis('off')
-    
+
     fig.tight_layout()
     fig.savefig(output_image, dpi=dpi)
     plt.close(fig)
 
-def create_mesh_figure(length_a, length_b, nx, ny,
+def create_mesh_figure(length_a_inp, length_b_inp, nx_inp, ny_inp,
                         output_pdf='mesh.pdf', dpi=150):
+    """
+    function for creating 
+    create an empty mesh as pdf
+    """
     # fig initialization
     fig, ax = plt.subplots(figsize=(5, 5))
     ax.axis('off')
     # plot point so that add patch works
     ax.plot([0],[0], 'k')
     # plot mesh
-    cell_x=length_a/nx
-    cell_y=length_b/ny
-    for idx1 in range(nx):
-        for idx2 in range(ny):
+    cell_x=length_a_inp/nx_inp
+    cell_y=length_b_inp/ny_inp
+    for idx1 in range(nx_inp):
+        for idx2 in range(ny_inp):
             rect_center_x=idx1*cell_x
             rect_center_y=idx2*cell_y
-            rect=Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
-                                           edgecolor='k', facecolor='none', linewidth=0.5)
+            rect=Rectangle((rect_center_x, rect_center_y), cell_x, cell_y,
+                            edgecolor='k', facecolor='none', linewidth=0.5)
             ax.add_patch(rect)
     # save figure
     fig.savefig(output_pdf, format='pdf', dpi=dpi)
@@ -64,7 +79,7 @@ def create_mesh_figure(length_a, length_b, nx, ny,
 # mother dir
 fig_dir='./joss_submission/figures/'
 # mesh params
-length_a= 40.  
+length_a= 40.
 length_b=40.
 # number of cells in each direction (int values)
 nx= 40
