@@ -23,6 +23,6 @@ run_sassena:
   before_script:
     - apt-get update && apt-get
      install -y libfuse2
-     - apt-get install libstdc++6
+    - apt-get install libstdc++6
   script:
     - ./Sassena/Sassena.AppImage --help
