@@ -19,7 +19,7 @@ download_sassena:
 
 run_sassena:
   stage: run
-  image: ubuntu:24.04
+  image: ubuntu:22.04
   dependencies:
     - download_sassena
   before_script:
