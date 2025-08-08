@@ -6,11 +6,11 @@ stages:
 
 download_sassena:
   stage: download
-  image: alpine
+  image: alpine:latest
   script: 
     - mkdir -p ./Sassena
-    - apk add --no-cache wget
-    - wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
+    - apk add --no-cache curl
+    - curl -L https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage -o Sassena/Sassena.AppImage
     - chmod +x ./Sassena/Sassena.AppImage # run sassena
     - ls -l ./Sassena/Sassena.AppImage
   artifacts:
