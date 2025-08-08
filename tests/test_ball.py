@@ -82,13 +82,13 @@ def test_clean_up():
     1. Removes created data and figure
     2. Checks whether removed
     """
-    # data_dir='data/40p0_40p0_40p0_40_40_40_lagrangian_1'
+    data_dir='data/40p0_40p0_40p0_40_40_40_lagrangian_1'
     fig_dir='figure/ball'
-    # # remove data files
-    # os.rmdir(data_dir)
+    # remove data files
+    os.rmdir(data_dir)
     # remove figure
     shutil.rmtree(fig_dir)
     # check if it is removed
-    # assert os.path.isdir(data_dir)==0
+    assert os.path.isdir(data_dir)==0
     assert os.path.isdir(fig_dir)==0
 
