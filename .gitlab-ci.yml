@@ -23,5 +23,7 @@ run_sassena:
   image: ubuntu:latest
   dependencies:
     - download_sassena
+  before_script:
+    - apt-get update && apt-get install -y mpi-default-dev
   script:
     - ./Sassena/Sassena.AppImage --appimage-extract-and-run --help
