@@ -11,13 +11,9 @@ download_sassena:
     - apt-get update && apt-get install -y curl
   script: 
     - mkdir -p ./Sassena
-    - curl -L https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage -o Sassena/Sassena.AppImageOrig
-    - chmod +x ./Sassena/Sassena.AppImageOrig
-    - cd ./Sassena # https://appimage-builder.readthedocs.io/en/latest/intro/install.html#install-in-a-docker-container
-    - sed -i 's|AI\x02|\x00\x00\x00|' Sassena.AppImageOrig
-    - ./Sassena.AppImageOrig --appimage-extract
-    - ls -l *
-    - ln -s ./squashfs-root/AppRun ./Sassena.AppImage
+    - curl -L https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage -o Sassena/Sassena.AppImage
+    - chmod +x ./Sassena/Sassena.AppImage
+    - ls -l ./Sassena # https://appimage-builder.readthedocs.io/en/latest/intro/install.html#install-in-a-docker-container
   artifacts:
     paths:
       - "Sassena"
