@@ -1,5 +1,4 @@
-# One line to give the program's name and an idea of what it does.
-# Copyright (C) 2025  Arnab Majumdar
+# Copyright (C) 2025  Helmholtz-Zentrum-Hereon
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
