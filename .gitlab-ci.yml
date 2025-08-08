@@ -19,7 +19,7 @@ download_sassena:
 
 run_sassena:
   stage: run
-  image: ubuntu:18.04
+  image: ubuntu:24.04
   before_script:
     - apt-get update && apt-get
      install -y libfuse2 build-essential wget
