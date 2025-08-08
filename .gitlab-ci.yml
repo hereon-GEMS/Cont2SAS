@@ -27,8 +27,9 @@ run_sassena:
     - download_sassena
   before_script:
     - apt-get update && apt-get install -y mpi-default-dev
+    - export APPIMAGE_EXTRACT_AND_RUN=1
   script:
-    - ./Sassena/Sassena.AppImage --appimage-extract-and-run --help
+    - ./Sassena/Sassena.AppImage --help
 
 test_c2s:
   stage: test
