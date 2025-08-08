@@ -1,12 +1,11 @@
 # .gitlab-ci.yml
 
 stages:
-  - download
-  - run
-  - install
+  - build
+  - test
 
-download_sassena:
-  stage: download
+download:
+  stage: build
   image: ubuntu:latest
   before_script:
     - apt-get update && apt-get install -y curl
@@ -14,33 +13,28 @@ download_sassena:
     - mkdir -p ./Sassena
     - curl -L https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage -o Sassena/Sassena.AppImage
     - chmod +x ./Sassena/Sassena.AppImage
-    - ls -l ./Sassena # https://appimage-builder.readthedocs.io/en/latest/intro/install.html#install-in-a-docker-container
   artifacts:
     paths:
       - "Sassena"
 
 run_sassena:
-  stage: run
+  stage: test
   image: ubuntu:latest
-  allow_failure: true
   dependencies:
-    - download_sassena
+    - download
   before_script:
     - apt-get update && apt-get install -y mpi-default-dev
     - export APPIMAGE_EXTRACT_AND_RUN=1
   script:
-    - ./Sassena/Sassena.AppImage --help
+    - wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+    - bash Miniforge3.sh -b -p "${HOME}/conda"
+    - source "${HOME}/conda/etc/profile.d/conda.sh"
+    - conda activate
+    - git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.git
+    - cd continuum-to-scattering
+    - export C2S_HOME=$PWD
+    - conda env create -f environment.yml
+    - conda activate Cont2Sas
+    - conda install pytest
+    - pytest -v
 
-install_pypkg:
-  stage: install
-  image: python:3.12
-  script:
-    - python -m venv venv
-    - source venv/bin/activate
-    - pip install --upgrade pip
-    - pip install -r requirements.txt
-    - pip install pytest
-  artifacts:
-    paths:
-      - venv/
-    expire_in: 1 hour
