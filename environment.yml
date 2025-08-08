@@ -11,7 +11,7 @@ dependencies:
   - netCDF4=1.7.1 # 1.7.2 # 1.7.1.post2
   - numpy=1.26.4 # 2.3.1 # 1.26.4
   - openmpi=5.0.8
-  - PyMuPDF==1.26.1
-  - pytest==7.4.4
+  - PyMuPDF=1.26.1
+  - pytest=7.4.4
   - scipy=1.11.4 # 1.16.0 # 1.11.4
   - pip=23.3.2
