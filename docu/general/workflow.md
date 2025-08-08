@@ -9,17 +9,17 @@ The workflow of `Cont2SAS` can be divided into four steps:
 
 ## Mesh generation
 
-The mesh generation step creates a mesh, which includes the coordinates of nodes, cell center, connectivity matrix, element type. 
+The mesh generation step creates a mesh, which includes the coordinates of nodes, cell center, the connectivity matrix, and the element type (defines interpolation function). 
 
 Relevant files:
-1. Relevant input xml: struct.xml
-2. Relevant script: src/struct_gen.py
+1. Input xml: struct.xml
+2. Script: src/struct_gen.py
 
 Important points:
-1. Generated mesh should match the mesh used for simulation, when outside software is used (e.g. moose)
-2. The connectivity matrix should match the `Cont2SAS` meshing strategy.
-3. The current version can only generate regular meshing. 
-4. The current version supports only lagrangian elements of 1st and 2nd order.
+1. The generated mesh has to match the mesh used for the simulation, when a third-part program (e.g. MOOSE) is used for the simulation.
+2. The connectivity matrix has to match the `Cont2SAS` meshing strategy.
+3. The current version always generates a regular meshing. 
+4. The current version supports Lagrangian elements of 1st and 2nd order.
 
 Workflow:
 1. [Copy struct.xml template](#copy-structxml-template)
@@ -29,7 +29,7 @@ Workflow:
 
 ### Copy struct.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy from template to xml folder
@@ -40,21 +40,21 @@ nano xml/struct.xml
 
 ### Edit struct.xml
 
-- lengths = dimension of simulation box in x,y,z
-- num_cell = num elements in x,y,z directions
+- lengths = dimension of simulation box in x,y,z (recommended: Angstrom)
+- num_cell = number of elements in x,y,z directions
 - element
     - type = type of element (allowed: 'lagrangian')
     - order = order of element (allowed: 1 or 2)
 - decision
-    - update_val = whether to rewrite the structure or not (preferred= 'True')
+    - update_val = whether to rewrite the structure or not (preferred: 'True')
     - plot
-        - node = decision to plot nodes (preffered: 'False') 
-        - cell = decision to plot element centers (preffered: 'False')
-        - mesh = decision to plot mesh (preffered: 'False')
+        - node = whether to plot nodes (preferred: 'False') 
+        - cell = whether to plot element centers (preferred: 'False')
+        - mesh = whether to plot mesh (preferred: 'False')
 
 ### Generate mesh
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # run script to generate mesh 
@@ -63,19 +63,19 @@ python ./src/struct_gen.py
 
 ### Output data location
 
-Output is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder` `->` `structure` folder in `struct.h5` file.
+The mesh is saved in `data/${lengthx}_${lengthy}_${lengthz}_${nx}_${ny}_${nz}_${eltype}_${elorder}/structure/struct.h5`.
 
 ## SLD assignment
 
-The SLD assignment step assigns SLD values to the nodes. For generated models, a formula is defined for assigning SLD values. For simulated models, the SLD values are read from `hdf5` files, which is created after postprocessing of simulated results.
+The SLD assignment step assigns scattering length density (SLD) values to the nodes. For generated models, a formula is defined in `lib/simulation.py` for assigning SLD values. For simulated models, the SLD values are read from `hdf5` files, which are created after postprocessing the simulated results.
 
 Relevant files:
-1. Relevant input xml: simulation.xml and appropiate model xmls
-2. Relevant script: src/sim_gen.py
+1. Input xml: simulation.xml and appropriate model xmls
+2. Script: src/sim_gen.py
 
 Important points:
-1. For different models, different model xml is input (see below for reference).
-2. For a new user defined model, definition of model xml must be added.
+1. For different models, a different model xml input is used (see below for reference).
+2. For a new user defined model, a new model xml file must be added.
 
 Workflow:
 1. [Copy simulation.xml template](#copy-simulationxml-template)
@@ -86,7 +86,7 @@ Workflow:
 
 ### Copy simulation.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy from template to xml folder
@@ -99,12 +99,12 @@ nano xml/simulation.xml
 
 - sim_model = name of the model
 - dt = time step length
-- t_end = end time (start time is 0)
-- n_ensem = number of structures per time step (ensemble of structure in one time step)
+- t_end = end time (start time is 0) (recommended unit: seconds)
+- n_ensem = number of structures per time step (ensemble of structures in one time step)
 
 ### Prepare model xml
 
-Check necessary steps for provided simulation models (sim_model):
+The necessary steps differ between the provided simulation models and are given in detail on the following pages:
 
 1. [ball](../models/ball.md)
 2. [box](../models/box.md)
@@ -115,11 +115,11 @@ Check necessary steps for provided simulation models (sim_model):
 7. [sld_growth](../models/sld_grow.md)
 8. [phase_field](../models/phase_field.md)
 
-### Assign sld to nodes
+After this step, the workflow converges again for all models and is described in the following.
 
-Run following code:
+### Assign SLD to nodes
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # run script to assign sld to nodes
@@ -128,18 +128,18 @@ python src/sim_gen.py
 
 ### Output data location
 
-Output is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder` `->` `simulation` `->` `${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}` `->` `${model_dir}` `->` `${time_dir}` `->` `${ensem_dir}` folder in `sim.h5`
+The SLD distribution is saved in `data/${lengthx}_${lengthy}_${lengthz}_${nx}_${ny}_${nz}_${eltype}_${elorder}/simulation/${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}/${model_dir}/${time_dir}/${ensem_dir}/sim.h5`.
 
 ## SAS pattern calculation
 
-The SAS pattern calculation step disctetizes the SLD distribution to pseudo atoms and calculates SAS pattern from pseudo atoms.
+The SAS pattern calculation step converts the continuous structure to a collection of pseudo atoms with certain scattering lengths and calculates the SAS pattern from these pseudo atoms.
 
 Relevant files:
-1. Relevant input xml: scatt_cal.xml
-2. Relevant script: src/scatt_cal.py
+1. Input xml: scatt_cal.xml
+2. Script: src/scatt_cal.py
 
 Important points:
-1. Uses Sassena under the hood
+1. This step uses Sassena under the hood
 
 Workflow:
 1. [Copy scatt_cal.xml template](#copy-scatt_calxml-template)
@@ -149,9 +149,8 @@ Workflow:
 
 ### Copy scatt_cal.xml template
 
-```
+```bash
 # run from main folder
-# relative position ../
 cd $C2S_HOME
 # copy from template to xml folder
 cp xml/Template/scatt_cal.xml xml/
@@ -162,10 +161,10 @@ nano xml/scatt_cal.xml
 ### Edit scatt_cal.xml
 
 - discretization
-    - num_cat = num categories for categorization
-    - method_cat = categorization method (allowed : 'direct', 'extend')
+    - num_cat = number of categories for categorization
+    - method_cat = categorization method (allowed: 'direct', 'extend')
 - sassena
-    - sassena_exe = [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/) executable location ([Check here for install instructions](../../README.md))
+    - sassena_exe = [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/) executable location ([check here for install instructions](../../README.md))
     - mpi_procs = number of mpi processes used by Sassena
     - num_threads = number of threads used by Sassena
 - scatt_cal
@@ -181,7 +180,7 @@ nano xml/scatt_cal.xml
 
 ### Calculate SAS pattern
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # run script to discretize and calculate SAS pattern
@@ -190,21 +189,21 @@ python ./src/scatt_cal.py
 
 ### Output data location
 
-Output of discretization is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder` `->` `simulation` `->` `${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}` `->` `${model_dir}` `->` `${time_dir}` `->` `${ensem_dir}` `->` `scatt_cal_cat_${method_cat}_${mum_cat}_Q_${Q_start}_${Q_end}_orien__${num_orientation}` folder in `scatt_cal.h5`
+The pseudo atoms with discretized SLD values are saved in `data/${lengthx}_${lengthy}_${lengthz}_${nx}_${ny}_${nz}_${eltype}_${elorder}/simulation/${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}/${model_dir}/${time_dir}/${ensem_dir}/scatt_cal_cat_${method_cat}_${num_cat}_Q_${Q_start}_${Q_end}_orien__${num_orientation}/scatt_cal.h5`.
 
-SAS pattern is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder` `->` `simulation` `->` `${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}` `->` `${model_dir}` `->` `${time_dir}` folder in `Iq_cat_${method_cat}_${mum_cat}_Q_${Q_start}_${Q_end}_orien__${num_orientation}.h5`
+The SAS pattern is saved in `data/${lengthx}_${lengthy}_${lengthz}_${nx}_${ny}_${nz}_${eltype}_${elorder}/simulation/${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}/${model_dir}/${time_dir}/Iq_cat_${method_cat}_${num_cat}_Q_${Q_start}_${Q_end}_orien__${num_orientation}.h5`.
 
 ## Effective cross-section calculation
 
-The effective cross-section calculation step calculates effective cross-section from the SAS pattern at each time step. The time evolution of effective cross-section can be obtained by combining the values at different time steps
+The effective cross-section calculation step calculates the time evolution of the effective cross-section from the SAS patterns at different time steps.
 
 Relevant files:
-1. Relevant input xml: sig_eff.xml
-2. Relevant script: src/sig_eff.py
+1. Input xml: sig_eff.xml
+2. Script: src/sig_eff.py
 
 Important points:
 1. Detector geometry and experimental conditions are required.
-2. Only relevant model is [sld_grow](../models/sld_grow.md).
+2. The only relevant example model contained in this repository is [sld_grow](../models/sld_grow.md).
 
 Workflow:
 1. [Generate pixelated detector geometry](#generate-pixelated-detector-geometry)
@@ -215,9 +214,9 @@ Workflow:
 
 ### Generate pixelated detector geometry
 
-This step is required only if ``detector.h5`` does not exist in ``/detector_geometry/${instru_name}_${facility_name}/``.
+This step is required only if the required `detector.h5` does not exist in `/detector_geometry/${instru_name}_${facility_name}/`.
 
-```
+```bash
 # go to detector directory
 cd $C2S_HOME/detector_geometry/${instru_name}_${facility_name}/
 # generate pixelated detector geometry
@@ -228,16 +227,16 @@ cd $C2S_HOME
 
 The output ``detector.h5`` contains following:
 
-- nx, ny = num pixels in detector in x, y dimensions
+- nx, ny = number of pixels in detector in x, y dimensions
 - dx, dy = pixel width in x and y dimensions
-- bs_wx, bs_wy = beam stopper width in x and y dimensions
+- bs_wx, bs_wy = beam stop width in x and y dimensions
 
 ### Copy sig_eff.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
-# copy tempate to cml folder
+# copy tempate to xml folder
 cp xml/Template/sig_eff.xml xml/
 # open xml with favourite editor (e.g. nano)
 nano xml/sig_eff.xml
@@ -245,18 +244,18 @@ nano xml/sig_eff.xml
 
 ### Edit sig_eff.xml
 
-- instrument = instrument name (allowed: 'SANS-1')
-- facility = name of facility (allowed: 'MLZ')
+- instrument = instrument name (currently existing: 'SANS-1')
+- facility = name of facility (currently existing: 'MLZ')
 - d = distance between detector and sample
-- lambda = wavelength of neutron
-- beam_center = vector defining center of beam w.r.t. detector center (e.g. np.array([0, 0, 0]))
+- lambda = wavelength of the incident radiation
+- beam_center = vector from the defining the center position of the direct beam relative to the detector center (e.g. np.array([0, 0, 0]))
     - x component
     - y component
     - z component
 
 ### Calculate effective cross-section
 
-``` 
+```bash
 # change to main folder
 cd $C2S_HOME
 # run script to calculate effective cross-section
@@ -265,4 +264,4 @@ python ./src/sig_eff.py
 
 ### Output data location
 
-Effective cross-section is saved in `data` `->` `lengthx_lengthy_lengthz_nx_ny_nz_eltype_elorder` `->` `simulation` `->` `${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}` `->` `${model_dir}` folder in `sig_eff_cat_${method_cat}_${mum_cat}_Q_${Q_start}_${Q_end}_orien__${num_orientation}.h5`
+The effective cross-section is saved in `data/${lengthx}_${lengthy}_${lengthz}_${nx}_${ny}_${nz}_${eltype}_${elorder}/simulation/${sim_model}_t_end_${t_end}_dt_${dt}_ensem_${ensem}/${model_dir}/sig_eff_cat_${method_cat}_${num_cat}_Q_${Q_start}_${Q_end}_orien__${num_orientation}.h5`.

@@ -1,8 +1,3 @@
-<!-- <p align="center">
-  <img src="logo/logo/Cont2SAS-logo-transparent.png" alt="Description" width="100"/>
-</p>
-<img src="logo/logo/Cont2SAS-logo-transparent.png" alt="Cropped" style="width:200px; height:100px; object-fit: cover;" /> -->
-
 ![logo](logo/logo/Cont2SAS-logo-transparent.png)
 
 # Calculation of SAS parameters from simulated continuum structures
@@ -23,92 +18,51 @@ It takes a distribution of scattering length density (SLD) values as input that 
 Workflow:
 
 1. Mesh generation
-2. SLD assignment
+2. Scattering length density (SLD) assignment
 3. SAS pattern calculation
 4. effective scattering cross section calculation
 
-The output data is stored in `data` folder. The detailed structure of `data` folder can be found in [documentation](./docu/index.md).
-
-Test cases:
+The output data are stored in the `data` folder. Its detailed structure is described in the [documentation](./docu/index.md).
 
 For validation, the SLD distribution of known structures can be generated and assigned, from which the scatering quantities can be calculated using this software and compared with analytical expressions. Several models are provided as validation test cases that follow this workflow. 
 
 As a functional test case, snapshots of an Exodus file obtained from exemplary MOOSE simulation are also included as `hdf` files. The SLD values are assigned from these `hdf` snapshot files to a generated mesh and SAS quantities are calculated using this software.
 
-Following are the list of test cases:
+The following test cases are included in this repository:
 
 - Validation test case: Generated model SLD distribution
-    - One time step models (structures)
-        - Sphere (ball)
-        - Cube (box)
-        - Sphere at the center of cube (bib)
-        - Sphere off the center of cube (bib_ecc)
-    - Several time step models (phenomena)
-        - Growth of sphere (gg)
-        - Interdiffusion of sphere and environment (fs)
-        - Change of chemical composition of sphere (sld_growth)
+    - Static models (structures) containing one time step
+        - Sphere
+        - Cube
+        - Sphere at the center of cube
+        - Sphere off the center of cube
+    - Evolving models (phenomena) containing several time steps
+        - Growth of a sphere
+        - Interdiffusion of a sphere with its environment
+        - Change of the chemical composition of a sphere
 - Functional test case: Simulated model SLD distribution
     - Phase field modeling using MOOSE
-        - Spinodal decomposition of Fe-Cr (phase_field)
+        - Spinodal decomposition of Fe-Cr
 
-Test scripts:
-
-Scripts are provided in `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication
+Scripts are provided in the `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication
 
 ### Files in repository
 
 A description and purpose of the provided files are listed below:
 
-1. `database_sassena`:
-    - Description: Copy of [sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/) database.
-    - Purpose: Some files are copied for creating database while calculating from continuum simulated structures.
-2. `detector_geometry`
-    - Description: Simulated version of detector of instruments (e.g. [SANS-1/MLZ](https://mlz-garching.de/sans-1)).
-    - Purpose: Required for calculating effective cross-section $(\sigma_{\text{eff}})$.
-3. `docu`
-    - Description: Documentation.
-    - Purpose: Deatiled description of software.
-4. `joss_submission`
-    - Description: [JOSS](https://joss.readthedocs.io/en/latest/submitting.html) publication related files.
-    - Purpose: Required for publishing in [JOSS](https://joss.readthedocs.io/en/latest/submitting.html).
-5. `lib`
-    - Description: List of functions required by run scripts in `src` and `models`.
-    - Purpose: Required for relevant run scripts in `src` and test scripts in `models`.
-6. `logo`
-    - Description: logo of `Cont2SAS`.
-    - Purpose: Required by `README` file.
-7. `models`
-    - Description: data generation and plot generation scripts for provided models (see [quick start guide](./getting-started.md))
-    - Purpose: Required for testing the functionality of `Cont2SAS`.
-8. `moose`
-    - Description: Output of moose formated as input of `Cont2SAS`
-    - Purpose: Required for assigning SLD in mesh for `phase_field` model, reads SLD values from `h5` file for chosen time steps.
-9. `moose_read`
-    - Description: [MOOSE](https://mooseframework.inl.gov/) input script and python scripts for converting [MOOSE](https://mooseframework.inl.gov/) output to `Cont2SAS` input.
-    - Purpose: FEM simulation using [MOOSE](https://mooseframework.inl.gov/) can be performed using docker container and the input scripts and output [exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html) can be converted to input of `Cont2SAS` using `exodus_reader.py` (see [instructions](./docu/models/phase_field.md))
-10. `shell_scripts`
-    - Description: All shell scripts
-    - Purpose: Install and uninstall
-11. `src`
-    - Description: Run scripts of `Cont2SAS`
-    - Purpose: reads xmls from `xml` folder as input; generates mesh (`struct_gen.py`), assigns SLD (`sim_gen.py`), calculates SAS patterns (`scatt_cal.py`), and effective cross-section (`sig_eff.py`); also used test scripts in `models`.
-12. `xml`
-    - Description: input xml files.
-    - Purpose: Required for specifying input conditions read by run scripts.
-13. `.gitignore`
-    - Description: Specify files ignored by git 
-14. `.pylintrc`
-    - Description: Configuration file for pylint
-15. `CITATION.cff`
-    - Description: Citation metadata
-16. `README.md`
-    - Description: This file
-17. `environment.yml`
-    - Description: Packages and their versions installed by conda
-18. `getting-started.md`
-    - Description: Quick start guide
-19. `requirements.txt`
-    - Description: Packages and their versions installed by pip
+1. `database_sassena`: A copy of the [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena/) database of scattering lengths. Some of these files are copied for creating a custom database while calculating the scattering patterns from continuum simulated structures.
+2. `detector_geometry`: A representation of the detector of small-angle scattering instruments (e.g. [SANS-1@MLZ](https://mlz-garching.de/sans-1)). This is required for calculating the effective cross-section $(\sigma_{\text{eff}})$.
+3. `docu`: Detailed description of this software.
+4. `joss_submission`: Files for the publication of this software in the [Journal of Open Source Software (JOSS)](https://joss.readthedocs.io/en/latest/submitting.html).
+5. `lib`: Functions required by the run scripts in `src` and `models`. See [documentation](./docu/code/desc.md).
+6. `logo`: Logo of `Cont2SAS`.
+7. `models`: Data generation and plot generation scripts for the models provided with this software for testing (see [quick start guide](./getting-started.md)).
+8. `moose`: Output of a [MOOSE](https://mooseframework.inl.gov/) simulation, reformatted as input for `Cont2SAS`. Required for assigning SLD values in the mesh of the `phase_field` model. Reads the SLD values from `hdf5` files for chosen time steps.
+9. `moose_read`: (a) Input script for a [MOOSE](https://mooseframework.inl.gov/) simulation -- instructions how to run the corresponding FEM simulation using a docker container are [included in the detailed documentation](./docu/models/phase_field.md). (b) python scripts for converting the output [exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html) of the MOOSE simulation into `Cont2SAS` input.
+10. `shell_scripts`: Shell scripts that add/remove an environment variable to the user's `.bashrc` for easy execution of the provided examples.
+11. `src`: Scripts that read xml files from the `xml` folder as input; generate mesh (`struct_gen.py`), assign SLD (`sim_gen.py`), calculate SAS patterns (`scatt_cal.py`), and effective cross-section (`sig_eff.py`); also used by the `*_gen.py` scripts in `models`. See [documentation](./docu/code/desc.md).
+12. `tests`: Test scripts for one static validation model, one evolving validation model, and one functional simulated model. Checks whether the data get generated, plots get generated, plots are correct, cleans generated files after execution.
+12. `xml`: Input xml files that specify variables read by the run scripts.
 
 ## Installation
 
@@ -116,7 +70,7 @@ A description and purpose of the provided files are listed below:
 
 #### Download the repository
 
-```
+```bash
 git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.git
 cd continuum-to-scattering
 ```
@@ -127,18 +81,18 @@ To ensure that the provided examples run on the user's computer regardless of th
 
 ##### Install
 
-```
-# define for current session
+```bash
+# define environment variable for current session
 export C2S_HOME=$PWD
-# define for further session
+# define for further sessions
 chmod +x ./shell_scripts/*
 ./shell_scripts/install.sh
 ```
 
 ##### Uninstall
 
-```
-# remove env var
+```bash
+# remove environment variable
 ./shell_scripts/uninstall.sh
 ```
 
@@ -148,9 +102,9 @@ chmod +x ./shell_scripts/*
 
 Download app image and use
 
-Default location: ``Sassena/sassena.AppImage``
+Default location: `Sassena/sassena.AppImage`
 
-```
+```bash
 # download app image
 mkdir -p ./Sassena
 wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage
@@ -158,7 +112,7 @@ wget -O ./Sassena/Sassena.AppImage https://codebase.helmholtz.cloud/api/v4/proje
 chmod +x ./Sassena/Sassena.AppImage
 ```
 To check if the download has worked, you can run
-```
+```bash
 ./Sassena/Sassena.AppImage --help
 ```
 which should print out messages about command line options of [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena) and end with an error message.
@@ -169,15 +123,15 @@ which should print out messages about command line options of [Sassena](https://
 
 ###### Install
 
-```
+```bash
 conda env create -f environment.yml
 conda activate Cont2Sas
 ```
 ###### Uninstall
 
-Remove the conda environment
+Remove the conda environment:
 
-```
+```bash
 conda deactivate
 conda remove --name Cont2Sas --all
 ```
@@ -187,7 +141,7 @@ and delete the source code directory by hand.
 
 ###### Install
 
-```
+```bash
 conda create -n Cont2Sas python=3.8.10
 conda activate Cont2Sas
 pip install -r requirements.txt
@@ -195,7 +149,7 @@ pip install -r requirements.txt
 
 ###### Uninstall
 
-```
+```bash
 pip uninstall -r requirements.txt
 conda deactivate
 conda remove --name Cont2Sas --all
@@ -205,7 +159,7 @@ conda remove --name Cont2Sas --all
 
 ###### Install
 
-```
+```bash
 sudo apt update
 sudo apt install python3-venv
 python3 -m venv Cont2Sas
@@ -215,31 +169,17 @@ pip install -r requirements.txt
 
 ###### Uninstall
 
-```
+```bash
 pip uninstall -r requirements.txt
 deactivate
 rm -rf Cont2Sas
 ```
 
-<!-- ##### Option 4: Using pip (not recommended)
-
-###### Install
-
-```
-pip install -r requirements.txt
-```
-
-###### Uninstall
-
-```
-pip uninstall -r requirements.txt
-``` -->
-
 ### Test installation
 
-To check whether the installation work run following script
+To check whether the installation has worked, execute the tests:
 
-```
+```bash
 conda install pytest
 pytest -v
 ```
@@ -248,9 +188,9 @@ pytest -v
 
 Some models are provided for generating or simulating nanostructures. From these structures SAS patterns can be calculated. One of the models also facilitates calculation of effective cross-section. 
 
-To run `Cont2SAS` with provided models and parameters, read the [getting started](./getting-started.md) guide.
+To run `Cont2SAS` with the provided models and parameters, read the [getting started](./getting-started.md) guide.
 
-To check detailed documentation, [click](./docu/index.md) here.
+A [detailed documentation](./docu/index.md) is provided in the `docu` folder.
 
 ## Referencing Cont2SAS
 
@@ -258,42 +198,8 @@ For the citation information of `Cont2SAS`, please see the [CITATION.cff](./CITA
 
 ## License
 
-The `Cont2SAS` source code is released under the [GNU General Public License Version 3](./LICENSE).
-<!-- 
-One line to give the program's name and an idea of what it does.
-Copyright (C) 2025  Arnab Majumdar
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, see
-<https://www.gnu.org/licenses/>.
-
-See legal code:</br>
-<a href="https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/develop/LICENSE?ref_type=heads"> 
-LICENSE
-</a>
-
-Copyright disclaimer from Helmholtz-Zentrum, Hereon (DE)
-
-Urheberrecht:
-Software unterliegt dem Urheberrecht. § 69a Urhebergesetz (UrhG) schützt Software in jeder
-Gestaltung, ein- schließlich Entwurfsmaterial, in allen Ausdrucksformen (QC, C, EXE, Module).
-Nicht geschützt sind dagegen Ideen und Grundsätze, die dem Werk zugrunde liegen.
-Das Urheberpersönlichkeitsrecht ist nach deutschem Recht zwar nicht übertragbar, zulässig
-sind jedoch die Einräumung von umfänglichen Nutzungsrechten sowie Vereinbarungen zu
-Verwertungsrechten. Legt man z. B. amerikanisches Recht zugrunde, dann ist auch eine Abtretung des gesamten Urheberrechts möglich. -->
+The `Cont2SAS` source code is released under the [GNU General Public License Version 3 or later](./LICENSE).
 
 ## Acknowledgement
 
-The `Cont2SAS` is developed at [Helmholtz-Zentrum Hereon](https://www.hereon.de/) and the development is supported by the consortium [DAPHNE4NFDI](https://www.daphne4nfdi.de/) in the context of the work of the
-NFDI e.V. The consortium is funded by the Deutsche Forschungsgemeinschaft (DFG, German
-Research Foundation) - project number 460248799.
+`Cont2SAS` is developed at [Helmholtz-Zentrum Hereon](https://www.hereon.de/) and the development is supported by the consortium [DAPHNE4NFDI](https://www.daphne4nfdi.de/) in the context of the work of the NFDI e.V. The consortium is funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) - project number 460248799.

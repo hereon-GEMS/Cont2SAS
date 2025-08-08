@@ -2,29 +2,32 @@
 
 ## List of models
 
-Provided models either generates SLD based on analytical formula or simulates SLD solving physics-based simulations (e.g. phase-field simulation). Within generated models, some produces structure at one time step; some produces time-evolving structures representing phenomena.
+Provided models either generate scattering length density (SLD) values based on analytical formulae or simulate the SLD distribution by solving physics-based simulations (e.g. a phase-field simulation). Some of the generated models produce a structure at a single time step; others produce time-evolving structures, representing phenomena.
 
-Following are the list of models:
+The following models are included in this repository, the instructions how to run them can be found below:
 
 - Generated models
     - Structure
-        - Sphere (ball)
-        - Cube (box)
-        - Sphere at the center of cube (bib)
-        - Sphere off the center of cube (bib_ecc)
+        - [Sphere (ball)](#ball)
+        - [Cube (box)](#box)
+        - [Sphere at the center of cube (ball in box, bib)](#bib)
+        - [Sphere off the center of cube (eccentric ball in box, bib_ecc)](#bib_ecc)
     - Phenomena
-        - Growth of sphere (gg)
-        - interdiffusion of sphere and environment (fs)
-        - Change of chemical composition of sphere (sld_growth)
+        - [Growth of sphere (gg)](#gg)
+        - [Interdiffusion of sphere and environment (fs)](#fs)
+        - [Change of chemical composition of sphere (sld_growth)](#sld_growth)
 - Simulated models
     - Phase field
-        - Spinodal decomposition of Fe-Cr (phase_field)
+        - [Spinodal decomposition of Fe-Cr (phase_field)](#phase_field)
+
+Instructions how to run these models are given in this document below; a [detailed documentation of each model and the complete workflow](./docu/index.md) is also available.
 
 ## ball
 
-### Instruction
+A sphere surrounded by empty space.
+Run time approx. 1 minute.
 
-```
+```bash
 # generate data
 python models/ball/ball_gen.py
 # generate plots
@@ -39,15 +42,12 @@ xdg-open figure/ball/pseudo_cat_ball.pdf
 xdg-open figure/ball/Iq_ball.pdf
 ```
 
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
-
 ## box
 
-### Instruction
+A cube surrounded by empty space.
+Run time approx. 1 minute.
 
-```
+```bash
 # generate data
 python models/box/box_gen.py
 # generate plots
@@ -62,15 +62,12 @@ xdg-open figure/box/pseudo_cat_box.pdf
 xdg-open figure/box/Iq_box.pdf
 ```
 
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
-
 ## bib
 
-### Instruction
+A sphere at the center of a cube.
+Run time approx. 1 minute.
 
-```
+```bash
 # generate data
 python models/bib/bib_gen.py
 # generate plots
@@ -85,15 +82,12 @@ xdg-open figure/bib/pseudo_cat_bib.pdf
 xdg-open figure/bib/Iq_bib.pdf
 ```
 
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
-
 ## bib_ecc
 
-### Instruction
+A sphere inside a cube, displaced from the center.
+Run time approx. 1 minute.
 
-```
+```bash
 # generate data
 python models/bib_ecc/bib_ecc_gen.py
 # generate plots
@@ -108,15 +102,12 @@ xdg-open figure/bib_ecc/pseudo_cat_bib_ecc.pdf
 xdg-open figure/bib_ecc/Iq_bib_ecc.pdf
 ```
 
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
-
 ## gg
 
-### Instruction
+A spherical grain growing in size from 7 to 17$\AA$ over 11 time steps.
+Run time approx. 1 minute.
 
-```
+```bash
 # generate data
 python models/gg/gg_gen.py
 # generate plots
@@ -133,15 +124,12 @@ xdg-open figure/gg/Iq_gg.pdf
 xdg-open figure/gg/rad_fit_gg.pdf
 ```
 
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
-
 ## fs
 
-### Instruction
+Interdiffusion of a spherical inhomogeneity with its environment over 11 time steps.
+Run time approx. 1 hour.
 
-```
+```bash
 # generate data
 python models/fs/fs_gen.py
 # generate plots
@@ -160,15 +148,12 @@ xdg-open figure/fs/rad_fit_fs.pdf
 xdg-open figure/fs/sig_fit_fs.pdf
 ```
 
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
-
 ## sld_grow
 
-### Instruction
+Change of the chemical composition of a sphere over 11 time steps.
+Run time approx. 1 minute.
 
-```
+```bash
 # generate data
 python models/sld_grow/sld_grow_gen.py
 # generate plots
@@ -187,15 +172,12 @@ xdg-open figure/sld_grow/sld_fit_sld_grow.pdf
 xdg-open figure/sld_grow/sig_eff_fit_sld_grow.pdf
 ```
 
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
-
 ## phase_field
 
-### Instruction
+Phase-field simulation of the spinodal decomposition of a Fe-Cr mixture.
+Run time approx. 1 hour.
 
-```
+```bash
 # generate data
 python models/phase_field/phase_field_gen.py
 # generate plots
@@ -212,10 +194,6 @@ xdg-open figure/phase_field/Iq.pdf
 # initial step eliminated
 xdg-open figure/phase_field/ch_len.pdf
 ```
-
-### See detailed explanation
-
-- [Link to documentation](./docu/index.md)
 
 ## Link to README
 

@@ -1,6 +1,6 @@
 # bib
 
-This page documents the workflow for creating the input xml related to the `bib` model, i.e. model_bib.xml. The name `bib` stands for ball in box. The `bib` model represents a parallepiped nanoparticle of one sld with spherical region of another sld at the center.
+This page documents the workflow for creating the input xml related to the `bib` model, i.e. model_bib.xml. The name `bib` stands for ball in box. The `bib` model represents a parallepiped nanoparticle of one SLD containing a spherical region of another SLD at the center.
 
 Relevant input xml: model_bib.xml
 
@@ -11,7 +11,7 @@ Workflow:
 
 ## Copy model_bib.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy xml template to xml folder
@@ -24,8 +24,8 @@ nano xml/model_bib.xml
 
 - rad = radius of sphere (must be <= simulation box length/2)
 - sld_in = SLD of sphere
-- sld_out = SLD of environment
-- qclean_sld = SLD outside simulation box
+- sld_out = SLD of the parallelepiped nanoparticle
+- qclean_sld = SLD outside of the simulation box
 
 ## Go to workflow
 

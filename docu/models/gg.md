@@ -1,6 +1,6 @@
 # gg
 
-This page documents the workflow for creating the input xml related to the `gg` model, i.e. model_gg.xml. The name `gg` stands for grain growth. The `gg` model represents the phenomenon of the growth of a spherical grain over time.
+This page documents the workflow for creating the input xml related to the `gg` model, i.e. model_gg.xml. The name `gg` stands for grain growth. The `gg` model represents the phenomenon of the growth of a spherical grain in a cubic nanoparticle over time.
 
 Relevant input xml: model_gg.xml
 
@@ -11,7 +11,7 @@ Workflow:
 
 ## Copy model_gg.xml template
 
-```
+```bash
 # run from main folder
 cd $C2S_HOME
 # copy xml template to xml folder
@@ -25,8 +25,8 @@ nano xml/model_gg.xml
 - rad_0 = starting radius of sphere
 - rad_end = end radius of sphere
 - sld_in = SLD of sphere
-- sld_out = SLD of environment
-- qclean_sld = SLD outside simulation box
+- sld_out = SLD of the cubic nanoparticle
+- qclean_sld = SLD outside of the simulation box
 
 ## Go to workflow
 
