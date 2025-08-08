@@ -43,4 +43,3 @@ test_c2s:
   script:
     - python3 --version
     - pip3 --version
-    - pytest
