@@ -6,13 +6,18 @@ stages:
 
 download_sassena:
   stage: download
-  image: alpine:latest
+  image: ubuntu:latest
   script: 
     - mkdir -p ./Sassena
     - apk add --no-cache curl
-    - curl -L https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage -o Sassena/Sassena.AppImage
-    - chmod +x ./Sassena/Sassena.AppImage # run sassena
-    - ls -l ./Sassena/Sassena.AppImage
+    - curl -L https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage -o Sassena/Sassena.AppImageOrig
+    - chmod +x ./Sassena/Sassena.AppImageOrig
+    - cd ./Sassena # https://appimage-builder.readthedocs.io/en/latest/intro/install.html#install-in-a-docker-container
+    - sed -i 's|AI\x02|\x00\x00\x00|' Sassena.AppImageOrig
+    - ./Sassena.AppImageOrig --appimage-extract
+    - ls -l *
+    - sudo mv /opt/squashfs-root ./Sassena.AppImageOrig.AppDir
+    - ln -s ./Sassena.AppImageOrig.AppDir/AppRun ./Sassena.AppImage
   artifacts:
     paths:
       - "Sassena"
@@ -23,6 +28,6 @@ run_sassena:
   dependencies:
     - download_sassena
   before_script:
-    - apt-get update && apt-get install -y libfuse2
+    - apt-get update && apt-get install -y fuse
   script:
     - ./Sassena/Sassena.AppImage --help
