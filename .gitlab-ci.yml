@@ -3,7 +3,7 @@
 stages:
   - download
   - run
-  - test
+  - install
 
 download_sassena:
   stage: download
@@ -31,15 +31,16 @@ run_sassena:
   script:
     - ./Sassena/Sassena.AppImage --help
 
-test_c2s:
-  stage: test
-  image: ubuntu:latest
-  dependencies:
-    - download_sassena
-  before_script:
-    - apt update
-    - apt install -y python3 python3-pip 
-    - pip3 install --no-cache-dir pytest
+install_pypkg:
+  stage: install
+  image: python:3.12
   script:
-    - python3 --version
-    - pip3 --version
+    - python -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install pytest
+  artifacts:
+    paths:
+      - venv/
+    expire_in: 1 hour
