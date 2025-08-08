@@ -21,7 +21,7 @@ run_sassena:
   stage: run
   image: ubuntu:latest
   dependencies:
-    - "download_sassena"
+    - download_sassena
   before_script:
     - apt-get update
     - apt-get install -y libfuse2
