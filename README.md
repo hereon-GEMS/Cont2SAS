@@ -1,6 +1,6 @@
 ![logo](logo/logo/Cont2SAS-logo-transparent.png)
 
-# Calculation of SAS parameters from simulated continuum structures
+# Cont2SAS
 
 ## Description
 
