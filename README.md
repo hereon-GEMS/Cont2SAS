@@ -180,7 +180,6 @@ rm -rf Cont2Sas
 To check whether the installation has worked, execute the tests:
 
 ```bash
-conda install pytest
 pytest -v
 ```
 
