@@ -1,10 +1,11 @@
 # .gitlab-ci.yml
 
 stages:
-  - build_sassena_stage
+  - download
+  - run
 
-install_sassena:
-  stage: build_sassena_stage
+download_sassena:
+  stage: download
   image: alpine
   script: 
     - mkdir -p ./Sassena
@@ -15,3 +16,9 @@ install_sassena:
   artifacts:
     paths:
       - "Sassena"
+
+run_sassena:
+  stage: run
+  image: ubuntu22.04
+  script:
+    - ./Sassena/Sassena.AppImage
