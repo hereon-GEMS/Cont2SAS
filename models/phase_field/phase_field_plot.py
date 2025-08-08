@@ -55,8 +55,13 @@ working_dir = "."  # Directory to run the script in
 
 # phase field simulation details
 phenm='spinodal_fe_cr'
-sim_times=(np.array([0, 2, 4, 6, 8, 8.64]) * 10000).astype(int)
-# sim_times=(np.array([8.64]) * 10000).astype(int) # uncomment when using 3 categories
+# uncomment below when calculating for all time steps
+# sim_times=(np.array([0, 2, 4, 6, 8, 8.64]) * 10000).astype(int)
+# uncomment when using 3 categories
+# sim_times=(np.array([8.64]) * 10000).astype(int)
+# comment if one of the above is uncommented
+# used for testing (initial and final time step)
+sim_times=(np.array([0, 8.64]) * 10000).astype(int)
 
 # figure initialize
 fig_scatt, ax_scatt = plt.subplots(figsize=(7, 5))
