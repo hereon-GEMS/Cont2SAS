@@ -32,7 +32,7 @@ Follwing are time statistics for the generation scripts of each model in each di
 | bib_ecc     | 39.745 s  | xx s    | xx s   |
 | gg          | 47.515 s  | xx s    | xx s   |
 | fs          | 2426 s    | xx s    | xx s   |
-| sld_grow    | 28.349 s  | xx s    | xx s   |
+| sld_grow    | 54.156 s  | xx s    | xx s   |
 | phase_field | 882.184 s | xx s    | xx s   |
 
 ## ball
