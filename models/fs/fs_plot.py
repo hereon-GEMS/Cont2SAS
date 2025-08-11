@@ -53,7 +53,6 @@ def J1(x):
     return y
 
 def fuzzysph(qmax,qmin,Npts,scale,bg,sld,sld_sol,sig_fuzz,radius):
-    # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
     analytical SAS pattern of fuzzy sphere
@@ -79,11 +78,11 @@ def fuzzysph(qmax,qmin,Npts,scale,bg,sld,sld_sol,sig_fuzz,radius):
     return Iq_arr, q_arr
 
 def fit_func(q_in, sig_opt, rad_opt):
-    # pylint: disable=unused-variable
     """
     function desc:
     fit function for fuzzy sphere
     """
+    # pylint: disable=unused-variable
     Iq, q_out =fuzzysph(qmax=max(q_in),qmin=min(q_in),
                         Npts=len(q_in), scale=1 , bg=0,
                         sld=sld_in, sld_sol=sld_out,

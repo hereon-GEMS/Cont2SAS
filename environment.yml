@@ -14,5 +14,6 @@ dependencies:
   - pdf2image=1.17.0
   - PyMuPDF=1.26.1
   - pytest=7.4.4
+  - pylint=3.3.8
   - scipy=1.11.4 # 1.16.0 # 1.11.4
   - pip=23.3.2

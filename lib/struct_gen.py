@@ -26,7 +26,6 @@ import matplotlib.pyplot as plt
 import h5py
 
 def node_cell_gen_3d (a, b, c, nx, ny, nz, el_info):
-    # pylint: disable=too-many-arguments
     """
     function desc: 
     decide the element type
@@ -37,7 +36,6 @@ def node_cell_gen_3d (a, b, c, nx, ny, nz, el_info):
     return lagrangian(a, b, c, nx, ny, nz, el_order)
 
 def lagrangian (a, b, c, nx, ny, nz, el_order):
-    # pylint: disable=too-many-arguments, too-many-locals, too-many-branches, too-many-statements
     """
     function desc: 
     generates nodes, connectivity and cells
@@ -153,7 +151,6 @@ def lagrangian (a, b, c, nx, ny, nz, el_order):
 
 def plotter_3d(points_3d, save_plot=False, save_dir='.',
                filename='plot', figsize=(10,10)):
-    # pylint: disable=too-many-arguments
     """
     function desc: 
     plot script of nodes or cells
@@ -169,7 +166,6 @@ def plotter_3d(points_3d, save_plot=False, save_dir='.',
 
 def mesh_plotter_3d(points_3d, con_3d, save_plot=False,
                      save_dir='.', filename='plot', figsize=(10,10)):
-    # pylint: disable=too-many-arguments
     """
     function desc: 
     plot mesh
@@ -209,7 +205,9 @@ def mesh_read(file_name):
     """
     file=h5py.File(file_name,'r')
     nodes=file['nodes'][:]
+    nodes=np.array(nodes)
     cells=file['cells'][:]
+    cells=np.array(cells)
     con=file['connectivity'][:]
     mesh=file['mesh'][:]
     file.close()

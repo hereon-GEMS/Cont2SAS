@@ -35,9 +35,10 @@ def test_sld_grow_gen():
     1. Check whether sld_grow_gen runs
     """
     gen_result = subprocess.run(
-        ["python", "models/sld_grow/sld_grow_gen.py"], 
-        capture_output=True, 
-        text=True
+        ["python", "models/sld_grow/sld_grow_gen.py"],
+        capture_output=True,
+        text=True,
+        check=True
     )
     # Ensure it runs without crashing
     assert gen_result.returncode == 0, "sld_grow model generates data"
@@ -48,9 +49,10 @@ def test_sld_grow_plot():
     1. Check whether sld_grow_plot runs
     """
     plot_result = subprocess.run(
-        ["python", "models/sld_grow/sld_grow_plot.py"], 
-        capture_output=True, 
-        text=True
+        ["python", "models/sld_grow/sld_grow_plot.py"],
+        capture_output=True,
+        text=True,
+        check=True
     )
     # Ensure it runs without crashing
     assert plot_result.returncode == 0, "sld_grow model plots data"
@@ -73,7 +75,7 @@ def test_compare_sld_grow_plot():
     gold_img='figure/gold/sig_eff_fit_sld_grow.pdf'
     plt_img='figure/sld_grow/sig_eff_fit_sld_grow.pdf'
     # Check expected output
-    assert comp_img(plt_img, gold_img, tol=2)==None
+    assert comp_img(plt_img, gold_img, tol=2) is None
 
 def test_clean_up():
     """
@@ -90,4 +92,3 @@ def test_clean_up():
     # check if it is removed
     assert os.path.isdir(data_dir)==0
     assert os.path.isdir(fig_dir)==0
-

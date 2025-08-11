@@ -36,8 +36,8 @@ lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # add .. in path
 sys.path.append(lib_dir)
 # lib imports
-from lib import struct_gen as sg # pylint: disable=import-error, wrong-import-position
-from lib import simulation as sim # pylint: disable=import-error, wrong-import-position
+from lib import struct_gen as sg # pylint: disable=wrong-import-position
+from lib import simulation as sim # pylint: disable=wrong-import-position
 
 
 

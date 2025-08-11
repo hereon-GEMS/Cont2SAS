@@ -27,7 +27,6 @@ import numpy as np
 import h5py
 from matplotlib import cm
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
 from scipy.optimize import curve_fit
 
 
@@ -53,7 +52,6 @@ def J1(x):
     return (np.sin(x)-x*np.cos(x))/x**2
 
 def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
-    # pylint: disable=too-many-arguments
     """
     function desc:
     analytical SAS pattern of sphere

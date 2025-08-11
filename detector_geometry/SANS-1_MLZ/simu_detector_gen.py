@@ -29,7 +29,6 @@ import h5py
 
 # functions
 def bs_mask(nx,ny,dx,dy, bs_wx, bs_wy):
-    # pylint: disable=too-many-arguments, too-many-locals
     """
     Function description:
     Generate array of booleans (same size as pixels)
@@ -44,12 +43,12 @@ def bs_mask(nx,ny,dx,dy, bs_wx, bs_wy):
     for i in range(nx):
         cur_mask_x=mask[i,0]
         pixel_x=i*dx+dx/2
-        if pixel_x<bs_x_up and pixel_x>bs_x_low:
+        if pixel_x<bs_x_up and pixel_x>bs_x_low: # pylint: disable=chained-comparison
             cur_mask_x=0
         for j in range(ny):
             cur_mask_y=mask[i,j]
             pixel_y=j*dy+dy/2
-            if pixel_y<bs_y_up and pixel_y>bs_y_low:
+            if pixel_y<bs_y_up and pixel_y>bs_y_low: # pylint: disable=chained-comparison
                 cur_mask_y=0
             if cur_mask_x==0 and cur_mask_y==0:
                 mask[i,j]=0
@@ -68,9 +67,9 @@ def detector(nx,ny,dx,dy):
     #pixel=bs_checker(pixel, (nx*dx/2), (ny*dy/2))
     return pixel
 
-"""
-Input detector geometry
-"""
+# """
+# Input detector geometry
+# """
 
 # detector geometry details
 # num pixels
@@ -84,9 +83,9 @@ dy_val=0.008
 bs_wx_val=0.085
 bs_wy_val=0.085
 
-"""
-Create simulated detector
-"""
+# """
+# Create simulated detector
+# """
 
 # create 2d matrices of pixel coordinates
 # create mask - array of booleans (same size as pixels)

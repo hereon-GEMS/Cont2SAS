@@ -50,7 +50,6 @@ def arrange_order(a,b,c):
     return zusammen[0], zusammen[1], zusammen[2]
 
 def gauss_legendre_double_integrate(func, domain1, domain2, deg):
-    # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
     numerical integration using gauss points
@@ -69,7 +68,6 @@ def gauss_legendre_double_integrate(func, domain1, domain2, deg):
     return np.sum(s1*s2*w1*w2*func(s1*x + a1,s2*y + a2))
 
 def box (qmax,qmin,Npts,scale,bg,sld,sld_sol,len_x,len_y,len_z):
-    # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
     analytical SAS pattern of parallelepiped

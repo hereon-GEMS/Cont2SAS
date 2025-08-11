@@ -53,7 +53,6 @@ def J1(x):
     return y
 
 def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
-    # pylint: disable=too-many-arguments
     """
     function desc:
     analytical SAS pattern of sphere
@@ -75,11 +74,11 @@ def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
     return Iq_arr, q_arr
 
 def fit_func_gg(q_in, rad_opt):
-    # pylint: disable=unused-variable
     """
     function desc:
     fit function for sphere
     """
+    # pylint: disable=unused-variable
     Iq, q_out =ball(qmax=max(q_in),qmin=min(q_in),
                         Npts=len(q_in), scale=1 , bg=0,
                         sld=sld_in, sld_sol=sld_out,

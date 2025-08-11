@@ -52,7 +52,6 @@ def J1(x):
     return y
 
 def arrange_order(a,b,c):
-    # pylint: disable=too-many-arguments
     """
     function desc:
     sort values
@@ -62,7 +61,6 @@ def arrange_order(a,b,c):
     return zusammen[0], zusammen[1], zusammen[2]
 
 def gauss_legendre_double_integrate(func, domain1, domain2, deg):
-    # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
     numerical integration using gauss points
@@ -82,7 +80,6 @@ def gauss_legendre_double_integrate(func, domain1, domain2, deg):
 
 def ball_in_box_ecc(qmax,qmin,Npts,scale,scale2,bg,sld_box, sld_ball,sld_sol,
                     len_x,len_y,len_z,radius, origin_shift):
-    # pylint: disable=too-many-arguments, too-many-locals
     """
     function desc:
     analytical SAS pattern of eccentric sphere in parallelepiped

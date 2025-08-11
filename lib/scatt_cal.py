@@ -54,7 +54,6 @@ def L2(x,x1,x2,x3):
     return ((x-x2)*(x-x3))/((x1-x2)*(x1-x3))
 
 def pseudo_b_cal(nodes,cells,node_sld,connec,cell_vol,el_info):
-    #pylint: disable=too-many-arguments, too-many-locals, too-many-statements
     """
     func desc.
     calculate scattering length of pseudo atoms
@@ -63,7 +62,7 @@ def pseudo_b_cal(nodes,cells,node_sld,connec,cell_vol,el_info):
     el_order=el_info['order']
     if el_type=='lagrangian':
         if el_order==1:
-            num_node=len(node_sld) # pylint: disable=unused-variable
+            # num_node=len(node_sld)
             num_cell=len(connec)
             pseudo_b=np.zeros(num_cell)
             for i in range(num_cell):
@@ -101,7 +100,7 @@ def pseudo_b_cal(nodes,cells,node_sld,connec,cell_vol,el_info):
                 #cell_i_cell_sld = np.average(cell_i_node_sld)
                 pseudo_b[i] = cell_vol*cell_i_cell_sld
         elif el_order==2:
-            num_node=len(node_sld)
+            # num_node=len(node_sld)
             num_cell=len(connec)
             pseudo_b=np.zeros(num_cell)
             for i in range(num_cell):
@@ -165,7 +164,7 @@ def pseudo_b_cal(nodes,cells,node_sld,connec,cell_vol,el_info):
                 p_331=cell_i_nodes[24,:]
                 p_332=cell_i_nodes[25,:]
                 p_333=cell_i_nodes[26,:]
-                #pylint: disable=line-too-long
+                # pylint: disable=line-too-long
                 cell_i_cell_sld = (L2(cell_i[0],p_111[0],p_211[0],p_311[0]) * L2(cell_i[1],p_111[1],p_121[1],p_131[1]) * L2(cell_i[2],p_111[2],p_112[2],p_113[2]) * cell_i_node_sld[0] +
                                    L2(cell_i[0],p_112[0],p_212[0],p_312[0]) * L2(cell_i[1],p_112[1],p_122[1],p_132[1]) * L2(cell_i[2],p_112[2],p_111[2],p_113[2]) * cell_i_node_sld[1] +
                                    L2(cell_i[0],p_113[0],p_213[0],p_313[0]) * L2(cell_i[1],p_113[1],p_123[1],p_133[1]) * L2(cell_i[2],p_113[2],p_111[2],p_112[2]) * cell_i_node_sld[2] +
@@ -197,7 +196,6 @@ def pseudo_b_cal(nodes,cells,node_sld,connec,cell_vol,el_info):
     return pseudo_b
 
 def pseudo_b_cat_cal(pseudo_b,num_cat,method='extend'):
-    # pylint: disable=too-many-locals
     """
     func desc.
     categorize scattering length of pseudo atoms
@@ -207,7 +205,7 @@ def pseudo_b_cat_cal(pseudo_b,num_cat,method='extend'):
     b_arg_sort=np.argsort(pseudo_b)
     b_min=b_sort[0]
     b_max=b_sort[-1]
-    b_range=b_max-b_min
+    #b_range=b_max-b_min
     pseudo_b_cat=np.zeros_like(pseudo_b)
     # no categorization
     if num_cat==0:
@@ -246,7 +244,7 @@ def pseudo_b_cat_cal(pseudo_b,num_cat,method='extend'):
             # |...o...|...o...|...o...|  ...  |...o...|
             ###########################################
             cat_range_extend=(b_max-b_min)/(2*(num_cat-1))
-            cat_range=b_range+2*cat_range_extend # pylint: disable=unused-variable
+            #cat_range=b_range+2*cat_range_extend
             cat_min=b_min-cat_range_extend
             cat_max=b_max+cat_range_extend
             cat_width=(cat_max-cat_min)/num_cat
@@ -272,14 +270,13 @@ def pseudo_b_cat_cal(pseudo_b,num_cat,method='extend'):
         output = pseudo_b_cat, cat
     return output
 
-def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx):
-    # pylint: disable=too-many-locals
+def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx): # pylint: disable=unused-argument
     """
     func desc.
     generate pdb and dcd files
     """
     points=np.float32(pseudo_pos)
-    cat_prop=np.float32(pseudo_b_cat_val) # pylint:disable=unused-variable
+    # cat_prop=np.float32(pseudo_b_cat_val)
     topo=md.Topology() #= md.Topology()
     ch=topo.add_chain()
     res=topo.add_residue('RES', ch)
@@ -302,7 +299,6 @@ def pdb_dcd_gen(pdb_dcd_dir, pseudo_pos, pseudo_b_cat_val, pseudo_b_cat_idx):
             f.write(points)
 
 def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
-    # pylint: disable=too-many-locals, too-many-statements
     """
     func desc.
     generate database for sassena
@@ -392,7 +388,6 @@ def db_gen(db_dir, pseudo_b_cat_val, pseudo_b_cat_idx):
 
 def scattxml_gen(scatter_xml_file, signal_file,scan_vector, start_length, end_length,
                   num_points, resolution_num, sld, xlength, ylength, zlength, mid_point):
-    # pylint: disable=too-many-statements, too-many-locals, too-many-arguments
     """
     func desc.
     generate scatter.xml: input to sassena

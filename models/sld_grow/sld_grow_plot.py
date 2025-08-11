@@ -54,7 +54,6 @@ def J1(x):
     return (np.sin(x)-x*np.cos(x))/x**2
 
 def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
-    # pylint: disable=too-many-arguments
     """
     function desc:
     analytical SAS pattern of sphere
