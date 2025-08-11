@@ -35,7 +35,7 @@ lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 # add .. in path
 sys.path.append(lib_dir)
 # lib imports
-from lib import xml_gen # pylint: disable=import-error, wrong-import-position
+from lib import xml_gen # pylint: disable=wrong-import-position
 
 # ignore warnings
 

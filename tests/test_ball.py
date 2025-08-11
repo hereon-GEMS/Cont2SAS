@@ -35,9 +35,10 @@ def test_ball_gen():
     1. Check whether ball_gen runs
     """
     gen_result = subprocess.run(
-        ["python", "models/ball/ball_gen.py"], 
-        capture_output=True, 
-        text=True
+        ["python", "models/ball/ball_gen.py"],
+        capture_output=True,
+        text=True,
+        check=True
     )
     # Ensure it runs without crashing
     assert gen_result.returncode == 0, "ball model generates data"
@@ -48,9 +49,10 @@ def test_ball_plot():
     1. Check whether ball_plot runs
     """
     plot_result = subprocess.run(
-        ["python", "models/ball/ball_plot.py"], 
-        capture_output=True, 
-        text=True
+        ["python", "models/ball/ball_plot.py"],
+        capture_output=True,
+        text=True,
+        check=True
     )
     # Ensure it runs without crashing
     assert plot_result.returncode == 0, "ball model plots data"
@@ -60,7 +62,6 @@ def test_check_ball_plot():
     Test script for $C2S_HOME/models/ball/ball_plot.py:
     1. Check whether ball_plot plots IvsQ figure
     """
-    gold_img='figure/gold/Iq_ball.pdf'
     plt_img='figure/ball/Iq_ball.pdf'
     if_exist=os.path.isfile(plt_img)
     # Ensure plotted file exist
@@ -74,7 +75,7 @@ def test_compare_ball_plot():
     gold_img='figure/gold/Iq_ball.pdf'
     plt_img='figure/ball/Iq_ball.pdf'
     # Check expected output
-    assert comp_img(plt_img, gold_img, tol=2)==None
+    assert comp_img(plt_img, gold_img, tol=2) is None
 
 def test_clean_up():
     """
@@ -91,4 +92,3 @@ def test_clean_up():
     # check if it is removed
     assert os.path.isdir(data_dir)==0
     assert os.path.isdir(fig_dir)==0
-

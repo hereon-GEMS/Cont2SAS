@@ -24,7 +24,7 @@ Created on Fri Jun 23 10:28:09 2023
 import os
 import xml.etree.ElementTree as ET
 import numpy as np
-from scipy.special import erf # pylint: disable=no-name-in-module
+from scipy.special import erf
 import h5py
 
 def model_run(sim_model,nodes, midpoint, t, t_end):
@@ -140,7 +140,6 @@ def model_bib(nodes, midpoint):
     return sim_sld, sld_max, sld_min
 
 def model_bib_ecc(nodes, midpoint):
-    # pylint: disable=too-many-locals
     """
     Function desc:
     define sld, man and min for bib_ecc model 
@@ -169,7 +168,6 @@ def model_bib_ecc(nodes, midpoint):
     return sim_sld, sld_max, sld_min
 
 def model_gg(nodes, midpoint, t, t_end):
-    # pylint: disable=too-many-locals
     """
     Function desc:
     define sld, man and min for gg model 
@@ -195,7 +193,6 @@ def model_gg(nodes, midpoint, t, t_end):
     return sim_sld, sld_max, sld_min
 
 def model_fs(nodes, midpoint, t, t_end):
-    # pylint: disable=too-many-locals
     """
     Function desc:
     define sld, man and min for fs model 
@@ -226,7 +223,6 @@ def model_fs(nodes, midpoint, t, t_end):
     return sim_sld, sld_max, sld_min
 
 def model_sld_grow(nodes, midpoint, t, t_end):
-    # pylint: disable=too-many-locals
     """
     Function desc:
     define sld, man and min for sld_grow model 

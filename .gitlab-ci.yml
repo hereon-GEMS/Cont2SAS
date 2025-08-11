@@ -35,5 +35,5 @@ run_tests:
     - conda env create -f environment.yml
     - conda activate Cont2Sas
     - conda install pytest
-    - pytest -v
+    - pytest -v -rsx
 

@@ -35,9 +35,10 @@ def test_phase_field_gen():
     1. Check whether phase_field_gen runs
     """
     gen_result = subprocess.run(
-        ["python", "models/phase_field/phase_field_gen.py"], 
-        capture_output=True, 
-        text=True
+        ["python", "models/phase_field/phase_field_gen.py"],
+        capture_output=True,
+        text=True,
+        check=True
     )
     # Ensure it runs without crashing
     assert gen_result.returncode == 0, "phase_field model generates data"
@@ -48,9 +49,10 @@ def test_phase_field_plot():
     1. Check whether phase_field_plot runs
     """
     plot_result = subprocess.run(
-        ["python", "models/phase_field/phase_field_plot.py"], 
-        capture_output=True, 
-        text=True
+        ["python", "models/phase_field/phase_field_plot.py"],
+        capture_output=True,
+        text=True,
+        check=True
     )
     # Ensure it runs without crashing
     assert plot_result.returncode == 0, "phase_field model plots data"
@@ -60,7 +62,6 @@ def test_check_phase_field_plot():
     Test script for $C2S_HOME/models/phase_field/phase_field_plot.py:
     1. Check whether phase_field_plot plots IvsQ figure
     """
-    gold_img='figure/gold/Iq_phase_field.pdf'
     plt_img='figure/phase_field/Iq_phase_field.pdf'
     if_exist=os.path.isfile(plt_img)
     # Ensure plotted file exist
@@ -74,7 +75,7 @@ def test_compare_phase_field_plot():
     gold_img='figure/gold/Iq_phase_field.pdf'
     plt_img='figure/phase_field/Iq_phase_field.pdf'
     # Check expected output
-    assert comp_img(plt_img, gold_img, tol=2)==None
+    assert comp_img(plt_img, gold_img, tol=2) is None
 
 def test_clean_up():
     """
@@ -91,4 +92,3 @@ def test_clean_up():
     # check if it is removed
     assert os.path.isdir(data_dir)==0
     assert os.path.isdir(fig_dir)==0
-
