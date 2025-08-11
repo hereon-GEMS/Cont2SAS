@@ -82,7 +82,7 @@ def test_clean_up():
     1. Removes created data and figure
     2. Checks whether removed
     """
-    data_dir='data/250p0_250p0_250p0_100_100_100_lagrangian_1'
+    data_dir='data/250_250_250_100_100_100_lagrangian_1'
     fig_dir='figure/phase_field'
     # remove data files
     os.rmdir(data_dir)
