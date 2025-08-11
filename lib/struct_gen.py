@@ -205,7 +205,9 @@ def mesh_read(file_name):
     """
     file=h5py.File(file_name,'r')
     nodes=file['nodes'][:]
+    nodes=np.array(nodes)
     cells=file['cells'][:]
+    cells=np.array(cells)
     con=file['connectivity'][:]
     mesh=file['mesh'][:]
     file.close()
