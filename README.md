@@ -42,7 +42,7 @@ The following test cases are included in this repository:
         - Change of the chemical composition of a sphere
 - Functional test case: Simulated model SLD distribution
     - Phase field modeling using MOOSE
-        - Spinodal decomposition of Fe-Cr
+        - Spinodal decomposition of Fe-Cr.
 
 Scripts are provided in the `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication
 
