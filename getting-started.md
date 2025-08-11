@@ -188,7 +188,7 @@ xdg-open figure/sld_grow/sig_eff_fit_sld_grow.pdf
 ## phase_field
 
 Phase-field simulation of the spinodal decomposition of a Fe-Cr mixture.
-Run time approx. 1 hour.
+Run time approx. 30 minutes.
 
 ```bash
 # generate data
