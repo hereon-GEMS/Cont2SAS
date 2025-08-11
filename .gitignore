@@ -40,7 +40,7 @@ moose_read/*.e
 
 # python files
 phase_field_Iq_plot_JF.py
-pylint_results
+pylint_result
 
 # lib files
 lib/simulation_old.py
