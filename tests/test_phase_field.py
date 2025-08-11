@@ -85,7 +85,7 @@ def test_clean_up():
     data_dir='data/250_250_250_100_100_100_lagrangian_1'
     fig_dir='figure/phase_field'
     # remove data files
-    os.rmdir(data_dir)
+    shutil.rmtree(data_dir)
     # remove figure
     shutil.rmtree(fig_dir)
     # check if it is removed

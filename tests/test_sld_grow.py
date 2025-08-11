@@ -84,7 +84,7 @@ def test_clean_up():
     data_dir='data/40p0_40p0_40p0_40_40_40_lagrangian_1'
     fig_dir='figure/sld_grow'
     # remove data files
-    os.rmdir(data_dir)
+    shutil.rmtree(data_dir)
     # remove figure
     shutil.rmtree(fig_dir)
     # check if it is removed
