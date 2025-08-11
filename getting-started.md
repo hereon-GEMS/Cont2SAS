@@ -22,6 +22,19 @@ The following models are included in this repository, the instructions how to ru
 
 Instructions how to run these models are given in this document below; a [detailed documentation of each model and the complete workflow](./docu/index.md) is also available.
 
+Follwing are time statistics for the generation scripts of each model in each different machines (M1, M2, M3):
+
+| Model       | Time - M1 | Time - M2 | Time - M3 |
+|-------------|-----------|-----------|-----------|
+| ball        | 12.404 s  | xx s    | xx s   |
+| box         | 28.349 s  | xx s    | xx s   |
+| bib         | 27.645 s  | xx s    | xx s   |
+| bib_ecc     | 39.745 s  | xx s    | xx s   |
+| gg          | 47.515 s  | xx s    | xx s   |
+| fs          | 2426 s    | xx s    | xx s   |
+| sld_grow    | 28.349 s  | xx s    | xx s   |
+| phase_field | 882.184 s | xx s    | xx s   |
+
 ## ball
 
 A sphere surrounded by empty space.
