@@ -79,7 +79,7 @@ qclean_sld=sld_out
 ### scatt_cal ###
 num_cat=501
 method_cat='extend'
-sassena_exe= './Sassena/Sassena.AppImage'
+sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
 mpi_procs=1
 num_threads=1
 sig_file='signal.h5'
