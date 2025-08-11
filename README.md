@@ -42,9 +42,9 @@ The following test cases are included in this repository:
         - Change of the chemical composition of a sphere
 - Functional test case: Simulated model SLD distribution
     - Phase field modeling using MOOSE
-        - Spinodal decomposition of Fe-Cr
+        - Spinodal decomposition of Fe-Cr.
 
-Scripts are provided in the `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication
+Scripts are provided in the `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication.
 
 ### Files in repository
 
@@ -60,9 +60,9 @@ A description and purpose of the provided files are listed below:
 8. `moose`: Output of a [MOOSE](https://mooseframework.inl.gov/) simulation, reformatted as input for `Cont2SAS`. Required for assigning SLD values in the mesh of the `phase_field` model. Reads the SLD values from `hdf5` files for chosen time steps.
 9. `moose_read`: (a) Input script for a [MOOSE](https://mooseframework.inl.gov/) simulation -- instructions how to run the corresponding FEM simulation using a docker container are [included in the detailed documentation](./docu/models/phase_field.md). (b) python scripts for converting the output [exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html) of the MOOSE simulation into `Cont2SAS` input.
 10. `shell_scripts`: Shell scripts that add/remove an environment variable to the user's `.bashrc` for easy execution of the provided examples.
-11. `src`: Scripts that read xml files from the `xml` folder as input; generate mesh (`struct_gen.py`), assign SLD (`sim_gen.py`), calculate SAS patterns (`scatt_cal.py`), and effective cross-section (`sig_eff.py`); also used by the `*_gen.py` scripts in `models`. See [documentation](./docu/code/desc.md).
-12. `tests`: Test scripts for one static validation model, one evolving validation model, and one functional simulated model. Checks whether the data get generated, plots get generated, plots are correct, cleans generated files after execution.
-12. `xml`: Input xml files that specify variables read by the run scripts.
+11. `src`: Scripts that read xml files from the `xml` folder as input; generate mesh (`struct_gen.py`), assign SLD (`sim_gen.py`), calculate SAS patterns (`scatt_cal.py`), and effective cross-section (`sig_eff.py`); also used by the `*_gen.py` scripts in `models` (see [documentation](./docu/code/desc.md)).
+12. `tests`: Test scripts for one static validation model, one evolving validation model, and one functional simulated model. Checks whether the data get generated, plots get generated, plots are correct, cleans generated files after execution of tests.
+13. `xml`: Input xml files that specify variables read by the run scripts.
 
 ## Installation
 
