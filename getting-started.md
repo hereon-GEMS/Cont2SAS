@@ -22,18 +22,18 @@ The following models are included in this repository, the instructions how to ru
 
 Instructions how to run these models are given in this document below; a [detailed documentation of each model and the complete workflow](./docu/index.md) is also available.
 
-Follwing are computation time required by generation scripts of each model in three different machines (M1, M2, M3):
+Follwing are computation time required by generation scripts of each model in three different machines (M1, M2 - Dell XPS 13 Laptop (2017), M3):
 
-| Model       | Compute time - M1 | Compute time - M2 | Compute time - M3 | Avg compute time|
-|-------------|-------------------|-------------------|-------------------|-----------------|
-| ball        | 12.404 s          | xx s              | xx s   |       |
-| box         | 28.349 s          | xx s              | xx s   |       |
-| bib         | 27.645 s          | xx s              | xx s   |       |
-| bib_ecc     | 39.745 s          | xx s              | xx s   |       |
-| gg          | 47.515 s          | xx s              | xx s   |       |
-| fs          | 2426 s            | xx s              | xx s   |       |
-| sld_grow    | 54.156 s          | xx s              | xx s   |       |
-| phase_field | 882.184 s         | xx s              | xx s   |       |
+| Model       | Runtime - M1 | Runtime - M2 | Runtime - M3 | Avg runtime|
+|-------------|-------------:|-------------:|-------------:|-----------:|
+| ball        |         12 s |          9 s |         xx s |       xx s |
+| box         |         28 s |         32 s |         xx s |       xx s |
+| bib         |         28 s |         31 s |         xx s |       xx s |
+| bib_ecc     |         40 s |         44 s |         xx s |       xx s |
+| gg          |         48 s |         56 s |         xx s |       xx s |
+| fs          |       2426 s |       2603 s |         xx s |       xx s |
+| sld_grow    |         54 s |         66 s |         xx s |       xx s |
+| phase_field |        882 s |       1008 s |         xx s |       xx s |
 
 ## ball
 
