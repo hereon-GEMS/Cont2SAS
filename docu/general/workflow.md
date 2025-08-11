@@ -2,14 +2,14 @@
 
 The workflow of `Cont2SAS` can be divided into four steps:
 
-1. mesh generation
-2. SLD assignment
-3. SAS pattern calculation
-4. effective cross-section calculation
+1. Mesh generation,
+2. SLD assignment,
+3. SAS pattern calculation,
+4. Effective cross-section calculation.
 
 ## Mesh generation
 
-The mesh generation step creates a mesh, which includes the coordinates of nodes, cell center, the connectivity matrix, and the element type (defines interpolation function). 
+The mesh generation step creates a mesh, which includes the coordinates of nodes and cell center, the connectivity matrix, and the element type (defines interpolation function). 
 
 Relevant files:
 1. Input xml: struct.xml
@@ -75,7 +75,7 @@ Relevant files:
 
 Important points:
 1. For different models, a different model xml input is used (see below for reference).
-2. For a new user defined model, a new model xml file must be added.
+2. For a new user defined model, the definition of the new model xml file must be added in `lib/simulation.py`.
 
 Workflow:
 1. [Copy simulation.xml template](#copy-simulationxml-template)
