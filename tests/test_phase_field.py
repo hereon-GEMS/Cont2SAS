@@ -75,7 +75,7 @@ def test_compare_phase_field_plot():
     gold_img='figure/gold/Iq_phase_field.pdf'
     plt_img='figure/phase_field/Iq_phase_field.pdf'
     # Check expected output
-    assert comp_img(plt_img, gold_img, tol=2)==None
+    assert comp_img(plt_img, gold_img, tol=2) is None
 
 def test_clean_up():
     """
