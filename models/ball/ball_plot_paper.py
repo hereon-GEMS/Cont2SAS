@@ -7,11 +7,7 @@ Date: 24.06.2025
 """
 import sys
 import os
-lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(lib_dir)
-
-import os
-import sys
+import warnings
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -19,38 +15,51 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.colors import ListedColormap
 import h5py
 
+# find current dir and and ..
+lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+# add .. in path
+sys.path.append(lib_dir)
+# lib imports (if any)
+
 # ignore warnings
-import warnings
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 
 # analytical SAS function
 def J1(x):
+    """
+    function desc:
+    spherical bessel function
+    """
     if x==0:
-        return 0
+        y = 0
     else:
-        return (np.sin(x)-x*np.cos(x))/x**2
+        y = (np.sin(x)-x*np.cos(x))/x**2
+    return y
 
 def ball (qmax,qmin,Npts,scale,bg,sld,sld_sol,rad):
+    """
+    function desc:
+    analytical SAS pattern of sphere
+    """
     vol=(4/3)*np.pi*rad**3
     # SLD unit 10^-5 \AA^-2
     del_rho=sld-sld_sol
     q_arr=np.linspace(qmin,qmax,Npts)
     FormFactor=np.zeros(len(q_arr))
-    for i in range(len(q_arr)):
-        q=q_arr[i]
-        if q==0:
+    for q_idx, q_cur in enumerate(q_arr):
+        if q_cur==0:
             # Form factor unit 10^-5 \AA
-            FormFactor[i]=1
+            FormFactor[q_idx]=vol*del_rho
         else:
             # Form factor unit 10^-5 \AA
-            FormFactor[i]=3*vol*del_rho*J1(q*rad)/(q*rad)
+            FormFactor[q_idx]=3*vol*del_rho*J1(q_cur*rad)/(q_cur*rad)
     # Intensity unit 10^-10 \AA^2
-    Iq_arr = ((scale)*np.abs(FormFactor)**2+bg)
+    Iq_arr = (scale)*np.abs(FormFactor)**2+bg
     return Iq_arr, q_arr
 
-"""
-read input from xml file
-"""
+##########################
+# read input from xml file
+##########################
 
 ### file locations ###
 # xml location
@@ -59,15 +68,15 @@ xml_folder='./xml/'
 script_dir = "src"  # Full path of the script
 working_dir = "."  # Directory to run the script in
 
+############
+# Input data
+############
 
-"""
-Input data
-"""
 ### struct gen ###
 # box side lengths (float values)
-length_a= 40.  
-length_b=40. 
-length_c=40. 
+length_a= 40.
+length_b=40.
+length_c=40.
 # number of cells in each direction (int values)
 nx= 40
 ny= 40
@@ -82,7 +91,7 @@ mid_point=np.array([length_a/2, length_b/2, length_c/2])
 # model name
 sim_model= 'ball'
 # simulation parameters
-dt= 1. 
+dt= 1.
 t_end= 0.
 n_ensem=1
 # calculate time array
@@ -94,15 +103,15 @@ ball_rad=10
 ball_sld=2
 qclean_sld=0
 # dir name for model param
-model_param_dir_name = ('rad' + '_' + str(ball_rad) + 
-                        '_' + 'sld' + '_' + str(ball_sld)
-                        + '_' + 'qclean_sld' + '_' + str(qclean_sld)
-                        ).replace('.', 'p')
+model_param_dir_name = ('rad' + '_' + str(ball_rad) +
+                         '_' + 'sld' + '_' + str(ball_sld)
+                           + '_' + 'qclean_sld' + '_' + str(qclean_sld)
+                           ).replace('.', 'p')
 
 ### scatt cal ###
 # decreitization params
 # number of categories and method of categorization
-num_cats= [3, 101, 3] 
+num_cats= [3, 101, 3]
 method_cats=['direct', 'direct', 'extend']
 # scatt_cal params
 sig_file='signal.h5'
@@ -157,17 +166,16 @@ os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
 plot_dir=os.path.join(figure_dir, sim_model +'_paper')
 os.makedirs(plot_dir, exist_ok=True)
-# plott setting 
+# plott setting
 # plot according to categorization methods
 fig, ax = plt.subplots(figsize=(7, 5))
 markers=['o', '^', 's']
 colors=['m', 'r', 'k']
 ms_arr=[3, 5, 3]
 
-for i in range(len(t_arr)):
-    t=t_arr[i]
+for i,t in enumerate(t_arr):
     # time_dir name
-    t_dir_name='t{0:0>3}'.format(i)
+    t_dir_name=f't{i:0>3}'
     t_dir=os.path.join(model_param_dir, t_dir_name)
     for idx in range(len(method_cats)):
         method_cat=method_cats[idx]
@@ -177,7 +185,7 @@ for i in range(len(t_arr)):
         scatt_settings='cat_' + method_cat + '_' + str(num_cat) + 'Q_' \
             + str(Q_range[0]) + '_' + str(Q_range[1]) + '_' + 'orien_' + '_' + str(num_orientation)
         scatt_settings=scatt_settings.replace('.', 'p')
-        
+
         # ball geometry
         vol_ball=(4/3)*np.pi*ball_rad**3
         vol_box=length_a*length_b*length_c
@@ -187,7 +195,7 @@ for i in range(len(t_arr)):
 
         # numerical intensity
         ## read I vs Q signal file
-        Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings) 
+        Iq_data_file_name='Iq_{0}.h5'.format(scatt_settings)
         Iq_data_file=os.path.join(t_dir,Iq_data_file_name)
         Iq_data=h5py.File(Iq_data_file,'r')
         Iq=Iq_data['Iq'][:] # unit fm^2
@@ -196,10 +204,11 @@ for i in range(len(t_arr)):
         Iq_data.close()
 
         # loglog plot
-        ax.loglog(q, Iq,color=colors[idx], linestyle='', marker=markers[idx], 
-                  markersize=ms_arr[idx], label='Categorization method: ' + method_cat + ', ' + str(num_cat) + ' categories' )
+        ax.loglog(q, Iq,color=colors[idx], linestyle='', marker=markers[idx],
+                   markersize=ms_arr[idx],
+                     label='Categorization method: ' + method_cat + ', ' + str(num_cat) + ' categories' )
 
-    # ananlytical intensity 
+    # ananlytical intensity
     ## Intensity unit 10^-10 \AA^2
     Iq_ana,q_ana=ball(qmax=np.max(q),qmin=np.min(q),Npts=100,
                 scale=1,bg=0,sld=ball_sld,sld_sol=0,rad=ball_rad)
@@ -259,15 +268,15 @@ for i in range(len(t_arr)):
     ax_ins = inset_axes(ax, width="100%", height="100%", bbox_to_anchor=(0, 0.35, 0.5, 0.5),
                         bbox_transform=ax.transAxes)
     ## image plot
-    ### .T is required to exchange x and y axis 
-    ### origin is 'lower' to put it in lower left corner 
+    ### .T is required to exchange x and y axis
+    ### origin is 'lower' to put it in lower left corner
     node_sld_3d=node_sld.reshape(num_node_x, num_node_y, num_node_z)
     cmap = ListedColormap(['white', '#440154'])
-    img = ax_ins.imshow(node_sld_3d[:,:,z_idx].T, 
-                    extent=[0, length_a, 0, length_b], 
-                    origin='lower', vmin=sld_min, vmax=sld_max, 
-                    interpolation='bilinear', cmap=cmap)
-    
+    img = ax_ins.imshow(node_sld_3d[:,:,z_idx].T,
+                         extent=[0, length_a, 0, length_b],
+                           origin='lower', vmin=sld_min, vmax=sld_max,
+                             interpolation='bilinear', cmap=cmap)
+
     ax_ins.axis('off')
 
     ## add mesh
@@ -277,8 +286,8 @@ for i in range(len(t_arr)):
         for idx2 in range(ny):
             rect_center_x=idx1*cell_x
             rect_center_y=idx2*cell_y
-            ax_ins.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y, 
-                                    edgecolor='k', facecolor='none', linewidth=0.5))
+            ax_ins.add_patch(Rectangle((rect_center_x, rect_center_y), cell_x, cell_y,
+                                        edgecolor='k', facecolor='none', linewidth=0.5))
 
     plt.savefig(plot_file, format='pdf')
     plt.close(fig)
