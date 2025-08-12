@@ -10,17 +10,17 @@ Software package for calculating Small Angle Scattering (SAS) parameters from co
 
 It can calculate
 
-1. SAS intensity ($I$ vs. $Q$),
+1. SAS intensity ($I$ vs. $Q$) and
 2. Effective scattering cross-section ($\sigma_\text{eff}$), i.e. the count rate of the scattered radiation per unit flux.
 
 It takes a distribution of scattering length density (SLD) values as input that can be provided by FEM simulation softwares, e.g., [Exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html) provided by [MOOSE](https://mooseframework.inl.gov/).
 
 Workflow:
 
-1. Mesh generation,
-2. Scattering length density (SLD) assignment,
-3. SAS pattern calculation,
-4. Effective scattering cross-section calculation.
+1. Mesh generation
+2. Scattering length density (SLD) assignment
+3. SAS pattern calculation
+4. Effective scattering cross-section calculation
 
 The output data are stored in the `data` folder. Its detailed structure is described in the [documentation](./docu/index.md).
 
@@ -42,7 +42,7 @@ The following test cases are included in this repository:
         - Change of the chemical composition of a sphere
 - Functional test case: Simulated model SLD distribution
     - Phase field modeling using MOOSE
-        - Spinodal decomposition of Fe-Cr.
+        - Spinodal decomposition of Fe-Cr
 
 Scripts are provided in the `models` folder that generate data and figures related to different test cases. All cases include a data generation script that stores generated data in `data` folder and a plot script that creates figures in `figure` folder. For the sld_grow model, an additional plot script is provided that creates figure for [JOSS](https://joss.readthedocs.io/en/latest/) publication.
 
@@ -59,7 +59,7 @@ A description and purpose of the provided files are listed below:
 7. `models`: Data generation and plot generation scripts for the models provided with this software for testing (see [quick start guide](./getting-started.md)).
 8. `moose`: Output of a [MOOSE](https://mooseframework.inl.gov/) simulation, reformatted as input for `Cont2SAS`. Required for assigning SLD values in the mesh of the `phase_field` model. Reads the SLD values from `hdf5` files for chosen time steps.
 9. `moose_read`: (a) Input script for a [MOOSE](https://mooseframework.inl.gov/) simulation -- instructions how to run the corresponding FEM simulation using a docker container are [included in the detailed documentation](./docu/models/phase_field.md). (b) python scripts for converting the output [exodus files](https://mooseframework.inl.gov/source/outputs/Exodus.html) of the MOOSE simulation into `Cont2SAS` input.
-10. `shell_scripts`: Shell scripts that add/remove an environment variable to the user's `.bashrc` for easy execution of the provided examples.
+10. `shell_scripts`: Shell scripts that add/remove an environment variable to the user's shell config file for easy execution of the provided examples.
 11. `src`: Scripts that read xml files from the `xml` folder as input; generate mesh (`struct_gen.py`), assign SLD (`sim_gen.py`), calculate SAS patterns (`scatt_cal.py`), and effective cross-section (`sig_eff.py`); also used by the `*_gen.py` scripts in `models` (see [documentation](./docu/code/desc.md)).
 12. `tests`: Test scripts for one static validation model, one evolving validation model, and one functional simulated model. Checks whether the data get generated, plots get generated, plots are correct, cleans generated files after execution of tests.
 13. `xml`: Input xml files that specify variables read by the run scripts.
@@ -79,12 +79,15 @@ cd continuum-to-scattering
 
 To ensure that the provided examples run on the user's computer regardless of the starting directory, the following environment variable is used.
 
+```bash
+# define environment variable for the current session
+export C2S_HOME=$PWD
+```
+
 ##### Install
 
 ```bash
-# define environment variable for current session
-export C2S_HOME=$PWD
-# define for further sessions
+# define environment variable for further sessions in the shell config file
 chmod +x ./shell_scripts/*
 ./shell_scripts/install.sh
 ```
@@ -92,7 +95,7 @@ chmod +x ./shell_scripts/*
 ##### Uninstall
 
 ```bash
-# remove environment variable
+# remove environment variable definition from the shell config file
 ./shell_scripts/uninstall.sh
 ```
 
