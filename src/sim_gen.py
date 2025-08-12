@@ -225,7 +225,7 @@ for i, t in enumerate(t_arr):
                     extent=[0, length_a, 0, length_b],
                       origin='lower',
                         vmin=sld_min, vmax=sld_max)
-        plot_file_3=os.path.join(ensem_dir,'snap_z_{z_val}.jpg')
+        plot_file_3=os.path.join(ensem_dir,f'snap_z_{z_val}.jpg')
         plt.colorbar()
         plt.title(f" time = {t:0>3}s, emsemble step = {idx_ensem+1:0>3} \n z = {z_val}{angstrom_str}")
         plt.savefig(plot_file_3, format='jpg')
