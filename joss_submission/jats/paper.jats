@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.2 20190208//EN"
+                  "JATS-publishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="1.2" article-type="other">
+<front>
+<journal-meta>
+<journal-id></journal-id>
+<journal-title-group>
+<journal-title>Journal of Open Source Software</journal-title>
+<abbrev-journal-title>JOSS</abbrev-journal-title>
+</journal-title-group>
+<issn publication-format="electronic">2475-9066</issn>
+<publisher>
+<publisher-name>Open Journals</publisher-name>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">0</article-id>
+<article-id pub-id-type="doi">N/A</article-id>
+<title-group>
+<article-title>Cont2SAS: A python package for calculating SAS pattern
+from continuum structures</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0003-4049-4060</contrib-id>
+<name>
+<surname>Majumdar</surname>
+<given-names>Arnab</given-names>
+</name>
+<xref ref-type="aff" rid="aff-1"/>
+<xref ref-type="aff" rid="aff-3"/>
+</contrib>
+<contrib contrib-type="author">
+<name>
+<surname>Müller</surname>
+<given-names>Martin</given-names>
+</name>
+<xref ref-type="aff" rid="aff-1"/>
+<xref ref-type="aff" rid="aff-2"/>
+<xref ref-type="aff" rid="aff-3"/>
+</contrib>
+<contrib contrib-type="author" corresp="yes">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-9815-909X</contrib-id>
+<name>
+<surname>Busch</surname>
+<given-names>Sebastian</given-names>
+</name>
+<xref ref-type="aff" rid="aff-1"/>
+<xref ref-type="corresp" rid="cor-1"><sup>*</sup></xref>
+</contrib>
+<aff id="aff-1">
+<institution-wrap>
+<institution>German Engineering Materials Science Centre (GEMS) at Heinz
+Maier-Leibnitz Zentrum (MLZ), Helmholtz-Zentrum Hereon GmbH,
+Lichtenbergstr. 1, 85748 Garching, Germany</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-2">
+<institution-wrap>
+<institution>Institute of Materials Physics, Helmholtz-Zentrum Hereon
+GmbH, Max-Planck-Str. 1, 21502 Geesthacht, Germany</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-3">
+<institution-wrap>
+<institution>Institut für Experimentelle und Angewandte Physik (IEAP),
+Christian-Albrechts-Universität zu Kiel, Leibnizstr. 19, 24098 Kiel,
+Germany</institution>
+</institution-wrap>
+</aff>
+</contrib-group>
+<author-notes>
+<corresp id="cor-1">* E-mail: <email></email></corresp>
+</author-notes>
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2025-07-17">
+<day>17</day>
+<month>7</month>
+<year>2025</year>
+</pub-date>
+<volume>¿VOL?</volume>
+<issue>¿ISSUE?</issue>
+<fpage>¿PAGE?</fpage>
+<permissions>
+<copyright-statement>Authors of papers retain copyright and release the
+work under a Creative Commons Attribution 4.0 International License (CC
+BY 4.0)</copyright-statement>
+<copyright-year>1970</copyright-year>
+<copyright-holder>The article authors</copyright-holder>
+<license license-type="open-access" xlink:href="https://creativecommons.org/licenses/by/4.0/">
+<license-p>Authors of papers retain copyright and release the work under
+a Creative Commons Attribution 4.0 International License (CC BY
+4.0)</license-p>
+</license>
+</permissions>
+<kwd-group kwd-group-type="author">
+<kwd>Python</kwd>
+<kwd>Continuum simulation</kwd>
+<kwd>Small Angle Neutron Scattering</kwd>
+<kwd>Small Angle X-ray Scattering</kwd>
+<kwd>Sassena</kwd>
+</kwd-group>
+</article-meta>
+</front>
+<body>
+<sec id="summary">
+  <title>Summary</title>
+  <p><monospace>Cont2SAS</monospace> facilitates the calculation of
+  Small Angle Scattering (SAS) parameters from simulated Continuum
+  (Cont) nanostructures. <monospace>Cont2SAS</monospace> is built on the
+  existing software solution <monospace>Sassena</monospace> – known for
+  calculating scattering patterns from simulated atomic structures
+  (<xref alt="Lindner, 2012" rid="ref-lindner2012towards" ref-type="bibr">Lindner,
+  2012</xref>,
+  <xref alt="2017" rid="ref-sassena2017lindner" ref-type="bibr">2017</xref>;
+  <xref alt="Lindner &amp; Smith, 2012" rid="ref-lindner2012sassena" ref-type="bibr">Lindner
+  &amp; Smith, 2012</xref>;
+  <xref alt="Majumdar et al., 2024" rid="ref-majumdar2024computation" ref-type="bibr">Majumdar
+  et al., 2024</xref>;
+  <xref alt="Majumdar &amp; Lindner, 2023" rid="ref-sassena2023majumdar" ref-type="bibr">Majumdar
+  &amp; Lindner, 2023</xref>). <monospace>Cont2SAS</monospace> can
+  calculate SAS patterns and the effective scattering cross-section
+  <inline-formula><alternatives>
+  <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>.
+  SAS patterns contain a SAS intensity <inline-formula><alternatives>
+  <tex-math><![CDATA[(I)]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>I</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
+  vs. scattering vector magnitude <inline-formula><alternatives>
+  <tex-math><![CDATA[(Q)]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>Q</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>.
+  The <inline-formula><alternatives>
+  <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
+  is the count rate of scattered radiation per incident unit flux. The
+  time evolution of <inline-formula><alternatives>
+  <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
+  is calculated from SAS patterns at different time steps. Through the
+  comparison of calculated and measured SAS parameters, simulations and
+  SAS experiments can be used complementarily for different purposes,
+  such as validating simulations, tuning simulation parameters, and
+  analyzing SAS data obtained from experiments
+  (<xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
+  et al., 2020</xref>;
+  <xref alt="Majumdar et al., 2024" rid="ref-majumdar2024computation" ref-type="bibr">Majumdar
+  et al., 2024</xref>;
+  <xref alt="Reich et al., 2022" rid="ref-reich2022comparison" ref-type="bibr">Reich
+  et al., 2022</xref>).</p>
+</sec>
+<sec id="statement-of-need">
+  <title>Statement of need</title>
+  <p>The simulation of material structure at the nanometer length scale
+  can be performed using atomistic simulations and continuum
+  simulations. Continuum simulations have the advantage over atomistic
+  ones that they can simulate bigger volumes for a larger time. However,
+  continuum simulations are less accurate than the atomistic
+  simulations. <monospace>Cont2SAS</monospace> is created to check the
+  accuracy of continuum simulations by validating them against SAS
+  experiments, such as Small Angle Neutron Scattering (SANS) and Small
+  Angle X-ray Scattering (SAXS). The validation is performed by
+  comparing SAS parameters calculated using
+  <monospace>Cont2SAS</monospace> with measured ones. A validated
+  simulation can also be used to retrieve nanostructure from SAS data
+  because a direct retrieval of nanstructure from SAS data is not
+  possible
+  (<xref alt="Billinge &amp; Levin, 2007" rid="ref-billinge2007problem" ref-type="bibr">Billinge
+  &amp; Levin, 2007</xref>). Alternatively to simulating continuum
+  nanostructures based on physics-based equations, they can also be
+  simulated based on the user’s knowledge of the sample to retrieve
+  nanostructures from SAS data.</p>
+  <fig>
+    <caption><p>Workflow of SAS pattern
+    calculation.<styled-content id="figU003Asas_workflow"></styled-content></p></caption>
+    <graphic mimetype="image" mime-subtype="png" xlink:href="workflow.png" />
+  </fig>
+  <p>Both physics- and knowledge-based simulated structures are expected
+  to output either Scattering Length Density (SLD)
+  (<inline-formula><alternatives>
+  <tex-math><![CDATA[\beta]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>β</mml:mi></mml:math></alternatives></inline-formula>)
+  values or a set of variables (e.g. local molar density
+  (<inline-formula><alternatives>
+  <tex-math><![CDATA[\rho_{\text{m}}]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>ρ</mml:mi><mml:mtext mathvariant="normal">m</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>)
+  and composition (<inline-formula><alternatives>
+  <tex-math><![CDATA[\chi]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>χ</mml:mi></mml:math></alternatives></inline-formula>))
+  from which SLD values can be calculated.
+  <monospace>Cont2SAS</monospace> creates a mesh, assigns SLD based on
+  the simulated values, and calculates SAS pattern from them, as shown
+  in
+  fig. <xref alt="[fig:sas_workflow]" rid="figU003Asas_workflow">[fig:sas_workflow]</xref>.</p>
+  <fig>
+    <caption><p>Calculation of effective cross-section from SAS patterns
+    at different time
+    steps.<styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
+    <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
+  </fig>
+  <p>For some materials, the nanostructure does not change over time but
+  the chemical composition does (e.g., ball-milled hydrogen storage
+  materials). For such a scenario, the time evolution of the count rate
+  is a useful parameter
+  (<xref alt="Aslan et al., 2019" rid="ref-aslan2019high" ref-type="bibr">Aslan
+  et al., 2019</xref>). This count rate per incident unit flux is named
+  <monospace>effective cross-section</monospace>
+  <inline-formula><alternatives>
+  <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>,
+  and can be calculated using <monospace>Cont2SAS</monospace>. Figure
+  <xref alt="[fig:sig_eff_workflow]" rid="figU003Asig_eff_workflow">[fig:sig_eff_workflow]</xref>
+  demonstrates such calculation from a series of SAS patterns. The
+  calculated <inline-formula><alternatives>
+  <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
+  must be multiplied by an empirical factor before comparing with
+  measured neutron count rate.</p>
+</sec>
+<sec id="conclusion">
+  <title>Conclusion</title>
+  <p><monospace>Cont2SAS</monospace> provides the much needed software
+  platform for calculating SAS pattern from continuum simulations of
+  nanostructures. The addition of effective cross-section in the
+  software package is going be helpful for analyzing powder-like
+  structures. One can also retrieve continuum nanostructures from SAS
+  data using simulated structures.</p>
+</sec>
+<sec id="acknowledgements">
+  <title>Acknowledgements</title>
+  <p>This publication was written in the context of the work of the
+  consortium DAPHNE4NFDI in association with the German National
+  Research Data Infrastructure (NFDI) e.V. NFDI is financed by the
+  Federal Republic of Germany and the 16 federal states and the
+  consortium is funded by the Deutsche Forschungsgemeinschaft (DFG,
+  German Research Foundation) - project number 460248799. The authors
+  would like to thank for the funding and support. Furthermore, thanks
+  go to all institutions and actors who are committed to the association
+  and its goals.</p>
+</sec>
+</body>
+<back>
+<ref-list>
+  <title></title>
+  <ref id="ref-billinge2007problem">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Billinge</surname><given-names>Simon JL</given-names></name>
+        <name><surname>Levin</surname><given-names>Igor</given-names></name>
+      </person-group>
+      <article-title>The problem with determining atomic structure at the nanoscale</article-title>
+      <source>science</source>
+      <publisher-name>American Association for the Advancement of Science</publisher-name>
+      <year iso-8601-date="2007">2007</year>
+      <volume>316</volume>
+      <issue>5824</issue>
+      <fpage>561</fpage>
+      <lpage>565</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-aslan2019high">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Aslan</surname><given-names>Neslihan</given-names></name>
+        <name><surname>Horstmann</surname><given-names>Christian</given-names></name>
+        <name><surname>Metz</surname><given-names>Oliver</given-names></name>
+        <name><surname>Kotlyar</surname><given-names>Oleg</given-names></name>
+        <name><surname>Dornheim</surname><given-names>Martin</given-names></name>
+        <name><surname>Pistidda</surname><given-names>Claudio</given-names></name>
+        <name><surname>Busch</surname><given-names>Sebastian</given-names></name>
+        <name><surname>Lohstroh</surname><given-names>Wiebke</given-names></name>
+        <name><surname>Müller</surname><given-names>Martin</given-names></name>
+        <name><surname>Pranzas</surname><given-names>Klaus</given-names></name>
+      </person-group>
+      <article-title>High-pressure cell for in situ neutron studies of hydrogen storage materials</article-title>
+      <source>Journal of Neutron Research</source>
+      <year iso-8601-date="2019">2019</year>
+      <volume>21</volume>
+      <issue>3-4</issue>
+      <pub-id pub-id-type="doi">10.3233/JNR-190116</pub-id>
+      <fpage>125</fpage>
+      <lpage>135</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-dorrell2020combined">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Dorrell</surname><given-names>Mitchell W</given-names></name>
+        <name><surname>Beaven</surname><given-names>Andrew H</given-names></name>
+        <name><surname>Sodt</surname><given-names>Alexander J</given-names></name>
+      </person-group>
+      <article-title>A combined molecular/continuum-modeling approach to predict the small-angle neutron scattering of curved membranes</article-title>
+      <source>Chemistry and physics of lipids</source>
+      <publisher-name>Elsevier</publisher-name>
+      <year iso-8601-date="2020">2020</year>
+      <volume>233</volume>
+      <pub-id pub-id-type="doi">10.1016/j.chemphyslip.2020.104983</pub-id>
+      <fpage>104983</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-lindner2012sassena">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+        <name><surname>Smith</surname><given-names>Jeremy C</given-names></name>
+      </person-group>
+      <article-title>Sassena—x-ray and neutron scattering calculated from molecular dynamics trajectories using massively parallel computers</article-title>
+      <source>Computer Physics Communications</source>
+      <publisher-name>Elsevier</publisher-name>
+      <year iso-8601-date="2012">2012</year>
+      <volume>183</volume>
+      <issue>7</issue>
+      <pub-id pub-id-type="doi">10.1016/j.cpc.2012.02.010</pub-id>
+      <fpage>1491</fpage>
+      <lpage>1501</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-majumdar2024computation">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Majumdar</surname><given-names>Arnab</given-names></name>
+        <name><surname>Müller</surname><given-names>Martin</given-names></name>
+        <name><surname>Busch</surname><given-names>Sebastian</given-names></name>
+      </person-group>
+      <article-title>Computation of x-ray and neutron scattering patterns to benchmark atomistic simulations against experiments</article-title>
+      <source>International Journal of Molecular Sciences</source>
+      <publisher-name>MDPI</publisher-name>
+      <year iso-8601-date="2024">2024</year>
+      <volume>25</volume>
+      <issue>3</issue>
+      <pub-id pub-id-type="doi">10.3390/ijms25031547</pub-id>
+      <fpage>1547</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-reich2022comparison">
+    <element-citation publication-type="paper-conference">
+      <person-group person-group-type="author">
+        <name><surname>Reich</surname><given-names>Veronika</given-names></name>
+        <name><surname>Majumdar</surname><given-names>Arnab</given-names></name>
+        <name><surname>Müller</surname><given-names>Martin</given-names></name>
+        <name><surname>Busch</surname><given-names>Sebastian</given-names></name>
+      </person-group>
+      <article-title>Comparison of molecular dynamics simulations of water with neutron and x-ray scattering experiments</article-title>
+      <source>EPJ web of conferences</source>
+      <publisher-name>EDP Sciences</publisher-name>
+      <year iso-8601-date="2022">2022</year>
+      <volume>272</volume>
+      <pub-id pub-id-type="doi">10.1051/epjconf/202227201015</pub-id>
+      <fpage>01015</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-lindner2012towards">
+    <element-citation publication-type="thesis">
+      <person-group person-group-type="author">
+        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+      </person-group>
+      <article-title>Towards a unification of supercomputing, molecular dynamics simulation and experimental neutron and x-ray scattering techniques</article-title>
+      <publisher-name>University of Tennessee, United States</publisher-name>
+      <year iso-8601-date="2012">2012</year>
+    </element-citation>
+  </ref>
+  <ref id="ref-sassena2023majumdar">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Majumdar</surname><given-names>Arnab</given-names></name>
+        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+      </person-group>
+      <article-title>Sassena</article-title>
+      <publisher-name>https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena</publisher-name>
+      <year iso-8601-date="2023">2023</year>
+      <pub-id pub-id-type="doi">10.5281/zenodo.10037485</pub-id>
+    </element-citation>
+  </ref>
+  <ref id="ref-sassena2017lindner">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+      </person-group>
+      <article-title>Sassena</article-title>
+      <publisher-name>https://github.com/camm/sassena</publisher-name>
+      <year iso-8601-date="2017">2017</year>
+    </element-citation>
+  </ref>
+</ref-list>
+</back>
+</article>
