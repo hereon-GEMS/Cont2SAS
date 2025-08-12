@@ -1,5 +1,5 @@
 ---
-title: 'Cont2SAS: A python package for calculating SAS pattern from continuum structures'
+title: 'Cont2SAS: A python package for calculating SAS parameters from continuum nanostructures'
 tags:
   - Python
   - Continuum simulation
@@ -35,13 +35,13 @@ bibliography: paper.bib
 
 The simulation of material structure at the nanometer length scale can be performed using atomistic simulations and continuum simulations. Continuum simulations have the advantage over atomistic ones that they can simulate bigger volumes for a larger time. However, continuum simulations are less accurate than the atomistic simulations. `Cont2SAS` is created to check the accuracy of continuum simulations by validating them against SAS experiments, such as Small Angle Neutron Scattering (SANS) and Small Angle X-ray Scattering (SAXS). The validation is performed by comparing SAS parameters calculated using `Cont2SAS` with measured ones. A validated simulation can also be used to retrieve nanostructure from SAS data because a direct retrieval of nanstructure from SAS data is not possible [@billinge2007problem]. Alternatively to simulating continuum nanostructures based on physics-based equations, they can also be simulated based on the user's knowledge of the sample to retrieve nanostructures from SAS data.
 
-![Workflow of SAS pattern calculation.\label{fig:sas_workflow}](figures/workflow.png)
+![Workflow of SAS pattern calculation: [left] Mesh generation, [middle] SLD assignment, [right] SAS pattern calculation. \label{fig:sas_workflow}](figures/workflow.png)
 
-Both physics- and knowledge-based simulated structures are expected to output either Scattering Length Density (SLD) ($\beta$) values or a set of variables (e.g. local molar density ($\rho_{\text{m}}$) and composition ($\chi$)) from which SLD values can be calculated. `Cont2SAS` creates a mesh, assigns SLD based on the simulated values, and calculates SAS pattern from them, as shown in fig. \autoref{fig:sas_workflow}.
+Both physics- and knowledge-based simulated structures are expected to output either Scattering Length Density (SLD) ($\beta$) values or a set of variables (e.g. local molar density ($\rho_{\text{m}}$) and composition ($\chi$)) from which SLD values can be calculated. `Cont2SAS` creates a mesh, assigns SLD based on the simulated values, and calculates SAS pattern from them, as shown in \autoref{fig:sas_workflow}.
 
-![Calculation of effective cross-section from SAS patterns at different time steps.\label{fig:sig_eff_workflow}](figures/sig_eff.png)
+![Workflow of effective cross-section $(\sigma_{\text{eff}})$ calculation: [left] Calculated SAS pattern at different time steps, [right] $\sigma_{\text{eff}}$ calculated from SAS patterns at different time steps: .\label{fig:sig_eff_workflow}](figures/sig_eff.png)
 
-For some materials, the nanostructure does not change over time but the chemical composition does (e.g., ball-milled hydrogen storage materials). For such a scenario, the time evolution of the count rate is a useful parameter [@aslan2019high]. This count rate per incident unit flux is named `effective cross-section` $(\sigma_{\text{eff}})$, and can be calculated using `Cont2SAS`. Figure \autoref{fig:sig_eff_workflow} demonstrates such calculation from a series of SAS patterns. The calculated $\sigma_{\text{eff}}$ must be multiplied by an empirical factor before comparing with measured neutron count rate.
+For some materials, the nanostructure does not change over time but the chemical composition does (e.g., ball-milled hydrogen storage materials). For such a scenario, the time evolution of the count rate is a useful parameter [@aslan2019high]. This count rate per incident unit flux is named `effective cross-section` $(\sigma_{\text{eff}})$, and can be calculated using `Cont2SAS`. \autoref{fig:sig_eff_workflow} demonstrates such a calculation from a series of SAS patterns. The calculated $\sigma_{\text{eff}}$ must be multiplied by an empirical factor before comparing with measured neutron count rate.
 
 # Conclusion
 

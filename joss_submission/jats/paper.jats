@@ -18,8 +18,8 @@
 <article-id pub-id-type="publisher-id">0</article-id>
 <article-id pub-id-type="doi">N/A</article-id>
 <title-group>
-<article-title>Cont2SAS: A python package for calculating SAS pattern
-from continuum structures</article-title>
+<article-title>Cont2SAS: A python package for calculating SAS parameters
+from continuum nanostructures</article-title>
 </title-group>
 <contrib-group>
 <contrib contrib-type="author">
@@ -170,8 +170,10 @@ a Creative Commons Attribution 4.0 International License (CC BY
   simulated based on the user’s knowledge of the sample to retrieve
   nanostructures from SAS data.</p>
   <fig>
-    <caption><p>Workflow of SAS pattern
-    calculation.<styled-content id="figU003Asas_workflow"></styled-content></p></caption>
+    <caption><p>Workflow of SAS pattern calculation: [left] Mesh
+    generation, [middle] SLD assignment, [right] SAS pattern
+    calculation.
+    <styled-content id="figU003Asas_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="workflow.png" />
   </fig>
   <p>Both physics- and knowledge-based simulated structures are expected
@@ -190,11 +192,18 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <monospace>Cont2SAS</monospace> creates a mesh, assigns SLD based on
   the simulated values, and calculates SAS pattern from them, as shown
   in
-  fig. <xref alt="[fig:sas_workflow]" rid="figU003Asas_workflow">[fig:sas_workflow]</xref>.</p>
+  <xref alt="[fig:sas_workflow]" rid="figU003Asas_workflow">[fig:sas_workflow]</xref>.</p>
   <fig>
-    <caption><p>Calculation of effective cross-section from SAS patterns
-    at different time
-    steps.<styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
+    <caption><p>Workflow of effective cross-section
+    <inline-formula><alternatives>
+    <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
+    calculation: [left] Calculated SAS pattern at different time steps,
+    [right] <inline-formula><alternatives>
+    <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
+    calculated from SAS patterns at different time steps:
+    .<styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
   </fig>
   <p>For some materials, the nanostructure does not change over time but
@@ -207,9 +216,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <inline-formula><alternatives>
   <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>,
-  and can be calculated using <monospace>Cont2SAS</monospace>. Figure
+  and can be calculated using <monospace>Cont2SAS</monospace>.
   <xref alt="[fig:sig_eff_workflow]" rid="figU003Asig_eff_workflow">[fig:sig_eff_workflow]</xref>
-  demonstrates such calculation from a series of SAS patterns. The
+  demonstrates such a calculation from a series of SAS patterns. The
   calculated <inline-formula><alternatives>
   <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
