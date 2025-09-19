@@ -47,3 +47,6 @@ lib/simulation_old.py
 
 # h5 files
 phase_field.h5
+
+# powerpoint files
+*.odp
