@@ -167,7 +167,7 @@ if scatt_cal_run==1:
     print(info_str + 'Executing scatt_cal.py')
     script_path = os.path.join(script_dir, 'scatt_cal.py')  # Full path of the script
     #working_dir = "."  # Directory to run the script in
-    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
+    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=False)
 else:
     print(info_str + 'Calculation of scattring function not attempted')
 # time counter end - SAS calculation
