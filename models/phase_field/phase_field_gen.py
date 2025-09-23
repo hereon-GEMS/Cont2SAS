@@ -101,7 +101,7 @@ for t_idx, sim_time in enumerate(sim_times):
     qclean_sld=moose_inp['qclean_sld'][()]
 
     ### scatt_cal ###
-    num_cat=501 # use 3 for the categorization picture
+    num_cat=501 # use 3 for the categorization picture (or 501)
     method_cat='extend'
     sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
     mpi_procs=1
@@ -197,7 +197,7 @@ for t_idx, sim_time in enumerate(sim_times):
         print(info_str + 'Executing scatt_cal.py')
         script_path = os.path.join(script_dir, 'scatt_cal.py')  # Full path of the script
         #working_dir = "."  # Directory to run the script in
-        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
+        subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=False)
     else:
         print(info_str + 'Calculation of scattring function not attempted')
     moose_inp.close()
