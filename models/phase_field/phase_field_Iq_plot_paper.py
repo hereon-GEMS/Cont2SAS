@@ -12,6 +12,7 @@ lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(lib_dir)
 
 import numpy as np
+from math import log
 import matplotlib.pyplot as plt
 import h5py
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
@@ -19,6 +20,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import fitz
 from matplotlib import cm
+from scipy.optimize import curve_fit
 
 
 # ignore warnings
@@ -26,7 +28,11 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # analytical SAS function
-# non req., only numerical SAS calculated
+def eq_line(x, m, c):
+    """
+    equation of a line
+    """
+    return m * x + c
 
 """
 Input data
@@ -53,8 +59,9 @@ N = len(sim_times)
 # Generate an array of colors (RGBA format)
 colors = cmap(np.linspace(0, 1, N))
 
-# initialize fit params (characteristic length)
+# initialize fit params (characteristic length and error bar)
 ch_len_arr=np.zeros_like(sim_times, dtype='float')
+ch_len_err_arr=np.zeros_like(sim_times, dtype='float')
 
 for sim_t_idx, sim_time in enumerate(sim_times):
     print(f'current time step: {sim_time}')
@@ -209,19 +216,27 @@ for sim_t_idx, sim_time in enumerate(sim_times):
         Iq_p=max(Iq)
         Iq_p_arg=np.argmax(Iq)
         q_p=q[Iq_p_arg]
+        q_p_err_low=q[Iq_p_arg-1]
+        q_p_err_high=q[Iq_p_arg+1]
+        # print(f'Qp :{q_p}, Q values before: {q_p_err_low} and after: {q_p_err_high}')
         # calculate characteristic length
-        ch_len=2*np.pi/q_p 
+        ch_len=2*np.pi/q_p
+        ch_len_err=2*np.pi*(1/q_p_err_low - 1/q_p_err_high)
+        print(f'errors are : {ch_len_err}')
         ch_len=round(ch_len,2) # in \AA
-        ch_len_nm=ch_len/10 
+        ch_len_err=round(ch_len_err,2) # in \AA
+        ch_len_nm=ch_len/10
+        ch_len_err_nm=ch_len_err/10
         ch_len_nm=round(ch_len_nm,2) # in nm
+        ch_len_err_nm=round(ch_len_err_nm,2) # in nm
         # print characteristic length
         AA_code = "\u212B" 
         with open(report_file, "a") as f:
             print(f'Characteristic length is {ch_len} {AA_code} ({ch_len_nm} nm)', file=f)
         # print(f'Characteristic length is {ch_len} {AA_code} ({ch_len_nm} nm)')
-        # store ch len in array
+        # store ch len and error bar in array
         ch_len_arr[sim_t_idx]=ch_len_nm
-
+        ch_len_err_arr[sim_t_idx]=ch_len_err_nm
 # add pdf in the inset axes
 ax_ins1 = inset_axes(ax_scatt, width="90%", height="90%", 
                         bbox_to_anchor=(0.41, 0.3, 0.7, 0.7), 
@@ -252,3 +267,53 @@ ax_scatt.grid()
 plot_file=os.path.join(plot_dir, 'spinod_fe_cr.pdf')
 fig_scatt.savefig(plot_file, format='pdf')
 plt.close(fig_scatt)
+
+# plot characteristic length vs time
+# ax_ch_len.loglog(sim_times[1:], ch_len_arr[1:],
+#                     linestyle='',
+#                       markersize=10, marker='*',
+#                         label= 'Simulation value')
+ax_ch_len.errorbar(sim_times[1:], ch_len_arr[1:],
+                    yerr=ch_len_err_arr[1:],
+                      fmt='ob', ecolor='gray', capsize=5, markersize=10,
+                        label= 'Simulation value')
+
+## fit to a line
+### ln(lambda) = a * ln(t) + c
+popt, pcov = curve_fit(eq_line, np.log(sim_times[1:]), np.log(ch_len_arr[1:]))
+slope=round(popt[0],2)
+print(f'slope: {slope}')
+log_ch_len_fit=eq_line(np.log(sim_times[1:]), *popt)
+ch_len_fit=np.exp(log_ch_len_fit)
+ax_ch_len.plot(sim_times[1:], ch_len_fit,
+                    linewidth=1, color='k', linestyle='--',
+                      label= 'Fitted power law')
+
+### add slope value ad text
+# ax_ch_len.text(2e4, 5, f"Slope = {slope}", color='k', fontsize=12,
+#                 bbox=dict(facecolor='white', edgecolor='black'))
+# Add annotation with arrow
+arr_head_x=3e4
+arr_head_y=np.exp(eq_line(np.log(arr_head_x), *popt))
+print(arr_head_y)
+# np.exp(eq_line(np.log(sim_times[1:]/3600), *popt))
+ax_ch_len.annotate(
+    f"Slope = {slope}",
+    xy=(arr_head_x, arr_head_y),           # Point to annotate
+    xytext=(2e4, 5),       # Text location
+    arrowprops=dict(facecolor='red', arrowstyle='->', lw=2),
+    fontsize=12,
+    color='black',
+    bbox=dict(facecolor='white', alpha=1, edgecolor='black')
+)
+
+## plot format
+ax_ch_len.legend()
+ax_ch_len.set_xscale('log')
+ax_ch_len.set_yscale('log')
+ax_ch_len.set_xlabel('t [s]')
+ax_ch_len.set_ylabel('Characteristic length [nm]')
+ax_ch_len.grid(True, which='both', linestyle='-', linewidth=0.5, alpha=0.7)
+plot_file=os.path.join(plot_dir, 'ch_len.pdf')
+fig_ch_len.savefig(plot_file, format='pdf')
+plt.close(fig_ch_len)
