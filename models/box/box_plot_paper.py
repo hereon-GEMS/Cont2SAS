@@ -208,7 +208,7 @@ for i in range(len(t_arr)):
         # loglog plot
         ax.loglog(q, Iq,color=colors[num_orien_idx], linestyle='', 
                   marker=markers[num_orien_idx], markersize=ms_arr[num_orien_idx],
-                   label= 'Number of oreientations = {0}'.format(num_orientation))
+                   label= 'Number of orientations = {0}'.format(num_orientation))
 
     # ananlytical intensity 
     ## Intensity unit 10^-10 \AA^2
