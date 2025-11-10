@@ -47,3 +47,8 @@ lib/simulation_old.py
 
 # h5 files
 phase_field.h5
+
+# draft docus
+draft_*
+DRAFT_*
+Draft_*
