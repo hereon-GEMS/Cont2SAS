@@ -194,6 +194,8 @@ To run `Cont2SAS` with the provided models and parameters, read the [getting sta
 
 A [detailed documentation](./docu/index.md) is provided in the `docu` folder.
 
+Potential developers, who want to contribute to the project, are advised to refer the [contributor's guide](./CONTRIBUTING.md).
+
 ## Referencing Cont2SAS
 
 For the citation information of `Cont2SAS`, please see the [CITATION.cff](./CITATION.cff) file.
