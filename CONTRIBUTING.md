@@ -35,7 +35,7 @@ All types of contributions are encouraged and valued. See the [table of contents
 ## Code of conduct
 
 This project and everyone participating in it is governed by the
-[Cont2SAS code of conduct](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/blob/main/CODE_OF_CONDUCT.md).
+[Cont2SAS code of conduct](./CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code.
 
 
