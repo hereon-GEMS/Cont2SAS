@@ -3,11 +3,7 @@
 
 Copyright (C) 2025  Helmholtz-Zentrum-Hereon
 
-<!-- omit in toc -->
-## Authors
-
-- Arnab Majumdar, Helmholtz Zentrum Hereon
-- Sebastian Busch, Helmholtz Zentrum Hereon
+Authors: Arnab Majumdar and Sebastian Busch
 
 <!-- omit in toc -->
 ## Introduction
@@ -27,7 +23,7 @@ All types of contributions are encouraged and valued. See the [table of contents
 - [Code of conduct](#code-of-conduct)
 - [I have a question](#i-have-a-question)
 - [I want to contribute](#i-want-to-contribute)
-  - [Before contibution](#before-contribution)
+  - [Before contribution](#before-contribution)
   - [Your first code contribution](#your-first-code-contribution)
 - [Styleguides](#styleguides)
 
@@ -59,8 +55,7 @@ If you then still feel the need to ask a question and need clarification, we rec
 <!-- omit in toc  -->
 #### Bug report
 
-A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. 
-Please complete the following steps in advance to help us fix any potential bug as fast as possible.
+A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report.
 
 <!-- omit in toc  -->
 #### Enhancement suggestion
@@ -102,7 +97,7 @@ Please ensure your code follows the [pylint style guide](https://pylint.pycqa.or
 
 <!-- omit in toc  -->
 ### Commit messages 
-Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
 
 <!-- omit in toc  -->
 ## Attribution
