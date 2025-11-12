@@ -73,7 +73,7 @@ Find out whether the suggested enhancement fits with the scope and aims of the p
 
 Please follow the steps below to contribute to Cont2SAS:
 
-- Create a new [issue](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/issues), where you describe your intentions clearly and can gather feedback.
+- Create a new [issue](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/issues/new), where you describe your intentions clearly and can gather feedback.
 - Get the source code using ``git clone https://codebase.helmholtz.cloud/DAPHNE4NFDI/continuum-to-scattering.git``.
 - Start from the development branch using ``git checkout develop``.
 - Make sure your ``develop`` branch is up to date with the repo's using ``git pull origin develop --rebase``.
