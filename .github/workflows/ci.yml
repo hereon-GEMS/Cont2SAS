@@ -2,68 +2,71 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
+      - develop 
   pull_request:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    name: Download Sassena
+  test:
+    name: Build & Test
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      APPIMAGE_EXTRACT_AND_RUN: 1
+      C2S_HOME: ${{ github.workspace }}
 
     steps:
-      - name: Install dependencies
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------
+      # System dependencies
+      # -----------------------
+      - name: Install system packages
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl
+          sudo apt-get install -y \
+            curl \
+            wget \
+            ghostscript \
+            mpi-default-dev
 
-      - name: Download Sassena
+      # -----------------------
+      # Download Sassena
+      # -----------------------
+      - name: Download Sassena AppImage
         run: |
           mkdir -p Sassena
-          curl -L https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage \
+          curl -L \
+            https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage \
             -o Sassena/Sassena.AppImage
           chmod +x Sassena/Sassena.AppImage
 
-      - name: Upload Sassena artifact
-        uses: actions/upload-artifact@v4
+      # -----------------------
+      # Miniforge + Conda cache
+      # -----------------------
+      - name: Setup Miniforge
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          name: sassena
-          path: Sassena
+          miniforge-variant: Miniforge3
+          miniforge-version: latest
+          auto-activate-base: false
+          activate-environment: Cont2Sas
+          environment-file: environment.yml
+          use-mamba: true
+          cache-environment: true
 
-  test:
-    name: Run tests
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download Sassena artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: sassena
-          path: Sassena
-
-      - name: Install system dependencies
+      # -----------------------
+      # Tests
+      # -----------------------
+      - name: Run tests
+        shell: bash -l {0}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y mpi-default-dev wget ghostscript
-
-      - name: Setup AppImage environment
-        run: |
-          echo "APPIMAGE_EXTRACT_AND_RUN=1" >> $GITHUB_ENV
-
-      - name: Install Miniforge
-        run: |
-          wget -O Miniforge3.sh \
-            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-          bash Miniforge3.sh -b -p "$HOME/conda"
-          echo "$HOME/conda/bin" >> $GITHUB_PATH
-
-      - name: Create and activate conda environment
-        run: |
-          source "$HOME/conda/etc/profile.d/conda.sh"
-          conda env create -f environment.yml
-          conda activate Cont2Sas
           conda install -y pytest
-          export C2S_HOME=$GITHUB_WORKSPACE
           pytest -v -rsx
