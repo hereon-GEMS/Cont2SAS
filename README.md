@@ -71,8 +71,8 @@ A description and purpose of the provided files are listed below:
 #### Download the repository
 
 ```bash
-git clone git@codebase.helmholtz.cloud:arnab.majumdar/continuum-to-scattering.git
-cd continuum-to-scattering
+git clone git@github.com:hereon-GEMS/Cont2SAS.git
+cd Cont2SAS
 ```
 
 #### Define environment variable
