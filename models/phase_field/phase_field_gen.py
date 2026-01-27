@@ -103,7 +103,7 @@ for t_idx, sim_time in enumerate(sim_times):
     ### scatt_cal ###
     num_cat=501 # use 3 for the categorization picture (or 501)
     method_cat='extend'
-    sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+    sassena_exe= '/home/amajumda/Dokumente/Software/source_code/sassena/build-rel-cpu/bin/sassena'
     mpi_procs=1
     num_threads=1
     sig_file='signal.h5'

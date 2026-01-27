@@ -76,7 +76,7 @@ qclean_sld=0
 ### scatt cal ###
 num_cat=3
 method_cat='extend'
-sassena_exe= '/home/amajumda/Documents/Softwares/sassena/compile/sassena'
+sassena_exe= '/home/amajumda/Dokumente/Software/source_code/sassena/build-rel-cpu/bin/sassena'
 mpi_procs=1
 num_threads=1
 sig_file='signal.h5'
