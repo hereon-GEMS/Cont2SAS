@@ -41,7 +41,7 @@ By participating, you are expected to uphold this code.
 
 If you then still feel the need to ask a question and need clarification, we recommend the following:
 
-- Open an [issue](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/issues/new).
+- Open an [issue](https://github.com/hereon-GEMS/Cont2SAS/issues/new).
 - Provide as much context as you can.
 
 ## I want to contribute
@@ -66,7 +66,7 @@ Find out whether the suggested enhancement fits with the scope and aims of the p
 #### General checklist
 
 - Make sure that you are using the latest version.
-- Make sure that you have read the [documentation](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/main/docu/index.md).
+- Make sure that you have read the [documentation](./docu/index.md).
 - Check [existing issues](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/issues).
 
 ### Your first code contribution
