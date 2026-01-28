@@ -8,7 +8,7 @@ Authors: Arnab Majumdar and Sebastian Busch
 <!-- omit in toc -->
 ## Introduction
 
-The project team of [Cont2SAS](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/) thanks you for taking the time to contribute!
+The project team of [Cont2SAS](https://github.com/hereon-GEMS/Cont2SAS) thanks you for taking the time to contribute!
 
 All types of contributions are encouraged and valued. See the [table of contents](#table-of-contents) for different ways to help and details about how the project team handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions.
 
@@ -41,7 +41,7 @@ By participating, you are expected to uphold this code.
 
 If you then still feel the need to ask a question and need clarification, we recommend the following:
 
-- Open an [issue](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/issues/new).
+- Open an [issue](https://github.com/hereon-GEMS/Cont2SAS/issues/new).
 - Provide as much context as you can.
 
 ## I want to contribute
@@ -66,15 +66,15 @@ Find out whether the suggested enhancement fits with the scope and aims of the p
 #### General checklist
 
 - Make sure that you are using the latest version.
-- Make sure that you have read the [documentation](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/-/blob/main/docu/index.md).
-- Check [existing issues](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/issues).
+- Make sure that you have read the [documentation](./docu/index.md).
+- Check [existing issues](https://github.com/hereon-GEMS/Cont2SAS/issues).
 
 ### Your first code contribution
 
 Please follow the steps below to contribute to Cont2SAS:
 
-- Create a new [issue](https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/issues/new), where you describe your intentions clearly and can gather feedback.
-- Get the source code using ``git clone https://codebase.helmholtz.cloud/DAPHNE4NFDI/continuum-to-scattering.git``.
+- Create a new [issue](https://github.com/hereon-GEMS/Cont2SAS/issues/new), where you describe your intentions clearly and can gather feedback.
+- Get the source code using ``git clone git@github.com:hereon-GEMS/Cont2SAS.git``.
 - Start from the development branch using ``git checkout develop``.
 - Make sure your ``develop`` branch is up to date with the repo's using ``git pull origin develop --rebase``.
 - Create a new feature branch from here with a descriptive name using ``git switch -c name``, where ``name`` could for example be ``fix/readme``.

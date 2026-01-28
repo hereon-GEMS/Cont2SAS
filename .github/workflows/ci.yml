@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop 
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      APPIMAGE_EXTRACT_AND_RUN: 1
+      C2S_HOME: ${{ github.workspace }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------
+      # System dependencies
+      # -----------------------
+      - name: Install system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            curl \
+            wget \
+            ghostscript \
+            mpi-default-dev
+
+      # -----------------------
+      # Download Sassena
+      # -----------------------
+      - name: Download Sassena AppImage
+        run: |
+          mkdir -p Sassena
+          curl -L \
+            https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage \
+            -o Sassena/Sassena.AppImage
+          chmod +x Sassena/Sassena.AppImage
+
+      # -----------------------
+      # Miniforge + Conda cache
+      # -----------------------
+      - name: Setup Miniforge
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-variant: Miniforge3
+          miniforge-version: latest
+          auto-activate-base: false
+          activate-environment: Cont2Sas
+          environment-file: environment.yml
+          use-mamba: true
+          cache-environment: true
+
+      # -----------------------
+      # Tests
+      # -----------------------
+      - name: Run tests
+        shell: bash -l {0}
+        run: |
+          conda install -y pytest
+          pytest -v -rsx

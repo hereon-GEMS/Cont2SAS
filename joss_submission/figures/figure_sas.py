@@ -58,7 +58,14 @@ def create_mesh_figure(length_a_inp, length_b_inp, nx_inp, ny_inp,
     """
     # fig initialization
     fig, ax = plt.subplots(figsize=(5, 5))
-    ax.axis('off')
+    # ax.axis('off')
+    ax.axis([0, length_a, 0, length_b])
+    ax.set_xlabel(r'X [$\mathrm{\AA}$]', fontsize=13.5)
+    ax.set_ylabel(r'Y [$\mathrm{\AA}$]', fontsize=13.5)
+    ax.tick_params(axis="both", labelsize=13.5)
+    ## plot title
+    title_text=" Cut at Z = 20.0 {0}".format(r"$\mathrm{\AA}$")
+    ax.set_title(title_text, fontsize=13.5)
     # plot point so that add patch works
     ax.plot([0],[0], 'k')
     # plot mesh
@@ -87,7 +94,8 @@ ny= 40
 # create mesh figure
 create_mesh_figure(length_a, length_b, nx, ny, output_pdf= fig_dir + 'mesh.pdf')
 # create figure with three pdfs
-pdf_files = ['mesh.pdf', 'SLD_ball.pdf', 'Iq_ball.pdf']
+# pdf_files = ['mesh.pdf', 'SLD_ball.pdf', 'Iq_ball.pdf']
+pdf_files = ['SLD_ball.pdf', 'Iq_ball.pdf'] # reviewer comment
 for pdf_idx, pdf_file in enumerate(pdf_files):
     pdf_files[pdf_idx]=fig_dir + pdf_file
 out_fig=fig_dir + 'workflow.png'
