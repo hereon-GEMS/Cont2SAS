@@ -418,7 +418,7 @@ plt.close(fig_scatt)
 
 # finalize plot for characteristic length
 # plot scattring pattern
-ax_ch_len.plot(sim_times[1:], ch_len_arr[1:],
+ax_ch_len.semilogx(sim_times[1:], ch_len_arr[1:],
                 linestyle='--', marker='o', markersize=5,
                   label=phenm)
 # plot formatting
