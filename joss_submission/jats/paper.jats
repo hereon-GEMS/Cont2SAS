@@ -205,8 +205,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <title>Software features</title>
   <fig>
     <caption><p>Workflow of SAS pattern calculation: [left] Mesh
-    generation, [middle] SLD assignment, [right] SAS pattern
-    calculation.
+    generation, [middle] SLD assignment, [right] numerical calculation
+    of SAS pattern. The numerical calculation matches well with the
+    known analytical formula for spherical nanoparticles
+    (<xref alt="Guinier et al., 1955" rid="ref-guinier1955small" ref-type="bibr">Guinier
+    et al., 1955</xref>).
     <styled-content id="figU003Asas_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="workflow.png" />
   </fig>
@@ -565,6 +568,19 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <article-title>Liquidlib–version 1.0</article-title>
       <publisher-name>https://github.com/Z-Laboratory/LiquidLib/tree/master</publisher-name>
       <year iso-8601-date="2023">2023</year>
+    </element-citation>
+  </ref>
+  <ref id="ref-guinier1955small">
+    <element-citation publication-type="book">
+      <person-group person-group-type="author">
+        <name><surname>Guinier</surname><given-names>André</given-names></name>
+        <name><surname>Fournet</surname><given-names>Gérard</given-names></name>
+        <name><surname>Walker</surname><given-names>Christopher B</given-names></name>
+        <name><surname>Yudowitch</surname><given-names>Kenneth L</given-names></name>
+      </person-group>
+      <source>Small-angle scattering of x-rays</source>
+      <publisher-name>Wiley New York</publisher-name>
+      <year iso-8601-date="1955">1955</year>
     </element-citation>
   </ref>
 </ref-list>
