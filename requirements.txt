@@ -1,6 +1,6 @@
 h5py==3.10.0
 imageio==2.33.1
-matplotlib==3.7.1
+matplotlib==3.10.8
 mdtraj==1.9.9
 netCDF4==1.7.1
 numpy==1.24.4
