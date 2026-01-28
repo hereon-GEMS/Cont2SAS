@@ -94,7 +94,8 @@ ny= 40
 # create mesh figure
 create_mesh_figure(length_a, length_b, nx, ny, output_pdf= fig_dir + 'mesh.pdf')
 # create figure with three pdfs
-pdf_files = ['mesh.pdf', 'SLD_ball.pdf', 'Iq_ball.pdf']
+# pdf_files = ['mesh.pdf', 'SLD_ball.pdf', 'Iq_ball.pdf']
+pdf_files = ['SLD_ball.pdf', 'Iq_ball.pdf'] # reviewer comment
 for pdf_idx, pdf_file in enumerate(pdf_files):
     pdf_files[pdf_idx]=fig_dir + pdf_file
 out_fig=fig_dir + 'workflow.png'

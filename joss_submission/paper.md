@@ -43,11 +43,11 @@ From atomistic simulations, different software such as `nMoldyn` [@rog2003nmoldy
 
 # Software features
 
-![Workflow of SAS pattern calculation: [left] Mesh generation, [middle] SLD assignment, [right] numerical calculation of SAS pattern. The numerical calculation matches well with the known analytical formula for spherical nanoparticles [@guinier1955small]. \label{fig:sas_workflow}](figures/workflow.png)
+![Workflow of SAS pattern calculation: [left] SLD assignment for a spherical nanoparticle on generated mesh and [right] numerical calculation of SAS pattern. The numerical calculation is validated against known analytical formula for spherical nanoparticles [@guinier1955small]. \label{fig:sas_workflow}](figures/workflow.png)
 
 `Cont2SAS` calculates SAS patterns taking simulated nanostructures as an input. The simulated structure must provide either Scattering Length Density (SLD) ($\beta$) values or a set of variables from which SLD values can be calculated. The simulated input is processed to a data taylor-made for `Sassena`. `Sassena` calculates the SAS intensity $(I)$ as a function of scattering vector magnitude $(Q)$, i.e. SAS pattern, for different time steps (see \autoref{fig:sas_workflow}). 
 
-![Workflow of effective cross-section $(\sigma_{\text{eff}})$ calculation: [left] SAS patterns and [right] $\sigma_{\text{eff}}$ calculated from SAS patterns at different time steps. With time, the SLD of a spherical nanoparticle increases linearly. The calculated $\sigma_{\text{eff}}$ values are proportional to the square of SLD difference between the particle and its environment. \label{fig:sig_eff_workflow}](figures/sig_eff.png)
+![Workflow of effective cross-section $(\sigma_{\text{eff}})$ calculation: [left] SAS patterns at different timesteps ranging from 0 to 10 seconds and [right] $\sigma_{\text{eff}}$ calculated from SAS patterns. With time, the SLD of a spherical nanoparticle increases linearly. The calculated $\sigma_{\text{eff}}$ values are proportional to the square of SLD difference between the particle and its environment, shown as contrast. \label{fig:sig_eff_workflow}](figures/sig_eff.png)
 
 `Cont2SAS` can also calculate the time evolution of effective cross-section $(\sigma_{\text{eff}})$, which is defined as the count rate per incident unit flux. This feature was not available in the in-house code [@dorrell2020combined] or `Sassena` [@sassena2023majumdar]. The time evolution of count rate is useful when the chemical composition changes over time instead of the nanostructure, e.g. while storing hydrogen in ball-milled powder sample [@aslan2019high]. \autoref{fig:sig_eff_workflow} demonstrates the workflow of such calculation from a series of SAS patterns. The calculated $\sigma_{\text{eff}}$ must be multiplied by an empirical factor before comparing with measured count rate.   
 
@@ -59,5 +59,9 @@ From atomistic simulations, different software such as `nMoldyn` [@rog2003nmoldy
 
 This publication was written in the context of the work of the consortium DAPHNE4NFDI in association with the German National Research Data Infrastructure (NFDI) e.V. NFDI is financed by the Federal Republic of Germany and the 16 federal states and the consortium is funded by the
 Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) - project number 460248799. The authors would like to thank for the funding and support. Furthermore, thanks go to all institutions and actors who are committed to the association and its goals.
+
+# Declaration
+
+During the preparation of this work, the authors used Chat-GPT in order to improve the quality of code and article. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the published code and article.
 
 # References

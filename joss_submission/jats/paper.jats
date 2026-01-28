@@ -204,10 +204,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <sec id="software-features">
   <title>Software features</title>
   <fig>
-    <caption><p>Workflow of SAS pattern calculation: [left] Mesh
-    generation, [middle] SLD assignment, [right] numerical calculation
-    of SAS pattern. The numerical calculation matches well with the
-    known analytical formula for spherical nanoparticles
+    <caption><p>Workflow of SAS pattern calculation: [left] SLD
+    assignment for a spherical nanoparticle on generated mesh and
+    [right] numerical calculation of SAS pattern. The numerical
+    calculation is validated against known analytical formula for
+    spherical nanoparticles
     (<xref alt="Guinier et al., 1955" rid="ref-guinier1955small" ref-type="bibr">Guinier
     et al., 1955</xref>).
     <styled-content id="figU003Asas_workflow"></styled-content></p></caption>
@@ -236,17 +237,17 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <inline-formula><alternatives>
     <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
-    calculation: [left] SAS patterns and [right]
-    <inline-formula><alternatives>
+    calculation: [left] SAS patterns at different timesteps ranging from
+    0 to 10 seconds and [right] <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-    calculated from SAS patterns at different time steps. With time, the
-    SLD of a spherical nanoparticle increases linearly. The calculated
+    calculated from SAS patterns. With time, the SLD of a spherical
+    nanoparticle increases linearly. The calculated
     <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
     values are proportional to the square of SLD difference between the
-    particle and its environment.
+    particle and its environment, shown as contrast.
     <styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
   </fig>
@@ -293,6 +294,14 @@ a Creative Commons Attribution 4.0 International License (CC BY
   would like to thank for the funding and support. Furthermore, thanks
   go to all institutions and actors who are committed to the association
   and its goals.</p>
+</sec>
+<sec id="declaration">
+  <title>Declaration</title>
+  <p>During the preparation of this work, the authors used Chat-GPT in
+  order to improve the quality of code and article. After using this
+  tool, the authors reviewed and edited the content as needed and take
+  full responsibility for the content of the published code and
+  article.</p>
 </sec>
 </body>
 <back>
