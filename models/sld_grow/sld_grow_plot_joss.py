@@ -28,6 +28,7 @@ import h5py
 from matplotlib import cm
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+from matplotlib.patches import FancyArrowPatch
 
 
 # find current dir and and ..
@@ -254,20 +255,42 @@ for i,t in enumerate(t_arr):
                            zorder=i, linestyle='',
                              marker='o', markersize=3,
                                label= f'Num (t = {t} s)')
+    # time arrow start and end
+    if i==0:
+        # starting coordinates
+        x1=q_num[10]
+        y1=Iq_num[10]
+    if i==len(t_arr)-1:
+        x2=q_num[15]
+        y2=Iq_num[15]
 
+# add arrow
+arrow = FancyArrowPatch(
+    (x1, y1),
+    (x2, y2),
+    arrowstyle="Fancy,head_length=8,head_width=8",
+    linewidth=2,
+    color="black",
+    zorder=100
+)
+ax_scatt_all.add_patch(arrow)
+ax_scatt_all.text(1.2e-2, 4.2e5, "time", fontsize=13.5, ha="center", va="center", zorder=100,
+                   bbox=dict(facecolor="yellow", edgecolor="k", boxstyle="round,pad=0.2"))
 # plot formatting
 ## legend
 # ax_scatt_all.legend(ncol=2)
 ## labels
-ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]')
-ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]')
+ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]', fontsize=13.5)
+ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]', fontsize=13.5)
+## tick size
+ax_scatt_all.tick_params(axis='both', labelsize=13.5)
 ## SANS upper boundary Q=1 \AA^-1
 ax_scatt_all.set_xlim([Q_range[0], Q_range[1]])
 # ax_scatt_all.set_ylim(bottom=1e4 )
 ## save plot
 plot_file_name=f'Iq_{sim_model}.pdf'
 plot_file=os.path.join(plot_dir,plot_file_name)
-fig_scatt_all.savefig(plot_file, format='pdf')
+fig_scatt_all.savefig(plot_file, format='pdf', bbox_inches='tight')
 plt.close('all')
 
 # plot fit param for all time step
@@ -314,12 +337,16 @@ ax.plot(sig_eff_t, factor*contrast_arr**2, 'r',
 
 # plot formatting
 ## legend
-ax.legend()
+ax.legend(fontsize=13.5)
 ## labels
-ax.set_xlabel('Time [s]')
-ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]')
+ax.set_xlabel('Time [s]', fontsize=13.5)
+ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]', fontsize=13.5)
+## ticks
+ax.tick_params(axis='both', labelsize=13.5)
+## offset text (1e9) on top of y axis
+ax.yaxis.get_offset_text().set_fontsize(13.5)
 ## limits
 ax.grid(True)
 ## save plot
-plt.savefig(plot_file, format='pdf')
+plt.savefig(plot_file, format='pdf', bbox_inches='tight')
 plt.close(fig)
