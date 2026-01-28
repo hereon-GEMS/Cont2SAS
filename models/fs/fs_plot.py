@@ -110,7 +110,7 @@ length_a=200.
 length_b=length_a
 length_c=length_a
 # number of cells in each direction (int values)
-nx=100
+nx=50
 ny=nx
 nz=nx
 # element details
