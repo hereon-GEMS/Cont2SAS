@@ -274,7 +274,7 @@ arrow = FancyArrowPatch(
     zorder=100
 )
 ax_scatt_all.add_patch(arrow)
-ax_scatt_all.text(1.18e-2, 4.5e5, "time", fontsize=13.5, ha="center", va="center", zorder=100,
+ax_scatt_all.text(1.2e-2, 4.2e5, "time", fontsize=13.5, ha="center", va="center", zorder=100,
                    bbox=dict(facecolor="yellow", edgecolor="k", boxstyle="round,pad=0.2"))
 # plot formatting
 ## legend
