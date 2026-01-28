@@ -241,10 +241,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
     0 to 10 seconds and [right] <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-<<<<<<< HEAD
-    calculated from SAS patterns at different time
-    steps.<styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
-=======
     calculated from SAS patterns. With time, the SLD of a spherical
     nanoparticle increases linearly. The calculated
     <inline-formula><alternatives>
@@ -258,7 +254,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
     i.e. square of SLD difference between the particle and its
     environment.
     <styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
->>>>>>> develop
     <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
   </fig>
   <p><monospace>Cont2SAS</monospace> can also calculate the time
@@ -595,8 +590,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <year iso-8601-date="2023">2023</year>
     </element-citation>
   </ref>
-<<<<<<< HEAD
-=======
   <ref id="ref-guinier1955small">
     <element-citation publication-type="book">
       <person-group person-group-type="author">
@@ -610,7 +603,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <year iso-8601-date="1955">1955</year>
     </element-citation>
   </ref>
->>>>>>> develop
 </ref-list>
 </back>
 </article>
