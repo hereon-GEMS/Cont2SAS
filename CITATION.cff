@@ -23,7 +23,7 @@ authors:
     affiliation: Helmholtz-Zentrum Hereon
     orcid: 'https://orcid.org/0000-0002-9815-909X'
 repository-code: >-
-  https://codebase.helmholtz.cloud/arnab.majumdar/continuum-to-scattering/
+  https://github.com/hereon-GEMS/Cont2SAS
 license: GPL-3.0
 version: 1.0.0
 date-released: '2025-08-05'
