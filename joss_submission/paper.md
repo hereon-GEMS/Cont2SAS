@@ -43,7 +43,7 @@ From atomistic simulations, different software such as `nMoldyn` [@rog2003nmoldy
 
 # Software features
 
-![Workflow of SAS pattern calculation: [left] Mesh generation, [middle] SLD assignment, [right] SAS pattern calculation. \label{fig:sas_workflow}](figures/workflow.png)
+![Workflow of SAS pattern calculation: [left] Mesh generation, [middle] SLD assignment, [right] numerical calculation of SAS pattern. The numerical calculation matches well with the known analytical formula for spherical nanoparticles [@guinier1955small]. \label{fig:sas_workflow}](figures/workflow.png)
 
 `Cont2SAS` calculates SAS patterns taking simulated nanostructures as an input. The simulated structure must provide either Scattering Length Density (SLD) ($\beta$) values or a set of variables from which SLD values can be calculated. The simulated input is processed to a data taylor-made for `Sassena`. `Sassena` calculates the SAS intensity $(I)$ as a function of scattering vector magnitude $(Q)$, i.e. SAS pattern, for different time steps (see \autoref{fig:sas_workflow}). 
 
