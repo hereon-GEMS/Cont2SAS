@@ -183,7 +183,7 @@ model_param_dir=os.path.join(model_dir,model_param_dir_name)
 figure_dir=os.path.join(mother_dir, '../../figure/')
 os.makedirs(figure_dir, exist_ok=True)
 ## folder for this suit of figures
-plot_dir=os.path.join(figure_dir, sim_model)
+plot_dir=os.path.join(figure_dir, sim_model + '_joss')
 os.makedirs(plot_dir, exist_ok=True)
 
 for i,t in enumerate(t_arr):
