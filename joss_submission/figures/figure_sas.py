@@ -58,7 +58,14 @@ def create_mesh_figure(length_a_inp, length_b_inp, nx_inp, ny_inp,
     """
     # fig initialization
     fig, ax = plt.subplots(figsize=(5, 5))
-    ax.axis('off')
+    # ax.axis('off')
+    ax.axis([0, length_a, 0, length_b])
+    ax.set_xlabel(r'X [$\mathrm{\AA}$]', fontsize=13.5)
+    ax.set_ylabel(r'Y [$\mathrm{\AA}$]', fontsize=13.5)
+    ax.tick_params(axis="both", labelsize=13.5)
+    ## plot title
+    title_text=" Cut at Z = 20.0 {0}".format(r"$\mathrm{\AA}$")
+    ax.set_title(title_text, fontsize=13.5)
     # plot point so that add patch works
     ax.plot([0],[0], 'k')
     # plot mesh

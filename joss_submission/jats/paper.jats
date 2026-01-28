@@ -236,12 +236,18 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <inline-formula><alternatives>
     <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
-    calculation: [left] Calculated SAS pattern at different time steps,
-    [right] <inline-formula><alternatives>
+    calculation: [left] SAS patterns and [right]
+    <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-    calculated from SAS patterns at different time
-    steps.<styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
+    calculated from SAS patterns at different time steps. With time, the
+    SLD of a spherical nanoparticle increases linearly. The calculated
+    <inline-formula><alternatives>
+    <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
+    values are proportional to the square of SLD difference between the
+    particle and its environment.
+    <styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
   </fig>
   <p><monospace>Cont2SAS</monospace> can also calculate the time
