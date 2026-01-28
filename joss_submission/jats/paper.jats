@@ -246,8 +246,13 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-    values are proportional to the square of SLD difference between the
-    particle and its environment, shown as contrast.
+    values are proportional to the (<inline-formula><alternatives>
+    <tex-math><![CDATA[\Delta]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>Δ</mml:mi></mml:math></alternatives></inline-formula>SLD)<inline-formula><alternatives>
+    <tex-math><![CDATA[^2]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msup><mml:mi></mml:mi><mml:mn>2</mml:mn></mml:msup></mml:math></alternatives></inline-formula>,
+    i.e. square of SLD difference between the particle and its
+    environment.
     <styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
   </fig>
@@ -297,7 +302,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="declaration">
   <title>Declaration</title>
-  <p>During the preparation of this work, the authors used Chat-GPT in
+  <p>During the preparation of this work, the authors used ChatGPT in
   order to improve the quality of code and article. After using this
   tool, the authors reviewed and edited the content as needed and take
   full responsibility for the content of the published code and
