@@ -1,1 +1,0 @@
-data/100_100_100_200_200_200/data.h5 filter=lfs diff=lfs merge=lfs -text
