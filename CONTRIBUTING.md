@@ -74,8 +74,26 @@ Find out whether the suggested enhancement fits with the scope and aims of the p
 Please follow the steps below to contribute to Cont2SAS:
 
 - Create a new [issue](https://github.com/hereon-GEMS/Cont2SAS/issues/new), where you describe your intentions clearly and can gather feedback.
-- Get the source code using ``git clone git@github.com:hereon-GEMS/Cont2SAS.git``.
-- Start from the development branch using ``git checkout develop``.
+- Create a fork of the project in GitHub website.
+- Clone the forked project using ``git clone``. The forked project link should look like ``git@github.com:majumdararn/Cont2SAS.git``, where ``majumdararn`` is your user name in GitHub.
+- Inside cloned project, add [original repository](https://github.com/hereon-GEMS/Cont2SAS) as upstream using ``git remote add upstream git@github.com:hereon-GEMS/Cont2SAS.git``.
+- Fetch from the original repository using ``git fetch upstream``.
+- Merge all changes from the devlop branch of original repository to the clone of forked project using ``git merge upstream/develop``.
+- Create a new feature branch from main with a descriptive name using ``git switch -c name``, where ``name`` could for example be ``fix/readme``.
+- Code away!
+   - Use ``pytest -v`` to check if all tests pass (add new test routine if a new simulation model is added).
+   - Use ``git add`` to upload the changed files.
+   - Use ``git commit`` to commit the uploaded change with a meaningful message.
+   <!-- - In your last commit of an feature branch, include a [keyword](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests) to close your feature branch.-->
+- Upload your feature branch using ``git push origin HEAD``. 
+- Create a pull request to merge the changes from the feature branch of forked project to develop branch of original project in GitHub.
+- Mention ``see #$ISSUE_NUM`` to link with issue or ``fix #$ISSUE_NUM`` to close the branch, where ``$ISSUE_NUM`` should be repled by the relevant issue number.
+- Once the pull request is approved and changes are impleted in the development branch of original repository, delete the feature branch in forked project using following steps:
+  - Go the develop branch using ``git checkout develop``.
+  - Delete the local feature branch using ``git branch -d name``, where ``name`` should be replaced by the name of feature-branch.
+  - Delete the remote feature branch using ``git push origin --delete name``, where ``name`` should be replaced by the name of feature-branch.
+<!-- - Get the source code using ``git clone git@github.com:hereon-GEMS/Cont2SAS.git``. -->
+<!-- - Start from the development branch using ``git checkout develop``.
 - Make sure your ``develop`` branch is up to date with the repo's using ``git pull origin develop --rebase``.
 - Create a new feature branch from here with a descriptive name using ``git switch -c name``, where ``name`` could for example be ``fix/readme``.
 - Code away!
@@ -84,7 +102,7 @@ Please follow the steps below to contribute to Cont2SAS:
    - Use ``git commit`` to commit the uploaded change with a meaningful message.
    - In your last commit of an feature branch, include a [keyword](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests) to close your feature branch.
 - Upload your feature branch using ``git push origin HEAD``.
-- Create a merge request of your feature branch into the ``develop`` branch.
+- Create a merge request of your feature branch into the ``develop`` branch. -->
 
 From time to time, the project team will merge the ``develop`` branch into the ``main`` branch.
 
