@@ -134,8 +134,8 @@ scatt_settings=scatt_settings.replace('.', 'p')
 ### save length values as strings
 ### decimal points are replaced with p
 length_a_str=str(length_a).replace('.','p')
-length_b_str=str(length_a).replace('.','p')
-length_c_str=str(length_a).replace('.','p')
+length_b_str=str(length_b).replace('.','p')
+length_c_str=str(length_c).replace('.','p')
 
 ### save num_cell values as strings
 nx_str=str(nx)
@@ -211,7 +211,7 @@ for i, t in enumerate(t_arr):
         # calculate pseudo atom scattering lengths
         cell_dx=length_a/nx
         cell_dy=length_b/ny
-        cell_dz=length_b/nz
+        cell_dz=length_c/nz
         cell_vol=cell_dx*cell_dy*cell_dz
         pseudo_b=scatt.pseudo_b_cal(nodes,cells,node_sld,con,cell_vol,el_info)
 
