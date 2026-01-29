@@ -75,10 +75,10 @@ Please follow the steps below to contribute to Cont2SAS:
 
 - Create a new [issue](https://github.com/hereon-GEMS/Cont2SAS/issues/new), where you describe your intentions clearly and can gather feedback.
 - Create a fork of the project in GitHub website.
-- Clone the forked project using ``git clone``. The forked project link should look like ``git@github.com:majumdararn/Cont2SAS.git``, where ``majumdararn`` is your user name in GitHub.
+- Clone the forked project using ``git clone``. The forked project link should look like ``git@github.com:majumdararn/Cont2SAS.git``, where ``majumdararn`` should be replaced by your user name in GitHub.
 - Inside cloned project, add [original repository](https://github.com/hereon-GEMS/Cont2SAS) as upstream using ``git remote add upstream git@github.com:hereon-GEMS/Cont2SAS.git``.
 - Fetch from the original repository using ``git fetch upstream``.
-- Merge all changes from the devlop branch of original repository to the clone of forked project using ``git merge upstream/develop``.
+- Merge all changes from the develop branch of original repository to the clone of forked project using ``git merge upstream/develop``.
 - Create a new feature branch from main with a descriptive name using ``git switch -c name``, where ``name`` could for example be ``fix/readme``.
 - Code away!
    - Use ``pytest -v`` to check if all tests pass (add new test routine if a new simulation model is added).
