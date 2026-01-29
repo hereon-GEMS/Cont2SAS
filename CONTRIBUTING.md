@@ -84,7 +84,6 @@ Please follow the steps below to contribute to Cont2SAS:
    - Use ``pytest -v`` to check if all tests pass (add new test routine if a new simulation model is added).
    - Use ``git add`` to upload the changed files.
    - Use ``git commit`` to commit the uploaded change with a meaningful message.
-   <!-- - In your last commit of an feature branch, include a [keyword](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests) to close your feature branch.-->
 - Upload your feature branch using ``git push origin HEAD``. 
 - Create a pull request to merge the changes from the feature branch of forked project to develop branch of original project in GitHub.
 - Mention ``see #$ISSUE_NUM`` to link with issue or ``fix #$ISSUE_NUM`` to close the branch, where ``$ISSUE_NUM`` should be repled by the relevant issue number.
@@ -92,17 +91,6 @@ Please follow the steps below to contribute to Cont2SAS:
   - Go the develop branch using ``git checkout develop``.
   - Delete the local feature branch using ``git branch -d name``, where ``name`` should be replaced by the name of feature-branch.
   - Delete the remote feature branch using ``git push origin --delete name``, where ``name`` should be replaced by the name of feature-branch.
-<!-- - Get the source code using ``git clone git@github.com:hereon-GEMS/Cont2SAS.git``. -->
-<!-- - Start from the development branch using ``git checkout develop``.
-- Make sure your ``develop`` branch is up to date with the repo's using ``git pull origin develop --rebase``.
-- Create a new feature branch from here with a descriptive name using ``git switch -c name``, where ``name`` could for example be ``fix/readme``.
-- Code away!
-   - Use ``pytest -v`` to check if all tests pass (add new test routine if a new simulation model is added).
-   - Use ``git add`` to upload the changed files.
-   - Use ``git commit`` to commit the uploaded change with a meaningful message.
-   - In your last commit of an feature branch, include a [keyword](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests) to close your feature branch.
-- Upload your feature branch using ``git push origin HEAD``.
-- Create a merge request of your feature branch into the ``develop`` branch. -->
 
 From time to time, the project team will merge the ``develop`` branch into the ``main`` branch.
 
