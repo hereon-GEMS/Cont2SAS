@@ -145,15 +145,16 @@ and delete the source code directory by hand.
 ###### Install
 
 ```bash
-conda create -n Cont2Sas python=3.8.10
+conda create -n Cont2Sas -c conda-forge python=3.12.1 mdtraj=1.9.9
 conda activate Cont2Sas
-pip install -r requirements.txt
+# install everything in requirements.txt except mdtraj
+grep -v mdtraj requirements.txt > requirements_no_mdtraj.txt && pip install -r requirements_no_mdtraj.txt && rm -r requirements_no_mdtraj.txt
 ```
 
 ###### Uninstall
 
 ```bash
-pip uninstall -r requirements.txt
+grep -v mdtraj requirements.txt > requirements_no_mdtraj.txt && pip uninstall -r requirements_no_mdtraj.txt && rm -r requirements_no_mdtraj.txt
 conda deactivate
 conda remove --name Cont2Sas --all
 ```
