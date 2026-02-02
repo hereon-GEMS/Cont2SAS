@@ -124,7 +124,7 @@ which should print out messages about command line options of [Sassena](https://
 
 #### Option 2: Other linux-based operating systems
 
-Clone sassena, build locally, copy executable to appimage location specified in option 1, and rename it as `Sassena.AppImage`. Please refer 
+Clone sassena, build locally, copy executable to appimage location specified in option 1, and rename it as `Sassena.AppImage`.
 
 ```bash
 # clone sassena
