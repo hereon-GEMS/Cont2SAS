@@ -103,6 +103,8 @@ chmod +x ./shell_scripts/*
 
 #### Sassena
 
+#### Option 1: Only for ubuntu 24.04
+
 Download app image and use
 
 Default location: `Sassena/sassena.AppImage`
@@ -119,6 +121,33 @@ To check if the download has worked, you can run
 ./Sassena/Sassena.AppImage --help
 ```
 which should print out messages about command line options of [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena) and end with an error message.
+
+#### Option 2: Other linux-based operating system
+
+Clone sassena, build locally, copy executable to appimage location specified in option 1, and rename it as `Sassena.AppImage`. Please refer 
+
+```bash
+# clone sassena
+cd ..
+git clone git@codebase.helmholtz.cloud:DAPHNE4NFDI/sassena.git
+# build locally
+cd sassena
+chmod +x runner.sh
+./runner.sh build --cpu
+# copy exec built from source to appimage location specified in option 1
+cd ../Cont2SAS
+mkdir -p ./Sassena
+cp ../sassena/build-rel-cpu/bin/sassena ./Sassena
+# rename copied exec it as Sassena.AppImage to make it consistent with option 1
+mv ./Sassena/sassena ./Sassena/Sassena.AppImage
+```
+To check if the download has worked, you can run
+```bash
+./Sassena/Sassena.AppImage --help
+```
+which should print out messages about command line options of [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena) and end with an error message.
+
+For details regarding sassena installation, please visit [sassena repository](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena).
 
 #### Python packages
 
