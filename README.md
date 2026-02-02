@@ -122,26 +122,30 @@ To check if the download has worked, you can run
 ```
 which should print out messages about command line options of [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena) and end with an error message.
 
-#### Option 2: Other linux-based operating systems
+#### Option 2: Other unix-based operating systems
 
-Clone sassena, build locally, copy executable to appimage location specified in option 1, and rename it as `Sassena.AppImage`.
+If the operating system is a different version of ubuntu or any other unix-based system: 
+1. Clone the sassena source code,
+2. Build sassena locally, 
+3. Copy the executable to the appimage location specified in the [first option](#option-1-only-for-ubuntu-2404), and 
+4. Rename it as `Sassena.AppImage`.
 
 ```bash
-# clone sassena
+# clone sassena source code
 cd ..
 git clone git@codebase.helmholtz.cloud:DAPHNE4NFDI/sassena.git
-# build locally
+# build sassena locally
 cd sassena
 chmod +x runner.sh
 ./runner.sh build --cpu
-# copy exec built from source to appimage location specified in option 1
+# copy exec built to the appimage location specified in option 1
 cd ../Cont2SAS
 mkdir -p ./Sassena
 cp ../sassena/build-rel-cpu/bin/sassena ./Sassena
-# rename copied exec it as Sassena.AppImage to make it consistent with option 1
+# rename it as Sassena.AppImage
 mv ./Sassena/sassena ./Sassena/Sassena.AppImage
 ```
-To check if the download has worked, you can run
+To check if the precedure has worked, you can run
 ```bash
 ./Sassena/Sassena.AppImage --help
 ```
