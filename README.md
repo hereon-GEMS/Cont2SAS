@@ -122,7 +122,7 @@ To check if the download has worked, you can run
 ```
 which should print out messages about command line options of [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena) and end with an error message.
 
-#### Option 2: Other linux-based operating system
+#### Option 2: Other linux-based operating systems
 
 Clone sassena, build locally, copy executable to appimage location specified in option 1, and rename it as `Sassena.AppImage`. Please refer 
 
