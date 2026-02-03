@@ -27,10 +27,10 @@ Date      : 06.08.2025
 import shutil
 import os
 import subprocess
-import math
-import numpy as np
+# import math
+# import numpy as np
 import pytest
-from matplotlib.testing.compare import compare_images as comp_img
+# from matplotlib.testing.compare import compare_images as comp_img
 import h5py
 
 # non-test functions
