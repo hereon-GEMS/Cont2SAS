@@ -48,7 +48,6 @@ def read_Iq_h5(Iq_data_h5, vol_norm):
     return q, Iq
 
 # test functions
-
 def test_ball_gen():
     """
     Test script for $C2S_HOME/models/ball/ball_gen.py:
@@ -99,19 +98,32 @@ def test_check_ball_plot():
 
 def test_compare_ball_data():
     """
-    Test script for $C2S_HOME/models/ball/ball_plot.py:
+    Test script for $C2S_HOME/models/ball/ball_gen.py:
     1. Compare numerical IvsQ data with gold standard
     """
     # folder structure of gen data
+    ## meshing dir
     mesh_dir=os.path.join('data', '40p0_40p0_40p0_40_40_40_lagrangian_1')
+    mesh_exist=os.path.isdir(mesh_dir)
+    assert mesh_exist==1, "meshing dir exist"
+    ## model dir
     sim_dir=os.path.join(mesh_dir, 'simulation/ball_tend_0p0_dt_1p0_ensem_1')
     model_dir=os.path.join(sim_dir, 'rad_10_sld_2_qclean_sld_0')
+    model_exist=os.path.isdir(model_dir)
+    assert model_exist==1, "model dir exist"
+    ## time dir
     t_dir=os.path.join(model_dir, 't000')
+    t_exist=os.path.isdir(t_dir)
+    assert t_exist==1, "time dir exist"
     # data
+    ## num data (read + check exist)
+    num_data=os.path.join(t_dir, 'Iq_cat_extend_3Q_0p0_1p0_orien__10.h5')
+    data_exist=os.path.isfile(num_data)
+    assert data_exist==1, "hdf5 file exist"
+    q_num, Iq_num=read_Iq_h5(num_data, 1)
+    ## gold data
     gold_data='tests/gold/ball_gold.h5'
     q_gold, Iq_gold=read_Iq_h5(gold_data, 1)
-    num_data=os.path.join(t_dir, 'Iq_cat_extend_3Q_0p0_1p0_orien__10.h5')
-    q_num, Iq_num=read_Iq_h5(num_data, 1)
     # compare num value and gold value
     assert q_num == pytest.approx(q_gold, abs=1e-6), "Q values match"
     assert Iq_num == pytest.approx(Iq_gold, abs=1e-6), "IQ values match"
