@@ -96,18 +96,27 @@ def test_check_sld_grow_plot():
 def test_compare_sld_grow_data():
     """
     Test script for $C2S_HOME/models/sld_grow/sld_grow_gen.py:
-    1. Compare numerical IvsQ data with gold standard
+    1. Compare numerical sig_eff vs t data with gold standard
     """
     # folder structure of gen data
+    ## meshing dir
     mesh_dir=os.path.join('data', '40p0_40p0_40p0_40_40_40_lagrangian_1')
+    mesh_exist=os.path.isdir(mesh_dir)
+    assert mesh_exist==1, "meshing dir exist"
+    ## model dir
     sim_dir=os.path.join(mesh_dir, 'simulation/sld_grow_tend_10p0_dt_1p0_ensem_1')
     model_dir=os.path.join(sim_dir, 'rad_10_sld_in_0_2_sld_in_end_5_sld_out_1_qclean_sld_1')
-    # t_dir=os.path.join(model_dir, 't000')
+    model_exist=os.path.isdir(model_dir)
+    assert model_exist==1, "model dir exist"
     # data
+    ## num data (read + check exist)
+    num_data=os.path.join(model_dir, 'sig_eff_cat_extend_101Q_0p0029_0p05_orien__10.h5')
+    data_exist=os.path.isfile(num_data)
+    assert data_exist==1, "hdf5 file exist"
+    t_num, sig_eff_num=read_sig_eff_h5(num_data)
+    ## gold data
     gold_data='tests/gold/sld_grow_gold.h5'
     t_gold, sig_eff_gold=read_sig_eff_h5(gold_data)
-    num_data=os.path.join(model_dir, 'sig_eff_cat_extend_101Q_0p0029_0p05_orien__10.h5')
-    t_num, sig_eff_num=read_sig_eff_h5(num_data)
     # compare num value and gold value
     assert t_num == pytest.approx(t_gold, abs=1e-6), "t values match"
     assert sig_eff_num == pytest.approx(sig_eff_gold, abs=1e-6), "sig eff values match"
