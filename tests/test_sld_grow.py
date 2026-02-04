@@ -36,7 +36,6 @@ def read_sig_eff_h5(sig_eff_data_h5):
     """
     Function for 
     1. Reading sig_eff data (sig_eff_data_h5)
-    2. normalize using vol_norm
     """
     sig_eff_data=h5py.File(sig_eff_data_h5,'r')
     sig_eff=sig_eff_data['sig_eff'][:]
