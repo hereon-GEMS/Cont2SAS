@@ -103,9 +103,9 @@ chmod +x ./shell_scripts/*
 
 #### Sassena
 
-#### Option 1: Only for ubuntu 24.04
+##### Option 1: Only for ubuntu 24.04
 
-Download app image and use
+Download app image and use. Only works for ubuntu 24.04.
 
 Default location: `Sassena/sassena.AppImage`
 
@@ -122,27 +122,27 @@ To check if the download has worked, you can run
 ```
 which should print out messages about command line options of [Sassena](https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena) and end with an error message.
 
-#### Option 2: Other unix-based operating systems
+##### Option 2: Other linux-based operating systems
 
-If the operating system is a different version of ubuntu or any other unix-based system: 
+If the operating system is a different version of ubuntu or any other linux-based operating system: 
 1. Clone the sassena source code,
 2. Build sassena locally, 
-3. Copy the executable to the appimage location specified in the [first option](#option-1-only-for-ubuntu-2404), and 
+3. Copy the executable to the default appimage location specified in the [first option](#option-1-only-for-ubuntu-2404), and 
 4. Rename it as `Sassena.AppImage`.
 
 ```bash
 # clone sassena source code
 cd ..
 git clone git@codebase.helmholtz.cloud:DAPHNE4NFDI/sassena.git
-# build sassena locally
+# build sassena locally inside cloned repository
 cd sassena
 chmod +x runner.sh
 ./runner.sh build --cpu
-# copy exec built to the appimage location specified in option 1
+# copy exec built to the default appimage location specified in option 1
 cd ../Cont2SAS
 mkdir -p ./Sassena
 cp ../sassena/build-rel-cpu/bin/sassena ./Sassena
-# rename it as Sassena.AppImage
+# rename executable as Sassena.AppImage
 mv ./Sassena/sassena ./Sassena/Sassena.AppImage
 ```
 To check if the precedure has worked, you can run
@@ -173,7 +173,7 @@ conda remove --name Cont2Sas --all
 ```
 and delete the source code directory by hand.
 
-##### Option 2: Using conda and pip
+<!-- ##### Option 2: Using conda and pip
 
 ###### Install
 
@@ -190,9 +190,9 @@ grep -v mdtraj requirements.txt > requirements_no_mdtraj.txt && pip install -r r
 grep -v mdtraj requirements.txt > requirements_no_mdtraj.txt && pip uninstall -r requirements_no_mdtraj.txt && rm -r requirements_no_mdtraj.txt
 conda deactivate
 conda remove --name Cont2Sas --all
-```
+``` -->
 
-##### Option 3: Using pip and venv
+##### Option 2: Using pip and venv
 
 ###### Install
 
