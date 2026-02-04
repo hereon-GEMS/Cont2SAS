@@ -32,15 +32,13 @@ import pytest
 import h5py
 
 # non-test functions
-def read_Iq_h5(Iq_data_h5, vol_norm):
+def read_Iq_h5(Iq_data_h5):
     """
     Function for 
     1. Reading Iq data (Iq_data_h5)
-    2. normalize using vol_norm
     """
     Iq_data=h5py.File(Iq_data_h5,'r')
-    Iq=Iq_data['Iq'][:] # unit fm^2
-    Iq=Iq/vol_norm*10**2 # unit (fm^2 / \AA^3) * 10^2 = cm^-1
+    Iq=Iq_data['Iq'][:]
     q=Iq_data['Q'][:]
     Iq_data.close()
     return q, Iq
@@ -123,10 +121,10 @@ def test_compare_phase_field_data():
     num_data_1=os.path.join(t_dir_1, 'Iq_cat_extend_501Q_0p025132741228718346_1p0_orien__200.h5')
     data_exist_1=os.path.isfile(num_data_1)
     assert data_exist_1==1, "hdf5 file exist, sim time 0"
-    q_num_1, Iq_num_1=read_Iq_h5(num_data_1, 1)
+    q_num_1, Iq_num_1=read_Iq_h5(num_data_1)
     #### gold data
     gold_data_1='tests/gold/phase_field_gold_1.h5'
-    q_gold_1, Iq_gold_1=read_Iq_h5(gold_data_1, 1)
+    q_gold_1, Iq_gold_1=read_Iq_h5(gold_data_1)
     ## sim time = 86400s
     ### model dir 2
     ### sim dir is same
@@ -142,10 +140,10 @@ def test_compare_phase_field_data():
     num_data_2=os.path.join(t_dir_2, 'Iq_cat_extend_501Q_0p025132741228718346_1p0_orien__200.h5')
     data_exist_2=os.path.isfile(num_data_2)
     assert data_exist_2==1, "hdf5 file exist, sim time 86400"
-    q_num_2, Iq_num_2=read_Iq_h5(num_data_2, 1)
+    q_num_2, Iq_num_2=read_Iq_h5(num_data_2)
     #### gold data
     gold_data_2='tests/gold/phase_field_gold_2.h5'
-    q_gold_2, Iq_gold_2=read_Iq_h5(gold_data_2, 1)
+    q_gold_2, Iq_gold_2=read_Iq_h5(gold_data_2)
     # compare num value and gold value
     ## sim time = 0s
     assert q_num_1 == pytest.approx(q_gold_1, abs=1e-6), "Q values match, t=0s"
