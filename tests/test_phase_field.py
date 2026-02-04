@@ -47,19 +47,19 @@ def read_Iq_h5(Iq_data_h5, vol_norm):
 
 # test functions
 
-# def test_phase_field_gen():
-#     """
-#     Test script for $C2S_HOME/models/phase_field/phase_field_gen.py:
-#     1. Check whether phase_field_gen runs
-#     """
-#     gen_result = subprocess.run(
-#         ["python", "models/phase_field/phase_field_gen.py"],
-#           capture_output=True,
-#             text=True,
-#               check=True
-#     )
-#     # Ensure it runs without crashing
-#     assert gen_result.returncode == 0, "phase_field model generates data"
+def test_phase_field_gen():
+    """
+    Test script for $C2S_HOME/models/phase_field/phase_field_gen.py:
+    1. Check whether phase_field_gen runs
+    """
+    gen_result = subprocess.run(
+        ["python", "models/phase_field/phase_field_gen.py"],
+          capture_output=True,
+            text=True,
+              check=True
+    )
+    # Ensure it runs without crashing
+    assert gen_result.returncode == 0, "phase_field model generates data"
 
 def test_phase_field_plot():
     """
@@ -124,18 +124,18 @@ def test_compare_phase_field_data():
     assert q_num_2 == pytest.approx(q_gold_2, abs=1e-6), "Q values match"
     assert Iq_num_2 == pytest.approx(Iq_gold_2, abs=1e-6), "IQ values match"
 
-# def test_clean_up():
-#     """
-#     Test script for clean up:
-#     1. Removes created data and figure
-#     2. Checks whether removed
-#     """
-#     data_dir='data/250p0_250p0_250p0_100_100_100_lagrangian_1'
-#     fig_dir='figure/phase_field'
-#     # remove data files
-#     shutil.rmtree(data_dir)
-#     # remove figure
-#     shutil.rmtree(fig_dir)
-#     # check if it is removed
-#     assert os.path.isdir(data_dir)==0
-#     assert os.path.isdir(fig_dir)==0
+def test_clean_up():
+    """
+    Test script for clean up:
+    1. Removes created data and figure
+    2. Checks whether removed
+    """
+    data_dir='data/250p0_250p0_250p0_100_100_100_lagrangian_1'
+    fig_dir='figure/phase_field'
+    # remove data files
+    shutil.rmtree(data_dir)
+    # remove figure
+    shutil.rmtree(fig_dir)
+    # check if it is removed
+    assert os.path.isdir(data_dir)==0
+    assert os.path.isdir(fig_dir)==0
