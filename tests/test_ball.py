@@ -38,7 +38,6 @@ def read_Iq_h5(Iq_data_h5):
     """
     Function for 
     1. Reading Iq data (Iq_data_h5)
-    2. normalize using vol_norm
     """
     Iq_data=h5py.File(Iq_data_h5,'r')
     Iq=Iq_data['Iq'][:]
