@@ -34,15 +34,14 @@ import pytest
 import h5py
 
 # non-test functions
-def read_Iq_h5(Iq_data_h5, vol_norm):
+def read_Iq_h5(Iq_data_h5):
     """
     Function for 
     1. Reading Iq data (Iq_data_h5)
     2. normalize using vol_norm
     """
     Iq_data=h5py.File(Iq_data_h5,'r')
-    Iq=Iq_data['Iq'][:] # unit fm^2
-    Iq=Iq/vol_norm*10**2 # unit (fm^2 / \AA^3) * 10^2 = cm^-1
+    Iq=Iq_data['Iq'][:]
     q=Iq_data['Q'][:]
     Iq_data.close()
     return q, Iq
@@ -120,10 +119,10 @@ def test_compare_ball_data():
     num_data=os.path.join(t_dir, 'Iq_cat_extend_3Q_0p0_1p0_orien__10.h5')
     data_exist=os.path.isfile(num_data)
     assert data_exist==1, "hdf5 file exist"
-    q_num, Iq_num=read_Iq_h5(num_data, 1)
+    q_num, Iq_num=read_Iq_h5(num_data)
     ## gold data
     gold_data='tests/gold/ball_gold.h5'
-    q_gold, Iq_gold=read_Iq_h5(gold_data, 1)
+    q_gold, Iq_gold=read_Iq_h5(gold_data)
     # compare num value and gold value
     assert q_num == pytest.approx(q_gold, abs=1e-6), "Q values match"
     assert Iq_num == pytest.approx(Iq_gold, abs=1e-6), "IQ values match"
