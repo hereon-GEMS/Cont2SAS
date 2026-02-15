@@ -141,7 +141,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   time evolution of nanostructures can also be probed
   (<xref alt="Hollamby, 2013" rid="ref-hollamby2013practical" ref-type="bibr">Hollamby,
   2013</xref>). However, a direct retrieval of nanostructure from SAS
-  data is not possible due to the so-called phase problem
+  data is not possible due to the so-called phase problem, i.e. the
+  phase loss in measured intensities
   (<xref alt="Billinge &amp; Levin, 2007" rid="ref-billinge2007problem" ref-type="bibr">Billinge
   &amp; Levin, 2007</xref>). Therefore, it is fruitful to combine SAS
   data with simulations to study nanostructures
@@ -150,14 +151,16 @@ a Creative Commons Attribution 4.0 International License (CC BY
   theories underlying simulations
   (<xref alt="Reich et al., 2022" rid="ref-reich2022comparison" ref-type="bibr">Reich
   et al., 2022</xref>).</p>
-  <p>Simulated structures in real space can be generated using atomistic
-  and continuum simulation. However, continuum simulation is the only
-  option when the nanostructure evolution is influenced by bigger
-  features or the SAS data is recorded for long time period, as
-  atomistic simulation can not simulate large structures for long time
+  <p>Simulated real-space structures can be generated using atomistic or
+  continuum simulation. However, atomistic simulation cannot simulate
+  large structures (e.g. millimeter scale) over long times
+  (e.g. seconds) due to computational limitations
   (<xref alt="Ghavanloo et al., 2019" rid="ref-ghavanloo2019computational" ref-type="bibr">Ghavanloo
-  et al., 2019</xref>). Despite this indispensability, there is no
-  software available for calculating SAS data from continuum
+  et al., 2019</xref>). This becomes problematic when the nanostructure
+  evolution is influenced by larger length-scale structures or when the
+  SAS data is recorded over long time periods. In such cases, continuum
+  simulation is the only option. Despite this indispensability, there is
+  no software available for calculating SAS data from continuum
   simulations. <monospace>Cont2SAS</monospace> aims to fill this void by
   providing a tool that offers fast and error-free comparison of
   continuum simulations and SAS data. The ultimate goal is to study
