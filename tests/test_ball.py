@@ -27,6 +27,7 @@ Date      : 06.08.2025
 import shutil
 import os
 import subprocess
+import sys
 # import math
 # import numpy as np
 import pytest
@@ -52,7 +53,7 @@ def test_ball_gen():
     1. Check whether ball_gen runs
     """
     gen_result = subprocess.run(
-        ["python", "models/ball/ball_gen.py"],
+        [sys.executable, "models/ball/ball_gen.py"],
         capture_output=True,
         text=True,
         check=True
