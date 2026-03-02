@@ -152,8 +152,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   (<xref alt="Reich et al., 2022" rid="ref-reich2022comparison" ref-type="bibr">Reich
   et al., 2022</xref>).</p>
   <p>Simulated real-space structures can be generated using atomistic or
-  continuum simulation. However, atomistic simulation cannot simulate
-  large structures (e.g. millimeter scale) over long times
+  continuum simulation. However, atomistic simulation cannot feasibly
+  simulate large structures (e.g. micrometer scale) over long times
   (e.g. seconds) due to computational limitations
   (<xref alt="Ghavanloo et al., 2019" rid="ref-ghavanloo2019computational" ref-type="bibr">Ghavanloo
   et al., 2019</xref>). This becomes problematic when the nanostructure
@@ -224,8 +224,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   simulated variables (e.g. molar density and molar fraction) before
   being provided as input to <monospace>Cont2SAS</monospace>. Simulating
   SLD distribution within <monospace>Cont2SAS</monospace> is also
-  possible but only for model structures. The simulated input is
-  processed to a data tailor-made for <monospace>Sassena</monospace>.
+  possible for model structures. The simulated input is processed to
+  data tailor-made for <monospace>Sassena</monospace>.
   <monospace>Sassena</monospace> calculates SAS pattern,
   i.e. <inline-formula><alternatives>
   <tex-math><![CDATA[I]]></tex-math>
