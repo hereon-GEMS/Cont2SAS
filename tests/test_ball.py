@@ -58,7 +58,7 @@ def test_ball_gen():
         check=True
     )
     # Ensure it runs without crashing
-    assert gen_result.returncode == 0, "ball model generates data"
+    assert gen_result.returncode == 0, "ball model did not generate data"
 
 def test_ball_plot():
     """
@@ -72,7 +72,7 @@ def test_ball_plot():
         check=True
     )
     # Ensure it runs without crashing
-    assert plot_result.returncode == 0, "ball model plots data"
+    assert plot_result.returncode == 0, "ball model did not plot data"
 
 def test_check_ball_plot():
     """
@@ -82,7 +82,7 @@ def test_check_ball_plot():
     plt_img='figure/ball/Iq_ball.pdf'
     if_exist=os.path.isfile(plt_img)
     # Ensure plotted file exist
-    assert if_exist==1
+    assert if_exist==1, "IvsQ plot for ball model was not created"
 
 # def test_compare_ball_plot():
 #     """
@@ -103,28 +103,28 @@ def test_compare_ball_data():
     ## meshing dir
     mesh_dir=os.path.join('data', '40p0_40p0_40p0_40_40_40_lagrangian_1')
     mesh_exist=os.path.isdir(mesh_dir)
-    assert mesh_exist==1, "meshing dir exist"
+    assert mesh_exist==1, "meshing dir does not exist"
     ## model dir
     sim_dir=os.path.join(mesh_dir, 'simulation/ball_tend_0p0_dt_1p0_ensem_1')
     model_dir=os.path.join(sim_dir, 'rad_10_sld_2_qclean_sld_0')
     model_exist=os.path.isdir(model_dir)
-    assert model_exist==1, "model dir exist"
+    assert model_exist==1, "model dir does not exist"
     ## time dir
     t_dir=os.path.join(model_dir, 't000')
     t_exist=os.path.isdir(t_dir)
-    assert t_exist==1, "time dir exist"
+    assert t_exist==1, "time dir does not exist"
     # data
     ## num data (read + check exist)
     num_data=os.path.join(t_dir, 'Iq_cat_extend_3Q_0p0_1p0_orien__10.h5')
     data_exist=os.path.isfile(num_data)
-    assert data_exist==1, "hdf5 file exist"
+    assert data_exist==1, "hdf5 file does not exist"
     q_num, Iq_num=read_Iq_h5(num_data)
     ## gold data
     gold_data='tests/gold/ball_gold.h5'
     q_gold, Iq_gold=read_Iq_h5(gold_data)
     # compare num value and gold value
-    assert q_num == pytest.approx(q_gold, abs=1e-6), "Q values match"
-    assert Iq_num == pytest.approx(Iq_gold, abs=1e-6), "IQ values match"
+    assert q_num == pytest.approx(q_gold, abs=1e-6), "Q values do not match"
+    assert Iq_num == pytest.approx(Iq_gold, abs=1e-6), "I(Q) values do not match"
 
 def test_clean_up():
     """
@@ -139,5 +139,5 @@ def test_clean_up():
     # remove figure
     shutil.rmtree(fig_dir)
     # check if it is removed
-    assert os.path.isdir(data_dir)==0
-    assert os.path.isdir(fig_dir)==0
+    assert os.path.isdir(data_dir)==0, "data dir is still there"
+    assert os.path.isdir(fig_dir)==0, "plot dir is still there"
