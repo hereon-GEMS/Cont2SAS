@@ -2,6 +2,7 @@
 
 ## Index
 
+- [Statement of need](./SON/son.md)
 - [Quick start guide](../getting-started.md)
 - General
     - [Workflow](./general/workflow.md)
