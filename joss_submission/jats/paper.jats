@@ -110,9 +110,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   calculating scattering patterns from simulated atomic structures. The
   goal of <monospace>Cont2SAS</monospace> is to provide a software
   similar to <monospace>Sassena</monospace>, but for calculating Small
-  Angle Scattering (SAS) data from simulated Continuum (Cont)
-  nanostructures. <monospace>Cont2SAS</monospace> can calculate SAS
-  patterns, i.e. SAS intensity <inline-formula><alternatives>
+  Angle Scattering data from simulated continuum nanostructures.
+  <monospace>Cont2SAS</monospace> can calculate SAS patterns, i.e. SAS
+  intensity <inline-formula><alternatives>
   <tex-math><![CDATA[(I)]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>I</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
   vs. scattering vector magnitude <inline-formula><alternatives>
@@ -192,9 +192,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <xref alt="Majumdar et al., 2024" rid="ref-majumdar2024computation" ref-type="bibr">Majumdar
   et al., 2024</xref>;
   <xref alt="Majumdar &amp; Lindner, 2023" rid="ref-sassena2023majumdar" ref-type="bibr">Majumdar
-  &amp; Lindner, 2023</xref>) can calculate SAS patterns but they can
-  not calculate the same from continuum simulations. An in-house code is
-  available for conitnuum simulations but it was built for a 2D membrane
+  &amp; Lindner, 2023</xref>) can calculate SAS patterns but they cannot
+  calculate the same from continuum simulations. An in-house code is
+  available for continuum simulations but it was built for a 2D membrane
   system lacking generality
   (<xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
   et al., 2020</xref>). Hence, <monospace>Cont2SAS</monospace> is built
@@ -219,33 +219,42 @@ a Creative Commons Attribution 4.0 International License (CC BY
   </fig>
   <p><monospace>Cont2SAS</monospace> calculates SAS patterns taking
   simulated nanostructures as an input. The simulated structure must
-  provide either Scattering Length Density (SLD)
-  (<inline-formula><alternatives>
-  <tex-math><![CDATA[\beta]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>β</mml:mi></mml:math></alternatives></inline-formula>)
-  values or a set of variables from which SLD values can be calculated.
-  The simulated input is processed to a data taylor-made for
-  <monospace>Sassena</monospace>. <monospace>Sassena</monospace>
-  calculates the SAS intensity <inline-formula><alternatives>
-  <tex-math><![CDATA[(I)]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>I</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
-  as a function of scattering vector magnitude
-  <inline-formula><alternatives>
-  <tex-math><![CDATA[(Q)]]></tex-math>
-  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>Q</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>,
-  i.e. SAS pattern, for different time steps (see
-  <xref alt="[fig:sas_workflow]" rid="figU003Asas_workflow">[fig:sas_workflow]</xref>).</p>
+  include a Scattering Length Density (SLD) distribution, which is
+  either directly obtained from simulation or calculated from a set of
+  simulated variables (e.g. molar density and molar fraction) before
+  being provided as input to <monospace>Cont2SAS</monospace>. Simulating
+  SLD distribution within <monospace>Cont2SAS</monospace> is also
+  possible but only for model structures. The simulated input is
+  processed to a data tailor-made for <monospace>Sassena</monospace>.
+  <monospace>Sassena</monospace> calculates SAS pattern,
+  i.e. <inline-formula><alternatives>
+  <tex-math><![CDATA[I]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>I</mml:mi></mml:math></alternatives></inline-formula>
+  vs <inline-formula><alternatives>
+  <tex-math><![CDATA[Q]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>Q</mml:mi></mml:math></alternatives></inline-formula>
+  data, as shown in
+  <xref alt="[fig:sas_workflow]" rid="figU003Asas_workflow">[fig:sas_workflow]</xref>.
+  The <inline-formula><alternatives>
+  <tex-math><![CDATA[Q]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>Q</mml:mi></mml:math></alternatives></inline-formula>-dependence
+  of <inline-formula><alternatives>
+  <tex-math><![CDATA[I]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>I</mml:mi></mml:math></alternatives></inline-formula>
+  reveals the average shape and size of the nanoparticles, whereas the
+  magnitude of <inline-formula><alternatives>
+  <tex-math><![CDATA[I]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>I</mml:mi></mml:math></alternatives></inline-formula>
+  is related to the scattering contrast, i.e. the average diffrence in
+  SLD between particles and their surrounding medium.</p>
   <fig>
-    <caption><p>Workflow of effective cross-section
+    <caption><p>[left] TR-SAS data, i.e. SAS patterns at different
+    timesteps ranging from 0 to 10 seconds. With time, the SLD of a
+    spherical nanoparticle increases linearly. [right]
     <inline-formula><alternatives>
-    <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
-    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
-    calculation: [left] SAS patterns at different timesteps ranging from
-    0 to 10 seconds and [right] <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-    calculated from SAS patterns. With time, the SLD of a spherical
-    nanoparticle increases linearly. The calculated
+    calculated from SAS patterns. The calculated
     <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
@@ -259,24 +268,27 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
   </fig>
-  <p><monospace>Cont2SAS</monospace> can also calculate the time
-  evolution of effective cross-section <inline-formula><alternatives>
+  <p>For a simulation with more than one timestep, SAS patterns can be
+  calculated from different time steps generating a TR-SAS data, as
+  shown in
+  <xref alt="[fig:sig_eff_workflow]" rid="figU003Asig_eff_workflow">[fig:sig_eff_workflow]</xref>.
+  From TR-SAS data, <monospace>Cont2SAS</monospace> can calculate the
+  time evolution of effective cross-section
+  <inline-formula><alternatives>
   <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>,
-  which is defined as the count rate per incident unit flux. This
-  feature was not available in the in-house code
+  which is defined as the count rate per incident unit flux (see
+  <xref alt="[fig:sig_eff_workflow]" rid="figU003Asig_eff_workflow">[fig:sig_eff_workflow]</xref>).
+  This feature was not available in the in-house code
   (<xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
   et al., 2020</xref>) or <monospace>Sassena</monospace>
   (<xref alt="Majumdar &amp; Lindner, 2023" rid="ref-sassena2023majumdar" ref-type="bibr">Majumdar
   &amp; Lindner, 2023</xref>). The time evolution of count rate is
-  useful when the chemical composition changes over time instead of the
-  nanostructure, e.g. while storing hydrogen in ball-milled powder
-  sample
+  useful when the SLD of nanostructure changes over time without any
+  change in average shape and size, e.g. while storing hydrogen in
+  ball-milled powder sample
   (<xref alt="Aslan et al., 2019" rid="ref-aslan2019high" ref-type="bibr">Aslan
-  et al., 2019</xref>).
-  <xref alt="[fig:sig_eff_workflow]" rid="figU003Asig_eff_workflow">[fig:sig_eff_workflow]</xref>
-  demonstrates the workflow of such calculation from a series of SAS
-  patterns. The calculated <inline-formula><alternatives>
+  et al., 2019</xref>). The calculated <inline-formula><alternatives>
   <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
   must be multiplied by an empirical factor before comparing with
