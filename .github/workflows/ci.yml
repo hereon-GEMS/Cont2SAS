@@ -1,11 +1,13 @@
 name: CI
 
+# Run on all branches, pushes, and PRs
 on:
   push:
     branches:
-      - main
-      - develop 
+      - '**'
   pull_request:
+    branches:
+      - '**'
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -22,6 +24,9 @@ jobs:
       C2S_HOME: ${{ github.workspace }}
 
     steps:
+      # -----------------------
+      # Checkout code
+      # -----------------------
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -38,7 +43,7 @@ jobs:
             mpi-default-dev
 
       # -----------------------
-      # Download Sassena
+      # Download Sassena AppImage
       # -----------------------
       - name: Download Sassena AppImage
         run: |
@@ -49,7 +54,7 @@ jobs:
           chmod +x Sassena/Sassena.AppImage
 
       # -----------------------
-      # Miniforge + Conda cache
+      # Miniforge + Conda environment
       # -----------------------
       - name: Setup Miniforge
         uses: conda-incubator/setup-miniconda@v3
@@ -60,13 +65,20 @@ jobs:
           activate-environment: Cont2Sas
           environment-file: environment.yml
           use-mamba: true
-          cache-environment: false
+          cache-environment: false   # disable cache to prevent drift
 
       # -----------------------
-      # Tests
+      # Force requests install (optional)
       # -----------------------
-      - name: Run tests
+      - name: Ensure requests is installed
         shell: bash -l {0}
         run: |
-          conda install -y pytest
+          conda install -y requests>=2.31,<3
+
+      # -----------------------
+      # Run tests
+      # -----------------------
+      - name: Run pytest
+        shell: bash -l {0}
+        run: |
           pytest -v -rsx
