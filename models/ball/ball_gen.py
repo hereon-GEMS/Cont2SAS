@@ -119,6 +119,7 @@ if struct_gen_run==1:
         scatt_cal_run = subprocess.run(
             ["python", script_path],
             cwd=working_dir,
+            stderr=subprocess.PIPE,
             capture_output=True,
             text=True,
             check=True
