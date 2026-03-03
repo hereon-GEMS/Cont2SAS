@@ -123,32 +123,32 @@ ttot_sg= round(toc_sg - tic_sg,3)
 print(f'Time taken for generating mesh: {ttot_sg} s')
 print('-------------------------------------------------')
 
-# print('-------------------------------------------------')
-# print(part_str + 'Assigning SLD values to nodes')
-# print('')
-# # time counter start - simulation gen
-# tic_sim = time.perf_counter()
-# if sim_run==1:
-#     # simulation xml
-#     print(info_str + 'Generating simulation.xml')
-#     xml_gen.sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem)
+print('-------------------------------------------------')
+print(part_str + 'Assigning SLD values to nodes')
+print('')
+# time counter start - simulation gen
+tic_sim = time.perf_counter()
+if sim_run==1:
+    # simulation xml
+    print(info_str + 'Generating simulation.xml')
+    xml_gen.sim_xml_write(xml_dir, sim_model,dt, t_end, n_ensem)
 
-#     # model xml
-#     print(info_str + 'Generating model_ball.xml')
-#     xml_gen.model_ball_xml_write(xml_dir, rad, sld, qclean_sld)
+    # model xml
+    print(info_str + 'Generating model_ball.xml')
+    xml_gen.model_ball_xml_write(xml_dir, rad, sld, qclean_sld)
 
-#     # generate structure
-#     print(info_str + 'Executing sim_gen.py')
-#     script_path = os.path.join(script_dir, 'sim_gen.py')  # Full path of the script
-#     #working_dir = "."  # Directory to run the script in
-#     subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
-# else:
-#     print(info_str + 'simulation not attempted')
-# # time counter end - simulation gen
-# toc_sim = time.perf_counter()
-# ttot_sim= round(toc_sim - tic_sim,3)
-# print(f'Time taken for assigning SLD values: {ttot_sim} s')
-# print('-------------------------------------------------')
+    # generate structure
+    print(info_str + 'Executing sim_gen.py')
+    script_path = os.path.join(script_dir, 'sim_gen.py')  # Full path of the script
+    #working_dir = "."  # Directory to run the script in
+    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
+else:
+    print(info_str + 'simulation not attempted')
+# time counter end - simulation gen
+toc_sim = time.perf_counter()
+ttot_sim= round(toc_sim - tic_sim,3)
+print(f'Time taken for assigning SLD values: {ttot_sim} s')
+print('-------------------------------------------------')
 
 # print('-------------------------------------------------')
 # print(part_str + 'Calculating SAS pattern')
