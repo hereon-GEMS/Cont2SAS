@@ -4,7 +4,6 @@ channels:
   - pypi
 dependencies:
   - python=3.12.1
-  - requests>=2.31,<3
   - h5py=3.10.0 # 3.14.0 # 3.10.0
   - imageio=2.33.1 # 2.37.0 # 2.33.1
   - matplotlib=3.8.2 # 3.10.3 # 3.8.2
