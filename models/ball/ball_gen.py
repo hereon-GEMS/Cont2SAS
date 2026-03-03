@@ -150,31 +150,31 @@ ttot_sim= round(toc_sim - tic_sim,3)
 print(f'Time taken for assigning SLD values: {ttot_sim} s')
 print('-------------------------------------------------')
 
-# print('-------------------------------------------------')
-# print(part_str + 'Calculating SAS pattern')
-# print('')
-# # time counter start - SAS calculation
-# tic_scatt = time.perf_counter()
-# if scatt_cal_run==1:
-#     # scatt_cal xml
-#     print(info_str + 'Generating scatt_cal.xml')
-#     xml_gen.scatt_cal_xml_write(xml_dir, num_cat, method_cat,
-#                                 sassena_exe, mpi_procs, num_threads,
-#                                 sig_file, scan_vec, Q_range,
-#                                 num_points, num_orientation)
+print('-------------------------------------------------')
+print(part_str + 'Calculating SAS pattern')
+print('')
+# time counter start - SAS calculation
+tic_scatt = time.perf_counter()
+if scatt_cal_run==1:
+    # scatt_cal xml
+    print(info_str + 'Generating scatt_cal.xml')
+    xml_gen.scatt_cal_xml_write(xml_dir, num_cat, method_cat,
+                                sassena_exe, mpi_procs, num_threads,
+                                sig_file, scan_vec, Q_range,
+                                num_points, num_orientation)
 
-#     # calculate scattering function
-#     print(info_str + 'Executing scatt_cal.py')
-#     script_path = os.path.join(script_dir, 'scatt_cal.py')  # Full path of the script
-#     #working_dir = "."  # Directory to run the script in
-#     subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
-# else:
-#     print(info_str + 'Calculation of scattring function not attempted')
-# # time counter end - SAS calculation
-# toc_scatt = time.perf_counter()
-# ttot_scatt= round(toc_scatt - tic_scatt,3)
-# print(f'Time taken for calculating SAS pattern: {ttot_scatt} s')
-# print('-------------------------------------------------')
+    # calculate scattering function
+    print(info_str + 'Executing scatt_cal.py')
+    script_path = os.path.join(script_dir, 'scatt_cal.py')  # Full path of the script
+    #working_dir = "."  # Directory to run the script in
+    subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
+else:
+    print(info_str + 'Calculation of scattring function not attempted')
+# time counter end - SAS calculation
+toc_scatt = time.perf_counter()
+ttot_scatt= round(toc_scatt - tic_scatt,3)
+print(f'Time taken for calculating SAS pattern: {ttot_scatt} s')
+print('-------------------------------------------------')
 
 # # Time satistics
 # print('')
