@@ -52,12 +52,33 @@ def test_ball_gen():
     Test script for $C2S_HOME/models/ball/ball_gen.py:
     1. Check whether ball_gen runs
     """
-    gen_result = subprocess.run(
-        [sys.executable, "models/ball/ball_gen.py"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
+    #     try:
+    #     result = subprocess.run(
+    #         ["python", script_path],
+    #         capture_output=True,   # capture stdout and stderr
+    #         text=True,             # decode bytes to string
+    #         check=True             # raise CalledProcessError on non-zero exit
+    #     )
+    #     print("STDOUT:", result.stdout)
+    # except subprocess.CalledProcessError as e:
+    #     print("Command failed!")
+    #     print("Return code:", e.returncode)
+    #     print("STDOUT:", e.stdout)
+    #     print("STDERR:", e.stderr)
+    try:
+        gen_result = subprocess.run(
+            [sys.executable, "models/ball/ball_gen.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("STDOUT:", gen_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
+
     # Ensure it runs without crashing
     assert gen_result.returncode == 0, "ball model did not generate data"
 
