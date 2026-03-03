@@ -118,7 +118,7 @@ if struct_gen_run==1:
     try:
         scatt_cal_run = subprocess.run(
             ["python", script_path],
-            cwd=working_dir
+            cwd=working_dir,
             capture_output=True,
             text=True,
             check=True
