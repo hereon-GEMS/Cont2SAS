@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir -p Sassena
           curl -L \
-            https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage \
+            https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.4-d67d4977/Sassena_CPU.AppImage \
             -o Sassena/Sassena.AppImage
           chmod +x Sassena/Sassena.AppImage
 
