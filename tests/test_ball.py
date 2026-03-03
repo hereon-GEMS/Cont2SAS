@@ -87,12 +87,19 @@ def test_ball_plot():
     Test script for $C2S_HOME/models/ball/ball_plot.py:
     1. Check whether ball_plot runs
     """
-    plot_result = subprocess.run(
-        ["python", "models/ball/ball_plot.py"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
+    try:
+        plot_result = subprocess.run(
+            ["python", "models/ball/ball_plot.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("STDOUT:", plot_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
     # Ensure it runs without crashing
     assert plot_result.returncode == 0, "ball model did not plot data"
 
