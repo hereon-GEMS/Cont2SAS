@@ -65,7 +65,7 @@ jobs:
       - name: Run tests
         shell: bash -l {0}
         run: |
-          conda install -y pytest
+          conda install -y pytest=7.4.4
           Sassena/Sassena.AppImage --help || true
           # pytest tests/test_ball.py -v -rsx || true
           # python models/ball/ball_gen.py
