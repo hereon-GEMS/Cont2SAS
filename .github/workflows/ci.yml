@@ -66,4 +66,4 @@ jobs:
         shell: bash -l {0}
         run: |
           conda install -y pytest
-          pytest tests/test_ball -v -rsx
+          pytest tests/test_ball.py -v -rsx
