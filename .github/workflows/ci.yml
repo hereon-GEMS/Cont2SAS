@@ -68,4 +68,5 @@ jobs:
           conda install -y pytest
           Sassena/Sassena.AppImage --help || true
           # pytest tests/test_ball.py -v -rsx || true
-          python models/ball/ball_gen.py 
+          python models/ball/ball_gen.py
+          python src/scatt_cal.py 
