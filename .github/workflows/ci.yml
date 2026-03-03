@@ -3,11 +3,7 @@ name: CI
 # Run on all branches, pushes, and PRs
 on:
   push:
-    branches:
-      - '**'
   pull_request:
-    branches:
-      - '**'
 
 concurrency:
   group: ci-${{ github.ref }}
