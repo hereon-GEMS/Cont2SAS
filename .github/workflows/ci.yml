@@ -44,6 +44,7 @@ jobs:
             https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage \
             -o Sassena/Sassena.AppImage
           chmod +x Sassena/Sassena.AppImage
+          ./Sassena/Sassena.AppImage --help
 
       # -----------------------
       # Miniforge + Conda cache
