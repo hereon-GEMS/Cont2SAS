@@ -66,12 +66,12 @@ jobs:
         shell: bash -l {0}
         run: |
           conda install -y "setuptools<81"
-          which python
-          conda list setuptools
+          # which python
+          # conda list setuptools
           # Sassena/Sassena.AppImage --help || true
-          # pytest tests/test_ball.py -v -rsx
+          pytest tests/test_ball.py -v -rsx
           # python models/ball/ball_gen.py
-          python -c "import mdtraj; print('mdtraj OK')"
+          # python -c "import mdtraj; print('mdtraj OK')"
           # python src/struct_gen.py
           # python src/sim_gen.py
           # python src/scatt_cal.py 
