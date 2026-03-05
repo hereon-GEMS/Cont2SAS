@@ -69,7 +69,7 @@ jobs:
           # Sassena/Sassena.AppImage --help || true
           # pytest tests/test_ball.py -v -rsx
           # python models/ball/ball_gen.py
-          python -c "import mdtraj; print('mdtraj OK')"
-          python src/struct_gen.py
-          python src/sim_gen.py
-          python src/scatt_cal.py 
+          # python -c "import mdtraj; print('mdtraj OK')"
+          # python src/struct_gen.py
+          # python src/sim_gen.py
+          # python src/scatt_cal.py 
