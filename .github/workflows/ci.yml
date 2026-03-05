@@ -57,7 +57,7 @@ jobs:
           activate-environment: Cont2Sas
           environment-file: environment.yml
           use-mamba: true
-          cache-environment: true
+          cache-environment: false
 
       # -----------------------
       # Tests
