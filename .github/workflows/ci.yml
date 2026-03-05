@@ -65,7 +65,7 @@ jobs:
       - name: Run tests
         shell: bash -l {0}
         run: |
-          conda install -y setuptools
+          conda install -y setuptools<81
           which python
           conda list setuptools
           # Sassena/Sassena.AppImage --help || true
