@@ -308,3 +308,5 @@ for i, t in enumerate(t_arr):
     Iq_data['Iq']=Iq
     Iq_data['Q']=q
     Iq_data.close()
+
+    print('simulation gen run complete')
