@@ -50,12 +50,20 @@ def test_phase_field_gen():
     Test script for $C2S_HOME/models/phase_field/phase_field_gen.py:
     1. Check whether phase_field_gen runs
     """
-    gen_result = subprocess.run(
-        ["python", "models/phase_field/phase_field_gen.py"],
-          capture_output=True,
-            text=True,
-              check=True
-    )
+    try:
+        gen_result = subprocess.run(
+            ["python", "models/phase_field/phase_field_gen.py"],
+            capture_output=True,
+                text=True,
+                check=True
+        )
+        print("STDOUT:", gen_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
+        
     # Ensure it runs without crashing
     assert gen_result.returncode == 0, "phase field model did not generate data"
 
@@ -64,12 +72,20 @@ def test_phase_field_plot():
     Test script for $C2S_HOME/models/phase_field/phase_field_plot.py:
     1. Check whether phase_field_plot runs
     """
-    plot_result = subprocess.run(
-        ["python", "models/phase_field/phase_field_plot.py"],
-          capture_output=True,
-            text=True,
-              check=True
-    )
+    try:
+        plot_result = subprocess.run(
+            ["python", "models/phase_field/phase_field_plot.py"],
+            capture_output=True,
+                text=True,
+                check=True
+        )
+        print("STDOUT:", plot_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
+
     # Ensure it runs without crashing
     assert plot_result.returncode == 0, "phase field model did not plot data"
 
