@@ -49,12 +49,19 @@ def test_sld_grow_gen():
     Test script for $C2S_HOME/models/sld_grow/sld_grow_gen.py:
     1. Check whether sld_grow_gen runs
     """
-    gen_result = subprocess.run(
-        ["python", "models/sld_grow/sld_grow_gen.py"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
+    try:
+        gen_result = subprocess.run(
+            ["python", "models/sld_grow/sld_grow_gen.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("STDOUT:", gen_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
     # Ensure it runs without crashing
     assert gen_result.returncode == 0, "sld grow model does not generate data"
 
@@ -63,12 +70,19 @@ def test_sld_grow_plot():
     Test script for $C2S_HOME/models/sld_grow/sld_grow_plot.py:
     1. Check whether sld_grow_plot runs
     """
-    plot_result = subprocess.run(
-        ["python", "models/sld_grow/sld_grow_plot.py"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
+    try:
+        plot_result = subprocess.run(
+            ["python", "models/sld_grow/sld_grow_plot.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("STDOUT:", plot_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
     # Ensure it runs without crashing
     assert plot_result.returncode == 0, "sld grow model does not plot data"
 
