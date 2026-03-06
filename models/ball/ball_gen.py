@@ -115,22 +115,6 @@ if struct_gen_run==1:
     script_path = os.path.join(script_dir, 'struct_gen.py')  # Full path of the script
     #working_dir = "."  # Directory to run the script in
     subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
-    # try:
-    #     scatt_cal_run = subprocess.run(
-    #         ["python", script_path],
-    #         cwd=working_dir,
-    #         stderr=subprocess.PIPE,
-    #         capture_output=True,
-    #         text=True,
-    #         check=True
-    #     )
-    #     print("STDOUT:", scatt_cal_run.stdout)
-    # except subprocess.CalledProcessError as e:
-    #     print("Command failed!")
-    #     print("Return code:", e.returncode)
-    #     print("STDOUT:", e.stdout)
-    #     print("STDERR:", e.stderr)
-    # subprocess.run(["python", script_path], cwd=working_dir, stderr=subprocess.PIPE, check=True)
 else:
     print(info_str + 'structure generation not attempted')
 # time counter end - struct gen
