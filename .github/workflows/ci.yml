@@ -2,9 +2,6 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-      - develop 
   pull_request:
 
 concurrency:
@@ -44,7 +41,7 @@ jobs:
         run: |
           mkdir -p Sassena
           curl -L \
-            https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.2-f31e3882/Sassena_CPU.AppImage \
+            https://codebase.helmholtz.cloud/api/v4/projects/6801/packages/generic/sassena/v1.9.4-d67d4977/Sassena_CPU.AppImage \
             -o Sassena/Sassena.AppImage
           chmod +x Sassena/Sassena.AppImage
 
@@ -60,7 +57,7 @@ jobs:
           activate-environment: Cont2Sas
           environment-file: environment.yml
           use-mamba: true
-          cache-environment: true
+          cache-environment: false
 
       # -----------------------
       # Tests
@@ -68,5 +65,13 @@ jobs:
       - name: Run tests
         shell: bash -l {0}
         run: |
-          conda install -y pytest
+          conda install -y "setuptools<81"
+          # which python
+          # conda list setuptools
+          # Sassena/Sassena.AppImage --help || true
           pytest -v -rsx
+          # python models/ball/bally_gen.py
+          # python -c "import mdtraj; print('mdtraj OK')"
+          # python src/struct_gen.py
+          # python src/sim_gen.py
+          # python src/scatt_cal.py 

@@ -253,3 +253,5 @@ imageio.mimsave(os.path.join(model_param_dir,'simu_1_4.gif'), images_1, fps=2, l
 imageio.mimsave(os.path.join(model_param_dir,'simu_2_4.gif'), images_2, fps=2, loop=0)
 ## z = 3/4 * z_max
 imageio.mimsave(os.path.join(model_param_dir,'simu_3_4.gif'), images_3, fps=2, loop=0)
+#end message
+print('Simulation generation complete')
