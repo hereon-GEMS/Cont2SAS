@@ -49,28 +49,42 @@ def test_sld_grow_gen():
     Test script for $C2S_HOME/models/sld_grow/sld_grow_gen.py:
     1. Check whether sld_grow_gen runs
     """
-    gen_result = subprocess.run(
-        ["python", "models/sld_grow/sld_grow_gen.py"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
+    try:
+        gen_result = subprocess.run(
+            ["python", "models/sld_grow/sld_grow_gen.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("STDOUT:", gen_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
     # Ensure it runs without crashing
-    assert gen_result.returncode == 0, "sld_grow model generates data"
+    assert gen_result.returncode == 0, "sld grow model does not generate data"
 
 def test_sld_grow_plot():
     """
     Test script for $C2S_HOME/models/sld_grow/sld_grow_plot.py:
     1. Check whether sld_grow_plot runs
     """
-    plot_result = subprocess.run(
-        ["python", "models/sld_grow/sld_grow_plot.py"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
+    try:
+        plot_result = subprocess.run(
+            ["python", "models/sld_grow/sld_grow_plot.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("STDOUT:", plot_result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Command failed!")
+        print("Return code:", e.returncode)
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
     # Ensure it runs without crashing
-    assert plot_result.returncode == 0, "sld_grow model plots data"
+    assert plot_result.returncode == 0, "sld grow model does not plot data"
 
 def test_check_sld_grow_plot():
     """
@@ -80,7 +94,7 @@ def test_check_sld_grow_plot():
     plt_img='figure/sld_grow/sig_eff_fit_sld_grow.pdf'
     if_exist=os.path.isfile(plt_img)
     # Ensure plotted file exist
-    assert if_exist==1
+    assert if_exist==1, "IvsQ plot for sld grow model was not created"
 
 # def test_compare_sld_grow_plot():
 #     """
@@ -101,24 +115,24 @@ def test_compare_sld_grow_data():
     ## meshing dir
     mesh_dir=os.path.join('data', '40p0_40p0_40p0_40_40_40_lagrangian_1')
     mesh_exist=os.path.isdir(mesh_dir)
-    assert mesh_exist==1, "meshing dir exist"
+    assert mesh_exist==1, "meshing dir does not exist"
     ## model dir
     sim_dir=os.path.join(mesh_dir, 'simulation/sld_grow_tend_10p0_dt_1p0_ensem_1')
     model_dir=os.path.join(sim_dir, 'rad_10_sld_in_0_2_sld_in_end_5_sld_out_1_qclean_sld_1')
     model_exist=os.path.isdir(model_dir)
-    assert model_exist==1, "model dir exist"
+    assert model_exist==1, "model dir does not exist"
     # data
     ## num data (read + check exist)
     num_data=os.path.join(model_dir, 'sig_eff_cat_extend_101Q_0p0029_0p05_orien__10.h5')
     data_exist=os.path.isfile(num_data)
-    assert data_exist==1, "hdf5 file exist"
+    assert data_exist==1, "hdf5 file does not exist"
     t_num, sig_eff_num=read_sig_eff_h5(num_data)
     ## gold data
     gold_data='tests/gold/sld_grow_gold.h5'
     t_gold, sig_eff_gold=read_sig_eff_h5(gold_data)
     # compare num value and gold value
-    assert t_num == pytest.approx(t_gold, abs=1e-6), "t values match"
-    assert sig_eff_num == pytest.approx(sig_eff_gold, abs=1e-6), "sig eff values match"
+    assert t_num == pytest.approx(t_gold, abs=1e-6), "t values do not match"
+    assert sig_eff_num == pytest.approx(sig_eff_gold, abs=1e-6), "sig eff values do not match"
 
 def test_clean_up():
     """
@@ -133,5 +147,5 @@ def test_clean_up():
     # remove figure
     shutil.rmtree(fig_dir)
     # check if it is removed
-    assert os.path.isdir(data_dir)==0
-    assert os.path.isdir(fig_dir)==0
+    assert os.path.isdir(data_dir)==0, "data dir is still there"
+    assert os.path.isdir(fig_dir)==0, "plot dir is still there"
