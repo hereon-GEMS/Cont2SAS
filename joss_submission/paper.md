@@ -11,6 +11,7 @@ authors:
     orcid: 0000-0003-4049-4060
     affiliation: "1, 3" # (Multiple affiliations must be quoted)
   - name: Martin Müller
+    orcid: 0000-0003-0995-7602
     affiliation: "1, 2, 3"
   - name: Sebastian Busch
     orcid: 0000-0002-9815-909X
