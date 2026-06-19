@@ -329,11 +329,11 @@ plot_file=os.path.join(plot_dir,plot_file_name)
 fig, ax = plt.subplots(figsize=(7, 5))
 
 ax.plot(sig_eff_t, sig_eff_num, 'b',
-         label= 'Simulation value')
+         label= 'Effective cross-section')
 ax.plot(sig_eff_t, factor*contrast_arr**2, 'r',
          linestyle='',
            marker='^', markersize=5,
-             label= 'Fit value')
+             label= r'$(\Delta \mathrm{SLD})^2$')
 
 # plot formatting
 ## legend
