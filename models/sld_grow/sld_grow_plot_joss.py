@@ -284,6 +284,8 @@ ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]', fontsize=17)
 ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]', fontsize=17)
 ## tick size
 ax_scatt_all.tick_params(axis='both', labelsize=17)
+ax_scatt_all.tick_params(axis='both', which='major', length=10, width=1)
+ax_scatt_all.tick_params(axis='both', which='minor', length=5, width=1)
 ## SANS upper boundary Q=1 \AA^-1
 ax_scatt_all.set_xlim([Q_range[0], Q_range[1]])
 # ax_scatt_all.set_ylim(bottom=1e4 )
@@ -343,6 +345,8 @@ ax.set_xlabel('Time [s]', fontsize=17)
 ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]', fontsize=17)
 ## ticks
 ax.tick_params(axis='both', labelsize=17)
+ax.tick_params(axis='both', which='major', length=10, width=1)
+ax.tick_params(axis='both', which='minor', length=5, width=1)
 ## offset text (1e9) on top of y axis
 ax.yaxis.get_offset_text().set_fontsize(17)
 ## limits
