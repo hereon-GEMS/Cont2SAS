@@ -486,8 +486,8 @@ plot_file_name=f'sld_fit_{sim_model}.pdf'
 plot_file=os.path.join(plot_dir,plot_file_name)
 fig, ax = plt.subplots(figsize=(7, 5))
 
-ax.plot(t_arr, sld_ana, 'b', label= 'Effective cross-section')
-ax.plot(t_arr, sld_fit, 'r', linestyle='', marker='^', markersize=5, label= r'$\Delta SLD^2$')
+ax.plot(t_arr, sld_ana, 'b', label= 'Simulation value')
+ax.plot(t_arr, sld_fit, 'r', linestyle='', marker='^', markersize=5, label= 'Fit value')
 
 # plot formatting
 ## legend
