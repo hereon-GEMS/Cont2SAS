@@ -274,16 +274,16 @@ arrow = FancyArrowPatch(
     zorder=100
 )
 ax_scatt_all.add_patch(arrow)
-ax_scatt_all.text(1.2e-2, 4.2e5, "time", fontsize=13.5, ha="center", va="center", zorder=100,
+ax_scatt_all.text(1.23e-2, 4.2e5, "time", fontsize=17, ha="center", va="center", zorder=100,
                    bbox=dict(facecolor="yellow", edgecolor="k", boxstyle="round,pad=0.2"))
 # plot formatting
 ## legend
 # ax_scatt_all.legend(ncol=2)
 ## labels
-ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]', fontsize=13.5)
-ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]', fontsize=13.5)
+ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]', fontsize=17)
+ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]', fontsize=17)
 ## tick size
-ax_scatt_all.tick_params(axis='both', labelsize=13.5)
+ax_scatt_all.tick_params(axis='both', labelsize=17)
 ## SANS upper boundary Q=1 \AA^-1
 ax_scatt_all.set_xlim([Q_range[0], Q_range[1]])
 # ax_scatt_all.set_ylim(bottom=1e4 )
@@ -337,14 +337,14 @@ ax.plot(sig_eff_t, factor*contrast_arr**2, 'r',
 
 # plot formatting
 ## legend
-ax.legend(fontsize=13.5)
+ax.legend(fontsize=17)
 ## labels
-ax.set_xlabel('Time [s]', fontsize=13.5)
-ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]', fontsize=13.5)
+ax.set_xlabel('Time [s]', fontsize=17)
+ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]', fontsize=17)
 ## ticks
-ax.tick_params(axis='both', labelsize=13.5)
+ax.tick_params(axis='both', labelsize=17)
 ## offset text (1e9) on top of y axis
-ax.yaxis.get_offset_text().set_fontsize(13.5)
+ax.yaxis.get_offset_text().set_fontsize(17)
 ## limits
 ax.grid(True)
 ## save plot
