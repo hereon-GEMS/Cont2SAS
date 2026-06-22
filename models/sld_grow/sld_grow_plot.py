@@ -27,7 +27,6 @@ import warnings
 import numpy as np
 import h5py
 import matplotlib as mpl
-from matplotlib import cm
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from scipy.optimize import curve_fit
