@@ -25,7 +25,7 @@ import os
 import warnings
 import numpy as np
 import h5py
-from matplotlib import cm
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from matplotlib.patches import FancyArrowPatch
@@ -207,7 +207,7 @@ fig_scatt_all, ax_scatt_all = plt.subplots(figsize=(7, 5))
 fig_fit_all, ax_fit_all = plt.subplots(figsize=(7, 5))
 
 # color scheme
-cmap_rainbow=cm.get_cmap('rainbow')
+cmap_rainbow=mpl.colormaps['rainbow']
 color_rainbow = cmap_rainbow(np.linspace(0, 1, len(t_arr)))
 
 for i,t in enumerate(t_arr):
