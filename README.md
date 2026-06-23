@@ -133,11 +133,10 @@ If the operating system is a different version of ubuntu or any other linux-base
 ```bash
 # clone sassena source code
 cd ..
-git clone git@codebase.helmholtz.cloud:DAPHNE4NFDI/sassena.git
+git clone --branch v1.9.4 --depth 1 https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena.git
 # build sassena locally inside cloned repository
 cd sassena
-chmod +x runner.sh
-./runner.sh build --cpu
+./runner.sh build-local --cpu
 # copy exec built to the default appimage location specified in option 1
 cd ../Cont2SAS
 mkdir -p ./Sassena
