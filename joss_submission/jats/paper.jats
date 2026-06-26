@@ -202,9 +202,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   2007</xref>). The <monospace>Generic SAS Calculator</monospace> option
   in <monospace>SasView</monospace>
   (<xref alt="SasView Developers, 2026" rid="ref-sasview" ref-type="bibr">SasView
-  Developers, 2026</xref>) is also a potential alternative, but lacks a
-  clear strategy for converting simulation output into the supported
-  input formats
+  Developers, 2026</xref>) is also a potential alternative. However,
+  <monospace>SasView</monospace> doesn’t provide an option to convert
+  simulation output into either discretized points or elements with
+  constant Scattering Length Density (SLD) required by the
+  <monospace>Generic SAS Calculator</monospace>
   (<xref alt="Liu et al., 2023" rid="ref-liu2023generic" ref-type="bibr">Liu
   et al., 2023</xref>). Hence, <monospace>Cont2SAS</monospace> is built
   as a general-purpose program that converts simulation output into
@@ -232,13 +234,12 @@ a Creative Commons Attribution 4.0 International License (CC BY
   </fig>
   <p><monospace>Cont2SAS</monospace> calculates SAS patterns taking
   simulated nanostructures as input. The simulated structure must
-  include a Scattering Length Density (SLD) distribution, which is
-  either directly obtained from simulation or calculated from a set of
-  simulated variables (e.g. molar density and molar fraction) before
-  being provided as input to <monospace>Cont2SAS</monospace>. Simulating
-  SLD distributions is also possible within
-  <monospace>Cont2SAS</monospace> for model structures. The simulated
-  input is processed to data tailor-made for
+  include a SLD distribution, which is either directly obtained from
+  simulation or calculated from a set of simulated variables (e.g. molar
+  density and molar fraction) before being provided as input to
+  <monospace>Cont2SAS</monospace>. Simulating SLD distributions is also
+  possible within <monospace>Cont2SAS</monospace> for model structures.
+  The simulated input is processed to data tailor-made for
   <monospace>Sassena</monospace>, which calculates SAS patterns,
   i.e. <inline-formula><alternatives>
   <tex-math><![CDATA[I]]></tex-math>
