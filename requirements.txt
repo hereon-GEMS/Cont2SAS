@@ -1,11 +1,12 @@
-h5py==3.10.0
-imageio==2.33.1
-matplotlib==3.10.8
-mdtraj==1.9.9
-netCDF4==1.7.1
-numpy==1.24.4
+h5py==3.16.0 #==3.10.0
+imageio==2.37.3 #==2.33.1
+matplotlib==3.11.0 #==3.10.8
+mdtraj==1.11.1 #==1.9.9
+netCDF4==1.7.4 #==1.7.1
+numpy==2.5.0 #==1.24.4
 pdf2image==1.17.0
-PyMuPDF==1.24.11
-pylint==3.3.8
-pytest==7.4.4
-scipy==1.10.1
+PyMuPDF==1.27.2 #==1.24.11
+pylint==4.0.6 #==3.3.8
+pytest==9.1.1 #==7.4.4
+setuptools<=80.10.2
+scipy==1.18.0 #==1.10.1

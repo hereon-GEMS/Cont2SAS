@@ -202,7 +202,7 @@ xdg-open figure/phase_field/pseudo_phase_field_86400.pdf
 # see categorized nano structure (t = 86400)
 xdg-open figure/phase_field/pseudo_cat_phase_field_86400.pdf
 # see SAS intensity vs Q plot
-xdg-open figure/phase_field/Iq.pdf
+xdg-open figure/phase_field/Iq_phase_field.pdf
 # see characteristic length vs t plot
 # initial step eliminated
 xdg-open figure/phase_field/ch_len.pdf

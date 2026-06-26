@@ -25,7 +25,7 @@ import os
 import warnings
 import numpy as np
 import h5py
-from matplotlib import cm
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from matplotlib.patches import FancyArrowPatch
@@ -207,7 +207,7 @@ fig_scatt_all, ax_scatt_all = plt.subplots(figsize=(7, 5))
 fig_fit_all, ax_fit_all = plt.subplots(figsize=(7, 5))
 
 # color scheme
-cmap_rainbow=cm.get_cmap('rainbow')
+cmap_rainbow=mpl.colormaps['rainbow']
 color_rainbow = cmap_rainbow(np.linspace(0, 1, len(t_arr)))
 
 for i,t in enumerate(t_arr):
@@ -274,16 +274,18 @@ arrow = FancyArrowPatch(
     zorder=100
 )
 ax_scatt_all.add_patch(arrow)
-ax_scatt_all.text(1.2e-2, 4.2e5, "time", fontsize=13.5, ha="center", va="center", zorder=100,
+ax_scatt_all.text(1.27e-2, 4.2e5, "time", fontsize=17, ha="center", va="center", zorder=100,
                    bbox=dict(facecolor="yellow", edgecolor="k", boxstyle="round,pad=0.2"))
 # plot formatting
 ## legend
 # ax_scatt_all.legend(ncol=2)
 ## labels
-ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]', fontsize=13.5)
-ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]', fontsize=13.5)
+ax_scatt_all.set_xlabel(r'Q [$\mathrm{\AA}^{-1}$]', fontsize=17)
+ax_scatt_all.set_ylabel(r'I(Q) [$\mathrm{cm}^{-1}$]', fontsize=17)
 ## tick size
-ax_scatt_all.tick_params(axis='both', labelsize=13.5)
+ax_scatt_all.tick_params(axis='both', labelsize=17)
+ax_scatt_all.tick_params(axis='both', which='major', length=10, width=1)
+ax_scatt_all.tick_params(axis='both', which='minor', length=5, width=1)
 ## SANS upper boundary Q=1 \AA^-1
 ax_scatt_all.set_xlim([Q_range[0], Q_range[1]])
 # ax_scatt_all.set_ylim(bottom=1e4 )
@@ -329,22 +331,24 @@ plot_file=os.path.join(plot_dir,plot_file_name)
 fig, ax = plt.subplots(figsize=(7, 5))
 
 ax.plot(sig_eff_t, sig_eff_num, 'b',
-         label= 'Simulation value')
+         label= 'Effective cross-section')
 ax.plot(sig_eff_t, factor*contrast_arr**2, 'r',
          linestyle='',
            marker='^', markersize=5,
-             label= 'Fit value')
+             label= r'$(\Delta \mathrm{SLD})^2$')
 
 # plot formatting
 ## legend
-ax.legend(fontsize=13.5)
+ax.legend(fontsize=17)
 ## labels
-ax.set_xlabel('Time [s]', fontsize=13.5)
-ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]', fontsize=13.5)
+ax.set_xlabel('Time [s]', fontsize=17)
+ax.set_ylabel(r'Effective cross-section [$10^{-5} \cdot \mathrm{\AA}^{-2}$]', fontsize=17)
 ## ticks
-ax.tick_params(axis='both', labelsize=13.5)
+ax.tick_params(axis='both', labelsize=17)
+ax.tick_params(axis='both', which='major', length=10, width=1)
+ax.tick_params(axis='both', which='minor', length=5, width=1)
 ## offset text (1e9) on top of y axis
-ax.yaxis.get_offset_text().set_fontsize(13.5)
+ax.yaxis.get_offset_text().set_fontsize(17)
 ## limits
 ax.grid(True)
 ## save plot

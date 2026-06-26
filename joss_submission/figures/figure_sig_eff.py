@@ -36,7 +36,7 @@ def create_pdf_figure(pdf_paths, output_image='figure.png', dpi=150):
         images.append(pages[0])  # use first page only
 
     cols = len(images)
-    fig, axes = plt.subplots(1, cols, figsize=(5 * cols, 3))
+    fig, axes = plt.subplots(1, cols, figsize=(6 * cols, 6))
 
     if cols == 1:
         axes = [axes]
@@ -45,6 +45,7 @@ def create_pdf_figure(pdf_paths, output_image='figure.png', dpi=150):
         ax.imshow(img)
         ax.axis('off')
 
+    fig.subplots_adjust(top=0.95, bottom=0.4)
     fig.tight_layout()
     fig.savefig(output_image, dpi=dpi)
     plt.close(fig)

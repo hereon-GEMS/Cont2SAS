@@ -18,8 +18,8 @@
 <article-id pub-id-type="publisher-id">0</article-id>
 <article-id pub-id-type="doi">N/A</article-id>
 <title-group>
-<article-title>Cont2SAS: A python package for calculating SAS parameters
-from continuum nanostructures</article-title>
+<article-title>Cont2SAS: A Python package for calculating small angle
+scattering parameters from continuum nanostructures</article-title>
 </title-group>
 <contrib-group>
 <contrib contrib-type="author">
@@ -109,9 +109,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <p><monospace>Cont2SAS</monospace> is a software tool built around the
   existing software solution <monospace>Sassena</monospace> – known for
   calculating scattering patterns from simulated atomic structures. The
-  goal of <monospace>Cont2SAS</monospace> is to provide a software
-  similar to <monospace>Sassena</monospace>, but for calculating Small
-  Angle Scattering data from simulated continuum nanostructures.
+  goal of <monospace>Cont2SAS</monospace> is to provide software similar
+  to <monospace>Sassena</monospace>, but for calculating Small Angle
+  Scattering (SAS) data from simulated continuum nanostructures.
   <monospace>Cont2SAS</monospace> can calculate SAS patterns, i.e. SAS
   intensity <inline-formula><alternatives>
   <tex-math><![CDATA[(I)]]></tex-math>
@@ -119,8 +119,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   vs. scattering vector magnitude <inline-formula><alternatives>
   <tex-math><![CDATA[(Q)]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>Q</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
-  using a novel numerical method. <monospace>Cont2SAS</monospace> can
-  also calculate effective cross-section <inline-formula><alternatives>
+  using a numerical method. <monospace>Cont2SAS</monospace> can also
+  calculate the effective cross-section <inline-formula><alternatives>
   <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>,
   i.e. the count rate of scattered radiation per incident unit flux.
@@ -128,21 +128,20 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
   is calculated by integrating instrument-agnostic SAS patterns taking
-  instrument geometry into account. <monospace>Cont2SAS</monospace> can
-  be used for different purposes, such as validating simulations, tuning
-  simulation parameters, and analyzing SAS data.</p>
+  the instrument geometry into account. <monospace>Cont2SAS</monospace>
+  can be used for different purposes, such as validating simulations,
+  tuning simulation parameters, and analyzing SAS data.</p>
 </sec>
 <sec id="statement-of-need">
   <title>Statement of need</title>
-  <p>Small Angle Scattering (SAS) experiments with neutrons (SANS) and
-  X-rays (SAXS) are useful techniques for probing material
-  nanostructures
+  <p>SAS experiments with neutrons (SANS) and X-rays (SAXS) are useful
+  techniques for probing material nanostructures
   (<xref alt="Chen et al., 2012" rid="ref-chen2012characterizing" ref-type="bibr">Chen
   et al., 2012</xref>). With the Time Resolved (TR) variant of SAS, the
   time evolution of nanostructures can also be probed
   (<xref alt="Hollamby, 2013" rid="ref-hollamby2013practical" ref-type="bibr">Hollamby,
-  2013</xref>). However, a direct retrieval of nanostructure from SAS
-  data is not possible due to the so-called phase problem, i.e. the
+  2013</xref>). However, a direct retrieval of the nanostructure from
+  SAS data is not possible due to the so-called phase problem, i.e. the
   phase loss in measured intensities
   (<xref alt="Billinge &amp; Levin, 2007" rid="ref-billinge2007problem" ref-type="bibr">Billinge
   &amp; Levin, 2007</xref>). Therefore, it is fruitful to combine SAS
@@ -153,65 +152,78 @@ a Creative Commons Attribution 4.0 International License (CC BY
   (<xref alt="Reich et al., 2022" rid="ref-reich2022comparison" ref-type="bibr">Reich
   et al., 2022</xref>).</p>
   <p>Simulated real-space structures can be generated using atomistic or
-  continuum simulation. However, atomistic simulation cannot feasibly
+  continuum simulations. However, atomistic simulations cannot feasibly
   simulate large structures (e.g. micrometer scale) over long times
   (e.g. seconds) due to computational limitations
   (<xref alt="Ghavanloo et al., 2019" rid="ref-ghavanloo2019computational" ref-type="bibr">Ghavanloo
-  et al., 2019</xref>). This becomes problematic when the nanostructure
+  et al., 2019</xref>). This becomes problematic when nanostructure
   evolution is influenced by larger length-scale structures or when the
-  SAS data is recorded over long time periods. In such cases, continuum
-  simulation is the only option. Despite this indispensability, there is
-  no software available for calculating SAS data from continuum
-  simulations. <monospace>Cont2SAS</monospace> aims to fill this void by
-  providing a tool that offers fast and error-free comparison of
-  continuum simulations and SAS data. The ultimate goal is to study
-  nanomaterials and validating theories using SAS data, particularly
-  when length-scales and time-scales, inaccessible to atomistic
-  simulations, need to be simulated.</p>
+  TR-SAS data is recorded over long time periods. In such cases,
+  continuum simulation is an appropriate option.
+  <monospace>Cont2SAS</monospace> aims to provide a tool that offers
+  fast comparison of continuum simulations and SAS data. The ultimate
+  goal is to study nanomaterials and validate theories using SAS data,
+  particularly when length-scales and time-scales, inaccessible to
+  atomistic simulations, need to be simulated.</p>
 </sec>
 <sec id="state-of-the-field">
   <title>State of the field</title>
-  <p>From atomistic simulations, different software such as
-  <monospace>nMoldyn</monospace>
+  <p>Different software packages such as <monospace>nMoldyn</monospace>
   (<xref alt="Hinsen, 2023" rid="ref-nmoldyn2023hinsen" ref-type="bibr">Hinsen,
   2023</xref>;
   <xref alt="Róg et al., 2003" rid="ref-rog2003nmoldyn" ref-type="bibr">Róg
   et al., 2003</xref>), <monospace>MDANSE</monospace>
   (<xref alt="Goret et al., 2017" rid="ref-goret2017mdanse" ref-type="bibr">Goret
   et al., 2017</xref>;
-  <xref alt="Neutron &amp; Facility, 2023" rid="ref-mdanse2023isis" ref-type="bibr">Neutron
-  &amp; Facility, 2023</xref>), <monospace>LiquidLib</monospace>
+  <xref alt="UKRI STFC ISIS Neutron and Muon Facility, 2023" rid="ref-mdanse2023isis" ref-type="bibr">UKRI
+  STFC ISIS Neutron and Muon Facility, 2023</xref>),
+  <monospace>LiquidLib</monospace>
   (<xref alt="Walter et al., 2018" rid="ref-walter2018liquidlib" ref-type="bibr">Walter
   et al., 2018</xref>;
   <xref alt="Z-laboratory, 2023" rid="ref-liquidlib2023zlab" ref-type="bibr">Z-laboratory,
   2023</xref>), and <monospace>Sassena</monospace>
   (<xref alt="Lindner, 2012" rid="ref-lindner2012towards" ref-type="bibr">Lindner,
-  2012</xref>,
-  <xref alt="2017" rid="ref-sassena2017lindner" ref-type="bibr">2017</xref>;
+  2012</xref>;
   <xref alt="Lindner &amp; Smith, 2012" rid="ref-lindner2012sassena" ref-type="bibr">Lindner
   &amp; Smith, 2012</xref>;
   <xref alt="Majumdar et al., 2024" rid="ref-majumdar2024computation" ref-type="bibr">Majumdar
   et al., 2024</xref>;
   <xref alt="Majumdar &amp; Lindner, 2023" rid="ref-sassena2023majumdar" ref-type="bibr">Majumdar
-  &amp; Lindner, 2023</xref>) can calculate SAS patterns but they cannot
-  calculate the same from continuum simulations. An in-house code is
-  available for continuum simulations but it was built for a 2D membrane
-  system lacking generality
-  (<xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
-  et al., 2020</xref>). Hence, <monospace>Cont2SAS</monospace> is built
-  using <monospace>Sassena</monospace> as a backend calculator.
-  <monospace>Sassena</monospace> was chosen over other software due to
-  its notable computation speed and robustness
+  &amp; Lindner, 2023</xref>) can calculate SAS patterns from atomistic
+  simulations, but they cannot calculate the same from continuum
+  simulations. For continuum simulations, existing software
+  implementations are typically developed for problem-specific
+  applications
+  (<xref alt="Berbenni et al., 2025" rid="ref-berbenni2025simulation" ref-type="bibr">Berbenni
+  et al., 2025</xref>;
+  <xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
+  et al., 2020</xref>;
+  <xref alt="Schmidt-Rohr, 2007" rid="ref-schmidt2007simulation" ref-type="bibr">Schmidt-Rohr,
+  2007</xref>). The <monospace>Generic SAS Calculator</monospace> option
+  in <monospace>SasView</monospace>
+  (<xref alt="SasView Developers, 2026" rid="ref-sasview" ref-type="bibr">SasView
+  Developers, 2026</xref>) is also a potential alternative, but lacks a
+  clear strategy for converting simulation output into the supported
+  input formats
+  (<xref alt="Liu et al., 2023" rid="ref-liu2023generic" ref-type="bibr">Liu
+  et al., 2023</xref>). Hence, <monospace>Cont2SAS</monospace> is built
+  as a general-purpose program that converts simulation output into
+  discretized atoms using a well-defined strategy
+  (<xref alt="Majumdar et al., 2026" rid="ref-majumdar2026characterization" ref-type="bibr">Majumdar
+  et al., 2026</xref>). For calculating SAS data from the discretized
+  atoms, <monospace>Cont2SAS</monospace> uses
+  <monospace>Sassena</monospace> as a backend calculator, which provides
+  notable computation speed and robustness
   (<xref alt="Majumdar et al., 2024" rid="ref-majumdar2024computation" ref-type="bibr">Majumdar
   et al., 2024</xref>).</p>
 </sec>
 <sec id="software-features">
   <title>Software features</title>
   <fig>
-    <caption><p>Workflow of SAS pattern calculation: [left] SLD
+    <caption><p>Workflow of calculating SAS patterns: [left] SLD
     assignment for a spherical nanoparticle on generated mesh and
     [right] numerical calculation of SAS pattern. The numerical
-    calculation is validated against known analytical formula for
+    calculation is validated against the known analytical formula for
     spherical nanoparticles
     (<xref alt="Guinier et al., 1955" rid="ref-guinier1955small" ref-type="bibr">Guinier
     et al., 1955</xref>).
@@ -219,15 +231,15 @@ a Creative Commons Attribution 4.0 International License (CC BY
     <graphic mimetype="image" mime-subtype="png" xlink:href="workflow.png" />
   </fig>
   <p><monospace>Cont2SAS</monospace> calculates SAS patterns taking
-  simulated nanostructures as an input. The simulated structure must
+  simulated nanostructures as input. The simulated structure must
   include a Scattering Length Density (SLD) distribution, which is
   either directly obtained from simulation or calculated from a set of
   simulated variables (e.g. molar density and molar fraction) before
   being provided as input to <monospace>Cont2SAS</monospace>. Simulating
-  SLD distribution within <monospace>Cont2SAS</monospace> is also
-  possible for model structures. The simulated input is processed to
-  data tailor-made for <monospace>Sassena</monospace>.
-  <monospace>Sassena</monospace> calculates SAS pattern,
+  SLD distributions is also possible within
+  <monospace>Cont2SAS</monospace> for model structures. The simulated
+  input is processed to data tailor-made for
+  <monospace>Sassena</monospace>, which calculates SAS patterns,
   i.e. <inline-formula><alternatives>
   <tex-math><![CDATA[I]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>I</mml:mi></mml:math></alternatives></inline-formula>
@@ -246,61 +258,68 @@ a Creative Commons Attribution 4.0 International License (CC BY
   magnitude of <inline-formula><alternatives>
   <tex-math><![CDATA[I]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>I</mml:mi></mml:math></alternatives></inline-formula>
-  is related to the scattering contrast, i.e. the average diffrence in
+  is related to the scattering contrast, i.e. the average difference in
   SLD between particles and their surrounding medium.</p>
   <fig>
-    <caption><p>[left] TR-SAS data, i.e. SAS patterns at different
-    timesteps ranging from 0 to 10 seconds. With time, the SLD of a
-    spherical nanoparticle increases linearly. [right]
+    <caption><p>[left] TR-SAS data, i.e. SAS patterns at different time
+    steps ranging from 0 to 10 seconds. The SLD of a spherical
+    nanoparticle increases linearly with time. [right]
     <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-    calculated from SAS patterns. The calculated
+    calculated from the SAS patterns. The calculated
     <inline-formula><alternatives>
     <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-    values are proportional to the (<inline-formula><alternatives>
+    values are proportional to the square of the SLD difference between
+    the particle and its environment,
+    i.e. (<inline-formula><alternatives>
     <tex-math><![CDATA[\Delta]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>Δ</mml:mi></mml:math></alternatives></inline-formula>SLD)<inline-formula><alternatives>
     <tex-math><![CDATA[^2]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msup><mml:mi></mml:mi><mml:mn>2</mml:mn></mml:msup></mml:math></alternatives></inline-formula>,
-    i.e. square of SLD difference between the particle and its
-    environment.
+    whose shown values are multiplied by an empirical constant.
     <styled-content id="figU003Asig_eff_workflow"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="sig_eff.png" />
   </fig>
-  <p>For a simulation with more than one timestep, SAS patterns can be
-  calculated from different time steps generating a TR-SAS data, as
+  <p>For simulations with multiple time steps, SAS patterns can be
+  calculated from different time steps generating a TR-SAS dataset, as
   shown in
   <xref alt="[fig:sig_eff_workflow]" rid="figU003Asig_eff_workflow">[fig:sig_eff_workflow]</xref>.
   From TR-SAS data, <monospace>Cont2SAS</monospace> can calculate the
-  time evolution of effective cross-section
+  time evolution of the effective cross-section
   <inline-formula><alternatives>
   <tex-math><![CDATA[(\sigma_{\text{eff}})]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>,
   which is defined as the count rate per incident unit flux (see
   <xref alt="[fig:sig_eff_workflow]" rid="figU003Asig_eff_workflow">[fig:sig_eff_workflow]</xref>).
-  This feature was not available in the in-house code
-  (<xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
-  et al., 2020</xref>) or <monospace>Sassena</monospace>
+  This feature was not available in previous implementations
+  (<xref alt="Berbenni et al., 2025" rid="ref-berbenni2025simulation" ref-type="bibr">Berbenni
+  et al., 2025</xref>;
+  <xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
+  et al., 2020</xref>;
+  <xref alt="Liu et al., 2023" rid="ref-liu2023generic" ref-type="bibr">Liu
+  et al., 2023</xref>;
+  <xref alt="Schmidt-Rohr, 2007" rid="ref-schmidt2007simulation" ref-type="bibr">Schmidt-Rohr,
+  2007</xref>) or <monospace>Sassena</monospace>
   (<xref alt="Majumdar &amp; Lindner, 2023" rid="ref-sassena2023majumdar" ref-type="bibr">Majumdar
-  &amp; Lindner, 2023</xref>). The time evolution of count rate is
-  useful when the SLD of nanostructure changes over time without any
-  change in average shape and size, e.g. while storing hydrogen in
+  &amp; Lindner, 2023</xref>). The time evolution of the count rate is
+  useful when the SLD of the nanostructure changes over time without any
+  change in average shape and size, e.g. while storing hydrogen in a
   ball-milled powder sample
   (<xref alt="Aslan et al., 2019" rid="ref-aslan2019high" ref-type="bibr">Aslan
   et al., 2019</xref>). The calculated <inline-formula><alternatives>
   <tex-math><![CDATA[\sigma_{\text{eff}}]]></tex-math>
   <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mtext mathvariant="normal">eff</mml:mtext></mml:msub></mml:math></alternatives></inline-formula>
-  must be multiplied by an empirical factor before comparing with
+  must be multiplied by an empirical factor before comparing it with the
   measured count rate.</p>
 </sec>
 <sec id="conclusion">
   <title>Conclusion</title>
-  <p><monospace>Cont2SAS</monospace> provides a software platform for
-  calculating SAS pattern from continuum simulations of nanostructures.
-  The addition of effective cross-section in the software package
-  further enables the analysis of count rate.
+  <p><monospace>Cont2SAS</monospace> provides a software package for
+  calculating SAS patterns from continuum simulations of nanostructures.
+  The addition of the effective cross-section in the software package
+  further enables the analysis of the experimental count rate.
   <monospace>Cont2SAS</monospace> can be used for analyzing SAS data and
   validating simulations to study nanomaterials.</p>
 </sec>
@@ -319,9 +338,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <sec id="declaration">
   <title>Declaration</title>
   <p>During the preparation of this work, the authors used ChatGPT in
-  order to improve the quality of code and article. After using this
-  tool, the authors reviewed and edited the content as needed and take
-  full responsibility for the content of the published code and
+  order to improve the quality of the code and the manuscript. After
+  using this tool, the authors reviewed and edited the content as needed
+  and take full responsibility for the content of the published code and
   article.</p>
 </sec>
 </body>
@@ -510,16 +529,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <pub-id pub-id-type="doi">10.5281/zenodo.10037485</pub-id>
     </element-citation>
   </ref>
-  <ref id="ref-sassena2017lindner">
-    <element-citation>
-      <person-group person-group-type="author">
-        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
-      </person-group>
-      <article-title>Sassena</article-title>
-      <publisher-name>https://github.com/camm/sassena</publisher-name>
-      <year iso-8601-date="2017">2017</year>
-    </element-citation>
-  </ref>
   <ref id="ref-rog2003nmoldyn">
     <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
@@ -570,10 +579,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <ref id="ref-mdanse2023isis">
     <element-citation>
       <person-group person-group-type="author">
-        <name><surname>Neutron</surname><given-names>UKRI STFC ISIS</given-names></name>
-        <name><surname>Facility</surname><given-names>Muon</given-names></name>
+        <string-name>UKRI STFC ISIS Neutron and Muon Facility</string-name>
       </person-group>
-      <article-title>MDANSE–version 1.5.2</article-title>
+      <article-title>MDANSE–version 2.0.1</article-title>
       <publisher-name>https://github.com/ISISNeutronMuon/MDANSE/</publisher-name>
       <year iso-8601-date="2023">2023</year>
     </element-citation>
@@ -617,6 +625,75 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <source>Small-angle scattering of x-rays</source>
       <publisher-name>Wiley New York</publisher-name>
       <year iso-8601-date="1955">1955</year>
+    </element-citation>
+  </ref>
+  <ref id="ref-schmidt2007simulation">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Schmidt-Rohr</surname><given-names>Klaus</given-names></name>
+      </person-group>
+      <article-title>Simulation of small-angle scattering curves by numerical fourier transformation</article-title>
+      <source>Journal of Applied Crystallography</source>
+      <publisher-name>International Union of Crystallography</publisher-name>
+      <year iso-8601-date="2007">2007</year>
+      <volume>40</volume>
+      <issue>1</issue>
+      <pub-id pub-id-type="doi">10.1107/S002188980604550X</pub-id>
+      <fpage>16</fpage>
+      <lpage>25</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-berbenni2025simulation">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Berbenni</surname><given-names>Stéphane</given-names></name>
+        <name><surname>Dingreville</surname><given-names>Rémi</given-names></name>
+        <name><surname>Schenk</surname><given-names>Thomas</given-names></name>
+      </person-group>
+      <article-title>Simulation and analysis of small angle scattering (SAS) patterns of ni-based superalloy microstructures generated by a phase-field model</article-title>
+      <source>Computational Materials Science</source>
+      <publisher-name>Elsevier</publisher-name>
+      <year iso-8601-date="2025">2025</year>
+      <volume>258</volume>
+      <pub-id pub-id-type="doi">10.1016/j.commatsci.2025.114086</pub-id>
+      <fpage>114086</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-liu2023generic">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Liu</surname><given-names>Yun</given-names></name>
+        <name><surname>Bourne</surname><given-names>Robert</given-names></name>
+        <name><surname>King</surname><given-names>Steve</given-names></name>
+      </person-group>
+      <article-title>Generic SAS calculator tool</article-title>
+      <publisher-name>https://www.sasview.org/docs/user/qtgui/Calculators/sas_calculator_help.html</publisher-name>
+      <year iso-8601-date="2023">2023</year>
+    </element-citation>
+  </ref>
+  <ref id="ref-sasview">
+    <element-citation>
+      <person-group person-group-type="author">
+        <string-name>SasView Developers</string-name>
+      </person-group>
+      <article-title>SasView–version 6.1.3</article-title>
+      <publisher-name>https://www.sasview.org</publisher-name>
+      <year iso-8601-date="2026">2026</year>
+    </element-citation>
+  </ref>
+  <ref id="ref-majumdar2026characterization">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Majumdar</surname><given-names>Arnab</given-names></name>
+        <name><surname>Müller</surname><given-names>Martin</given-names></name>
+        <name><surname>Busch</surname><given-names>Sebastian</given-names></name>
+      </person-group>
+      <article-title>Characterization of nanomaterials through complementary use of continuum simulations and small angle scattering measurements</article-title>
+      <publisher-name>SSRN working paper</publisher-name>
+      <year iso-8601-date="2026">2026</year>
+      <uri>https://ssrn.com/abstract=6460568</uri>
+      <pub-id pub-id-type="doi">10.2139/ssrn.6460568</pub-id>
     </element-citation>
   </ref>
 </ref-list>
