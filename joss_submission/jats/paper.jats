@@ -168,8 +168,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="state-of-the-field">
   <title>State of the field</title>
-  <p>From atomistic simulations, different software packages such as
-  <monospace>nMoldyn</monospace>
+  <p>Different software packages such as <monospace>nMoldyn</monospace>
   (<xref alt="Hinsen, 2023" rid="ref-nmoldyn2023hinsen" ref-type="bibr">Hinsen,
   2023</xref>;
   <xref alt="Róg et al., 2003" rid="ref-rog2003nmoldyn" ref-type="bibr">Róg
@@ -190,10 +189,11 @@ a Creative Commons Attribution 4.0 International License (CC BY
   <xref alt="Majumdar et al., 2024" rid="ref-majumdar2024computation" ref-type="bibr">Majumdar
   et al., 2024</xref>;
   <xref alt="Majumdar &amp; Lindner, 2023" rid="ref-sassena2023majumdar" ref-type="bibr">Majumdar
-  &amp; Lindner, 2023</xref>) can calculate SAS patterns but they cannot
-  calculate the same from continuum simulations. For continuum
-  simulations, existing software implementations are typically developed
-  for problem-specific applications
+  &amp; Lindner, 2023</xref>) can calculate SAS patterns from atomistic
+  simulations, but they cannot calculate the same from continuum
+  simulations. For continuum simulations, existing software
+  implementations are typically developed for problem-specific
+  applications
   (<xref alt="Berbenni et al., 2025" rid="ref-berbenni2025simulation" ref-type="bibr">Berbenni
   et al., 2025</xref>;
   <xref alt="Dorrell et al., 2020" rid="ref-dorrell2020combined" ref-type="bibr">Dorrell
@@ -203,9 +203,8 @@ a Creative Commons Attribution 4.0 International License (CC BY
   in <monospace>SasView</monospace>
   (<xref alt="SasView Developers, 2026" rid="ref-sasview" ref-type="bibr">SasView
   Developers, 2026</xref>) is also a potential alternative, but lacks a
-  clear strategy for converting simulation output into the expected
-  input formats, <monospace>grid type data</monospace> and
-  <monospace>element type data</monospace>
+  clear strategy for converting simulation output into the supported
+  input formats
   (<xref alt="Liu et al., 2023" rid="ref-liu2023generic" ref-type="bibr">Liu
   et al., 2023</xref>). Hence, <monospace>Cont2SAS</monospace> is built
   as a general-purpose program that converts simulation output into
