@@ -169,19 +169,20 @@ a Creative Commons Attribution 4.0 International License (CC BY
 <sec id="state-of-the-field">
   <title>State of the field</title>
   <p>Different software packages such as <monospace>nMoldyn</monospace>
-  (<xref alt="Hinsen, 2023" rid="ref-nmoldyn2023hinsen" ref-type="bibr">Hinsen,
-  2023</xref>;
+  (<xref alt="Hinsen et al., 2023" rid="ref-nmoldyn2023hinsen" ref-type="bibr">Hinsen
+  et al., 2023</xref>;
+  <xref alt="Kneller et al., 1995" rid="ref-kneller1995nmoldyn" ref-type="bibr">Kneller
+  et al., 1995</xref>;
   <xref alt="Róg et al., 2003" rid="ref-rog2003nmoldyn" ref-type="bibr">Róg
   et al., 2003</xref>), <monospace>MDANSE</monospace>
-  (<xref alt="Goret et al., 2017" rid="ref-goret2017mdanse" ref-type="bibr">Goret
-  et al., 2017</xref>;
-  <xref alt="UKRI STFC ISIS Neutron and Muon Facility, 2023" rid="ref-mdanse2023isis" ref-type="bibr">UKRI
-  STFC ISIS Neutron and Muon Facility, 2023</xref>),
-  <monospace>LiquidLib</monospace>
+  (<xref alt="Agu et al., 2024" rid="ref-mdanse2024agu" ref-type="bibr">Agu
+  et al., 2024</xref>;
+  <xref alt="Goret et al., 2017" rid="ref-goret2017mdanse" ref-type="bibr">Goret
+  et al., 2017</xref>), <monospace>LiquidLib</monospace>
   (<xref alt="Walter et al., 2018" rid="ref-walter2018liquidlib" ref-type="bibr">Walter
   et al., 2018</xref>;
-  <xref alt="Z-laboratory, 2023" rid="ref-liquidlib2023zlab" ref-type="bibr">Z-laboratory,
-  2023</xref>), and <monospace>Sassena</monospace>
+  <xref alt="Z-laboratory, 2022" rid="ref-liquidlib2023zlab" ref-type="bibr">Z-laboratory,
+  2022</xref>), and <monospace>Sassena</monospace>
   (<xref alt="Lindner, 2012" rid="ref-lindner2012towards" ref-type="bibr">Lindner,
   2012</xref>;
   <xref alt="Lindner &amp; Smith, 2012" rid="ref-lindner2012sassena" ref-type="bibr">Lindner
@@ -516,6 +517,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <article-title>Towards a unification of supercomputing, molecular dynamics simulation and experimental neutron and x-ray scattering techniques</article-title>
       <publisher-name>University of Tennessee, United States</publisher-name>
       <year iso-8601-date="2012">2012</year>
+      <pub-id pub-id-type="doi">20.500.14382/22524</pub-id>
     </element-citation>
   </ref>
   <ref id="ref-sassena2023majumdar">
@@ -549,10 +551,33 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <lpage>667</lpage>
     </element-citation>
   </ref>
+  <ref id="ref-kneller1995nmoldyn">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Kneller</surname><given-names>Gerald R.</given-names></name>
+        <name><surname>Keiner</surname><given-names>Volker</given-names></name>
+        <name><surname>Kneller</surname><given-names>Meinhard</given-names></name>
+        <name><surname>Schiller</surname><given-names>Matthias</given-names></name>
+      </person-group>
+      <article-title>nMOLDYN: A program package for a neutron scattering oriented analysis of molecular dynamics simulations</article-title>
+      <source>Computer Physics Communications</source>
+      <year iso-8601-date="1995">1995</year>
+      <volume>91</volume>
+      <issue>1</issue>
+      <pub-id pub-id-type="doi">10.1016/0010-4655(95)00048-K</pub-id>
+      <fpage>191</fpage>
+      <lpage>214</lpage>
+    </element-citation>
+  </ref>
   <ref id="ref-nmoldyn2023hinsen">
     <element-citation>
       <person-group person-group-type="author">
         <name><surname>Hinsen</surname><given-names>Konrad</given-names></name>
+        <name><surname>Pellegrini</surname><given-names>Eric</given-names></name>
+        <name><surname>Kneller</surname><given-names>Gerald</given-names></name>
+        <name><surname>Aoun</surname><given-names>Bachir</given-names></name>
+        <name><surname>Murzyn</surname><given-names>Krzysztof</given-names></name>
+        <name><surname>Tomasz</surname><given-names>Róg</given-names></name>
       </person-group>
       <article-title>nMOLDYN3–version 3.0.12</article-title>
       <publisher-name>https://github.com/khinsen/nMOLDYN3/</publisher-name>
@@ -577,14 +602,25 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <lpage>5</lpage>
     </element-citation>
   </ref>
-  <ref id="ref-mdanse2023isis">
+  <ref id="ref-mdanse2024agu">
     <element-citation>
       <person-group person-group-type="author">
-        <string-name>UKRI STFC ISIS Neutron and Muon Facility</string-name>
+        <name><surname>Agu</surname><given-names>Ifeoma</given-names></name>
+        <name><surname>Banerjee</surname><given-names>Raunakk</given-names></name>
+        <name><surname>Bartkowiak</surname><given-names>Maciej</given-names></name>
+        <name><surname>Buchanan</surname><given-names>Rob</given-names></name>
+        <name><surname>Cheng</surname><given-names>Chi Y.</given-names></name>
+        <name><surname>Gonzales</surname><given-names>Miguel Angel</given-names></name>
+        <name><surname>Goret</surname><given-names>Gael</given-names></name>
+        <name><surname>Mukhopadhyay</surname><given-names>Sanghamitra</given-names></name>
+        <name><surname>Pellegrini</surname><given-names>Eric</given-names></name>
+        <name><surname>Perenon</surname><given-names>Remi</given-names></name>
+        <name><surname>Turanyi</surname><given-names>Rastislav</given-names></name>
+        <name><surname>Wilkins</surname><given-names>Jacob</given-names></name>
       </person-group>
       <article-title>MDANSE–version 2.0.1</article-title>
       <publisher-name>https://github.com/ISISNeutronMuon/MDANSE/</publisher-name>
-      <year iso-8601-date="2023">2023</year>
+      <year iso-8601-date="2024">2024</year>
     </element-citation>
   </ref>
   <ref id="ref-walter2018liquidlib">
@@ -610,9 +646,9 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <person-group person-group-type="author">
         <name><surname>Z-laboratory</surname></name>
       </person-group>
-      <article-title>Liquidlib–version 1.0</article-title>
-      <publisher-name>https://github.com/Z-Laboratory/LiquidLib/tree/master</publisher-name>
-      <year iso-8601-date="2023">2023</year>
+      <article-title>Liquidlib–version 1.0.0</article-title>
+      <publisher-name>https://z-laboratory.github.io/LiquidLib/</publisher-name>
+      <year iso-8601-date="2022">2022</year>
     </element-citation>
   </ref>
   <ref id="ref-guinier1955small">
