@@ -402,77 +402,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <lpage>565</lpage>
     </element-citation>
   </ref>
-  <ref id="ref-ghavanloo2019computational">
-    <element-citation publication-type="book">
-      <person-group person-group-type="author">
-        <name><surname>Ghavanloo</surname><given-names>Esmaeal</given-names></name>
-        <name><surname>Rafii-Tabar</surname><given-names>Hashem</given-names></name>
-        <name><surname>Fazelzadeh</surname><given-names>Seyed Ahmad</given-names></name>
-      </person-group>
-      <source>Computational continuum mechanics of nanoscopic structures</source>
-      <publisher-name>Springer</publisher-name>
-      <year iso-8601-date="2019">2019</year>
-      <pub-id pub-id-type="doi">10.1007/978-3-030-11650-7</pub-id>
-    </element-citation>
-  </ref>
-  <ref id="ref-aslan2019high">
-    <element-citation publication-type="article-journal">
-      <person-group person-group-type="author">
-        <name><surname>Aslan</surname><given-names>Neslihan</given-names></name>
-        <name><surname>Horstmann</surname><given-names>Christian</given-names></name>
-        <name><surname>Metz</surname><given-names>Oliver</given-names></name>
-        <name><surname>Kotlyar</surname><given-names>Oleg</given-names></name>
-        <name><surname>Dornheim</surname><given-names>Martin</given-names></name>
-        <name><surname>Pistidda</surname><given-names>Claudio</given-names></name>
-        <name><surname>Busch</surname><given-names>Sebastian</given-names></name>
-        <name><surname>Lohstroh</surname><given-names>Wiebke</given-names></name>
-        <name><surname>Müller</surname><given-names>Martin</given-names></name>
-        <name><surname>Pranzas</surname><given-names>Klaus</given-names></name>
-      </person-group>
-      <article-title>High-pressure cell for in situ neutron studies of hydrogen storage materials</article-title>
-      <source>Journal of Neutron Research</source>
-      <year iso-8601-date="2019">2019</year>
-      <volume>21</volume>
-      <issue>3-4</issue>
-      <pub-id pub-id-type="doi">10.3233/JNR-190116</pub-id>
-      <fpage>125</fpage>
-      <lpage>135</lpage>
-    </element-citation>
-  </ref>
-  <ref id="ref-dorrell2020combined">
-    <element-citation publication-type="article-journal">
-      <person-group person-group-type="author">
-        <name><surname>Dorrell</surname><given-names>Mitchell W</given-names></name>
-        <name><surname>Beaven</surname><given-names>Andrew H</given-names></name>
-        <name><surname>Sodt</surname><given-names>Alexander J</given-names></name>
-      </person-group>
-      <article-title>A combined molecular/continuum-modeling approach to predict the small-angle neutron scattering of curved membranes</article-title>
-      <source>Chemistry and physics of lipids</source>
-      <publisher-name>Elsevier</publisher-name>
-      <year iso-8601-date="2020">2020</year>
-      <volume>233</volume>
-      <pub-id pub-id-type="doi">10.1016/j.chemphyslip.2020.104983</pub-id>
-      <fpage>104983</fpage>
-      <lpage></lpage>
-    </element-citation>
-  </ref>
-  <ref id="ref-lindner2012sassena">
-    <element-citation publication-type="article-journal">
-      <person-group person-group-type="author">
-        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
-        <name><surname>Smith</surname><given-names>Jeremy C</given-names></name>
-      </person-group>
-      <article-title>Sassena—x-ray and neutron scattering calculated from molecular dynamics trajectories using massively parallel computers</article-title>
-      <source>Computer Physics Communications</source>
-      <publisher-name>Elsevier</publisher-name>
-      <year iso-8601-date="2012">2012</year>
-      <volume>183</volume>
-      <issue>7</issue>
-      <pub-id pub-id-type="doi">10.1016/j.cpc.2012.02.010</pub-id>
-      <fpage>1491</fpage>
-      <lpage>1501</lpage>
-    </element-citation>
-  </ref>
   <ref id="ref-majumdar2024computation">
     <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
@@ -509,27 +438,35 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <lpage></lpage>
     </element-citation>
   </ref>
-  <ref id="ref-lindner2012towards">
-    <element-citation publication-type="thesis">
+  <ref id="ref-ghavanloo2019computational">
+    <element-citation publication-type="book">
       <person-group person-group-type="author">
-        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+        <name><surname>Ghavanloo</surname><given-names>Esmaeal</given-names></name>
+        <name><surname>Rafii-Tabar</surname><given-names>Hashem</given-names></name>
+        <name><surname>Fazelzadeh</surname><given-names>Seyed Ahmad</given-names></name>
       </person-group>
-      <article-title>Towards a unification of supercomputing, molecular dynamics simulation and experimental neutron and x-ray scattering techniques</article-title>
-      <publisher-name>University of Tennessee, United States</publisher-name>
-      <year iso-8601-date="2012">2012</year>
-      <pub-id pub-id-type="doi">20.500.14382/22524</pub-id>
+      <source>Computational continuum mechanics of nanoscopic structures</source>
+      <publisher-name>Springer</publisher-name>
+      <year iso-8601-date="2019">2019</year>
+      <pub-id pub-id-type="doi">10.1007/978-3-030-11650-7</pub-id>
     </element-citation>
   </ref>
-  <ref id="ref-sassena2023majumdar">
-    <element-citation>
+  <ref id="ref-kneller1995nmoldyn">
+    <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
-        <name><surname>Majumdar</surname><given-names>Arnab</given-names></name>
-        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+        <name><surname>Kneller</surname><given-names>Gerald R.</given-names></name>
+        <name><surname>Keiner</surname><given-names>Volker</given-names></name>
+        <name><surname>Kneller</surname><given-names>Meinhard</given-names></name>
+        <name><surname>Schiller</surname><given-names>Matthias</given-names></name>
       </person-group>
-      <article-title>Sassena</article-title>
-      <publisher-name>https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena</publisher-name>
-      <year iso-8601-date="2023">2023</year>
-      <pub-id pub-id-type="doi">10.5281/zenodo.10037485</pub-id>
+      <article-title>nMOLDYN: A program package for a neutron scattering oriented analysis of molecular dynamics simulations</article-title>
+      <source>Computer Physics Communications</source>
+      <year iso-8601-date="1995">1995</year>
+      <volume>91</volume>
+      <issue>1</issue>
+      <pub-id pub-id-type="doi">10.1016/0010-4655(95)00048-K</pub-id>
+      <fpage>191</fpage>
+      <lpage>214</lpage>
     </element-citation>
   </ref>
   <ref id="ref-rog2003nmoldyn">
@@ -549,24 +486,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <pub-id pub-id-type="doi">10.1002/jcc.10243</pub-id>
       <fpage>657</fpage>
       <lpage>667</lpage>
-    </element-citation>
-  </ref>
-  <ref id="ref-kneller1995nmoldyn">
-    <element-citation publication-type="article-journal">
-      <person-group person-group-type="author">
-        <name><surname>Kneller</surname><given-names>Gerald R.</given-names></name>
-        <name><surname>Keiner</surname><given-names>Volker</given-names></name>
-        <name><surname>Kneller</surname><given-names>Meinhard</given-names></name>
-        <name><surname>Schiller</surname><given-names>Matthias</given-names></name>
-      </person-group>
-      <article-title>nMOLDYN: A program package for a neutron scattering oriented analysis of molecular dynamics simulations</article-title>
-      <source>Computer Physics Communications</source>
-      <year iso-8601-date="1995">1995</year>
-      <volume>91</volume>
-      <issue>1</issue>
-      <pub-id pub-id-type="doi">10.1016/0010-4655(95)00048-K</pub-id>
-      <fpage>191</fpage>
-      <lpage>214</lpage>
     </element-citation>
   </ref>
   <ref id="ref-nmoldyn2023hinsen">
@@ -651,17 +570,44 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <year iso-8601-date="2022">2022</year>
     </element-citation>
   </ref>
-  <ref id="ref-guinier1955small">
-    <element-citation publication-type="book">
+  <ref id="ref-lindner2012sassena">
+    <element-citation publication-type="article-journal">
       <person-group person-group-type="author">
-        <name><surname>Guinier</surname><given-names>André</given-names></name>
-        <name><surname>Fournet</surname><given-names>Gérard</given-names></name>
-        <name><surname>Walker</surname><given-names>Christopher B</given-names></name>
-        <name><surname>Yudowitch</surname><given-names>Kenneth L</given-names></name>
+        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+        <name><surname>Smith</surname><given-names>Jeremy C</given-names></name>
       </person-group>
-      <source>Small-angle scattering of x-rays</source>
-      <publisher-name>Wiley New York</publisher-name>
-      <year iso-8601-date="1955">1955</year>
+      <article-title>Sassena—x-ray and neutron scattering calculated from molecular dynamics trajectories using massively parallel computers</article-title>
+      <source>Computer Physics Communications</source>
+      <publisher-name>Elsevier</publisher-name>
+      <year iso-8601-date="2012">2012</year>
+      <volume>183</volume>
+      <issue>7</issue>
+      <pub-id pub-id-type="doi">10.1016/j.cpc.2012.02.010</pub-id>
+      <fpage>1491</fpage>
+      <lpage>1501</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-lindner2012towards">
+    <element-citation publication-type="thesis">
+      <person-group person-group-type="author">
+        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+      </person-group>
+      <article-title>Towards a unification of supercomputing, molecular dynamics simulation and experimental neutron and x-ray scattering techniques</article-title>
+      <publisher-name>University of Tennessee, United States</publisher-name>
+      <year iso-8601-date="2012">2012</year>
+      <pub-id pub-id-type="doi">20.500.14382/22524</pub-id>
+    </element-citation>
+  </ref>
+  <ref id="ref-sassena2023majumdar">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Majumdar</surname><given-names>Arnab</given-names></name>
+        <name><surname>Lindner</surname><given-names>Benjamin</given-names></name>
+      </person-group>
+      <article-title>Sassena</article-title>
+      <publisher-name>https://codebase.helmholtz.cloud/DAPHNE4NFDI/sassena</publisher-name>
+      <year iso-8601-date="2023">2023</year>
+      <pub-id pub-id-type="doi">10.5281/zenodo.10037485</pub-id>
     </element-citation>
   </ref>
   <ref id="ref-schmidt2007simulation">
@@ -678,6 +624,23 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <pub-id pub-id-type="doi">10.1107/S002188980604550X</pub-id>
       <fpage>16</fpage>
       <lpage>25</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-dorrell2020combined">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Dorrell</surname><given-names>Mitchell W</given-names></name>
+        <name><surname>Beaven</surname><given-names>Andrew H</given-names></name>
+        <name><surname>Sodt</surname><given-names>Alexander J</given-names></name>
+      </person-group>
+      <article-title>A combined molecular/continuum-modeling approach to predict the small-angle neutron scattering of curved membranes</article-title>
+      <source>Chemistry and physics of lipids</source>
+      <publisher-name>Elsevier</publisher-name>
+      <year iso-8601-date="2020">2020</year>
+      <volume>233</volume>
+      <pub-id pub-id-type="doi">10.1016/j.chemphyslip.2020.104983</pub-id>
+      <fpage>104983</fpage>
+      <lpage></lpage>
     </element-citation>
   </ref>
   <ref id="ref-berbenni2025simulation">
@@ -697,6 +660,16 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <lpage></lpage>
     </element-citation>
   </ref>
+  <ref id="ref-sasview">
+    <element-citation>
+      <person-group person-group-type="author">
+        <string-name>SasView Developers</string-name>
+      </person-group>
+      <article-title>SasView–version 6.1.3</article-title>
+      <publisher-name>https://www.sasview.org</publisher-name>
+      <year iso-8601-date="2026">2026</year>
+    </element-citation>
+  </ref>
   <ref id="ref-liu2023generic">
     <element-citation>
       <person-group person-group-type="author">
@@ -707,16 +680,6 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <article-title>Generic SAS calculator tool</article-title>
       <publisher-name>https://www.sasview.org/docs/user/qtgui/Calculators/sas_calculator_help.html</publisher-name>
       <year iso-8601-date="2023">2023</year>
-    </element-citation>
-  </ref>
-  <ref id="ref-sasview">
-    <element-citation>
-      <person-group person-group-type="author">
-        <string-name>SasView Developers</string-name>
-      </person-group>
-      <article-title>SasView–version 6.1.3</article-title>
-      <publisher-name>https://www.sasview.org</publisher-name>
-      <year iso-8601-date="2026">2026</year>
     </element-citation>
   </ref>
   <ref id="ref-majumdar2026characterization">
@@ -731,6 +694,43 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <year iso-8601-date="2026">2026</year>
       <uri>https://ssrn.com/abstract=6460568</uri>
       <pub-id pub-id-type="doi">10.2139/ssrn.6460568</pub-id>
+    </element-citation>
+  </ref>
+  <ref id="ref-guinier1955small">
+    <element-citation publication-type="book">
+      <person-group person-group-type="author">
+        <name><surname>Guinier</surname><given-names>André</given-names></name>
+        <name><surname>Fournet</surname><given-names>Gérard</given-names></name>
+        <name><surname>Walker</surname><given-names>Christopher B</given-names></name>
+        <name><surname>Yudowitch</surname><given-names>Kenneth L</given-names></name>
+      </person-group>
+      <source>Small-angle scattering of x-rays</source>
+      <publisher-name>Wiley New York</publisher-name>
+      <year iso-8601-date="1955">1955</year>
+    </element-citation>
+  </ref>
+  <ref id="ref-aslan2019high">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Aslan</surname><given-names>Neslihan</given-names></name>
+        <name><surname>Horstmann</surname><given-names>Christian</given-names></name>
+        <name><surname>Metz</surname><given-names>Oliver</given-names></name>
+        <name><surname>Kotlyar</surname><given-names>Oleg</given-names></name>
+        <name><surname>Dornheim</surname><given-names>Martin</given-names></name>
+        <name><surname>Pistidda</surname><given-names>Claudio</given-names></name>
+        <name><surname>Busch</surname><given-names>Sebastian</given-names></name>
+        <name><surname>Lohstroh</surname><given-names>Wiebke</given-names></name>
+        <name><surname>Müller</surname><given-names>Martin</given-names></name>
+        <name><surname>Pranzas</surname><given-names>Klaus</given-names></name>
+      </person-group>
+      <article-title>High-pressure cell for in situ neutron studies of hydrogen storage materials</article-title>
+      <source>Journal of Neutron Research</source>
+      <year iso-8601-date="2019">2019</year>
+      <volume>21</volume>
+      <issue>3-4</issue>
+      <pub-id pub-id-type="doi">10.3233/JNR-190116</pub-id>
+      <fpage>125</fpage>
+      <lpage>135</lpage>
     </element-citation>
   </ref>
 </ref-list>
