@@ -168,9 +168,12 @@ a Creative Commons Attribution 4.0 International License (CC BY
 </sec>
 <sec id="state-of-the-field">
   <title>State of the field</title>
-  <p>Different software packages such as <monospace>nMoldyn</monospace>
-  (<xref alt="Hinsen et al., 2023" rid="ref-nmoldyn2023hinsen" ref-type="bibr">Hinsen
-  et al., 2023</xref>;
+  <p>Different software packages such as <monospace>nMOLDYN</monospace>
+  (<xref alt="Calandrini et al., 2011" rid="ref-calandrini2011nMoldyn" ref-type="bibr">Calandrini
+  et al., 2011</xref>;
+  <xref alt="Hinsen et al., 2012" rid="ref-hinsen2012nMoldyn3" ref-type="bibr">Hinsen
+  et al., 2012</xref>,
+  <xref alt="2023" rid="ref-nmoldyn2023hinsen" ref-type="bibr">2023</xref>;
   <xref alt="Kneller et al., 1995" rid="ref-kneller1995nmoldyn" ref-type="bibr">Kneller
   et al., 1995</xref>;
   <xref alt="Róg et al., 2003" rid="ref-rog2003nmoldyn" ref-type="bibr">Róg
@@ -488,6 +491,42 @@ a Creative Commons Attribution 4.0 International License (CC BY
       <lpage>667</lpage>
     </element-citation>
   </ref>
+  <ref id="ref-calandrini2011nMoldyn">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Calandrini</surname><given-names>V.</given-names></name>
+        <name><surname>Pellegrini</surname><given-names>E.</given-names></name>
+        <name><surname>Calligari</surname><given-names>P.</given-names></name>
+        <name><surname>Hinsen</surname><given-names>K.</given-names></name>
+        <name><surname>Kneller</surname><given-names>G. R.</given-names></name>
+      </person-group>
+      <article-title>nMoldyn - interfacing spectroscopic experiments, molecular dynamics simulations and models for time correlation functions</article-title>
+      <source>JDN</source>
+      <year iso-8601-date="2011">2011</year>
+      <volume>12</volume>
+      <pub-id pub-id-type="doi">10.1051/sfn/201112010</pub-id>
+      <fpage>201</fpage>
+      <lpage>232</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-hinsen2012nMoldyn3">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Hinsen</surname><given-names>Konrad</given-names></name>
+        <name><surname>Pellegrini</surname><given-names>Eric</given-names></name>
+        <name><surname>Stachura</surname><given-names>Sławomir</given-names></name>
+        <name><surname>Kneller</surname><given-names>Gerald R.</given-names></name>
+      </person-group>
+      <article-title>nMoldyn 3: Using task farming for a parallel spectroscopy-oriented analysis of molecular dynamics simulations</article-title>
+      <source>Journal of Computational Chemistry</source>
+      <year iso-8601-date="2012">2012</year>
+      <volume>33</volume>
+      <issue>25</issue>
+      <pub-id pub-id-type="doi">10.1002/jcc.23035</pub-id>
+      <fpage>2043</fpage>
+      <lpage>2048</lpage>
+    </element-citation>
+  </ref>
   <ref id="ref-nmoldyn2023hinsen">
     <element-citation>
       <person-group person-group-type="author">
@@ -496,7 +535,7 @@ a Creative Commons Attribution 4.0 International License (CC BY
         <name><surname>Kneller</surname><given-names>Gerald</given-names></name>
         <name><surname>Aoun</surname><given-names>Bachir</given-names></name>
         <name><surname>Murzyn</surname><given-names>Krzysztof</given-names></name>
-        <name><surname>Tomasz</surname><given-names>Róg</given-names></name>
+        <name><surname>Róg</surname><given-names>Tomasz</given-names></name>
       </person-group>
       <article-title>nMOLDYN3–version 3.0.12</article-title>
       <publisher-name>https://github.com/khinsen/nMOLDYN3/</publisher-name>
