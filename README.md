@@ -1,5 +1,8 @@
 ![logo](logo/logo/Cont2SAS-logo-transparent.png)
 
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.09772/status.svg)](https://doi.org/10.21105/joss.09772) 
+[![CI](https://github.com/hereon-GEMS/Cont2SAS/actions/workflows/ci.yml/badge.svg)](https://github.com/hereon-GEMS/Cont2SAS/actions/workflows/ci.yml)
+
 # Cont2SAS
 
 ## Description
