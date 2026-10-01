@@ -1,29 +1,44 @@
-# This CITATION.cff file was generated with cffinit.
-# Visit https://bit.ly/cffinit to generate yours today!
-
-cff-version: 1.2.0
-title: Cont2SAS
-message: >-
-  Software package for calculating Small Angle Scattering
-  (SAS) parameters from continuum simulations.
-type: software
+cff-version: "1.2.0"
 authors:
-  - given-names: Arnab
-    family-names: Majumdar
-    email: arnab.majumdar@hereon.de
-    affiliation: Helmholtz-Zentrum Hereon
-    orcid: 'https://orcid.org/0000-0003-4049-4060'
-  - given-names: Martin
-    family-names: Müller
-    email: martin.mueller@hereon.de
-    affiliation: Helmholtz-Zentrum Hereon
-  - given-names: Sebastian
-    family-names: Busch
-    email: sebastian.busch@hereon.de
-    affiliation: Helmholtz-Zentrum Hereon
-    orcid: 'https://orcid.org/0000-0002-9815-909X'
-repository-code: >-
-  https://github.com/hereon-GEMS/Cont2SAS
-license: GPL-3.0
-version: 1.0.0
-date-released: '2025-08-05'
+- family-names: Majumdar
+  given-names: Arnab
+  orcid: "https://orcid.org/0000-0003-4049-4060"
+- family-names: Müller
+  given-names: Martin
+  orcid: "https://orcid.org/0000-0003-0995-7602"
+- family-names: Busch
+  given-names: Sebastian
+  orcid: "https://orcid.org/0000-0002-9815-909X"
+contact:
+- family-names: Busch
+  given-names: Sebastian
+  orcid: "https://orcid.org/0000-0002-9815-909X"
+doi: 10.5281/zenodo.21721782
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Majumdar
+    given-names: Arnab
+    orcid: "https://orcid.org/0000-0003-4049-4060"
+  - family-names: Müller
+    given-names: Martin
+    orcid: "https://orcid.org/0000-0003-0995-7602"
+  - family-names: Busch
+    given-names: Sebastian
+    orcid: "https://orcid.org/0000-0002-9815-909X"
+  date-published: 2026-08-23
+  doi: 10.21105/joss.09772
+  issn: 2475-9066
+  issue: 124
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 9772
+  title: "Cont2SAS: A Python package for calculating small angle
+    scattering parameters from continuum nanostructures"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.09772"
+  volume: 11
+title: "Cont2SAS: A Python package for calculating small angle
+  scattering parameters from continuum nanostructures"
